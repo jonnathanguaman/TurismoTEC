@@ -1,0 +1,16 @@
+<nav class="menu" *ngIf="!ocultarMenuVal">
+    <div class="menu-logo">
+      <h1>CuencaTurismo</h1>
+      <button #menuToggle class="menu-toggle" (click)="toggleMenu($event)" aria-label="Abrir menú">&#9776;</button>
+    </div>
+    <ul #menuItems class="menu-items" [class.active]="menuAbierto">
+      <li><a routerLink="/">Inicio</a></li>
+      <li><a routerLink="/nosotros">Nosotros</a></li>
+      <li *ngIf="registro"><a routerLink="/recomendaciones">Recomendaciones</a></li>
+      <li *ngIf="registro"><a routerLink="/perfil">Perfil</a></li>
+      <li *ngIf="!registro"><a routerLink="/login">Iniciar sesión</a></li>
+      <li *ngIf="!registro"><a routerLink="/registro">Registrarse</a></li>
+      <li *ngIf="registro"><a (click)="cerrarSesion()" routerLink="/">Cerrar sesión</a></li>
+    </ul>
+  </nav>
+  

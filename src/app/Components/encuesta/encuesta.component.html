@@ -1,0 +1,104 @@
+<div class="formularioSugerencia">
+  <h1>Registro de usuario</h1>
+  <form>
+    <div class="pregunta">
+      <label>Ingrese su nombre</label>
+      <input type="text" name="nombre" id="nombre" [(ngModel)]="nombre">
+    </div>
+
+    <div class="pregunta">
+      <label>Ingrese su apellido</label>
+      <input type="text" name="apellido" id="apellido" [(ngModel)]="apellido">
+    </div>
+
+    <div class="pregunta">
+      <label>Pais de origen</label>
+      <input type="text" name="pais" id="pais" [(ngModel)]="pais">
+    </div>
+
+    <div class="pregunta">
+      <label>Idioma preferido</label>
+      <input type="text" name="idioma" id="idioma"[(ngModel)]="idioma">
+    </div>
+
+    <div class="pregunta">
+      <label>¿Cuál es tu edad?</label>
+      <input type="number" name="edad" id="edad" [(ngModel)]="edad">
+    </div>
+
+    <div class="pregunta">
+      <label>¿Con quien viaja?</label>
+      <label>
+        <input type="radio" name="viaje" [(ngModel)]="viaje" value="solo"> Solo
+      </label>
+      <label>
+        <input type="radio" name="viaje" [(ngModel)]="viaje" value="pareja"> Con pareja
+      </label>
+      <label>
+        <input type="radio" name="viaje" [(ngModel)]="viaje" value="familia"> En familia
+      </label>
+      <label>
+        <input type="radio" name="viaje" [(ngModel)]="viaje" value="amigos"> Con amigos
+      </label>
+    </div>
+
+    <div class="pregunta">
+      <label>¿Cuanto tiempo planea estar en la ciudad?</label>
+      <label>
+        <input type="radio" name="duracion" [(ngModel)]="duracion" value="1-dia"> 1 día
+      </label>
+      <label>
+        <input type="radio" name="duracion" [(ngModel)]="duracion" value="2-3-dias"> 2-3 días
+      </label>
+      <label>
+        <input type="radio" name="duracion" [(ngModel)]="duracion" value="1-semana"> 1 semana
+      </label>
+      <label>
+        <input type="radio" name="duracion" [(ngModel)]="duracion" value="mas-de-1-semana"> Más de una semana
+      </label>
+    </div>
+
+    <div class="pregunta">
+      <label>¿Qué tipo de actividades prefieres? </label>
+      <label>
+        <input type="checkbox" name="actividad" value="naturaleza" (change)="guardarActividades($event)"> Naturaleza y
+        ecoturismo
+      </label>
+      <label>
+        <input type="checkbox" name="actividad" value="cultura" (change)="guardarActividades($event)"> Cultura y
+        patrimonio histórico
+      </label>
+      <label>
+        <input type="checkbox" name="actividad" value="gastronomia" (change)="guardarActividades($event)"> Gastronomía
+        local
+      </label>
+      <label>
+        <input type="checkbox" name="actividad" value="vida-nocturna" (change)="guardarActividades($event)"> Vida
+        nocturna
+      </label>
+      <label>
+        <input type="checkbox" name="actividad" value="aventura" (change)="guardarActividades($event)"> Aventura extrema
+      </label>
+      <label>
+        <input type="checkbox" name="actividad" value="compras" (change)="guardarActividades($event)"> Compras
+      </label>
+    </div>
+
+    <div class="pregunta">
+      <label>¿Qué nivel de actividad física prefieres?</label>
+      <label>
+        <input type="radio" name="actividad_fisica" [(ngModel)]="actividad_fisica" value="baja"> Baja (paseos
+        tranquilos, recorridos en auto)
+      </label>
+      <label>
+        <input type="radio" name="actividad_fisica" [(ngModel)]="actividad_fisica" value="moderada"> Moderada
+        (caminatas, actividades ligeras)
+      </label>
+      <label>
+        <input type="radio" name="actividad_fisica" [(ngModel)]="actividad_fisica" value="alta"> Alta (excursiones,
+        deportes extremos)
+      </label>
+    </div>
+    <button (click)="recomendarTipoLugare()" class="botonRecomendar">Registrar</button>
+  </form>
+</div>
