@@ -22,10 +22,24 @@
     </div>
 
     <div class="pregunta">
+      <label>Usuario</label>
+      <input type="text" name="usuario" id="usuario"[(ngModel)]="usuario">
+    </div>
+
+    <div class="pregunta">
+      <label>Contraseña</label>
+      <input type="text" name="contrasena" id="contrasena"[(ngModel)]="contrasena">
+    </div>
+
+    <div class="pregunta">
       <label>¿Cuál es tu edad?</label>
       <input type="number" name="edad" id="edad" [(ngModel)]="edad">
     </div>
 
+    <div>
+      <h3>Encuesta de preferencias</h3>
+    </div>
+    
     <div class="pregunta">
       <label>¿Con quien viaja?</label>
       <label>

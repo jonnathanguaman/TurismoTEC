@@ -9,14 +9,52 @@
 
 .integrante {
     width: 250px;
+    height: 300px; /* Ajusta la altura para que sea suficiente */
     background-color: #ffffff;
     border: 1px solid #ddd;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     padding: 20px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    cursor: default;
+    transition: transform 0.6s;
+    cursor: pointer;
+    perspective: 1000px;
+    position: relative;
+    transform-style: preserve-3d; 
+}
+
+.front, .back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.front {
+    z-index: 2; 
+}
+
+.back {
+    transform: rotateY(180deg); 
+    display: none;
+}
+
+.integrante:hover {
+    transform: rotateY(180deg); 
+}
+
+.integrante:hover .back {
+    display: flex; 
+}
+
+.integrante:hover .front {
+    display: none; 
 }
 
 .integrante img {
@@ -39,9 +77,4 @@
     margin: 5px 0;
     font-size: 0.9rem;
     color: #666;
-}
-
-.integrante:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }

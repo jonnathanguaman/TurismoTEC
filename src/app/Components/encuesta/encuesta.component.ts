@@ -13,6 +13,8 @@ export class EncuestaComponent  implements OnInit{
 
   title = 'turismoCuenca';
 
+  usuario!:string;
+  contrasena!:string;
   nombre!:string;
   apellido!:string;
   idioma!:string;
