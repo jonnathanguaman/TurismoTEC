@@ -1,1 +1,29 @@
-<p>perfil works!</p>
+<div class="perfil-image">
+    <div class="perfil-images-item">
+        <img src="/assets/img/perfildefault.png" width="200px">
+    </div>
+    <div class="perfil-images-pie">
+        <p>User name</p>
+    </div>
+</div>
+
+<hr>
+
+<div class="tabla-container">
+    <button class="tabla" [class.active]="activarTabla === 'tab1'" (click)="seleccionarTablaactiva('tab1')">
+        Datos personales
+    </button>
+    <button class="tabla" [class.active]="activarTabla === 'tab2'" (click)="seleccionarTablaactiva('tab2')">
+        Preferencias
+    </button>
+</div>
+
+<hr>
+
+<div class="tabla-contenido" *ngIf="activarTabla === 'tab1'">
+    <app-datos-personales></app-datos-personales>
+</div>
+
+<div class="tabla-contenido" *ngIf="activarTabla === 'tab2'">
+    <app-encuesta></app-encuesta>
+</div>

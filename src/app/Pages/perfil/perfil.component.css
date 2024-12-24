@@ -1,0 +1,116 @@
+.perfil-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.perfil-images-item {
+    width: 200px;
+    border: 1px solid rgb(125, 122, 122);
+    border-radius: 100%;
+    margin-top: 12px;
+}
+
+.perfil-images-pie {
+    font-family: Arial, sans-serif;
+}
+
+hr {
+    margin-top: -5px;
+    border: 0;
+    height: 4px;
+    background-color: #ccc;
+    margin-right: 3%;
+    margin-left: 3%;
+}
+
+
+/*Tabla para editar*/
+.tabla-container {
+    display: flex;
+    padding: 10px;
+    margin-right: 3%;
+    margin-left: 3%;
+    margin-bottom: 15px;
+    justify-content: center;
+}
+
+.tabla {
+    background: none;
+    color: black;
+    border: none;
+    font-size: 16px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: color 0.3s, border-bottom 0.3s;
+    border-bottom: 2px solid transparent;
+}
+
+.tabla.active {
+    color: #0d6efd;
+    border-bottom: 2px solid #0d6efd;
+}
+
+.tabla:hover {
+    color: #0a58ca;
+}
+
+.tabla-contenido {
+    margin-top: 5px;
+    color: black;
+    border-radius: 0 0 8px 8px;
+    margin-right: 3%;
+    margin-left: 3%;
+}
+
+
+/*Datos personales*/
+.datos-personales {
+    font-family: Arial, sans-serif;
+    position: relative;
+    margin: 20px 0;
+}
+
+/* Estilo del input */
+.datos-personales input {
+    width: 98.3%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px){
+    .datos-personales input {
+        width: 95%;
+    }
+}
+.datos-personales label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    background-color: #fff;
+    color: #666;
+    font-size: 14px;
+    padding: 0 5px;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.datos-personales input:focus,
+.datos-personales input:valid {
+    border-color: #007bff;
+}
+
+.datos-personales input:focus+label,
+.datos-personales input:valid+label {
+    top: -10px;
+    font-size: 14px;
+    color: #007bff;
+    margin-top: 10px;
+}

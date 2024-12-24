@@ -14,6 +14,7 @@ import { NosotrosComponent } from './Pages/nosotros/nosotros.component';
 import { RecomendacionesComponent } from './Pages/recomendaciones/recomendaciones.component';
 import { SliderInicioComponent } from './Components/slider-inicio/slider-inicio.component';
 import { LoginComponent } from './Pages/login/login.component';
+import { DatosPersonalesComponent } from './Components/datos-personales/datos-personales.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { LoginComponent } from './Pages/login/login.component';
     RecomendacionesComponent,
     SliderInicioComponent,
     LoginComponent,
+    DatosPersonalesComponent,
   ],
   imports: [
     BrowserModule,
