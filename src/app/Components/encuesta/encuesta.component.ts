@@ -10,16 +10,7 @@ export class EncuestaComponent  implements OnInit{
   ngOnInit(): void {
 
   }
-
   title = 'turismoCuenca';
-
-  usuario!:string;
-  contrasena!:string;
-  nombre!:string;
-  apellido!:string;
-  idioma!:string;
-  pais!:string;
-  edad!:number;
   viaje!:string;
   duracion!:string;
   actividad_fisica!:string;
@@ -38,7 +29,7 @@ export class EncuestaComponent  implements OnInit{
   }
 
   mensajeRecomendarLugareEnviarApi():string{
-   const mensaje:string = "hola soy una persona de " + this.edad + " años, estoy viajando con mi"+ this.viaje +", tenemos destinados "+ this.duracion +" dias de vacaciones, me gusta la: "+ this.actividadesSeleccionadas +"; me gusta un nivel de actividad fisica "+ this.actividad_fisica+". Con esta información y solo con palabras sueltas que tipo de lugares me recomiendas visitar. Ejemplo: Cascadas, reservas, naturales, Mercados locales, senderismo ,Caminatas, miradores. Separa cada actividad con una coma."
+   const mensaje:string = "hola, estoy viajando con mi"+ this.viaje +", tenemos destinados "+ this.duracion +" dias de vacaciones, me gusta la: "+ this.actividadesSeleccionadas +"; me gusta un nivel de actividad fisica "+ this.actividad_fisica+". Con esta información y solo con palabras sueltas que tipo de lugares me recomiendas visitar. Ejemplo: Cascadas, reservas, naturales, Mercados locales, senderismo ,Caminatas, miradores. Separa cada actividad con una coma."
     return mensaje
   }
 
@@ -49,14 +40,4 @@ export class EncuestaComponent  implements OnInit{
     console.log(arrayRespuesta);
   }
 
-  recomendarTipoLugare(){
-    if(this.nombre == "" || this.apellido == "" || this.pais == "" || this.idioma == "" ||
-      this.edad == undefined || this.viaje == "" || this.duracion == "" || 
-      this.actividad_fisica == "" || this.actividadesSeleccionadas.length == 0){
-      alert("Error ingrese todos los datos")
-    }else{
-      this.convertirRespuestaApiArray(this.repuesta)
-      console.log(this.mensajeRecomendarLugareEnviarApi())
-    }
-  }
 }

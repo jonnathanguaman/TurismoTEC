@@ -1,0 +1,78 @@
+.formularioSugerencia {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+/*Datos personales*/
+.datos-personales {
+    font-family: Arial, sans-serif;
+    position: relative;
+    margin: 20px 0;
+}
+
+/* Estilo del input */
+.datos-personales input {
+    width: 98.3%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+}
+
+@media (max-width: 768px){
+    .datos-personales input {
+        width: 95%;
+    }
+}
+.datos-personales label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    background-color: #fff;
+    color: #666;
+    font-size: 14px;
+    padding: 0 5px;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.datos-personales input:focus,
+.datos-personales input:valid {
+    border-color: #007bff;
+}
+
+.datos-personales input:focus+label,
+.datos-personales input:valid+label {
+    top: -10px;
+    font-size: 14px;
+    color: #007bff;
+    margin-top: 10px;
+}
+
+.botonRegistrar {
+    display: flex;
+    justify-content: center;
+    width: 130px;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn{
+    display: flex;
+    justify-content: center;
+}
