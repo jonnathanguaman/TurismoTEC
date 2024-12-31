@@ -6,11 +6,19 @@ import { Component } from '@angular/core';
   styleUrl: './datos-personales.component.css'
 })
 export class DatosPersonalesComponent {
-  usuario!:string;
-  contrasena!:string;
-  nombre!:string;
-  apellido!:string;
-  idioma!:string;
-  pais!:string;
+  usuario:string='';
+  contrasena:string='';
+  nombre:string='';
+  apellido:string='';
+  idioma:string='';
+  pais:string='';
   edad!:number;
+
+  onSubmit(form:any) {
+    if (form.valid) {
+      alert('Formulario enviado');
+    } else {
+      alert('Formulario inválido');
+    }
+  }
 }

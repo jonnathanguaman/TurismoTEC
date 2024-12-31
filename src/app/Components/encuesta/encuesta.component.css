@@ -73,7 +73,7 @@ input[type="password"]:focus {
     justify-content: center;
     width: 130px;
     padding: 12px;
-    background-color: #4CAF50;
+    background-color: #29a72e;
     color: white;
     border: none;
     border-radius: 10px;
@@ -82,6 +82,9 @@ input[type="password"]:focus {
     text-align: center;
 }
 
+.botonRegistrar:hover{
+    background-color: #07710b;
+}
 .btn{
     display: flex;
     justify-content: center;

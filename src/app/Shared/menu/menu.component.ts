@@ -1,19 +1,31 @@
-import { Component, ElementRef, ViewChild, HostListener } from '@angular/core';
+import { Component, ElementRef, ViewChild, HostListener, OnInit } from '@angular/core';
 import { environment } from '../../../enviroments/enviroment';
+import { AuthService } from '../../Services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit{
   menuAbierto: boolean = false;
-  registro:boolean = environment.registrado;
+  userloginOn:boolean = false;
   
   @ViewChild('menuItems') menuItems!: ElementRef;
   @ViewChild('menuToggle') menuToggle!: ElementRef;
 
-  constructor() {}
+  constructor(private loginService:AuthService, private router:Router){}
+
+  ngOnInit(): void {
+    this.loginService.currentUserLoginOn.subscribe(
+      {
+        next:(userloginOn) =>{
+          this.userloginOn = userloginOn
+        }
+      }
+    )
+  }
 
   toggleMenu(event: Event) {
     event.stopPropagation(); 
@@ -34,7 +46,8 @@ export class MenuComponent {
 
   ocultarMenuVal:boolean = false
   cerrarSesion(){
-    this.registro = false
+    this.loginService.logOut();
+    this.router.navigate(['/login']);
   }
 
   ocultarMenu(){

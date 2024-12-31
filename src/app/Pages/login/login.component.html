@@ -1,20 +1,39 @@
 <div class="login-container">
     <div class="login">
-        <form>
+        <form [formGroup]="loginForm">
             <div class="form-group">
                 <label for="usuario">Usuario</label>
-                <input type="text" name="usuario" id="usuario" placeholder="Ingrese su usuario">
+                <input formControlName="username" type="text"  id="usuario"
+                    placeholder="Ingrese su usuario">
+
+                <div *ngIf="username.invalid && (username.dirty || username.touched)" class="text-danger">
+                    <div *ngIf="username.hasError('required')">
+                        El email es requerido
+                    </div>
+                    <div *ngIf="username.hasError('email')">
+                        Email invalido
+                    </div>
+                </div>
+
             </div>
-    
+
             <div class="form-group">
                 <label for="contrasena">Contraseña</label>
-                <input type="password" name="contrasena" id="contrasena" placeholder="Ingrese su contraseña">
+                <input formControlName="password" type="password"  id="contrasena"
+                    placeholder="Ingrese su contraseña">
+
+                <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                    <div *ngIf="password.hasError('required')">
+                        La contraseña es requerido
+                    </div>
+                </div>
+
             </div>
-    
+
             <div class="form-group">
-                <button type="submit" class="btn">Iniciar sesión</button>
+                <button (click)="login()" type="submit" class="btn">Iniciar sesión</button>
             </div>
         </form>
     </div>
-    
+
 </div>

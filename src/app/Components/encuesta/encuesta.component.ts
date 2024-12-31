@@ -26,7 +26,7 @@ export class EncuestaComponent  implements OnInit{
         this.actividadesSeleccionadas.splice(index, 1);
       }
     }
-  }
+  } 
 
   mensajeRecomendarLugareEnviarApi():string{
    const mensaje:string = "hola, estoy viajando con mi"+ this.viaje +", tenemos destinados "+ this.duracion +" dias de vacaciones, me gusta la: "+ this.actividadesSeleccionadas +"; me gusta un nivel de actividad fisica "+ this.actividad_fisica+". Con esta información y solo con palabras sueltas que tipo de lugares me recomiendas visitar. Ejemplo: Cascadas, reservas, naturales, Mercados locales, senderismo ,Caminatas, miradores. Separa cada actividad con una coma."

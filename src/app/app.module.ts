@@ -3,7 +3,7 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EncuestaComponent } from './Components/encuesta/encuesta.component';
 import { RegistroPersonaComponent } from './Pages/registro-persona/registro-persona.component';
 import { MenuComponent } from './Shared/menu/menu.component';
@@ -15,6 +15,9 @@ import { RecomendacionesComponent } from './Pages/recomendaciones/recomendacione
 import { SliderInicioComponent } from './Components/slider-inicio/slider-inicio.component';
 import { LoginComponent } from './Pages/login/login.component';
 import { DatosPersonalesComponent } from './Components/datos-personales/datos-personales.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { JwtInterceptorService } from './Services/auth/jwt-interceptor.service';
+import { ErrorInterceptorService } from './Services/auth/error-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -34,10 +37,13 @@ import { DatosPersonalesComponent } from './Components/datos-personales/datos-pe
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [
-    provideClientHydration()
+    {provide:HTTP_INTERCEPTORS,useClass:JwtInterceptorService,multi:true},
+    {provide:HTTP_INTERCEPTORS, useClass:ErrorInterceptorService,multi:true},
   ],
   bootstrap: [AppComponent]
 })
