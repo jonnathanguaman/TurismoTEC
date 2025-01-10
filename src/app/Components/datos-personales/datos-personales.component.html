@@ -1,24 +1,23 @@
-<form #form="ngForm" (ngSubmit)="onSubmit(form)">
+<form #form="ngForm"> <!--Poner (ngSubmit)="onSubmit(form)"-->
     <div class="formularioSugerencia">
 
         <div>
-            <div class="datos-personales">
+            <div [ngClass]="{'datos-personales': !editar, 'datosPersonalesTrue':editar}">
                 <div class="datos-personales-items" [ngClass]="{'input-error': auxnombre.invalid && auxnombre.touched}">
-                    <input type="text" id="nombre" name="nombre" [(ngModel)]="nombre" #auxnombre="ngModel" required />
-                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" [(ngModel)]="nombre" #auxnombre="ngModel" required [disabled]="editar">
+                    <label  for="nombre">Nombre</label>
                 </div>
             </div>
-
             <div *ngIf="auxnombre.invalid && auxnombre.touched" class="error">
                 Nombre es obligatorio.
             </div>
         </div>
 
         <div>
-            <div class="datos-personales">
+            <div [ngClass]="{'datos-personales': !editar, 'datosPersonalesTrue':editar}">
                 <div class="datos-personales-items" [ngClass]="{'input-error': auxapellido.invalid && auxapellido.touched}">
                     <input type="text" id="apellido" name="apellido" [(ngModel)]="apellido" #auxapellido="ngModel"
-                        required />
+                        required [disabled]="editar">
                     <label for="apellido">Apellido</label>
                 </div>
             </div>
@@ -27,11 +26,12 @@
             </div>
         </div>
         
+        <!--Cambiar por fecha de nacimiento-->
         <div>
             <div>
-                <div class="datos-personales">
+                <div [ngClass]="{'datos-personales': !editar, 'datosPersonalesTrue':editar}">
                     <div class="datos-personales-items" [ngClass]="{'input-error': auxedad.invalid && auxedad.touched}">
-                        <input type="number" id="edad" name="edad" [(ngModel)]="edad" #auxedad="ngModel" required min="18" />
+                        <input type="number" id="edad" name="edad" [(ngModel)]="edad" #auxedad="ngModel" required min="18" [disabled]="editar"/>
                         <label for="edad">Edad</label>
                     </div>
                 </div>
@@ -42,9 +42,9 @@
         </div>
 
         <div>
-            <div class="datos-personales">
+            <div [ngClass]="{'datos-personales': !editar, 'datosPersonalesTrue':editar}">
                 <div class="datos-personales-items" [ngClass]="{'input-error': auxpais.invalid && auxpais.touched}">
-                    <input type="text" id="pais" name="pais" [(ngModel)]="pais" #auxpais="ngModel" required />
+                    <input type="text" id="pais" name="pais" [(ngModel)]="pais" #auxpais="ngModel" required [disabled]="editar"/>
                     <label for="pais">País de Origen</label>
                 </div>
             </div>
@@ -54,9 +54,9 @@
         </div>
 
         <div>
-            <div class="datos-personales">
+            <div [ngClass]="{'datos-personales': !editar, 'datosPersonalesTrue':editar}">
                 <div class="datos-personales-items" [ngClass]="{'input-error': auxidioma.invalid && auxidioma.touched}">
-                    <input type="text" id="idioma" name="idioma" [(ngModel)]="idioma" #auxidioma="ngModel" required />
+                    <input type="text" id="idioma" name="idioma" [(ngModel)]="idioma" #auxidioma="ngModel" required [disabled]="editar"/>
                     <label for="idioma">Idioma Preferido</label>
                 </div>
             </div>
@@ -66,9 +66,9 @@
         </div>
 
         <div>
-            <div class="datos-personales">
+            <div [ngClass]="{'datos-personales': !editar, 'datosPersonalesTrue':editar}">
                 <div class="datos-personales-items" [ngClass]="{'input-error': auxusuario.invalid && auxusuario.touched}">
-                    <input type="text" id="usuario" name="usuario" [(ngModel)]="usuario" #auxusuario="ngModel" required />
+                    <input type="text" id="usuario" name="usuario" [(ngModel)]="usuario" #auxusuario="ngModel" required [disabled]="editar"/>
                     <label for="usuario">Usuario</label>
                 </div>
             </div>
@@ -78,10 +78,10 @@
         </div>
 
         <div>
-            <div class="datos-personales">
+            <div [ngClass]="{'datos-personales': !editar, 'datosPersonalesTrue':editar}">
                 <div class="datos-personales-items" [ngClass]="{'input-error': auxcontrasena.invalid && auxcontrasena.touched}">
                     <input type="password" id="contrasena" name="contrasena" [(ngModel)]="contrasena"
-                        #auxcontrasena="ngModel" required minlength="6" />
+                        #auxcontrasena="ngModel" required minlength="6" [disabled]="editar"/>
                     <label for="contrasena">Contraseña</label>
                 </div>
             </div>
@@ -91,7 +91,10 @@
         </div>
         
         <div class="btn">
-            <button type="submit" class="botonRegistrar" >Registrar</button>
+            <button (click)="registrarPersona()" *ngIf="!userloginOn" type="submit" class="botonRegistrar">Registrar</button>
+            <button (click)="registrarPersona()" *ngIf="!editar && userloginOn" type="submit" class="botonRegistrar">Guardar</button>
+            
+            <button [ngClass]="{'botonEditar': editar, 'botonEditarTrue': !editar}" (click)="activarModoEditar()" type="submit">Editar</button>
         </div>
     </div>
 </form>

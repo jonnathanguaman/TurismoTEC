@@ -1,0 +1,44 @@
+<div class="producto-container">
+    <!-- Columna de imágenes -->
+    <div class="imagenes-container">
+      <div class="imagen-principal">
+        <img src="https://bscstoreusa.com/cdn/shop/files/1_34a66fb0-660a-42b3-8348-b7616bb032ab.webp?v=1718933101" alt="Producto principal">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdFx832qj6zmrNktIH2kBidqd0aXes1FYGmw&s" alt="Producto adicional">
+      </div>
+      <div class="imagenes-secundarias">
+        <img src="https://bscstoreusa.com/cdn/shop/files/1A_248bd723-9651-42c3-8f94-d5c67b11d2fc.jpg?v=1685890833" alt="Producto adicional">
+      </div>
+    </div>
+  
+    <!-- Columna de detalles -->
+    <div class="detalles-container">
+      <p class="producto-nuevo">NEW</p>
+      <h1 class="producto-titulo">Camiseta Cuenca Vive</h1>
+      <p class="producto-subtitulo">Slim Fit</p>
+      <a (click)="abrirDescripcion()" routerLink="/producto" id="abrir-descripcion">Descripción</a>
+      <p class="producto-precio">$40</p>
+  
+      <div class="tallas">
+        <p>Select a size:</p>
+        <div class="tallas-opciones">
+          <span>XS</span>
+          <span>S</span>
+          <span>M</span>
+          <span>L</span>
+          <span>XL</span>
+        </div>
+      </div>
+  
+      <button class="boton-agregar">Añadir al carrito</button>
+    </div>
+  </div>
+  
+  <!-- Subpestaña (Se muestra/oculta dinámicamente) -->
+  <div [ngClass]="{'subpestanaOculatar':!modalAbierto, 'subpestanaVer':modalAbierto}"  id="subpestana" class="subpestana ocultar">
+    <h2>Descripción del Producto</h2>
+    <p>
+      La camiseta Cuenca Vive combina un diseño moderno con la mejor calidad. Hecha de materiales transpirables y cómodos, es ideal para actividades deportivas o uso casual. Disponible en varias tallas para adaptarse perfectamente a ti.
+    </p>
+    <button (click)="cerrarDescripcion()" id="cerrar-descripcion">Cerrar</button>
+  </div>
+  

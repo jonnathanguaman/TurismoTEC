@@ -28,3 +28,5 @@ function stopSlider() {
   }
 }
 //Termina slider
+
+

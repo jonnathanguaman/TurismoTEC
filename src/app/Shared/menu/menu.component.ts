@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild, HostListener, OnInit } from '@angular/core';
 import { environment } from '../../../enviroments/enviroment';
-import { AuthService } from '../../Services/auth/auth.service';
+import { AuthService } from '../../Services/login/login.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,7 +18,7 @@ export class MenuComponent implements OnInit{
   constructor(private loginService:AuthService, private router:Router){}
 
   ngOnInit(): void {
-    this.loginService.currentUserLoginOn.subscribe(
+    this.loginService.userLoginOn.subscribe(
       {
         next:(userloginOn) =>{
           this.userloginOn = userloginOn

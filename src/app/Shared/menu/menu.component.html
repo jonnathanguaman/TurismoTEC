@@ -8,6 +8,9 @@
       <li><a routerLink="/nosotros">Nosotros</a></li>
       <li *ngIf="userloginOn"><a routerLink="/recomendaciones">Recomendaciones</a></li>
       <li *ngIf="userloginOn"><a routerLink="/perfil">Perfil</a></li>
+      <li *ngIf="!userloginOn"><a routerLink="/tienda">Tienda</a></li>
+      <li *ngIf="!userloginOn"><a routerLink="/">Ver hoteles</a></li>
+      <li *ngIf="!userloginOn"><a routerLink="/">Ver restaurantes</a></li>
       <li *ngIf="!userloginOn"><a routerLink="/login">Iniciar sesión</a></li>
       <li *ngIf="!userloginOn"><a routerLink="/registro">Registrarse</a></li>
       <li *ngIf="userloginOn"><a (click)="cerrarSesion()" routerLink="/">Cerrar sesión</a></li>

@@ -6,6 +6,9 @@ import { NosotrosComponent } from './Pages/nosotros/nosotros.component';
 import { PerfilComponent } from './Pages/perfil/perfil.component';
 import { RecomendacionesComponent } from './Pages/recomendaciones/recomendaciones.component';
 import { LoginComponent } from './Pages/login/login.component';
+import { DatosPersonalesComponent } from './Components/datos-personales/datos-personales.component';
+import { TiendaComponent } from './Pages/tienda/tienda.component';
+import { ProductoComponent } from './Pages/producto/producto.component';
 
 const routes: Routes = [
   {
@@ -32,6 +35,15 @@ const routes: Routes = [
     path:"login",
     component:LoginComponent
   },
+  {
+    path:"tienda",
+    component:TiendaComponent
+  },
+  {
+    path:"producto",
+    component:ProductoComponent
+  }
+ 
 ];
 
 @NgModule({

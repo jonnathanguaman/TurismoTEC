@@ -38,6 +38,9 @@ input[type="password"] {
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+label{
+    color: #007BFF;
+}
 input[type="text"]:focus,
 input[type="password"]:focus {
     

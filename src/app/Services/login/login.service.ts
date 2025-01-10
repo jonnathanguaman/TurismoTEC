@@ -24,15 +24,13 @@ export class AuthService {
   }
 
   login(credentials:LoginRequest):Observable<any>{
-    console.log(credentials.username)
-    console.log(credentials.password)
     return this.http.post<any>(environment.urlHost+"public/login",credentials).pipe(
       tap((userData) => {
         sessionStorage.setItem("token",userData.token)
         this.currentUserData.next(userData.token)
         this.currentUserLoginOn.next(true)
       }),
-      map((userDate) => userDate.token),
+      map((userData) => userData.token),
       catchError(this.handleError)
     )
   }

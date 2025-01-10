@@ -29,9 +29,25 @@
     position: relative;
     margin: 20px 0;
 }
+.datosPersonalesTrue{
+    font-family: Arial, sans-serif;
+    position: relative;
+    margin: 20px 0;
+}
+
 
 /* Estilo del input */
 .datos-personales input {
+    width: 98.3%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #333;
+    outline: none;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+}
+
+.datosPersonalesTrue input{
     width: 98.3%;
     padding: 10px;
     font-size: 16px;
@@ -49,6 +65,19 @@
 .datos-personales label {
     position: absolute;
     top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    background-color: #fff;
+    color: #666;
+    font-size: 14px;
+    padding: 0 5px;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.datosPersonalesTrue label {
+    position: absolute;
+    top: 2%;
     left: 10px;
     transform: translateY(-50%);
     background-color: #fff;
@@ -89,7 +118,45 @@
     background-color: #07710b;
 }
 
+.botonRegistrar {
+    display: flex;
+    justify-content: center;
+    width: 130px;
+    padding: 12px;
+    background-color: #29a72e;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+.botonRegistrar:hover{
+    background-color: #07710b;
+}
+
+.botonEditar {
+    display: flex;
+    justify-content: center;
+    width: 130px;
+    padding: 12px;
+    background-color: #406ce4;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+.botonEditar:hover{
+    background-color: #071c71;
+}
+
+.botonEditarTrue{
+    display: none;
+}
 .btn{
     display: flex;
     justify-content: center;
+    gap: 25px;
 }

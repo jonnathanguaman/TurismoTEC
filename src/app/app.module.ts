@@ -16,8 +16,10 @@ import { SliderInicioComponent } from './Components/slider-inicio/slider-inicio.
 import { LoginComponent } from './Pages/login/login.component';
 import { DatosPersonalesComponent } from './Components/datos-personales/datos-personales.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { JwtInterceptorService } from './Services/auth/jwt-interceptor.service';
-import { ErrorInterceptorService } from './Services/auth/error-interceptor.service';
+import { JwtInterceptorService } from './Services/login/jwt-interceptor.service';
+import { ErrorInterceptorService } from './Services/login/error-interceptor.service';
+import { TiendaComponent } from './Pages/tienda/tienda.component';
+import { ProductoComponent } from './Pages/producto/producto.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { ErrorInterceptorService } from './Services/auth/error-interceptor.servi
     SliderInicioComponent,
     LoginComponent,
     DatosPersonalesComponent,
+    TiendaComponent,
+    ProductoComponent,
   ],
   imports: [
     BrowserModule,
