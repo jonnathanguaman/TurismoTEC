@@ -20,6 +20,7 @@ import { JwtInterceptorService } from './Services/login/jwt-interceptor.service'
 import { ErrorInterceptorService } from './Services/login/error-interceptor.service';
 import { TiendaComponent } from './Pages/tienda/tienda.component';
 import { ProductoComponent } from './Pages/producto/producto.component';
+import { VerHotelesComponent } from './Pages/ver-hoteles/ver-hoteles.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ProductoComponent } from './Pages/producto/producto.component';
     DatosPersonalesComponent,
     TiendaComponent,
     ProductoComponent,
+    VerHotelesComponent,
   ],
   imports: [
     BrowserModule,
