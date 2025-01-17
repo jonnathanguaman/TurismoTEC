@@ -21,6 +21,7 @@ import { ErrorInterceptorService } from './Services/login/error-interceptor.serv
 import { TiendaComponent } from './Pages/tienda/tienda.component';
 import { ProductoComponent } from './Pages/producto/producto.component';
 import { VerHotelesComponent } from './Pages/ver-hoteles/ver-hoteles.component';
+import { ForoComponent } from './Pages/foro/foro.component'; 
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { VerHotelesComponent } from './Pages/ver-hoteles/ver-hoteles.component';
     TiendaComponent,
     ProductoComponent,
     VerHotelesComponent,
+    ForoComponent,
   ],
   imports: [
     BrowserModule,
