@@ -1,0 +1,180 @@
+a {
+    all: unset;
+}
+
+.detalles-container a {
+    cursor: pointer;
+}
+
+.menu {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.lugar-container {
+    font-family: Arial, sans-serif;
+    display: grid;
+    grid-template-columns: 1.5fr 1.25fr;
+    gap: 30px;
+    padding: 40px;
+    align-items: center;
+}
+
+/* Columna de imágenes */
+.imagenes-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.imagen-principal img {
+    width: 300px;
+    height: 250px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.imagenes-secundarias {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    object-fit: cover;
+}
+
+.imagenes-secundarias img {
+    width: 450px;
+    height: auto;
+}
+
+/* Columna de detalles */
+.detalles-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nombre {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.detalles {
+    font-size: 1.2rem;
+    color: #000000;
+}
+
+/* Botón */
+.boton-agregar {
+    margin-top: 25px;
+    background-color: #29a72e;
+    color: #f4f4f9;
+    padding: 15px 20px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+}
+
+.boton-agregar:hover {
+    background-color: #07710b;
+}
+
+
+.subpestana {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.subpestanaMapa {
+    display: none;
+}
+
+.subpestanaHotel {
+    display: none;
+}
+
+.subpestanaRestaurante {
+    display: none;
+}
+
+.subpestana button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.subpestana button:hover {
+    background-color: #555;
+}
+
+#abrir-descripcion {
+    all: unset;
+}
+
+#abrir-descripcion {
+    cursor: pointer !important;
+}
+
+.cerrar {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    text-align: center;
+
+}
+
+.cerrar:hover {
+    background-color: #555;
+    transform: scale(1.05);
+}
+
+.cerrar:active {
+    background-color: #111;
+    transform: scale(0.95);
+}
+
+.cerrar:focus {
+    outline: none;
+    box-shadow: 0 0 3px #fff;
+}
+
+
+@media (max-width: 768px) {
+    .producto-container {
+        grid-template-columns: 1fr;
+    }
+
+    .imagenes-container {
+        display: block;
+    }
+
+    .imagenes-secundarias {
+        display: flex;
+        flex-direction: row;
+        margin-top: 5px;
+    }
+
+    .imagenes-secundarias img {
+        width: 300px;
+        height: 250px;
+        object-fit: cover;
+        cursor: pointer;
+    }
+}

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RegistroPersonaComponent } from './Pages/registro-persona/registro-persona.component';
 import { InicioComponent } from './Pages/inicio/inicio.component';
@@ -7,8 +7,8 @@ import { PerfilComponent } from './Pages/perfil/perfil.component';
 import { RecomendacionesComponent } from './Pages/recomendaciones/recomendaciones.component';
 import { LoginComponent } from './Pages/login/login.component';
 import { DatosPersonalesComponent } from './Components/datos-personales/datos-personales.component';
-import { TiendaComponent } from './Pages/tienda/tienda.component';
-import { ProductoComponent } from './Pages/producto/producto.component';
+import { LugarComponent } from './Pages/lugar/lugar.component';
+import { VerHotelesComponent } from './Pages/ver-hoteles/ver-hoteles.component';
 
 const routes: Routes = [
   {
@@ -36,13 +36,13 @@ const routes: Routes = [
     component:LoginComponent
   },
   {
-    path:"tienda",
-    component:TiendaComponent
+    path:"lugar",
+    component:LugarComponent
   },
   {
-    path:"producto",
-    component:ProductoComponent
-  }
+    path:"hoteles",
+    component:VerHotelesComponent
+  },
  
 ];
 
