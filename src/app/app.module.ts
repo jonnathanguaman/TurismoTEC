@@ -18,9 +18,8 @@ import { DatosPersonalesComponent } from './Components/datos-personales/datos-pe
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptorService } from './Services/login/jwt-interceptor.service';
 import { ErrorInterceptorService } from './Services/login/error-interceptor.service';
-import { TiendaComponent } from './Pages/tienda/tienda.component';
-import { ProductoComponent } from './Pages/producto/producto.component';
 import { VerHotelesComponent } from './Pages/ver-hoteles/ver-hoteles.component';
+import { LugarComponent } from './Pages/lugar/lugar.component';
 
 @NgModule({
   declarations: [
@@ -36,9 +35,8 @@ import { VerHotelesComponent } from './Pages/ver-hoteles/ver-hoteles.component';
     SliderInicioComponent,
     LoginComponent,
     DatosPersonalesComponent,
-    TiendaComponent,
-    ProductoComponent,
     VerHotelesComponent,
+    LugarComponent,
   ],
   imports: [
     BrowserModule,
