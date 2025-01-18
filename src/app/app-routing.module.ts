@@ -9,6 +9,7 @@ import { LoginComponent } from './Pages/login/login.component';
 import { DatosPersonalesComponent } from './Components/datos-personales/datos-personales.component';
 import { LugarComponent } from './Pages/lugar/lugar.component';
 import { VerHotelesComponent } from './Pages/ver-hoteles/ver-hoteles.component';
+import { HabitacionesComponent } from './Pages/habitaciones/habitaciones.component';
 
 const routes: Routes = [
   {
@@ -43,7 +44,10 @@ const routes: Routes = [
     path:"hoteles",
     component:VerHotelesComponent
   },
- 
+  {
+    path:"habitacion",
+    component:HabitacionesComponent
+  }
 ];
 
 @NgModule({

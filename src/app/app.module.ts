@@ -20,6 +20,9 @@ import { JwtInterceptorService } from './Services/login/jwt-interceptor.service'
 import { ErrorInterceptorService } from './Services/login/error-interceptor.service';
 import { VerHotelesComponent } from './Pages/ver-hoteles/ver-hoteles.component';
 import { LugarComponent } from './Pages/lugar/lugar.component';
+import { HabitacionesComponent } from './Pages/habitaciones/habitaciones.component';
+import { SliderHotelComponent } from './Components/slider-hotel/slider-hotel.component';
+import { ModalHabitacionComponent } from './Components/modal-habitacion/modal-habitacion.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,9 @@ import { LugarComponent } from './Pages/lugar/lugar.component';
     DatosPersonalesComponent,
     VerHotelesComponent,
     LugarComponent,
+    HabitacionesComponent,
+    SliderHotelComponent,
+    ModalHabitacionComponent,
   ],
   imports: [
     BrowserModule,
