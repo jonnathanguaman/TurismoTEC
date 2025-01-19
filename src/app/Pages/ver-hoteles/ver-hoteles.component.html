@@ -4,25 +4,24 @@
         <h1>Hoteles</h1>
     </div>
 
-    <div class="card-hotel">
+    <div class="card-hotel" *ngFor="let auxhotel of todoshoteles">
         <div class="card-hotel-img">
             <img src="https://www.kayak.com.ec/rimg/himg/b3/10/90/ice-178163-120191068-424668.jpg?width=1366&height=768&crop=true" alt="Imagen del hotel">
         </div>
         <div class="card-hotel-info">
             <div class="card-hotel-nombre">
-                <h3>Hotel Tito</h3>
+                <h3>{{auxhotel.nombre}}</h3>
             </div>
             <div class="card-hotel-descripcion">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio rerum voluptate, dicta voluptatibus quae minus fugit est ratione, et labore placeat eveniet eum, dolores consectetur veritatis ipsa? Nulla, dolore laudantium.</p>
+                <p>{{auxhotel.descripcion}}</p>
             </div>
 
             <div class="card-hotel-calificacion">
-                <p>Calificación: 5 estrellas</p>
+                <p>Calificación: {{auxhotel.calificacion}} estrellas</p>
             </div>
         </div>
         <div class="card-hotel-boton">
-            <button routerLink="/habitacion">Ver hotel</button>
+            <button [routerLink]="['/habitacion/'+auxhotel.idHotel]">Ver hotel</button>
         </div>
     </div>
-
 </div>

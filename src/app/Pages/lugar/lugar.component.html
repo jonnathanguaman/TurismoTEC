@@ -14,22 +14,19 @@
     </div>
 
     <!-- Columna de detalles -->
-    <div class="detalles-container">
-        <h1 class="nombre">Parque nacional el cajas</h1>
-        <p class="descripcion">Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus nam voluptates quo
-            incidunt doloremque numquam nulla. Fugiat quam qui minima, perferendis iusto temporibus esse excepturi
-            facilis rerum in, molestias numquam?Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas quidem
-            voluptas excepturi pariatur, debitis fugiat nemo dolores quo sit vitae atque nulla reprehenderit minima?
-            Esse aliquam ipsa soluta nostrum perferendis. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Facere impedit sequi quisquam facilis. Sint, porro? Harum possimus aliquid architecto, tenetur quam dolore?
-            In quisquam, atque modi vitae reprehenderit porro qui.</p>
-        <p class="detalles">Area protegida</p>
-        <p class="detalles">Zona Urbana</p>
+    <div class="detalles-container" *ngIf="lugarEcontrado">
+        <h1 class="nombre">{{lugarEcontrado.nombre}}</h1>
+        <p class="descripcion">{{lugarEcontrado.descripcion}}</p>
+        
+        <div class="container-detalles">
+            <p class="detalles" *ngIf="lugarEcontrado.areaProtegida">Area protegida</p>
+            <p class="detalles">Zona {{lugarEcontrado.tipoZona}}</p>
+        </div>
         
         <div class="menu">
-            <a class="ubucacion" (click)="abrirMapa()" routerLink="/lugar">Ver ubicación</a>
-            <a class="hotel" (click)="abrirHoteles()" routerLink="/lugar">Ver Hoteles</a>
-            <a class="restaurante" (click)="abrirRestaurantes()" routerLink="/lugar">Ver restaurantes</a>
+            <a class="ubucacion" (click)="abrirMapa()" [routerLink]="['/lugar/',lugarEcontrado.idLugares]">Ver ubicación</a>
+            <a class="hotel" (click)="abrirHoteles()" [routerLink]="['/lugar/',lugarEcontrado.idLugares]">Ver Hoteles</a>
+            <a class="restaurante" (click)="abrirRestaurantes()" [routerLink]="['/lugar/',lugarEcontrado.idLugares]">Ver restaurantes</a>
         </div>
 
     </div>
@@ -46,7 +43,7 @@
 
 <!--Subpestaña hoteles-->
 <div [ngClass]="{'subpestanaHotel':!modalAbiertoHotel}" class="subpestana">
-    <app-ver-hoteles></app-ver-hoteles>
+    <app-ver-hoteles [idLugar]="lugarEcontrado.idLugares"></app-ver-hoteles>
     <button (click)="cerrarHoteles()" class="cerrar">Cerrar</button>
 </div>
 

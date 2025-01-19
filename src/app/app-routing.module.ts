@@ -42,11 +42,15 @@ const routes: Routes = [
     component:LugarComponent
   },
   {
+    path:"lugar/:id",
+    component:LugarComponent
+  },
+  {
     path:"hoteles",
     component:VerHotelesComponent
   },
   {
-    path:"habitacion",
+    path:"habitacion/:id",
     component:HabitacionesComponent
   },
   {
