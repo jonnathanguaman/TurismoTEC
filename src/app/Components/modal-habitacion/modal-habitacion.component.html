@@ -2,10 +2,64 @@
 <div class="modal" *ngIf="isVisible">
     <div class="modal-content">
       <span class="cerrar" (click)="cerrarModal()">×</span>
-      
+
       <div class="modal-content-principal">
-            <div>
+            <div class="modal-content-principal-item">
                 
+                <div class="modal-content-principal-item-imgPrincipal">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTD-uZbAICjNy10pTQaHGjGOVUrwmmIRRmCg&s" alt="">
+                </div>
+
+                <div class="modal-content-principal-item-img-secundarias">
+                    <div class="modal-content-principal-item-img">
+                    
+                    </div>
+    
+                    <div class="modal-content-principal-item-img">
+                        
+                    </div>
+    
+                    <div class="modal-content-principal-item-img">
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-content-principal-item">
+                
+                <div class="modal-titulo">
+                      <h3>Habitacion solitaria</h3>
+                </div>
+
+                <div class="modal-descripcio">
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aspernatur magnam quos laudantium voluptate quas minus tenetur pariatur recusandae consequatur maiores, placeat, magni commodi nulla. Rem perspiciatis vel assumenda fugiat porro!</p>
+                </div>
+
+                <div class="modal-numeroHabitacion">
+                    <p>Habitacion numero: 44</p>
+                </div>
+
+                <div class="modal-fechaReserva">
+                    <div class="modal-fechaReserva-inicio">
+                        <label>Fecha de incio de la reserva:</label>
+                        <br>
+                        <input type="date">
+                    </div>
+
+                    <div class="modal-fechaReserva-fin">
+                        <label>Fecha final de la reserva:</label>
+                        <br>
+                        <input type="date">
+                    </div>
+                </div>
+
+                <div class="modal-precio">
+                    <p>Precio: $299</p>
+                </div>
+
+                <div class="modal-boton">
+                    <button class="botonReservar">Reservar</button>
+                </div>
             </div>
       </div>
     </div>

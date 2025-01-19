@@ -76,7 +76,6 @@
 }
 
 .card-habitacion-imagen img{
-    
     border-radius: 15px;
 }
 
@@ -108,7 +107,13 @@
 
 
 @media (max-width: 768px) {
-    .card-habitacion {
+    .habitaciones {
         flex-direction: column;
     }
+
+
+    .card-habitacion{
+        width: 90%;
+    }
+    
 }

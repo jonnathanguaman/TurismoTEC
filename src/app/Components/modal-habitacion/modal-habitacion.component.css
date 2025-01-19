@@ -13,17 +13,17 @@
   
   /* Contenido del Modal */
   .modal-content {
-    background-color: #fff;
+    background-color: #f9f9f9;
     margin: 15% auto; /* Centrado vertical y horizontal */
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Ancho del modal */
-    max-width: 600px;
     border-radius: 8px;
   }
   
   /* Estilo de la cruz de cerrar */
   .cerrar {
+    margin-top: -20px;
     color: #aaa;
     float: right;
     font-size: 28px;
@@ -36,4 +36,47 @@
     text-decoration: none;
     cursor: pointer;
   }
+  
+
+  .modal-content-principal{
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .modal-content-principal-item-imgPrincipal{
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+  }
+
+  .modal-content-principal-item-imgPrincipal img{
+    width: 70%;
+    object-fit: cover;
+  }
+
+
+
+  .botonReservar{
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .botonReservar:hover {
+    background-color: #45a049;
+  }
+
+  .botonVerHabitacion:active {
+    background-color: #4CAF50;
+  }
+
   

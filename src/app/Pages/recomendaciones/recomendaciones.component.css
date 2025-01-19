@@ -19,6 +19,10 @@ a{
     object-fit: cover;
     height: 200px;
 }
+.card-recomendaciones-img img{
+
+    border-radius: 15px;
+}
 .card-recomendaciones{
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -60,5 +64,8 @@ a{
 @media (max-width: 768px) {
     .card-recomendaciones{
         width: 100%;
+    }
+    .card-recomendaciones-img{
+        height: auto;
     }
 }

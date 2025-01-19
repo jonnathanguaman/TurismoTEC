@@ -157,6 +157,9 @@ a {
 
 
 @media (max-width: 768px) {
+    .lugar-container{
+        grid-template-columns: 1fr;
+    }
     .producto-container {
         grid-template-columns: 1fr;
     }
