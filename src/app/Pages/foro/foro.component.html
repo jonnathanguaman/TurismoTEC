@@ -1,0 +1,81 @@
+<!-- Carrusel de imágenes en la parte superior -->
+<div class="carousel">
+  <div class="carousel-item active">
+    <img src="assets/img/image1.jpg" alt="Imagen 1" />
+  </div>
+  <div class="carousel-item">
+    <img src="assets/img/image2.jpg" alt="Imagen 2" />
+  </div>
+  <div class="carousel-item">
+    <img src="assets/img/image3.jpg" alt="Imagen 3" />
+  </div>
+</div>
+
+<!-- Descripción con foto lateral -->
+<div class="descripcion-foto">
+  <div class="descripcion">
+    <h2>Bienvenido al Foro</h2>
+    <p>
+      Cuenca, ubicada en el sur de Ecuador, es una ciudad que cautiva por su belleza colonial, su rica historia y su vibrante cultura. Fundada en 1557, esta encantadora ciudad es un destino ideal para los amantes del turismo histórico, cultural y natural. Su centro histórico, declarado Patrimonio de la Humanidad por la UNESCO, se caracteriza por calles empedradas, hermosas iglesias coloniales, y la imponente catedral que domina la Plaza Calderón. Además, la ciudad está rodeada de impresionantes paisajes montañosos y parques naturales, como el Parque Nacional Cajas, conocido por sus lagunas y biodiversidad. Los turistas también podrán disfrutar de su gastronomía típica, su artesanal sombrero de Panamá, y la calidez de sus habitantes, haciendo de Cuenca un destino único para explorar en Ecuador.
+      
+    </p>
+    <p>
+    Este espacio está diseñado para compartir ideas, resolver dudas y
+      conectar con otros usuarios. ¡Participa y enriquece nuestra comunidad!
+    </p>
+  </div>
+  <div class="foto">
+    <img src="assets/img/image4.jpg" alt="Foto lateral" />
+  </div>
+</div>
+
+<!-- Botón para abrir la ventana emergente -->
+<div class="foro-container">
+  <button class="btn-foro" (click)="abrirVentana()">Publicar</button>
+</div>
+
+<!-- Ventana emergente inicial -->
+<div class="ventana-emergente" *ngIf="mostrarVentana">
+  <div class="ventana-contenido">
+    <h2>Opciones del Foro</h2>
+    <button class="btn-opcion" (click)="abrirVentanaCrear()">Crear contenido</button>
+    <button class="btn-opcion" (click)="cerrarVentana()">Salir</button>
+  </div>
+</div>
+
+<!-- Ventana emergente para crear contenido -->
+<div class="ventana-emergente" *ngIf="mostrarVentanaCrear">
+  <div class="ventana-contenido">
+    <h2>Crear Nuevo Contenido</h2>
+    <div class="input-container">
+      <label for="titulo">Título:</label>
+      <input type="text" id="titulo" [(ngModel)]="nuevoTitulo" />
+    </div>
+    <div class="input-container">
+      <label for="contenido">Contenido:</label>
+      <textarea id="contenido" [(ngModel)]="nuevoContenido" rows="4" (input)="autoResize($event)"></textarea>
+    </div>
+    <button class="btn-opcion" (click)="publicar()">Publicar</button>
+    <button class="btn-opcion" (click)="cerrarVentana()">Salir</button>
+  </div>
+</div>
+
+<!-- Publicaciones -->
+<div class="publicaciones">
+  <div class="publicacion" *ngFor="let publicacion of publicaciones; let i = index">
+    <h3>{{ publicacion.titulo }}</h3>
+    <p>{{ publicacion.contenido }}</p>
+
+    <!-- Sección de comentarios -->
+    <div class="comentarios">
+      <h4>Comentarios:</h4>
+      <div *ngFor="let comentario of publicacion.comentarios" class="comentario">
+        <p>{{ comentario }}</p>
+      </div>
+      <div class="comentario-form">
+        <textarea [(ngModel)]="nuevoComentario[i]" placeholder="Escribe un comentario" rows="2" (input)="autoResize($event)"></textarea>
+        <button (click)="agregarComentario(publicacion, i)">Publicar comentario</button>
+      </div>
+    </div>
+  </div>
+</div>

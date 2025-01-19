@@ -7,6 +7,9 @@ import { PerfilComponent } from './Pages/perfil/perfil.component';
 import { RecomendacionesComponent } from './Pages/recomendaciones/recomendaciones.component';
 import { LoginComponent } from './Pages/login/login.component';
 import { DatosPersonalesComponent } from './Components/datos-personales/datos-personales.component';
+import { TiendaComponent } from './Pages/tienda/tienda.component';
+import { ProductoComponent } from './Pages/producto/producto.component';
+import { ForoComponent } from './Pages/foro/foro.component';
 import { LugarComponent } from './Pages/lugar/lugar.component';
 import { VerHotelesComponent } from './Pages/ver-hoteles/ver-hoteles.component';
 import { HabitacionesComponent } from './Pages/habitaciones/habitaciones.component';
@@ -41,6 +44,14 @@ const routes: Routes = [
     component:LugarComponent
   },
   {
+    path:"producto",
+    component:ProductoComponent
+  },
+  {
+    path:"foro",
+    component:ForoComponent
+  },
+  
     path:"hoteles",
     component:VerHotelesComponent
   },
