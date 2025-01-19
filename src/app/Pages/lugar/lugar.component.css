@@ -7,6 +7,7 @@ a {
 }
 
 .menu {
+    margin-top: 15px;
     display: flex;
     flex-direction: row;
     gap: 20px;
@@ -58,11 +59,16 @@ a {
 .nombre {
     font-size: 1.8rem;
     font-weight: bold;
+    color: #007BFF;
 }
 
 .detalles {
     font-size: 1.2rem;
     color: #000000;
+}
+.container-detalles{
+    margin-top: -20px;
+    text-align: center;
 }
 
 /* Botón */

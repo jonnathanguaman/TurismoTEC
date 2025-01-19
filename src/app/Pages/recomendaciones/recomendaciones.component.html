@@ -1,92 +1,16 @@
 <div class="container">
-
-
-    <div class="card-recomendaciones">
-        <a routerLink="/lugar">
+    <div class="card-recomendaciones" *ngFor="let auxlugares of todosLugars">
+        <a [routerLink]="['/lugar/',auxlugares.idLugares]">
             <div class="card-recomendaciones-img">
                 <img src="assets/img/cat2.jpg" alt="">
             </div>
 
             <div class="card-recomendaciones-nombre">
-                <h3>Parque nacional el cajas</h3>
+                <h3>{{auxlugares.nombre}}</h3>
             </div>
 
             <div class="card-recomendaciones-descripcion">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum quam qui quo optio labore sit cumque
-                    eligendi molestiae adipisci natus ducimus dolorum consequuntur, iusto alias placeat provident
-                    asperiores debitis beatae?</p>
-            </div>
-        </a>
-    </div>
-
-    <div class="card-recomendaciones">
-        <a routerLink="/lugar">
-            <div class="card-recomendaciones-img">
-                <img src="assets/img/cat2.jpg" alt="">
-            </div>
-
-            <div class="card-recomendaciones-nombre">
-                <h3>Parque nacional el cajas</h3>
-            </div>
-
-            <div class="card-recomendaciones-descripcion">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum quam qui quo optio labore sit cumque
-                    eligendi molestiae adipisci natus ducimus dolorum consequuntur, iusto alias placeat provident
-                    asperiores debitis beatae?</p>
-            </div>
-        </a>
-    </div>
-
-    <div class="card-recomendaciones">
-        <a routerLink="/lugar">
-            <div class="card-recomendaciones-img">
-                <img src="assets/img/cat2.jpg" alt="">
-            </div>
-
-            <div class="card-recomendaciones-nombre">
-                <h3>Parque nacional el cajas</h3>
-            </div>
-
-            <div class="card-recomendaciones-descripcion">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum quam qui quo optio labore sit cumque
-                    eligendi molestiae adipisci natus ducimus dolorum consequuntur, iusto alias placeat provident
-                    asperiores debitis beatae?</p>
-            </div>
-        </a>
-    </div>
-
-    <div class="card-recomendaciones">
-        <a routerLink="/lugar">
-            <div class="card-recomendaciones-img">
-                <img src="assets/img/cat2.jpg" alt="">
-            </div>
-
-            <div class="card-recomendaciones-nombre">
-                <h3>Parque nacional el cajas</h3>
-            </div>
-
-            <div class="card-recomendaciones-descripcion">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum quam qui quo optio labore sit cumque
-                    eligendi molestiae adipisci natus ducimus dolorum consequuntur, iusto alias placeat provident
-                    asperiores debitis beatae?</p>
-            </div>
-        </a>
-    </div>
-
-    <div class="card-recomendaciones">
-        <a routerLink="/lugar">
-            <div class="card-recomendaciones-img">
-                <img src="assets/img/cat2.jpg" alt="">
-            </div>
-
-            <div class="card-recomendaciones-nombre">
-                <h3>Parque nacional el cajas</h3>
-            </div>
-
-            <div class="card-recomendaciones-descripcion">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum quam qui quo optio labore sit cumque
-                    eligendi molestiae adipisci natus ducimus dolorum consequuntur, iusto alias placeat provident
-                    asperiores debitis beatae?</p>
+                <p>{{auxlugares.descripcion}}</p>
             </div>
         </a>
     </div>
