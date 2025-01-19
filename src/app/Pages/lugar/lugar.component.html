@@ -1,0 +1,57 @@
+<div class="lugar-container">
+    <!-- Columna de imágenes -->
+    <div class="imagenes-container">
+        <div class="imagen-principal">
+            <img src="https://bscstoreusa.com/cdn/shop/files/1_34a66fb0-660a-42b3-8348-b7616bb032ab.webp?v=1718933101"
+                alt="Producto principal">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdFx832qj6zmrNktIH2kBidqd0aXes1FYGmw&s"
+                alt="Producto adicional">
+        </div>
+        <div class="imagenes-secundarias">
+            <img src="https://bscstoreusa.com/cdn/shop/files/1A_248bd723-9651-42c3-8f94-d5c67b11d2fc.jpg?v=1685890833"
+                alt="Producto adicional">
+        </div>
+    </div>
+
+    <!-- Columna de detalles -->
+    <div class="detalles-container">
+        <h1 class="nombre">Parque nacional el cajas</h1>
+        <p class="descripcion">Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus nam voluptates quo
+            incidunt doloremque numquam nulla. Fugiat quam qui minima, perferendis iusto temporibus esse excepturi
+            facilis rerum in, molestias numquam?Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quas quidem
+            voluptas excepturi pariatur, debitis fugiat nemo dolores quo sit vitae atque nulla reprehenderit minima?
+            Esse aliquam ipsa soluta nostrum perferendis. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Facere impedit sequi quisquam facilis. Sint, porro? Harum possimus aliquid architecto, tenetur quam dolore?
+            In quisquam, atque modi vitae reprehenderit porro qui.</p>
+        <p class="detalles">Area protegida</p>
+        <p class="detalles">Zona Urbana</p>
+        
+        <div class="menu">
+            <a class="ubucacion" (click)="abrirMapa()" routerLink="/lugar">Ver ubicación</a>
+            <a class="hotel" (click)="abrirHoteles()" routerLink="/lugar">Ver Hoteles</a>
+            <a class="restaurante" (click)="abrirRestaurantes()" routerLink="/lugar">Ver restaurantes</a>
+        </div>
+
+    </div>
+</div>
+
+<!-- Subpestaña mapa-->
+<div [ngClass]="{'subpestanaMapa':!modalAbiertoMapa}" id="subpestana"
+    class="subpestana ocultar">
+    <iframe [src]="location" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <button (click)="cerrarMapa()" class="cerrar">Cerrar</button>
+</div>
+
+
+<!--Subpestaña hoteles-->
+<div [ngClass]="{'subpestanaHotel':!modalAbiertoHotel}" class="subpestana">
+    <app-ver-hoteles></app-ver-hoteles>
+    <button (click)="cerrarHoteles()" class="cerrar">Cerrar</button>
+</div>
+
+<!--Subpestaña restaurante-->
+<div [ngClass]="{'subpestanaHotel':!modalAbiertoRestaurante}" class="subpestana">
+    <h3>Hoteles</h3>
+    <button (click)="cerrarRestaurantes()" class="cerrar">Cerrar</button>
+</div>
