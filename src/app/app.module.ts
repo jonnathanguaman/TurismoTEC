@@ -23,6 +23,7 @@ import { LugarComponent } from './Pages/lugar/lugar.component';
 import { HabitacionesComponent } from './Pages/habitaciones/habitaciones.component';
 import { SliderHotelComponent } from './Components/slider-hotel/slider-hotel.component';
 import { ModalHabitacionComponent } from './Components/modal-habitacion/modal-habitacion.component';
+import { ForoComponent } from './Pages/foro/foro.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { ModalHabitacionComponent } from './Components/modal-habitacion/modal-ha
     HabitacionesComponent,
     SliderHotelComponent,
     ModalHabitacionComponent,
+    ForoComponent,
   ],
   imports: [
     BrowserModule,
