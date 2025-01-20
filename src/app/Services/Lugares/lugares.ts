@@ -1,3 +1,5 @@
+import { ImagenesLugares } from "../ImagenesLugares/imagenesLugares";
+
 export interface Lugares{
     idLugares:number;
     nombre:string;
@@ -5,4 +7,5 @@ export interface Lugares{
     direccion:string;
     tipoZona:string;
     areaProtegida:boolean;
+    imagenesLugars:ImagenesLugares[]
 }
