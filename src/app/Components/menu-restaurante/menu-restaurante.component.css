@@ -1,0 +1,108 @@
+/* Estilo del Modal */
+.modal {
+  display: block; /* Mostrar el modal */
+  position: fixed; /* Se posiciona en la parte superior */
+  z-index: 1; /* Se coloca sobre otros elementos */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Agrega scroll si es necesario */
+  background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro y difuso */
+}
+
+/* Contenido del Modal */
+.modal-content {
+  background-color: #fff;
+  margin: 5% auto; /* Centrado vertical y horizontal */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Ancho del modal */
+  border-radius: 8px;
+}
+
+/* Estilo de la cruz de cerrar */
+.cerrar {
+  margin-top: -20px;
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.cerrar:hover,
+.cerrar:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+/* Contenedor principal del menú */
+.modal-content-plato {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px; /* Espacio entre los platos */
+  margin: 20px auto;
+  padding: 15px;
+  border-radius: 12px; /* Bordes redondeados */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra elegante */
+  max-width: 1200px; /* Ancho máximo del contenedor */
+}
+
+/* Estilo de cada plato */
+.modal-content-plato-item {
+  background-color: #ffffff; /* Fondo blanco para cada tarjeta */
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efecto hover en cada tarjeta */
+.modal-content-plato-item:hover {
+  transform: scale(1.05); /* Ampliación al pasar el mouse */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Imagen del plato */
+.imagenPlato {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  border-radius: 8px; /* Esquinas redondeadas */
+  margin-bottom: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Sombra ligera */
+}
+
+/* Nombre del plato */
+.nombre {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #007bff; /* Azul elegante */
+}
+
+/* Descripción del plato */
+.modal-descripcio {
+  font-size: 1rem;
+  color: #6c757d; /* Gris suave */
+  margin: 5px 0;
+}
+
+
+/* Precio del plato */
+.modal-precio {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #28a745; /* Verde para destacar el precio */
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .modal-content{
+    margin: 20% auto;
+  }
+}

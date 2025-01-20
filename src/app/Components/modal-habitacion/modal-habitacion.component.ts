@@ -29,8 +29,6 @@ export class ModalHabitacionComponent implements OnInit{
     this.isVisible = false;
   }
   
-  
-
   ngOnInit(): void {
   }
 }

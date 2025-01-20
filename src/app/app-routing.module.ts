@@ -64,7 +64,11 @@ const routes: Routes = [
     component:VerRestaurantesComponent
   },
   {
-    path:"mesa",
+    path:"restaurantes",
+    component:VerRestaurantesComponent
+  },
+  {
+    path:"mesa/:id",
     component:MesasComponent
   }
 ];
