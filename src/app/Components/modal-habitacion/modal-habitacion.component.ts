@@ -1,22 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { HabitacionesService } from '../../Services/habitaciones/habitaciones.service';
+import { Habitaciones } from '../../Services/habitaciones/habitaciones';
 
 @Component({
   selector: 'app-modal-habitacion',
   templateUrl: './modal-habitacion.component.html',
   styleUrl: './modal-habitacion.component.css'
 })
-export class ModalHabitacionComponent {
+export class ModalHabitacionComponent implements OnInit{
 
+  constructor(private habitacionService:HabitacionesService){}
+
+  @Input() idHabitacion?:number
+
+  habitacion!:Habitaciones
   isVisible: boolean = false;
 
-  // Método para mostrar el modal
   abrirModal(): void {
     this.isVisible = true;
+    if(this.idHabitacion){
+      this.habitacionService.getHabitacionById(this.idHabitacion).subscribe(auxhabitacion =>{
+        this.habitacion = auxhabitacion
+      })
+    }
   }
 
-  // Método para cerrar el modal
   cerrarModal(): void {
     this.isVisible = false;
   }
   
+  
+
+  ngOnInit(): void {
+  }
 }

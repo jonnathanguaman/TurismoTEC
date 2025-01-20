@@ -4,6 +4,13 @@
         <h1>Hoteles</h1>
     </div>
 
+    <div class="search-container">
+        <div class="search-bar">
+          <input *ngIf="!idLugar" [(ngModel)]="nombreHotelBuscado" type="text" name="buscar" id="buscar" placeholder="Buscar..." (input)="filtrarHoteles()" class="search-input">
+          <input *ngIf="idLugar" [(ngModel)]="nombreHotelBuscado" type="text" name="buscar" id="buscar" placeholder="Buscar en recomendacion" (input)="filtrarHotelesRecomendaciones()" class="search-input">
+        </div>
+    </div>
+    <p>Nombre: {{nombreHotelBuscado}}</p>
     <div class="card-hotel" *ngFor="let auxhotel of todoshoteles">
         <div class="card-hotel-img">
             <img src="https://www.kayak.com.ec/rimg/himg/b3/10/90/ice-178163-120191068-424668.jpg?width=1366&height=768&crop=true" alt="Imagen del hotel">

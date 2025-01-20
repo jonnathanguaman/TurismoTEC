@@ -40,11 +40,11 @@
             </div>
 
             <div class="card-habitacion-botonVer">
-                <button (click)="modal.abrirModal()" class="botonVerHabitacion">Ver habitación</button>
+                <button (click)="guardarId(habitaciones.idHabitacion)" (click)="modal.abrirModal()" class="botonVerHabitacion">Ver habitación</button>
             </div>
         </div>
     </div>
 </div>
 
-<app-modal-habitacion #modal></app-modal-habitacion>
+<app-modal-habitacion [idHabitacion]="enviarIdHabitacion"  #modal></app-modal-habitacion>
 

@@ -25,18 +25,18 @@
                 </div>
             </div>
 
-            <div class="modal-content-principal-item">
+            <div class="modal-content-principal-item" *ngIf="idHabitacion">
                 
                 <div class="modal-titulo">
-                      <h3>Habitacion solitaria</h3>
+                      <h3>{{habitacion.nombreHabitacion}}</h3>
                 </div>
 
                 <div class="modal-descripcio">
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aspernatur magnam quos laudantium voluptate quas minus tenetur pariatur recusandae consequatur maiores, placeat, magni commodi nulla. Rem perspiciatis vel assumenda fugiat porro!</p>
+                    <p>{{habitacion.descripcion}}</p>
                 </div>
 
                 <div class="modal-numeroHabitacion">
-                    <p>Habitacion numero: 44</p>
+                    <p>Habitacion numero: {{habitacion.numeroHabitacion}}</p>
                 </div>
 
                 <div class="modal-fechaReserva">
@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="modal-precio">
-                    <p>Precio: $299</p>
+                    <p>Precio: ${{habitacion.precio}}</p>
                 </div>
 
                 <div class="modal-boton">
