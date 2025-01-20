@@ -20,7 +20,7 @@ a{
     height: 200px;
 }
 .card-recomendaciones-img img{
-
+    width: 50%;
     border-radius: 15px;
 }
 .card-recomendaciones{
