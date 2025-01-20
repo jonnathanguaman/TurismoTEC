@@ -1,3 +1,5 @@
+import { ImagenesHoteles } from "../imagenesHoteles/imagesHoteles";
+
 export interface Hoteles{
     idHotel:number;
     nombre:string;
@@ -5,4 +7,5 @@ export interface Hoteles{
     telefono:string;
     descripcion:string;
     calificacion:number;
+    imagenesHoteles:ImagenesHoteles[];
 }

@@ -17,7 +17,7 @@ export class HotelesService {
 
   getHotelById(id:number):Observable<Hoteles>{
     return this.http.get<Hoteles>(`${environment.urlHost + "/hotel"}/${id}`)
-  }
+  } 
 
   gethotelesDeLugar(id:number):Observable<Hoteles[]>{
     return this.http.get<Hoteles[]>(`${environment.urlHost + "/hotelesDeLugar"}/${id}`)

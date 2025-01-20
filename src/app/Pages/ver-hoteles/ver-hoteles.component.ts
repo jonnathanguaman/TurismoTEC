@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HotelesService } from '../../Services/hoteles/hoteles.service';
 import { Hoteles } from '../../Services/hoteles/hoteles';
+import { environment } from '../../../enviroments/enviroment';
 
 @Component({
   selector: 'app-ver-hoteles',
@@ -15,6 +16,7 @@ export class VerHotelesComponent implements OnInit{
 
   todoshoteles:Hoteles[]=[]
   nombreHotelBuscado:string=''
+  urlHost:string = environment.urlAut;
 
   ngOnInit(): void {
     if(this.idLugar){
