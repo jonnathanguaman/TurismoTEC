@@ -11,6 +11,8 @@ import { LugarComponent } from './Pages/lugar/lugar.component';
 import { VerHotelesComponent } from './Pages/ver-hoteles/ver-hoteles.component';
 import { HabitacionesComponent } from './Pages/habitaciones/habitaciones.component';
 import { ForoComponent } from './Pages/foro/foro.component';
+import { VerRestaurantesComponent } from './Pages/ver-restaurantes/ver-restaurantes.component';
+import { MesasComponent } from './Pages/mesas/mesas.component';
 
 const routes: Routes = [
   {
@@ -57,6 +59,14 @@ const routes: Routes = [
     path:"foro",
     component:ForoComponent
   },
+  {
+    path:"restaurantes",
+    component:VerRestaurantesComponent
+  },
+  {
+    path:"mesa",
+    component:MesasComponent
+  }
 ];
 
 @NgModule({

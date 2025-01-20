@@ -24,6 +24,10 @@ import { HabitacionesComponent } from './Pages/habitaciones/habitaciones.compone
 import { SliderHotelComponent } from './Components/slider-hotel/slider-hotel.component';
 import { ModalHabitacionComponent } from './Components/modal-habitacion/modal-habitacion.component';
 import { ForoComponent } from './Pages/foro/foro.component';
+import { VerRestaurantesComponent } from './Pages/ver-restaurantes/ver-restaurantes.component';
+import { MesasComponent } from './Pages/mesas/mesas.component';
+import { SliderRestauranteComponent } from './Components/slider-restaurante/slider-restaurante.component';
+import { ModalMesaComponent } from './Components/modal-mesa/modal-mesa.component'; 
 
 @NgModule({
   declarations: [
@@ -45,6 +49,10 @@ import { ForoComponent } from './Pages/foro/foro.component';
     SliderHotelComponent,
     ModalHabitacionComponent,
     ForoComponent,
+    VerRestaurantesComponent,
+    MesasComponent,
+    SliderRestauranteComponent,
+    ModalMesaComponent,
   ],
   imports: [
     BrowserModule,

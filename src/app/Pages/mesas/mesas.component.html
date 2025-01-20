@@ -1,0 +1,67 @@
+<app-slider-restaurante></app-slider-restaurante>
+
+<div class="container">
+    <div class="restaurante">
+        <div class="restaurante-nombre">
+            <h2>Restaurante El Sabor</h2>
+        </div>
+    
+        <div class="restaurante-descripcion">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus id, repudiandae perferendis aut nisi pariatur assumenda facere voluptate esse fuga odio eaque sapiente cum ullam consectetur et sequi corporis quo Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consequatur quasi mollitia vitae ipsam harum. Suscipit fugiat sequi nobis ipsa voluptatum illum, tenetur distinctio, eveniet facilis fuga voluptates quibusdam ea eaque.</p>
+        </div>
+
+        <div class="restaurante-titulo-informacion">
+            <h3>Información</h3>
+        </div>
+
+        <div class="restaurante-informacion">
+            <p class="informacion">Dirección: Cuenca</p>
+            <p class="informacion">Teléfono: 0992978704</p>
+        </div>
+    </div>
+
+    <div class="mesas-titulo">
+        <h2>Mesas Disponibles</h2>
+    </div>
+
+    <div class="mesas">
+
+        <div class="card-mesa">
+            <div class="card-mesa-imagen">
+                <img src="assets/img/mesa1.jpg" alt="Imagen 1" />
+            </div>
+            <div class="card-mesa-nombre">
+                <h3>Mesa para dos</h3>
+            </div>
+
+            <div class="card-mesa-precio">
+                <p>Desde: $50</p>
+            </div>
+
+            <div class="card-mesa-botonVer">
+                <button (click)="modal.abrirModal()" class="botonVerMesa">Ver mesa</button>
+            </div>
+        </div>
+
+        <div class="card-mesa">
+            <div class="card-mesa-imagen">
+                <img src="assets/img/mesa1.jpg" alt="Imagen 1" />
+            </div>
+            <div class="card-mesa-nombre">
+                <h3>Mesa para cuatro</h3>
+            </div>
+
+            <div class="card-mesa-precio">
+                <p>Desde: $80</p>
+            </div>
+
+            <div class="card-mesa-botonVer">
+                <button class="botonVerMesa">Ver mesa</button>
+            </div>
+        </div>
+
+        <!-- Puedes añadir más mesas aquí -->
+    </div>
+</div>
+
+<app-modal-mesa #modal></app-modal-mesa>
