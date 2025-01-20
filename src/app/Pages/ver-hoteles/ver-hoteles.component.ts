@@ -24,11 +24,11 @@ export class VerHotelesComponent implements OnInit{
     }
   }
 
-  obtenerTodosHoteles(){
-    this.hotelesService.getTodosHoteles().subscribe(hoteles =>{
-      this.todoshoteles = hoteles
-    })
-  }
+    obtenerTodosHoteles(){
+      this.hotelesService.getTodosHoteles().subscribe(hoteles =>{
+        this.todoshoteles = hoteles
+      })
+    }
 
   obtenerHotelesDeLugar(id:number){
     this.hotelesService.gethotelesDeLugar(id).subscribe(auxHotelesDeLugar =>{
@@ -36,7 +36,6 @@ export class VerHotelesComponent implements OnInit{
     })
   }
 
-  hotelesFiltrados: Hoteles[] = []; 
   
   filtrarHoteles() {
     const nombreLower = this.nombreHotelBuscado.toLowerCase();
