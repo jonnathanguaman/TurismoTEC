@@ -3,6 +3,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { LugaresService } from '../../Services/Lugares/lugares.service';
 import { ActivatedRoute } from '@angular/router';
 import { Lugares } from '../../Services/Lugares/lugares';
+import { environment } from '../../../enviroments/enviroment';
 
 @Component({
   selector: 'app-lugar',
@@ -11,9 +12,12 @@ import { Lugares } from '../../Services/Lugares/lugares';
 })
 export class LugarComponent implements OnInit{
 
+
   modalAbiertoMapa:boolean = false
   modalAbiertoHotel:boolean = false
   modalAbiertoRestaurante:boolean = false
+
+  urlHost:string = environment.urlAut
 
   abrirMapa(){
     this.modalAbiertoMapa = true

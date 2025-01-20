@@ -32,17 +32,9 @@
 
 <!-- Botón para abrir la ventana emergente -->
 <div class="foro-container">
-  <button class="btn-foro" (click)="abrirVentana()">Publicar</button>
+  <button class="btn-foro" (click)="abrirVentanaCrear()">Crear publicación</button>
 </div>
 
-<!-- Ventana emergente inicial -->
-<div class="ventana-emergente" *ngIf="mostrarVentana">
-  <div class="ventana-contenido">
-    <h2>Opciones del Foro</h2>
-    <button class="btn-opcion" (click)="abrirVentanaCrear()">Crear contenido</button>
-    <button class="btn-opcion" (click)="cerrarVentana()">Salir</button>
-  </div>
-</div>
 
 <!-- Ventana emergente para crear contenido -->
 <div class="ventana-emergente" *ngIf="mostrarVentanaCrear">

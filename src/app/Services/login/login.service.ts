@@ -24,7 +24,7 @@ export class AuthService {
   }
 
   login(credentials:LoginRequest):Observable<any>{
-    return this.http.post<any>(environment.urlHost+"public/login",credentials).pipe(
+    return this.http.post<any>(environment.urlAut+"/public/login",credentials).pipe(
       tap((userData) => {
         sessionStorage.setItem("token",userData.token)
         this.currentUserData.next(userData.token)

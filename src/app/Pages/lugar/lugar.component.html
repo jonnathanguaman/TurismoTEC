@@ -1,15 +1,13 @@
 <div class="lugar-container">
     <!-- Columna de imágenes -->
-    <div class="imagenes-container">
+    <div class="imagenes-container" *ngIf="lugarEcontrado">
         <div class="imagen-principal">
-            <img src="https://bscstoreusa.com/cdn/shop/files/1_34a66fb0-660a-42b3-8348-b7616bb032ab.webp?v=1718933101"
+            <img [src]="[urlHost + lugarEcontrado.imagenesLugars[0].url]"
                 alt="Producto principal">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdFx832qj6zmrNktIH2kBidqd0aXes1FYGmw&s"
-                alt="Producto adicional">
+            <img [src]="[urlHost + lugarEcontrado.imagenesLugars[1].url]" >
         </div>
         <div class="imagenes-secundarias">
-            <img src="https://bscstoreusa.com/cdn/shop/files/1A_248bd723-9651-42c3-8f94-d5c67b11d2fc.jpg?v=1685890833"
-                alt="Producto adicional">
+            <img [src]="[urlHost + lugarEcontrado.imagenesLugars[2].url]">
         </div>
     </div>
 
@@ -49,6 +47,6 @@
 
 <!--Subpestaña restaurante-->
 <div [ngClass]="{'subpestanaHotel':!modalAbiertoRestaurante}" class="subpestana">
-    <h3>Hoteles</h3>
+    <app-ver-restaurantes></app-ver-restaurantes>
     <button (click)="cerrarRestaurantes()" class="cerrar">Cerrar</button>
 </div>
