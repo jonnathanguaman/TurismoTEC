@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HotelesService } from '../../Services/hoteles/hoteles.service';
 import { Hoteles } from '../../Services/hoteles/hoteles';
 import { ActivatedRoute } from '@angular/router';
@@ -11,6 +11,9 @@ import { Habitaciones } from '../../Services/habitaciones/habitaciones';
   styleUrl: './habitaciones.component.css',
 })
 export class HabitacionesComponent implements OnInit {
+
+  
+
   constructor(
     private hotelservice: HotelesService,
     private activedRouter: ActivatedRoute,
@@ -19,10 +22,12 @@ export class HabitacionesComponent implements OnInit {
 
   hotelEncontrado!: Hoteles;
   habitacionesDeHotel!:Habitaciones[]
+  enviarIdHabitacion?:number;
 
   ngOnInit(): void {
     this.obtenerHoteles()
   }
+
 
   obtenerHoteles(){
     this.activedRouter.params.subscribe((params) => {
@@ -39,7 +44,10 @@ export class HabitacionesComponent implements OnInit {
   obtenerHabitacionesDeHotel(id:number){
     this.habitacionService.getHabitacionDeHotel(id).subscribe(habitaciones =>{
       this.habitacionesDeHotel = habitaciones
-      console.log(habitaciones)
     })
-}
+  }
+
+  guardarId(idHabitacion:number){
+      this.enviarIdHabitacion = idHabitacion!
+  }
 }

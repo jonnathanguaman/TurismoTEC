@@ -14,4 +14,8 @@ export class HabitacionesService {
   getHabitacionDeHotel(id:number):Observable<Habitaciones[]>{
     return this.http.get<Habitaciones[]>(`${environment.urlHost + "/habitacionesDeHotel"}/${id}`)
   }
+
+  getHabitacionById(id:number):Observable<Habitaciones>{
+    return this.http.get<Habitaciones>(`${environment.urlHost + "/habitaciones"}/${id}`)
+  }
 }

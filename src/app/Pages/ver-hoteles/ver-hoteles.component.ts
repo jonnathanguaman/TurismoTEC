@@ -14,6 +14,7 @@ export class VerHotelesComponent implements OnInit{
   @Input() idLugar?:number
 
   todoshoteles:Hoteles[]=[]
+  nombreHotelBuscado:string=''
 
   ngOnInit(): void {
     if(this.idLugar){
@@ -32,6 +33,26 @@ export class VerHotelesComponent implements OnInit{
   obtenerHotelesDeLugar(id:number){
     this.hotelesService.gethotelesDeLugar(id).subscribe(auxHotelesDeLugar =>{
       this.todoshoteles = auxHotelesDeLugar
+    })
+  }
+
+  hotelesFiltrados: Hoteles[] = []; 
+  
+  filtrarHoteles() {
+    const nombreLower = this.nombreHotelBuscado.toLowerCase();
+    this.hotelesService.getTodosHoteles().subscribe(hoteles =>{
+      this.todoshoteles = hoteles.filter((hotel) =>
+        hotel.nombre.toLowerCase().includes(nombreLower)
+      )
+    })
+  }
+
+  filtrarHotelesRecomendaciones() {
+    const nombreLower = this.nombreHotelBuscado.toLowerCase();
+    this.hotelesService.gethotelesDeLugar(this.idLugar!).subscribe(hoteles =>{
+      this.todoshoteles = hoteles.filter((hotel) =>
+        hotel.nombre.toLowerCase().includes(nombreLower)
+      )
     })
   }
 }
