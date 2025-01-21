@@ -47,6 +47,6 @@
 
 <!--Subpestaña restaurante-->
 <div [ngClass]="{'subpestanaHotel':!modalAbiertoRestaurante}" class="subpestana">
-    <app-ver-restaurantes></app-ver-restaurantes>
+    <app-ver-restaurantes [idLugar]="lugarEcontrado.idLugares"></app-ver-restaurantes>
     <button (click)="cerrarRestaurantes()" class="cerrar">Cerrar</button>
 </div>

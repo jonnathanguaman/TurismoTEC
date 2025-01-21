@@ -4,24 +4,33 @@
         <h1>Restaurantes</h1>
     </div>
 
-    <div class="card-restaurante">
+    <div class="search-container">
+        <div class="search-bar">
+          <input *ngIf="!idLugar" [(ngModel)]="nombreRestauranteBuscado" type="text" name="buscar" id="buscar" placeholder="Buscar..." (input)="filtrarRestaurantes()" class="search-input">
+          <input *ngIf="idLugar" [(ngModel)]="nombreRestauranteBuscado" type="text" name="buscar" id="buscar" placeholder="Buscar en recomendacion" (input)="filtrarHotelesRecomendaciones()" class="search-input">
+        </div>
+    </div>
+    <p>Nombre: {{nombreRestauranteBuscado}}</p>
+
+    <div class="card-restaurante" *ngFor="let auxrestaurante of todosRestaurantes">
         <div class="card-restaurante-img">
-            <img src="assets/img/restaurante1.jpg" alt="rest1" />
+            <img [src]="[urlHost + auxrestaurante.imagenesRestaurantes[0].url]" alt="rest1" />
         </div>
         <div class="card-restaurante-info">
             <div class="card-restaurante-nombre">
-                <h3>Restaurante El Sabor</h3>
+                <h3>{{auxrestaurante.nombre}}</h3>
             </div>
             <div class="card-restaurante-descripcion">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio rerum voluptate, dicta voluptatibus quae minus fugit est ratione, et labore placeat eveniet eum, dolores consectetur veritatis ipsa? Nulla, dolore laudantium.</p>
+                <p>{{auxrestaurante.descripcion}}</p>
             </div>
 
             <div class="card-restaurante-calificacion">
-                <p>Calificación: 5 estrellas</p>
+                <p>Calificación: {{auxrestaurante.calificacion}} estrellas</p>
             </div>
+            
         </div>
         <div class="card-restaurante-boton">
-            <button routerLink="/mesa">Ver restaurante</button>
+            <button [routerLink]="['/mesa/'+auxrestaurante.idRestaurante]">Ver restaurante</button>
         </div>
     </div>
 

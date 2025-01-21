@@ -78,8 +78,13 @@ const routes: Routes = [
     path:"crud-hotel",
     component:CrudHotelComponent
   },
-
-
+    path:"restaurantes",
+    component:VerRestaurantesComponent
+  },
+  {
+    path:"mesa/:id",
+    component:MesasComponent
+  }
 ];
 
 @NgModule({

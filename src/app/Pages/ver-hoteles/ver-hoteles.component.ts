@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HotelesService } from '../../Services/hoteles/hoteles.service';
 import { Hoteles } from '../../Services/hoteles/hoteles';
+import { environment } from '../../../enviroments/enviroment';
 
 @Component({
   selector: 'app-ver-hoteles',
@@ -15,6 +16,7 @@ export class VerHotelesComponent implements OnInit{
 
   todoshoteles:Hoteles[]=[]
   nombreHotelBuscado:string=''
+  urlHost:string = environment.urlAut;
 
   ngOnInit(): void {
     if(this.idLugar){
@@ -24,11 +26,11 @@ export class VerHotelesComponent implements OnInit{
     }
   }
 
-  obtenerTodosHoteles(){
-    this.hotelesService.getTodosHoteles().subscribe(hoteles =>{
-      this.todoshoteles = hoteles
-    })
-  }
+    obtenerTodosHoteles(){
+      this.hotelesService.getTodosHoteles().subscribe(hoteles =>{
+        this.todoshoteles = hoteles
+      })
+    }
 
   obtenerHotelesDeLugar(id:number){
     this.hotelesService.gethotelesDeLugar(id).subscribe(auxHotelesDeLugar =>{
@@ -36,7 +38,6 @@ export class VerHotelesComponent implements OnInit{
     })
   }
 
-  hotelesFiltrados: Hoteles[] = []; 
   
   filtrarHoteles() {
     const nombreLower = this.nombreHotelBuscado.toLowerCase();

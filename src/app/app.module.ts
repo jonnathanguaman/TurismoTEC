@@ -31,6 +31,7 @@ import { ModalMesaComponent } from './Components/modal-mesa/modal-mesa.component
 import { CrudLugarComponent } from './Components/crud-lugar/crud-lugar.component';
 import { CrudRestauranteComponent } from './Components/crud-restaurante/crud-restaurante.component';
 import { CrudHotelComponent } from './Components/crud-hotel/crud-hotel.component'; 
+import { MenuRestauranteComponent } from './Components/menu-restaurante/menu-restaurante.component'; 
 
 @NgModule({
   declarations: [
@@ -56,10 +57,10 @@ import { CrudHotelComponent } from './Components/crud-hotel/crud-hotel.component
     MesasComponent,
     SliderRestauranteComponent,
     ModalMesaComponent,
-    
     CrudLugarComponent,
-          CrudRestauranteComponent,
-          CrudHotelComponent,
+    CrudRestauranteComponent,
+    CrudHotelComponent,
+    MenuRestauranteComponent,
   ],
   imports: [
     BrowserModule,
