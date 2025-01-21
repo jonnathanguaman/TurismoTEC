@@ -27,7 +27,10 @@ import { ForoComponent } from './Pages/foro/foro.component';
 import { VerRestaurantesComponent } from './Pages/ver-restaurantes/ver-restaurantes.component';
 import { MesasComponent } from './Pages/mesas/mesas.component';
 import { SliderRestauranteComponent } from './Components/slider-restaurante/slider-restaurante.component';
-import { ModalMesaComponent } from './Components/modal-mesa/modal-mesa.component'; 
+import { ModalMesaComponent } from './Components/modal-mesa/modal-mesa.component';
+import { CrudLugarComponent } from './Components/crud-lugar/crud-lugar.component';
+import { CrudRestauranteComponent } from './Components/crud-restaurante/crud-restaurante.component';
+import { CrudHotelComponent } from './Components/crud-hotel/crud-hotel.component'; 
 
 @NgModule({
   declarations: [
@@ -53,6 +56,10 @@ import { ModalMesaComponent } from './Components/modal-mesa/modal-mesa.component
     MesasComponent,
     SliderRestauranteComponent,
     ModalMesaComponent,
+    
+    CrudLugarComponent,
+          CrudRestauranteComponent,
+          CrudHotelComponent,
   ],
   imports: [
     BrowserModule,
