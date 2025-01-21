@@ -1,106 +1,58 @@
 <div class="crud-container">
-    <h2>Gestión de Restaurantes</h2>
-    <form (submit)="onSubmit()" #formRestaurante="ngForm">
-        <div class="input-container">
-            <label for="id_restaurante">ID Restaurante:</label>
-            <input
-                type="number"
-                id="id_restaurante"
-                [(ngModel)]="restaurante.id_restaurante"
-                name="id_restaurante"
-                required
-                #id_restaurante="ngModel"
-            />
-            <div *ngIf="id_restaurante.invalid && id_restaurante.touched" class="message error">
-                El ID es obligatorio.
+    <div class="container-header">
+        <div class="contenedor-izq">
+            <h2>Gestión de Restaurantes</h2>
+            <p>Descripción general de la gestión de restaurantes y otras opciones.</p>
+        </div>
+        <div class="contenedor-derecho">
+            <div class="search-container">
+                <input type="text" placeholder="Buscar" class="search-input" />
+                <button class="search-button"><span class="icon">🔍</span></button>
             </div>
+            <button class="btn-opcion" (click)="openCrudModal()">Crear Restaurante</button>
         </div>
-        <div class="input-container">
-            <label for="nombre">Nombre:</label>
-            <input
-                type="text"
-                id="nombre"
-                [(ngModel)]="restaurante.nombre"
-                name="nombre"
-                required
-                minlength="3"
-                #nombre="ngModel"
-            />
-            <div *ngIf="nombre.invalid && nombre.touched" class="message error">
-                El nombre es obligatorio y debe tener al menos 3 caracteres.
-            </div>
+    </div>
+
+    <!-- Modal para el CRUD -->
+    <div class="crud-modal" *ngIf="isCrudModalOpen">
+        <div class="crud-modal-content">
+            
+            <h3>Crear o Editar Restaurante</h3>
+
+            <form (submit)="onSubmit()" #formRestaurante="ngForm">
+                <div class="input-container">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" [(ngModel)]="restaurante.nombre" name="nombre" required minlength="3" #nombre="ngModel" />
+                    <div *ngIf="nombre.invalid && nombre.touched" class="message error">El nombre es obligatorio y debe tener al menos 3 caracteres.</div>
+                </div>
+                <div class="input-container">
+                    <label for="descripcion">Descripción:</label>
+                    <textarea id="descripcion" [(ngModel)]="restaurante.descripcion" name="descripcion" rows="4" required #descripcion="ngModel"></textarea>
+                    <div *ngIf="descripcion.invalid && descripcion.touched" class="message error">La descripción es obligatoria.</div>
+                </div>
+                <div class="input-container">
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" id="direccion" [(ngModel)]="restaurante.direccion" name="direccion" required #direccion="ngModel" />
+                    <div *ngIf="direccion.invalid && direccion.touched" class="message error">La dirección es obligatoria.</div>
+                </div>
+                <div class="input-container">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" [(ngModel)]="restaurante.telefono" name="telefono" required #telefono="ngModel" />
+                    <div *ngIf="telefono.invalid && telefono.touched" class="message error">El teléfono es obligatorio.</div>
+                </div>
+                <div class="input-container">
+                    <label for="imagen">Imagen:</label>
+                    <input type="file" id="imagen" (change)="onImageChange($event)" />
+                </div>
+
+                <hr />
+                <div class="btn-panel">
+                    <button class="btn-opcion" type="submit" [disabled]="formRestaurante.invalid"><span class="icon">✔️</span> Guardar</button>
+                    <button class="btn-opcion" type="button" (click)="limpiarFormulario()"><span class="icon">🧹</span> Limpiar</button>
+                </div>
+            </form>
         </div>
-        <div class="input-container">
-            <label for="direccion">Dirección:</label>
-            <input
-                type="text"
-                id="direccion"
-                [(ngModel)]="restaurante.direccion"
-                name="direccion"
-                required
-                #direccion="ngModel"
-            />
-            <div *ngIf="direccion.invalid && direccion.touched" class="message error">
-                La dirección es obligatoria.
-            </div>
-        </div>
-        <div class="input-container">
-            <label for="telefono">Teléfono:</label>
-            <input
-                type="tel"
-                id="telefono"
-                [(ngModel)]="restaurante.telefono"
-                name="telefono"
-                required
-                pattern="^[0-9]{10}$"
-                #telefono="ngModel"
-            />
-            <div *ngIf="telefono.invalid && telefono.touched" class="message error">
-                El teléfono debe ser válido (10 dígitos).
-            </div>
-        </div>
-        <div class="input-container">
-            <label for="descripcion">Descripción:</label>
-            <textarea
-                id="descripcion"
-                [(ngModel)]="restaurante.descripcion"
-                name="descripcion"
-                rows="4"
-                required
-                #descripcion="ngModel"
-            ></textarea>
-            <div *ngIf="descripcion.invalid && descripcion.touched" class="message error">
-                La descripción es obligatoria.
-            </div>
-        </div>
-        <div class="input-container">
-            <label for="disponibilidad">Disponibilidad:</label>
-            <input
-                type="number"
-                id="disponibilidad"
-                [(ngModel)]="restaurante.disponibilidad"
-                name="disponibilidad"
-                required
-                min="0"
-                #disponibilidad="ngModel"
-            />
-            <div *ngIf="disponibilidad.invalid && disponibilidad.touched" class="message error">
-                La disponibilidad debe ser un número entero mayor o igual a 0.
-            </div>
-        </div>
-        <div class="input-container">
-            <label for="imagen">Imagen:</label>
-            <input type="file" id="imagen" (change)="onImageChange($event)" />
-        </div>
-        <div class="btn-container">
-            <button class="btn-opcion" type="submit" [disabled]="formRestaurante.invalid">
-                <span class="icon">✔️</span> Guardar
-            </button>
-            <button class="btn-opcion" type="button" (click)="limpiarFormulario()">
-                <span class="icon">🧹</span> Limpiar
-            </button>
-        </div>
-    </form>
+    </div>
 
     <div *ngIf="message" class="message success">{{ message }}</div>
 
@@ -108,32 +60,24 @@
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nombre</th>
                     <th>Dirección</th>
                     <th>Teléfono</th>
                     <th>Descripción</th>
-                    <th>Disponibilidad</th>
                     <th>Imagen</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let restaurante of restaurantes">
-                    <td>{{ restaurante.id_restaurante }}</td>
                     <td>{{ restaurante.nombre }}</td>
                     <td>{{ restaurante.direccion }}</td>
                     <td>{{ restaurante.telefono }}</td>
                     <td>{{ restaurante.descripcion }}</td>
-                    <td>{{ restaurante.disponibilidad }}</td>
                     <td><img [src]="restaurante.imagen" alt="Imagen Restaurante" /></td>
                     <td>
-                        <button class="btn-opcion" (click)="editarRestaurante(restaurante)">
-                            <span class="icon">✏️</span> Editar
-                        </button>
-                        <button class="btn-opcion" (click)="eliminarRestaurante(restaurante.id_restaurante)">
-                            <span class="icon">❌</span> Eliminar
-                        </button>
+                        <button class="btn-opcion" (click)="editarRestaurante(restaurante)"><span class="icon">✏️</span> Editar</button>
+                        <button class="btn-opcion" (click)="eliminarRestaurante(restaurante.id_restaurante)"><span class="icon">❌</span> Eliminar</button>
                     </td>
                 </tr>
             </tbody>

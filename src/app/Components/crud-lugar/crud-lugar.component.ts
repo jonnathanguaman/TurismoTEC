@@ -9,59 +9,68 @@ export class CrudLugarComponent {
     lugar = this.nuevoLugar();
     lugares: any[] = [];
     message: string | null = null;
+    isCrudModalOpen: boolean = false;
 
     nuevoLugar() {
         return {
             id_lugar: null,
             nombre: '',
-            descripcion: '',
             direccion: '',
+            descripcion: '',
             areaProtegida: false,
             patrimonio: false,
-            rural: false,
             urbano: false,
+            rural: false,
             imagen: '',
         };
     }
 
+    openCrudModal() {
+        this.isCrudModalOpen = true;
+    }
+
+    closeCrudModal() {
+        this.isCrudModalOpen = false;
+    }
+
     onSubmit() {
-        if (this.lugar.id_lugar === null) {
-            this.message = 'El ID Lugar es obligatorio.';
-            return;
-        }
-
-        const existe = this.lugares.find((l) => l.id_lugar === this.lugar.id_lugar);
-        if (existe) {
-            this.message = 'El ID Lugar ya existe.';
+        if (this.lugar.id_lugar) {
+            const index = this.lugares.findIndex(l => l.id_lugar === this.lugar.id_lugar);
+            if (index !== -1) {
+                this.lugares[index] = { ...this.lugar };
+            }
         } else {
+           // this.lugar.id_lugar = this.lugares.length + 1;
             this.lugares.push({ ...this.lugar });
-            this.message = 'Lugar guardado exitosamente.';
         }
 
-        this.limpiarFormulario();
+        this.message = 'Lugar guardado correctamente!';
+        this.lugar = this.nuevoLugar();
+        this.isCrudModalOpen = false;
     }
 
     limpiarFormulario() {
         this.lugar = this.nuevoLugar();
     }
 
-    editarLugar(lugar: any) {
-        this.lugar = { ...lugar };
+    eliminarLugar(id: number) {
+        this.lugares = this.lugares.filter(l => l.id_lugar !== id);
+        this.message = 'Lugar eliminado correctamente!';
     }
 
-    eliminarLugar(id_lugar: number) {
-        this.lugares = this.lugares.filter((l) => l.id_lugar !== id_lugar);
-        this.message = 'Lugar eliminado correctamente.';
+    editarLugar(lugar: any) {
+        this.lugar = { ...lugar };
+        this.isCrudModalOpen = true;
     }
 
     onImageChange(event: any) {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = (e: any) => {
-                this.lugar.imagen = e.target.result;
-            };
             reader.readAsDataURL(file);
+            reader.onload = () => {
+                this.lugar.imagen = reader.result as string;
+            };
         }
     }
 }

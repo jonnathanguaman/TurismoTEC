@@ -9,6 +9,7 @@ export class CrudRestauranteComponent {
     restaurante = this.nuevoRestaurante();
     restaurantes: any[] = [];
     message: string | null = null;
+    isCrudModalOpen: boolean = false;
 
     nuevoRestaurante() {
         return {
@@ -17,25 +18,31 @@ export class CrudRestauranteComponent {
             direccion: '',
             telefono: '',
             descripcion: '',
-            disponibilidad: 0,
+            precio: null,
+            disponibilidad: false,
             imagen: '',
         };
     }
 
-    onSubmit() {
-        if (this.restaurante.id_restaurante === null) {
-            this.message = 'El ID Restaurante es obligatorio.';
-            return;
-        }
+    openCrudModal() {
+        this.isCrudModalOpen = true;
+    }
 
+    closeCrudModal() {
+        this.isCrudModalOpen = false;
+    }
+
+    onSubmit() {
         const existe = this.restaurantes.find((r) => r.id_restaurante === this.restaurante.id_restaurante);
         if (existe) {
-            this.message = 'El ID Restaurante ya existe.';
+            const index = this.restaurantes.findIndex((r) => r.id_restaurante === this.restaurante.id_restaurante);
+            this.restaurantes[index] = { ...this.restaurante };
+            this.message = 'Restaurante actualizado exitosamente.';
         } else {
             this.restaurantes.push({ ...this.restaurante });
             this.message = 'Restaurante guardado exitosamente.';
         }
-
+        this.closeCrudModal();
         this.limpiarFormulario();
     }
 
@@ -45,20 +52,19 @@ export class CrudRestauranteComponent {
 
     editarRestaurante(restaurante: any) {
         this.restaurante = { ...restaurante };
+        this.openCrudModal();
     }
 
     eliminarRestaurante(id_restaurante: number) {
-        this.restaurantes = this.restaurantes.filter((r) => r.id_restaurante !== id_restaurante);
-        this.message = 'Restaurante eliminado correctamente.';
+        this.restaurantes = this.restaurantes.filter((restaurante) => restaurante.id_restaurante !== id_restaurante);
+        this.message = 'Restaurante eliminado exitosamente.';
     }
 
     onImageChange(event: any) {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = (e: any) => {
-                this.restaurante.imagen = e.target.result;
-            };
+            reader.onload = () => (this.restaurante.imagen = reader.result as string);
             reader.readAsDataURL(file);
         }
     }

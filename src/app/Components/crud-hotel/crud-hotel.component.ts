@@ -9,6 +9,7 @@ export class CrudHotelComponent {
     hotel = this.nuevoHotel();
     hoteles: any[] = [];
     message: string | null = null;
+    isCrudModalOpen: boolean = false;
 
     nuevoHotel() {
         return {
@@ -23,20 +24,25 @@ export class CrudHotelComponent {
         };
     }
 
-    onSubmit() {
-        if (this.hotel.id_hotel === null) {
-            this.message = 'El ID del hotel es obligatorio.';
-            return;
-        }
+    openCrudModal() {
+        this.isCrudModalOpen = true;
+    }
 
+    closeCrudModal() {
+        this.isCrudModalOpen = false;
+    }
+
+    onSubmit() {
         const existe = this.hoteles.find((h) => h.id_hotel === this.hotel.id_hotel);
         if (existe) {
-            this.message = 'El ID del hotel ya existe.';
+            const index = this.hoteles.findIndex((h) => h.id_hotel === this.hotel.id_hotel);
+            this.hoteles[index] = { ...this.hotel };
+            this.message = 'Hotel actualizado exitosamente.';
         } else {
             this.hoteles.push({ ...this.hotel });
             this.message = 'Hotel guardado exitosamente.';
         }
-
+        this.closeCrudModal();
         this.limpiarFormulario();
     }
 
@@ -46,23 +52,20 @@ export class CrudHotelComponent {
 
     editarHotel(hotel: any) {
         this.hotel = { ...hotel };
+        this.openCrudModal();
     }
 
     eliminarHotel(id_hotel: number) {
-        this.hoteles = this.hoteles.filter((h) => h.id_hotel !== id_hotel);
-        this.message = 'Hotel eliminado correctamente.';
+        this.hoteles = this.hoteles.filter((hotel) => hotel.id_hotel !== id_hotel);
+        this.message = 'Hotel eliminado exitosamente.';
     }
 
     onImageChange(event: any) {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = (e: any) => {
-                this.hotel.imagen = e.target.result;
-            };
+            reader.onload = () => (this.hotel.imagen = reader.result as string);
             reader.readAsDataURL(file);
         }
     }
 }
-  
-
