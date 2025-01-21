@@ -28,6 +28,9 @@ import { VerRestaurantesComponent } from './Pages/ver-restaurantes/ver-restauran
 import { MesasComponent } from './Pages/mesas/mesas.component';
 import { SliderRestauranteComponent } from './Components/slider-restaurante/slider-restaurante.component';
 import { ModalMesaComponent } from './Components/modal-mesa/modal-mesa.component';
+import { CrudLugarComponent } from './Components/crud-lugar/crud-lugar.component';
+import { CrudRestauranteComponent } from './Components/crud-restaurante/crud-restaurante.component';
+import { CrudHotelComponent } from './Components/crud-hotel/crud-hotel.component'; 
 import { MenuRestauranteComponent } from './Components/menu-restaurante/menu-restaurante.component'; 
 
 @NgModule({
@@ -54,6 +57,9 @@ import { MenuRestauranteComponent } from './Components/menu-restaurante/menu-res
     MesasComponent,
     SliderRestauranteComponent,
     ModalMesaComponent,
+    CrudLugarComponent,
+    CrudRestauranteComponent,
+    CrudHotelComponent,
     MenuRestauranteComponent,
   ],
   imports: [

@@ -13,6 +13,9 @@ import { HabitacionesComponent } from './Pages/habitaciones/habitaciones.compone
 import { ForoComponent } from './Pages/foro/foro.component';
 import { VerRestaurantesComponent } from './Pages/ver-restaurantes/ver-restaurantes.component';
 import { MesasComponent } from './Pages/mesas/mesas.component';
+import { CrudLugarComponent } from './Components/crud-lugar/crud-lugar.component';
+import { CrudRestauranteComponent } from './Components/crud-restaurante/crud-restaurante.component';
+import { CrudHotelComponent } from './Components/crud-hotel/crud-hotel.component';
 
 const routes: Routes = [
   {
@@ -62,6 +65,18 @@ const routes: Routes = [
   {
     path:"restaurantes",
     component:VerRestaurantesComponent
+  },
+  {
+    path:"crud-lugar",
+    component:CrudLugarComponent
+  },
+  {
+    path:"crud-restaurante",
+    component:CrudRestauranteComponent
+  },
+  {
+    path:"crud-hotel",
+    component:CrudHotelComponent
   },
   {
     path:"restaurantes",
