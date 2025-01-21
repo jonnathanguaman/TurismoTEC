@@ -14,7 +14,7 @@ export class PublicacionesService {
 
   getPublicaciones():Observable<Publicaciones[]>{
       return this.http.get<Publicaciones[]>(environment.urlHost + "/publicaciones");
-    }
+  }
 
   guardarPublicacion(publicaciones:Publicaciones, idusuario:number):Observable<Publicaciones>{
     return this.http.post<Publicaciones>(`${environment.urlHost + "/publicaciones"}/${idusuario}`,publicaciones);

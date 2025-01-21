@@ -32,7 +32,9 @@ import { CrudLugarComponent } from './Components/crud-lugar/crud-lugar.component
 import { CrudRestauranteComponent } from './Components/crud-restaurante/crud-restaurante.component';
 import { CrudHotelComponent } from './Components/crud-hotel/crud-hotel.component'; 
 import { MenuRestauranteComponent } from './Components/menu-restaurante/menu-restaurante.component';
-import { TimeAgoPipe } from './Services/publicaciones/time-ago.pipe'; 
+import { TimeAgoPipe } from './Services/publicaciones/time-ago.pipe';
+import { PaginaAdminComponent } from './Pages/pagina-admin/pagina-admin.component';
+import { MenuAdminComponent } from './Shared/menu-admin/menu-admin.component'; 
 
 @NgModule({
   declarations: [
@@ -63,6 +65,8 @@ import { TimeAgoPipe } from './Services/publicaciones/time-ago.pipe';
     CrudHotelComponent,
     MenuRestauranteComponent,
     TimeAgoPipe,
+    PaginaAdminComponent,
+    MenuAdminComponent,
   ],
   imports: [
     BrowserModule,

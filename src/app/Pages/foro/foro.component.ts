@@ -3,6 +3,10 @@ import { PublicacionesService } from '../../Services/publicaciones/publicaciones
 import { FormBuilder, Validators } from '@angular/forms';
 import { Publicaciones } from '../../Services/publicaciones/publicaciones';
 import Swal from 'sweetalert2';
+import { ComentarioService } from '../../Services/comentario/comentario.service';
+import { Comentario } from '../../Services/comentario/comentario';
+
+type ToastIcon = 'success' | 'error' | 'warning' | 'info' | 'question';
 
 const Toast = Swal.mixin({
   toast: true,
@@ -26,6 +30,14 @@ export class ForoComponent implements OnInit {
   mostrarVentana: boolean = false;
   mostrarVentanaCrear: boolean = false;
 
+  idPublicacionHaComentar!: number;
+
+  mostrarComentarios: boolean = false;
+  mostrandoFormulario: boolean = false;
+
+  publicacionesList!: Publicaciones[];
+  comentariosList!: Comentario[];
+
   abrirVentana() {
     this.mostrarVentana = true;
   }
@@ -38,29 +50,33 @@ export class ForoComponent implements OnInit {
     this.mostrarVentanaCrear = true;
   }
 
-  mostrarComentarios: boolean = false;
-  mostrandoFormulario: boolean = false;
-
-  textComentario: string = '▼ Comentarios';
-
-  verComentarios() {
-    this.mostrarComentarios = !this.mostrarComentarios;
-    if (this.mostrarComentarios) {
-      this.textComentario = '▲ Comentarios';
+  verComentarios(publicacion: Publicaciones) {
+    if (!publicacion.mostrarComentarios) {
+      this.comentarioService.obtenerComentarioDePublicacion(publicacion.idPublicaciones).subscribe((comentarios) => {
+        publicacion.comentarios = comentarios; 
+        publicacion.mostrarComentarios = true;
+        publicacion.textComentario = '▲ Comentarios';
+      });
     } else {
-      this.textComentario = '▼ Comentarios';
+      publicacion.mostrarComentarios = false;
+        publicacion.textComentario = '▼ Comentarios';
     }
   }
+  
 
-  comentar() {
-    this.mostrandoFormulario = true;
+  comentar(publicacion: Publicaciones) {
+    this.idPublicacionHaComentar = publicacion.idPublicaciones;
+    publicacion.mostrandoFormulario = !publicacion.mostrandoFormulario
   }
 
-  publicacionesList!: Publicaciones[];
+  cancelarComentar(publicacion: Publicaciones) {
+    publicacion.mostrandoFormulario = !publicacion.mostrandoFormulario
+  }
 
   constructor(
     private publicacionesService: PublicacionesService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private comentarioService: ComentarioService
   ) {}
 
   ngOnInit(): void {
@@ -71,7 +87,10 @@ export class ForoComponent implements OnInit {
     idPublicaciones: ['', [Validators.required]],
     titulo: ['', [Validators.required]],
     contenido: ['', [Validators.required]],
-    idusuario: [, [Validators.required]],
+  });
+
+  comentarioForm = this.fb.group({
+    contenido: ['', [Validators.required]],
   });
 
   get titulo() {
@@ -82,10 +101,18 @@ export class ForoComponent implements OnInit {
     return this.publicacionForm.controls.contenido;
   }
 
-  get usuario() {
-    return this.publicacionForm.controls.idusuario;
+  get contenidoComentario() {
+    return this.comentarioForm.controls.contenido;
   }
 
+  limpiarCamposPublicacion(){
+    this.publicacionForm.controls.titulo.setValue('')
+    this.publicacionForm.controls.contenido.setValue('')
+  }
+
+  limpiarCamposComentario(){
+    this.comentarioForm.controls.contenido.setValue('')
+  }
   guardarPublicacion() {
     if (this.publicacionForm) {
       this.publicacionesService
@@ -95,13 +122,10 @@ export class ForoComponent implements OnInit {
         )
         .subscribe({
           next: () => {
+            this.limpiarCamposPublicacion()
             this.obtenerPublicaciones();
             this.cerrarVentana();
-            Toast.fire({
-              icon: 'success',
-              title: 'Se ha publicado con exito',
-              footer: 'Gracias por compartir con la comunidad',
-            });
+            this.mensajeToast('success','Publicacion registrada','Gracias por compartir con la comunidad');
           },
           error: (e) => {
             console.log(e);
@@ -112,12 +136,40 @@ export class ForoComponent implements OnInit {
 
   obtenerPublicaciones() {
     this.publicacionesService.getPublicaciones().subscribe((publicaciones) => {
-      this.publicacionesList = publicaciones;
+      this.publicacionesList = publicaciones.map((publicacion) => ({
+        ...publicacion, // Copia todas las propiedades existentes de `publicacion`
+        textComentario: '▼ Comentarios',
+        mostrarComentarios: false, 
+      }));;
     });
+  }
+
+  guardarComentario() {
+    this.comentarioService.guardarComentario(
+        this.comentarioForm.value as Comentario,
+        <number>(<unknown>sessionStorage.getItem('id')),
+        this.idPublicacionHaComentar
+      )
+      .subscribe({
+        next:()=>{
+          this.limpiarCamposComentario()
+          this.mensajeToast('success','Comentario registrado','Gracias por compartir con la comunidad');
+        }
+      });
   }
 
   autoResize(event: any) {
     event.target.style.height = 'auto';
     event.target.style.height = `${event.target.scrollHeight}px`;
   }
+
+
+  mensajeToast(tipo: ToastIcon, mesajeCuerpo: string, footer: string) {
+    Toast.fire({
+      icon: tipo,
+      title: mesajeCuerpo,
+      footer: footer
+    });
+  }
+  
 }
