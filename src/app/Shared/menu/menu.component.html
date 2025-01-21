@@ -8,6 +8,11 @@
       <li><a routerLink="/nosotros">Nosotros</a></li>
       <li *ngIf="!userloginOn"><a routerLink="/recomendaciones">Recomendaciones</a></li>
       <li *ngIf="userloginOn"><a routerLink="/perfil">Perfil</a></li>
+      <li *ngIf="userloginOn"><a routerLink="/crud-lugar">crud Lugar</a></li>
+      <li *ngIf="userloginOn"><a routerLink="/crud-restaurante">crud restaurante</a></li>
+      <li *ngIf="!userloginOn"><a routerLink="/crud-hotel">crud hotel</a></li>
+      <li *ngIf="!userloginOn"><a routerLink="/hoteles">Ver hoteles</a></li>
+      <li *ngIf="!userloginOn"><a routerLink="/restaurantes">Ver Restaurante</a></li>
       <li *ngIf="!userloginOn"><a routerLink="/hoteles">Hoteles</a></li>
       <li *ngIf="!userloginOn"><a routerLink="/restaurantes">Restaurante</a></li>
       <li *ngIf="!userloginOn"><a routerLink="/foro">Foro</a></li>
