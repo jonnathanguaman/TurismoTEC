@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { HotelesService } from '../../Services/hoteles/hoteles.service';
 import { RestauranteService } from '../../Services/restaurantes/restaurante.service';
 import { Restaurante } from '../../Services/restaurantes/restaurante';
+import { environment } from '../../../enviroments/enviroment';
 
 @Component({
   selector: 'app-ver-restaurantes',
@@ -16,7 +17,8 @@ export class VerRestaurantesComponent implements OnInit{
 
   todosRestaurantes!:Restaurante[]
   nombreRestauranteBuscado!:string
-
+  urlHost:string = environment.urlAut;
+  
   ngOnInit(): void {
     if(this.idLugar){
       this.obtenerRestauranteDeLugar(this.idLugar)

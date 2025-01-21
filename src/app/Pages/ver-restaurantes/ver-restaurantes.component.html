@@ -14,7 +14,7 @@
 
     <div class="card-restaurante" *ngFor="let auxrestaurante of todosRestaurantes">
         <div class="card-restaurante-img">
-            <img src="assets/img/restaurante1.jpg" alt="rest1" />
+            <img [src]="[urlHost + auxrestaurante.imagenesRestaurantes[0].url]" alt="rest1" />
         </div>
         <div class="card-restaurante-info">
             <div class="card-restaurante-nombre">

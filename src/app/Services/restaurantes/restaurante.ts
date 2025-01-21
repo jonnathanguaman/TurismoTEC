@@ -1,3 +1,5 @@
+import { ImagenesRestaurantes } from "../imagenesRestaurantes/imagenesRestaurantes";
+
 export interface Restaurante{
     idRestaurante:number;
     nombre:string;
@@ -6,4 +8,5 @@ export interface Restaurante{
     descripcion:string;
     menu:string;
     calificacion:number
+    imagenesRestaurantes:ImagenesRestaurantes[]
 }
