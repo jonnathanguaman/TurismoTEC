@@ -15,7 +15,7 @@ function startSlider() {
       currentIndex = (currentIndex + 1) % 3;
       sliderImages.style.transform = `translateX(-${currentIndex * 100}%)`;
     }
-  }, 5000);
+  }, 4000);
 }
 window.onload = startSlider;
 

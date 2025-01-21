@@ -31,7 +31,8 @@ import { ModalMesaComponent } from './Components/modal-mesa/modal-mesa.component
 import { CrudLugarComponent } from './Components/crud-lugar/crud-lugar.component';
 import { CrudRestauranteComponent } from './Components/crud-restaurante/crud-restaurante.component';
 import { CrudHotelComponent } from './Components/crud-hotel/crud-hotel.component'; 
-import { MenuRestauranteComponent } from './Components/menu-restaurante/menu-restaurante.component'; 
+import { MenuRestauranteComponent } from './Components/menu-restaurante/menu-restaurante.component';
+import { TimeAgoPipe } from './Services/publicaciones/time-ago.pipe'; 
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { MenuRestauranteComponent } from './Components/menu-restaurante/menu-res
     CrudRestauranteComponent,
     CrudHotelComponent,
     MenuRestauranteComponent,
+    TimeAgoPipe,
   ],
   imports: [
     BrowserModule,

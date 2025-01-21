@@ -5,70 +5,82 @@
   </div>
 
 
-<!-- Descripción con foto lateral -->
-<div class="descripcion-foto">
-  <div class="descripcion">
-    <h2>Bienvenido al Foro</h2>
-    <p>
-      Cuenca, ubicada en el sur de Ecuador, es una ciudad que cautiva por su belleza colonial,
-       su rica historia y su vibrante cultura. Fundada en 1557, esta encantadora ciudad es un 
-       destino ideal para los amantes del turismo histórico, cultural y natural. Su centro histórico,
-        declarado Patrimonio de la Humanidad por la UNESCO, se caracteriza por calles empedradas, 
-        hermosas iglesias coloniales, y la imponente catedral que domina la Plaza Calderón. Además, 
-        la ciudad está rodeada de impresionantes paisajes montañosos y parques naturales, como el Parque Nacional 
-        Cajas, conocido por sus lagunas y biodiversidad. Los turistas también podrán disfrutar de su gastronomía 
-        típica, su artesanal sombrero de Panamá, y la calidez de sus habitantes, haciendo de Cuenca un destino 
+  <!-- Descripción con foto lateral -->
+  <div class="descripcion-foto">
+    <div class="descripcion">
+      <h2>Bienvenido al Foro</h2>
+      <p>
+        Cuenca, ubicada en el sur de Ecuador, es una ciudad que cautiva por su belleza colonial,
+        su rica historia y su vibrante cultura. Fundada en 1557, esta encantadora ciudad es un
+        destino ideal para los amantes del turismo histórico, cultural y natural. Su centro histórico,
+        declarado Patrimonio de la Humanidad por la UNESCO, se caracteriza por calles empedradas,
+        hermosas iglesias coloniales, y la imponente catedral que domina la Plaza Calderón. Además,
+        la ciudad está rodeada de impresionantes paisajes montañosos y parques naturales, como el Parque Nacional
+        Cajas, conocido por sus lagunas y biodiversidad. Los turistas también podrán disfrutar de su gastronomía
+        típica, su artesanal sombrero de Panamá, y la calidez de sus habitantes, haciendo de Cuenca un destino
         único para explorar en Ecuador.
-    </p>
-    <p>
-      Este espacio está diseñado para compartir ideas, resolver dudas y
-      conectar con otros usuarios. ¡Participa y enriquece nuestra comunidad!
-    </p>
-  </div>
-  <div class="foto">
-    <img src="assets/img/img_foro2.jpg" alt="Foto lateral" />
-  </div>
-</div>
-
-<!-- Botón para abrir la ventana emergente -->
-<div class="foro-container">
-  <button class="btn-foro" (click)="abrirVentanaCrear()">Crear publicación</button>
-</div>
-
-
-<!-- Ventana emergente para crear contenido -->
-<div class="ventana-emergente" *ngIf="mostrarVentanaCrear">
-  <div class="ventana-contenido">
-    <h2>Crear Nuevo Contenido</h2>
-    <div class="input-container">
-      <label for="titulo">Título:</label>
-      <input type="text" id="titulo" [(ngModel)]="nuevoTitulo" />
+      </p>
+      <p>
+        Este espacio está diseñado para compartir ideas, resolver dudas y
+        conectar con otros usuarios. ¡Participa y enriquece nuestra comunidad!
+      </p>
     </div>
-    <div class="input-container">
-      <label for="contenido">Contenido:</label>
-      <textarea id="contenido" [(ngModel)]="nuevoContenido" rows="4" (input)="autoResize($event)"></textarea>
+    <div class="foto">
+      <img src="assets/img/img_foro2.jpg" alt="Foto lateral" />
     </div>
-    <button class="btn-opcion" (click)="publicar()">Publicar</button>
-    <button class="btn-opcion" (click)="cerrarVentana()">Salir</button>
   </div>
-</div>
 
-<!-- Publicaciones -->
-<div class="publicaciones">
-  <div class="publicacion" *ngFor="let publicacion of publicaciones; let i = index">
-    <h3>{{ publicacion.titulo }}</h3>
-    <p>{{ publicacion.contenido }}</p>
+  <!-- Botón para abrir la ventana emergente -->
+  <div class="foro-container">
+    <button class="btn-foro" (click)="abrirVentanaCrear()">Crear publicación</button>
+  </div>
 
-    <!-- Sección de comentarios -->
-    <div class="comentarios">
-      <h4>Comentarios:</h4>
-      <div *ngFor="let comentario of publicacion.comentarios" class="comentario">
-        <p>{{ comentario }}</p>
+
+  <!-- Ventana emergente para crear contenido -->
+  <div class="ventana-emergente" *ngIf="mostrarVentanaCrear">
+    <form [formGroup]="publicacionForm">
+      <div class="ventana-contenido">
+        <h2>Crear nueva publicación</h2>
+        <div class="input-container">
+          <label for="titulo">Título:</label>
+          <input formControlName="titulo" for type="text" id="titulo" />
+        </div>
+        <div class="input-container">
+          <label for="contenido">Contenido:</label>
+          <textarea formControlName="contenido" name="contenido" id="contenido" rows="4"
+            (input)="autoResize($event)"></textarea>
+        </div>
+        <button class="btn-opcion" type="submit" (click)="guardarPublicacion()">Publicar</button>
+        <button class="btn-opcion" (click)="cerrarVentana()">Salir</button>
       </div>
-      <div class="comentario-form">
-        <textarea [(ngModel)]="nuevoComentario[i]" placeholder="Escribe un comentario" rows="2" (input)="autoResize($event)"></textarea>
-        <button (click)="agregarComentario(publicacion, i)">Publicar comentario</button>
+    </form>
+  </div>
+
+  <!-- Publicaciones -->
+  <div class="publicaciones">
+    <div class="publicacion" *ngFor="let publicacion of publicacionesList">
+      <p class="publicado">Publicado por: {{publicacion.usuario.nombre}} {{publicacion.usuario.apellido}}</p>
+      <p class="hace">hace: {{publicacion.fechaPublicacion | timeAgo}}</p>
+      <h3>{{ publicacion.titulo }}</h3>
+      <p>{{ publicacion.contenido }}</p>
+
+      <div class="comentarios">
+        <button (click)="verComentarios()">{{textComentario}}</button>
+        <button (click)="comentar()">Comentar</button>
+      </div>
+
+      <div *ngIf="mostrarComentarios">
+        <h3>Comentarios:</h3>
+        <ul>
+          <li>Comentarios</li>
+        </ul>
       </div>
     </div>
+    
   </div>
-</div>
+  
+  <!-- Sección de formulario para comentar -->
+  <div *ngIf="mostrandoFormulario">
+    <textarea placeholder="Escribe tu comentario"></textarea>
+    <button >Publicar</button>
+  </div>

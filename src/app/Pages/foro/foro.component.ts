@@ -1,18 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { PublicacionesService } from '../../Services/publicaciones/publicaciones.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Publicaciones } from '../../Services/publicaciones/publicaciones';
+import Swal from 'sweetalert2';
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'bottom-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  showCloseButton: true,
+  didOpen: (toast) => {
+    toast.onmouseenter = Swal.stopTimer;
+    toast.onmouseleave = Swal.resumeTimer;
+  },
+});
 
 @Component({
   selector: 'app-foro',
   templateUrl: './foro.component.html',
-  styleUrl: './foro.component.css'
+  styleUrl: './foro.component.css',
 })
-export class ForoComponent {
-
+export class ForoComponent implements OnInit {
   mostrarVentana: boolean = false;
   mostrarVentanaCrear: boolean = false;
-  nuevoTitulo: string = '';
-  nuevoContenido: string = '';
-  nuevoComentario: string[] = [];
-  publicaciones: any[] = [];
+
   abrirVentana() {
     this.mostrarVentana = true;
   }
@@ -24,28 +37,85 @@ export class ForoComponent {
     this.mostrarVentana = false;
     this.mostrarVentanaCrear = true;
   }
-  publicar() {
-    if (this.nuevoTitulo.trim() && this.nuevoContenido.trim()) {
-      this.publicaciones.push({
-        titulo: this.nuevoTitulo,
-        contenido: this.nuevoContenido,
-        comentarios: [],
-      });
-      this.nuevoTitulo = '';
-      this.nuevoContenido = '';
-      this.cerrarVentana();
+
+  mostrarComentarios: boolean = false;
+  mostrandoFormulario: boolean = false;
+
+  textComentario: string = '▼ Comentarios';
+
+  verComentarios() {
+    this.mostrarComentarios = !this.mostrarComentarios;
+    if (this.mostrarComentarios) {
+      this.textComentario = '▲ Comentarios';
     } else {
-      alert('Por favor, completa todos los campos antes de publicar.');
+      this.textComentario = '▼ Comentarios';
     }
   }
-  agregarComentario(publicacion: any, index: number) {
-    if (this.nuevoComentario[index]?.trim()) {
-      publicacion.comentarios.push(this.nuevoComentario[index]);
-      this.nuevoComentario[index] = '';
-    } else {
-      alert('El comentario no puede estar vacío.');
+
+  comentar() {
+    this.mostrandoFormulario = true;
+  }
+
+  publicacionesList!: Publicaciones[];
+
+  constructor(
+    private publicacionesService: PublicacionesService,
+    private fb: FormBuilder
+  ) {}
+
+  ngOnInit(): void {
+    this.obtenerPublicaciones();
+  }
+
+  publicacionForm = this.fb.group({
+    idPublicaciones: ['', [Validators.required]],
+    titulo: ['', [Validators.required]],
+    contenido: ['', [Validators.required]],
+    idusuario: [, [Validators.required]],
+  });
+
+  get titulo() {
+    return this.publicacionForm.controls.titulo;
+  }
+
+  get contenido() {
+    return this.publicacionForm.controls.contenido;
+  }
+
+  get usuario() {
+    return this.publicacionForm.controls.idusuario;
+  }
+
+  guardarPublicacion() {
+    if (this.publicacionForm) {
+      this.publicacionesService
+        .guardarPublicacion(
+          this.publicacionForm.value as unknown as Publicaciones,
+          <number>(<unknown>sessionStorage.getItem('id'))
+        )
+        .subscribe({
+          next: () => {
+            this.obtenerPublicaciones();
+            this.cerrarVentana();
+            Toast.fire({
+              icon: 'success',
+              title: 'Se ha publicado con exito',
+              footer: 'Gracias por compartir con la comunidad',
+            });
+          },
+          error: (e) => {
+            console.log(e);
+          },
+        });
     }
   }
+
+  obtenerPublicaciones() {
+    this.publicacionesService.getPublicaciones().subscribe((publicaciones) => {
+      this.publicacionesList = publicaciones;
+    });
+  }
+
   autoResize(event: any) {
     event.target.style.height = 'auto';
     event.target.style.height = `${event.target.scrollHeight}px`;
