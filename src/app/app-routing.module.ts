@@ -78,6 +78,7 @@ const routes: Routes = [
     path:"crud-hotel",
     component:CrudHotelComponent
   },
+  {
     path:"restaurantes",
     component:VerRestaurantesComponent
   },
