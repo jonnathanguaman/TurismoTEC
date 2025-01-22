@@ -55,6 +55,12 @@ export class VerHotelesComponent implements OnInit{
   obtenerHotelesDeLugar(id:number){
     this.hotelesService.gethotelesDeLugar(id).subscribe(auxHotelesDeLugar =>{
       this.todoshoteles = auxHotelesDeLugar
+
+      this.todoshoteles.forEach(hotel =>{
+        this.obtenerImagesDeHoteles(hotel.idHotel).then(img => {
+          hotel.imagenesHoteles = img
+        })
+      })
     })
   }
 

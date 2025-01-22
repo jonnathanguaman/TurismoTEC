@@ -3,6 +3,9 @@ import { HotelesService } from '../../Services/hoteles/hoteles.service';
 import { RestauranteService } from '../../Services/restaurantes/restaurante.service';
 import { Restaurante } from '../../Services/restaurantes/restaurante';
 import { environment } from '../../../enviroments/enviroment';
+import { ImagenesRestaurantesService } from '../../Services/imagenesRestaurantes/imagenes-restaurantes.service';
+import { ImagenesRestaurantes } from '../../Services/imagenesRestaurantes/imagenesRestaurantes';
+import { error } from 'console';
 
 @Component({
   selector: 'app-ver-restaurantes',
@@ -11,14 +14,16 @@ import { environment } from '../../../enviroments/enviroment';
 })
 export class VerRestaurantesComponent implements OnInit{
   
-  constructor(private restauranteService:RestauranteService){}
+  constructor(
+    private restauranteService:RestauranteService,
+    private imgRestaurantesService:ImagenesRestaurantesService
+  ){}
 
   @Input() idLugar?:number
 
   todosRestaurantes!:Restaurante[]
   nombreRestauranteBuscado!:string
   urlHost:string = environment.urlAut;
-  
   ngOnInit(): void {
     if(this.idLugar){
       this.obtenerRestauranteDeLugar(this.idLugar)
@@ -30,12 +35,33 @@ export class VerRestaurantesComponent implements OnInit{
   obtenerTodosRestaurantes(){
     this.restauranteService.getTodosRestaurantes().subscribe(restaurate =>{
       this.todosRestaurantes = restaurate
+
+      this.todosRestaurantes.forEach(restaurante =>{
+        this.obtenerImgDeRestaurates(restaurante.idRestaurante).then(img =>{
+          restaurante.imagenesRestaurantes = img
+        })
+      })
+    })
+  }
+
+  obtenerImgDeRestaurates(idRestaurate:number):Promise<ImagenesRestaurantes[]>{
+    return new Promise((resolve, reject) =>{
+      this.imgRestaurantesService.getImagenesRestaurantes(idRestaurate).subscribe(
+        imgRestante => resolve(imgRestante),
+        error => reject(error)
+      )
     })
   }
 
   obtenerRestauranteDeLugar(id:number){
     this.restauranteService.getRestauranteDeLugar(id).subscribe(auxrestauranteDeLugar =>{
       this.todosRestaurantes = auxrestauranteDeLugar
+
+      this.todosRestaurantes.forEach(restaurante =>{
+        this.obtenerImgDeRestaurates(restaurante.idRestaurante).then(img =>{
+          restaurante.imagenesRestaurantes = img
+        })
+      })
     })
   }
 

@@ -17,7 +17,6 @@ export class RecomendacionesComponent implements OnInit{
 
     todosLugars:Lugares[] = []
     urlHost:string = environment.urlAut;
-    imagenesLugaresById:ImagenesLugares[]=[]
 
     ngOnInit(): void {
       // Obtiene todos los lugares
