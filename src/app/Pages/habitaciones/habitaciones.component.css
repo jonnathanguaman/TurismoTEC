@@ -1,0 +1,119 @@
+
+.container {
+    font-family: Arial, sans-serif;
+    max-width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.hotel {
+    margin-bottom: 30px;
+}
+
+.hotel-nombre h2 {
+    margin: 0;
+    font-size: 28px;
+    color: #0073e6;
+    text-align: center;
+}
+
+.hotel-descripcion p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+.hotel-titulo-informacion h3 {
+    font-size: 22px;
+    color: #0073e6;
+    margin-top: 20px;
+}
+
+.hotel-informacion .informacion {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+}
+
+.habitaciones{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+}
+
+.habitaciones-titulo h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #0073e6;
+    margin-bottom: 15px;
+}
+
+.card-habitacion {
+    text-align: center;
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    width: 25%;
+    height: 325px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card-habitacion:hover{
+    transform: translateY(-5px); 
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15)
+    
+}
+
+.card-habitacion-imagen {
+    display: flex;
+    justify-content: center;
+    object-fit: cover;
+    height: 200px;
+}
+
+.card-habitacion-imagen img{
+    border-radius: 15px;
+}
+
+.card-habitacion-informacion {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.botonVerHabitacion {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.botonVerHabitacion:hover {
+    background-color: #45a049;
+}
+
+.botonVerHabitacion:active {
+    background-color: #4CAF50;
+}
+
+
+@media (max-width: 768px) {
+    .habitaciones {
+        flex-direction: column;
+    }
+
+
+    .card-habitacion{
+        width: 90%;
+    }
+    
+}

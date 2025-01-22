@@ -1,0 +1,9 @@
+<div class="slider-container" *ngIf="idRestaurante">
+    <div class="slider">
+        <div class="slider-images">
+            <div class="slide" *ngFor="let auximgRestaurent of imgRestaurantes">
+                <img [src]="[urlHost + auximgRestaurent.url]" alt="Imagen 1" />
+            </div>
+        </div>
+    </div>
+</div>

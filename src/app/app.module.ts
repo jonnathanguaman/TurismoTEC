@@ -18,9 +18,23 @@ import { DatosPersonalesComponent } from './Components/datos-personales/datos-pe
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptorService } from './Services/login/jwt-interceptor.service';
 import { ErrorInterceptorService } from './Services/login/error-interceptor.service';
-import { TiendaComponent } from './Pages/tienda/tienda.component';
-import { ProductoComponent } from './Pages/producto/producto.component';
 import { VerHotelesComponent } from './Pages/ver-hoteles/ver-hoteles.component';
+import { LugarComponent } from './Pages/lugar/lugar.component';
+import { HabitacionesComponent } from './Pages/habitaciones/habitaciones.component';
+import { SliderHotelComponent } from './Components/slider-hotel/slider-hotel.component';
+import { ModalHabitacionComponent } from './Components/modal-habitacion/modal-habitacion.component';
+import { ForoComponent } from './Pages/foro/foro.component';
+import { VerRestaurantesComponent } from './Pages/ver-restaurantes/ver-restaurantes.component';
+import { MesasComponent } from './Pages/mesas/mesas.component';
+import { SliderRestauranteComponent } from './Components/slider-restaurante/slider-restaurante.component';
+import { ModalMesaComponent } from './Components/modal-mesa/modal-mesa.component';
+import { CrudLugarComponent } from './Components/crud-lugar/crud-lugar.component';
+import { CrudRestauranteComponent } from './Components/crud-restaurante/crud-restaurante.component';
+import { CrudHotelComponent } from './Components/crud-hotel/crud-hotel.component'; 
+import { MenuRestauranteComponent } from './Components/menu-restaurante/menu-restaurante.component';
+import { TimeAgoPipe } from './Services/publicaciones/time-ago.pipe';
+import { PaginaAdminComponent } from './Pages/pagina-admin/pagina-admin.component';
+import { MenuAdminComponent } from './Shared/menu-admin/menu-admin.component'; 
 
 @NgModule({
   declarations: [
@@ -36,9 +50,23 @@ import { VerHotelesComponent } from './Pages/ver-hoteles/ver-hoteles.component';
     SliderInicioComponent,
     LoginComponent,
     DatosPersonalesComponent,
-    TiendaComponent,
-    ProductoComponent,
     VerHotelesComponent,
+    LugarComponent,
+    HabitacionesComponent,
+    SliderHotelComponent,
+    ModalHabitacionComponent,
+    ForoComponent,
+    VerRestaurantesComponent,
+    MesasComponent,
+    SliderRestauranteComponent,
+    ModalMesaComponent,
+    CrudLugarComponent,
+    CrudRestauranteComponent,
+    CrudHotelComponent,
+    MenuRestauranteComponent,
+    TimeAgoPipe,
+    PaginaAdminComponent,
+    MenuAdminComponent,
   ],
   imports: [
     BrowserModule,

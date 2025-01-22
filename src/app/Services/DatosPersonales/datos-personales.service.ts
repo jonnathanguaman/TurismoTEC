@@ -14,11 +14,11 @@ export class DatosPersonalesService {
   constructor(private http:HttpClient) { }
 
   guardarPesona(datosPersonales:DatosPersona):Observable<DatosPersona>{
-    return this.http.post<DatosPersona>(environment.urlHost+"public/api/usuario",datosPersonales,{headers:this.httpHeaders})
+    return this.http.post<DatosPersona>(environment.urlAut+"/public/api/usuario",datosPersonales,{headers:this.httpHeaders})
   }
 
   getPersonById(id:number):Observable<any>{
-    return this.http.get<any>(`${environment.urlHost+"public/api/usuario"}/${id}`)
+    return this.http.get<any>(`${environment.urlAut+"/public/api/usuario"}/${id}`)
   }
 
 }

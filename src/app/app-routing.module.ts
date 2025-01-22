@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RegistroPersonaComponent } from './Pages/registro-persona/registro-persona.component';
 import { InicioComponent } from './Pages/inicio/inicio.component';
@@ -7,8 +7,16 @@ import { PerfilComponent } from './Pages/perfil/perfil.component';
 import { RecomendacionesComponent } from './Pages/recomendaciones/recomendaciones.component';
 import { LoginComponent } from './Pages/login/login.component';
 import { DatosPersonalesComponent } from './Components/datos-personales/datos-personales.component';
-import { TiendaComponent } from './Pages/tienda/tienda.component';
-import { ProductoComponent } from './Pages/producto/producto.component';
+import { LugarComponent } from './Pages/lugar/lugar.component';
+import { VerHotelesComponent } from './Pages/ver-hoteles/ver-hoteles.component';
+import { HabitacionesComponent } from './Pages/habitaciones/habitaciones.component';
+import { ForoComponent } from './Pages/foro/foro.component';
+import { VerRestaurantesComponent } from './Pages/ver-restaurantes/ver-restaurantes.component';
+import { MesasComponent } from './Pages/mesas/mesas.component';
+import { CrudLugarComponent } from './Components/crud-lugar/crud-lugar.component';
+import { CrudRestauranteComponent } from './Components/crud-restaurante/crud-restaurante.component';
+import { CrudHotelComponent } from './Components/crud-hotel/crud-hotel.component';
+import { PaginaAdminComponent } from './Pages/pagina-admin/pagina-admin.component';
 
 const routes: Routes = [
   {
@@ -36,14 +44,55 @@ const routes: Routes = [
     component:LoginComponent
   },
   {
-    path:"tienda",
-    component:TiendaComponent
+    path:"lugar",
+    component:LugarComponent
   },
   {
-    path:"producto",
-    component:ProductoComponent
-  }
- 
+    path:"lugar/:id",
+    component:LugarComponent
+  },
+  {
+    path:"hoteles",
+    component:VerHotelesComponent
+  },
+  {
+    path:"habitacion/:id",
+    component:HabitacionesComponent
+  },
+  {
+    path:"foro",
+    component:ForoComponent
+  },
+  {
+    path:"restaurantes",
+    component:VerRestaurantesComponent
+  },
+  {
+    path:"restaurantes",
+    component:VerRestaurantesComponent
+  },
+  {
+    path:"mesa/:id",
+    component:MesasComponent
+  },
+  {
+    path:"admin",
+    component:PaginaAdminComponent,
+    children:[
+      {
+        path:"crudRestaurante",
+        component:CrudRestauranteComponent
+      },
+      {
+        path:"crudLugar",
+        component:CrudLugarComponent
+      },
+      {
+        path:"crudHotel",
+        component:CrudHotelComponent
+      },
+    ]
+  },
 ];
 
 @NgModule({

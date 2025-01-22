@@ -1,0 +1,72 @@
+/* Estilos generales para el menú lateral */
+.sidebar {
+    width: 200px;
+    background-color: #2c3e50;
+    color: white;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+  }
+  
+  .sidebar-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .sidebar-header h2 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ecf0f1;
+  }
+  
+  .menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu-item {
+    background: none;
+    border: none;
+    width: 100%;
+    padding: 15px;
+    text-align: left;
+    font-size: 16px;
+    color: #ecf0f1;
+    background-color: #34495e;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .menu-item:hover {
+    background-color: #1abc9c;
+  }
+  
+  .menu-item:focus {
+    outline: none;
+  }
+  
+  .menu-item:active {
+    background-color: #16a085;
+  }
+  
+  /* Añadir sombra y bordes */
+  .sidebar {
+    box-shadow: 3px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sidebar-header h2 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 1px;
+  }
+  
+  /* Estilo para el contenido que se desplaza a la derecha del menú lateral */
+  .content {
+    margin-left: 250px;
+    padding: 20px;
+  }
+  

@@ -1,0 +1,58 @@
+<div class="modal" *ngIf="isVisible">
+    <div class="modal-content">
+        <span class="cerrar" (click)="cerrarModal()">×</span>
+
+        <div class="modal-content-principal">
+            <div class="modal-content-principal-item">
+
+                <div class="modal-content-principal-item-imgPrincipal">
+                    <img src="assets/img/mesa1.jpg" alt="mesa1" />
+                </div>
+
+                <div class="modal-content-principal-item-img-secundarias">
+                    <div class="modal-content-principal-item-img"></div>
+                    <div class="modal-content-principal-item-img"></div>
+                    <div class="modal-content-principal-item-img"></div>
+                </div>
+            </div>
+
+            <div class="modal-content-principal-item">
+
+                <div class="modal-titulo">
+                    <h3>Mesa Exclusiva</h3>
+                </div>
+
+                <div class="modal-descripcion">
+                    <p>Disfruta de una experiencia gastronómica inolvidable con una mesa reservada especialmente para ti.</p>
+                </div>
+
+                <div class="modal-numeroMesa">
+                    <p>Mesa número: 12</p>
+                </div>
+
+                <div class="modal-fechaReserva">
+                    <div class="modal-fechaReserva-inicio">
+                        <label>Fecha de inicio de la reserva:</label>
+                        <br>
+                        <input type="date">
+                    </div>
+
+                    <div class="modal-fechaReserva-fin">
+                        <label>Fecha final de la reserva:</label>
+                        <br>
+                        <input type="date">
+                    </div>
+                </div>
+
+                <div class="modal-precio">
+                    <p>Precio: $50</p>
+                </div>
+
+                <div class="modal-boton">
+                    <button class="botonReservar">Reservar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

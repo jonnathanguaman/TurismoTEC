@@ -1,0 +1,37 @@
+<div class="container">
+
+    <div class="Titulo">
+        <h1>Restaurantes</h1>
+    </div>
+
+    <div class="search-container">
+        <div class="search-bar">
+          <input *ngIf="!idLugar" [(ngModel)]="nombreRestauranteBuscado" type="text" name="buscar" id="buscar" placeholder="Buscar..." (input)="filtrarRestaurantes()" class="search-input">
+          <input *ngIf="idLugar" [(ngModel)]="nombreRestauranteBuscado" type="text" name="buscar" id="buscar" placeholder="Buscar en recomendacion" (input)="filtrarHotelesRecomendaciones()" class="search-input">
+        </div>
+    </div>
+    <p>Nombre: {{nombreRestauranteBuscado}}</p>
+
+    <div class="card-restaurante" *ngFor="let auxrestaurante of todosRestaurantes">
+        <div class="card-restaurante-img">
+            <img [src]="[urlHost + auxrestaurante.imagenesRestaurantes[0].url]" alt="rest1" />
+        </div>
+        <div class="card-restaurante-info">
+            <div class="card-restaurante-nombre">
+                <h3>{{auxrestaurante.nombre}}</h3>
+            </div>
+            <div class="card-restaurante-descripcion">
+                <p>{{auxrestaurante.descripcion}}</p>
+            </div>
+
+            <div class="card-restaurante-calificacion">
+                <p>Calificación: {{auxrestaurante.calificacion}} estrellas</p>
+            </div>
+            
+        </div>
+        <div class="card-restaurante-boton">
+            <button [routerLink]="['/mesa/'+auxrestaurante.idRestaurante]">Ver restaurante</button>
+        </div>
+    </div>
+
+</div>

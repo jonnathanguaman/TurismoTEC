@@ -1,0 +1,52 @@
+<div class="lugar-container">
+    <!-- Columna de imágenes -->
+    <div class="imagenes-container" *ngIf="lugarEcontrado">
+        <div class="imagen-principal">
+            <img [src]="[urlHost + lugarEcontrado.imagenesLugars[0].url]"
+                alt="Producto principal">
+            <img [src]="[urlHost + lugarEcontrado.imagenesLugars[1].url]" >
+        </div>
+        <div class="imagenes-secundarias">
+            <img [src]="[urlHost + lugarEcontrado.imagenesLugars[2].url]">
+        </div>
+    </div>
+
+    <!-- Columna de detalles -->
+    <div class="detalles-container" *ngIf="lugarEcontrado">
+        <h1 class="nombre">{{lugarEcontrado.nombre}}</h1>
+        <p class="descripcion">{{lugarEcontrado.descripcion}}</p>
+        
+        <div class="container-detalles">
+            <p class="detalles" *ngIf="lugarEcontrado.areaProtegida">Area protegida</p>
+            <p class="detalles">Zona {{lugarEcontrado.tipoZona}}</p>
+        </div>
+        
+        <div class="menu">
+            <a class="ubucacion" (click)="abrirMapa()" [routerLink]="['/lugar/',lugarEcontrado.idLugares]">Ver ubicación</a>
+            <a class="hotel" (click)="abrirHoteles()" [routerLink]="['/lugar/',lugarEcontrado.idLugares]">Ver Hoteles</a>
+            <a class="restaurante" (click)="abrirRestaurantes()" [routerLink]="['/lugar/',lugarEcontrado.idLugares]">Ver restaurantes</a>
+        </div>
+
+    </div>
+</div>
+
+<!-- Subpestaña mapa-->
+<div [ngClass]="{'subpestanaMapa':!modalAbiertoMapa}" id="subpestana"
+    class="subpestana ocultar">
+    <iframe [src]="location" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <button (click)="cerrarMapa()" class="cerrar">Cerrar</button>
+</div>
+
+
+<!--Subpestaña hoteles-->
+<div [ngClass]="{'subpestanaHotel':!modalAbiertoHotel}" class="subpestana">
+    <app-ver-hoteles [idLugar]="lugarEcontrado.idLugares"></app-ver-hoteles>
+    <button (click)="cerrarHoteles()" class="cerrar">Cerrar</button>
+</div>
+
+<!--Subpestaña restaurante-->
+<div [ngClass]="{'subpestanaHotel':!modalAbiertoRestaurante}" class="subpestana">
+    <app-ver-restaurantes [idLugar]="lugarEcontrado.idLugares"></app-ver-restaurantes>
+    <button (click)="cerrarRestaurantes()" class="cerrar">Cerrar</button>
+</div>

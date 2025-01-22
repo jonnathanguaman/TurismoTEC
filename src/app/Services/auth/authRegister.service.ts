@@ -13,14 +13,14 @@ export class AuthRegisterService {
   constructor(private http:HttpClient) {}
 
   registerAuth(auth:authRegister):Observable<any>{
-    return this.http.post<any>(environment.urlHost+"public/v1/auth",auth,{headers:this.httpHeaders})
+    return this.http.post<any>(environment.urlAut+"/public/v1/auth",auth,{headers:this.httpHeaders})
   }
 
   getAuth(nombre:String):Observable<any>{
-    return this.http.get<any>(`${environment.urlHost+"public/v1/authGet"}/${nombre}`)
+    return this.http.get<any>(`${environment.urlAut+"/public/v1/authGet"}/${nombre}`)
   }
 
   getIdPerson(nombre:String):Observable<any>{
-    return this.http.get<any>(`${environment.urlHost+"public/v1/authGetId"}/${nombre}`)
+    return this.http.get<any>(`${environment.urlAut+"/public/v1/authGetId"}/${nombre}`)
   }
 }

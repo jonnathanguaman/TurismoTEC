@@ -87,8 +87,8 @@ export class DatosPersonalesComponent implements OnInit {
   idauth!:number;
   registrarPersona() {
     //Validar que el usuario no se repita
-    this.authService.getAuth(this.usuario).subscribe({
-      next: (auxauthService) => {
+    // this.authService.getAuth(this.usuario).subscribe({
+      // next: (auxauthService) => {
         // this.idauth = auxauthService.id_auth
         // console.log(this.idauth)
         this.persona.nombre = this.nombre;
@@ -118,7 +118,7 @@ export class DatosPersonalesComponent implements OnInit {
             });
           },
         });
-      },
-    });
+      // },
+    // });
   }
 }

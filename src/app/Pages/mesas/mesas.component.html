@@ -1,0 +1,52 @@
+<app-slider-restaurante [idRestaurante]="restauranteEncontrado.idRestaurante"></app-slider-restaurante>
+
+<div class="container">
+    <div class="restaurante" *ngIf="restauranteEncontrado">
+        <div class="restaurante-nombre">
+            <h2>{{restauranteEncontrado.nombre}}</h2>
+        </div>
+    
+        <div class="restaurante-descripcion">
+            <p>{{restauranteEncontrado.descripcion}}</p>
+        </div>
+
+        <div class="restaurante-titulo-informacion">
+            <h3>Información</h3>
+        </div>
+
+        <div class="restaurante-informacion">
+            <p class="informacion">Dirección: {{restauranteEncontrado.direccion}}</p>
+            <p class="informacion">Teléfono: {{restauranteEncontrado.telefono}}</p>
+        </div>
+        <div>
+            <a class="menu" (click)="restaurante.abrirModal()" >Ver menu</a>
+        </div>
+          
+    </div>
+
+    <div class="mesas-titulo">
+        <h2>Mesas Disponibles</h2>
+    </div>
+
+    <div class="mesas">
+        <div class="card-mesa" *ngFor="let auxMesa of mesasRestaurante">
+            <div class="card-mesa-imagen">
+                <img src="assets/img/mesa1.jpg" alt="Imagen 1" />
+            </div>
+            <div class="card-mesa-nombre">
+                <h3>Numero de mesa: {{auxMesa.numeroMesa}}</h3>
+            </div>
+
+            <div class="card-mesa-precio">
+                <p>Numero de sillas: {{auxMesa.capacidad}}</p>
+            </div>
+
+            <div class="card-mesa-botonVer">
+                <button (click)="modal.abrirModal()" class="botonVerMesa">Ver mesa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-modal-mesa #modal></app-modal-mesa>
+<app-menu-restaurante #restaurante></app-menu-restaurante>

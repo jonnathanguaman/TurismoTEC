@@ -1,0 +1,11 @@
+<!--Poner maximo 3 imagenes-->
+
+<div class="slider-container" *ngIf="idHotel">
+    <div class="slider">
+      <div class="slider-images">
+        <div class="slide" *ngFor="let auximgHotel of imgHoteles">
+          <img [src]="urlHost + auximgHotel.url">
+        </div>
+      </div>
+    </div>
+  </div>

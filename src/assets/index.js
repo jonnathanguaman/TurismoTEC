@@ -1,5 +1,5 @@
 //Inicia slider
-//Para un maximo de 3 imagenes
+//Para 3 imagenes
 let currentIndex = 0;
 let intervalId;
 
@@ -15,10 +15,8 @@ function startSlider() {
       currentIndex = (currentIndex + 1) % 3;
       sliderImages.style.transform = `translateX(-${currentIndex * 100}%)`;
     }
-  }, 5000);
+  }, 4000);
 }
-
-
 window.onload = startSlider;
 
 function stopSlider() {
