@@ -2,12 +2,12 @@
     <!-- Columna de imágenes -->
     <div class="imagenes-container" *ngIf="lugarEcontrado">
         <div class="imagen-principal">
-            <img [src]="[urlHost + lugarEcontrado.imagenesLugars[0].url]"
+            <img [src]="[urlHost + imgDeLugares[0].url]"
                 alt="Producto principal">
-            <img [src]="[urlHost + lugarEcontrado.imagenesLugars[1].url]" >
+            <img [src]="[urlHost + imgDeLugares[1].url]" >
         </div>
         <div class="imagenes-secundarias">
-            <img [src]="[urlHost + lugarEcontrado.imagenesLugars[2].url]">
+            <img [src]="[urlHost + imgDeLugares[2].url]">
         </div>
     </div>
 

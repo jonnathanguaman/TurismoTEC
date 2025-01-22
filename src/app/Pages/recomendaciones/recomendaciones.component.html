@@ -3,7 +3,7 @@
     <div class="card-recomendaciones" *ngFor="let auxlugares of todosLugars">
         <a [routerLink]="['/lugar/',auxlugares.idLugares]">
             <div class="card-recomendaciones-img">
-                <img [src]="'http://localhost:8080'+ auxlugares.imagenesLugars[0].url" alt="Imagen del lugar">    
+                <img [src]="urlHost+ auxlugares.imagenesLugars[0]!.url" alt="Imagen del lugar">    
             </div>
 
             <div class="card-recomendaciones-nombre">

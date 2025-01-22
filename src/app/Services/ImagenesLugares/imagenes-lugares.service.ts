@@ -14,4 +14,8 @@ export class ImagenesLugaresService {
     getImgesLugares():Observable<ImagenesLugares[]>{
       return this.http.get<ImagenesLugares[]>(environment.urlHost + "/imageLugares");
     }
+
+    getImagenesByIdLugares(idLugar:number):Observable<ImagenesLugares[]>{
+      return this.http.get<ImagenesLugares[]>(`${environment.urlHost + "/imageLugares"}/${idLugar}`)
+    }
 }

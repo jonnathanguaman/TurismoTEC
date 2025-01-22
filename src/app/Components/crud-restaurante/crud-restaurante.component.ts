@@ -13,12 +13,12 @@ export class CrudRestauranteComponent {
 
     nuevoRestaurante() {
         return {
-            id_restaurante: null,
+            id_restaurante: "null",
             nombre: '',
             direccion: '',
             telefono: '',
             descripcion: '',
-            precio: null,
+            precio: "null",
             disponibilidad: false,
             imagen: '',
         };

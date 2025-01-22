@@ -13,12 +13,12 @@ export class CrudHotelComponent {
 
     nuevoHotel() {
         return {
-            id_hotel: null,
+            id_hotel: "null",
             nombre: '',
             direccion: '',
             telefono: '',
             descripcion: '',
-            precio: null,
+            precio: "null",
             disponibilidad: false,
             imagen: '',
         };
