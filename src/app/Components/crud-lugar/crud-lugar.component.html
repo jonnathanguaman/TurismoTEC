@@ -63,15 +63,12 @@
 
                 <div class="btn-panel">
                     <button class="btn-opcion" type="submit" (click)="crearLugares()"><span class="icon">✔️</span> Guardar</button>
-                    <button class="btn-opcion" type="button" (click)="limpiarFormulario()"><span class="icon">🧹</span> Limpiar</button>
+                    
                 </div>
             </form>
             
         </div>
     </div>
-
-    <div *ngIf="message" class="message success">{{ message }}</div>
-
     <div class="table-container">
         <table>
             <thead>
@@ -95,8 +92,8 @@
                     <td>{{ lugar.tipoZona}}</td>
                     
                     <td>
-                        <button class="btn-opcion" (click)="editarLugar(lugar)"><span class="icon">✏️</span> Editar</button>
-                        <button class="btn-opcion" ><span class="icon">❌</span> Eliminar</button>
+                        <button class="btn-opcion" ><span class="icon">✏️</span> Editar</button>
+                        <button class="btn-opcion" (click)="eliminarLugar(lugar.idLugares)" ><span class="icon">❌</span> Eliminar</button>
                     </td>
                 </tr>
             </tbody>

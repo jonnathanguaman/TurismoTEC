@@ -5,6 +5,8 @@ export const environment = {
   production: false,
   urlHost: 'http://localhost:8080/public/v1',
   urlAut: 'http://localhost:8080',
+
+  
   mensajeToast: (tipo: 'success' | 'error' | 'warning' | 'info' | 'question', mensajeCuerpo: string, footer: string) => {
     const Toast = Swal.mixin({
       toast: true,
@@ -23,6 +25,21 @@ export const environment = {
       icon: tipo,
       title: mensajeCuerpo,
       footer: footer
+    });
+  },
+
+  mensajeEliminar(titulo:string,texto:string,tipo: 'success' | 'error' | 'warning' | 'info' | 'question'){
+    return Swal.fire({
+      title: titulo,
+      text: texto,
+      icon: tipo,
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'No, cancelar'
+    }).then((result) => {
+      return result.isConfirmed;
     });
   }
 };
