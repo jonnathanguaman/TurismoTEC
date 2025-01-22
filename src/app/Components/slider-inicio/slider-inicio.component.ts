@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ImagenesInicioService } from '../../Services/ImagenesInicio/imagenes-inicio.service';
+import { environment } from '../../../enviroments/enviroment';
 
 @Component({
   selector: 'app-slider-inicio',
@@ -7,9 +8,11 @@ import { ImagenesInicioService } from '../../Services/ImagenesInicio/imagenes-in
   styleUrls: ['./slider-inicio.component.css'],
 })
 export class SliderInicioComponent implements OnInit {
-  imagenes: string[] = []; // Almacena las URLs de las imágenes
+  imagenes: string[] = [];
 
   constructor(private imagenesService: ImagenesInicioService) {}
+
+  urlHost:string = environment.urlAut;
 
   ngOnInit(): void {
     this.cargarImagenes();
