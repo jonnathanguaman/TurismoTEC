@@ -7,5 +7,6 @@ export interface Lugares{
     direccion:string;
     tipoZona:string;
     areaProtegida:boolean;
+    patrimonio:boolean;
     imagenesLugars:ImagenesLugares[]
 }

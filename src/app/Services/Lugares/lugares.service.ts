@@ -18,4 +18,8 @@ export class LugaresService {
   getLugarById(id:number):Observable<Lugares>{
     return this.http.get<Lugares>(`${environment.urlHost + "/lugares"}/${id}`)
   }
+
+  guardarLugares(lugares:Lugares):Observable<Lugares>{
+    return this.http.post<Lugares>(environment.urlHost + "/lugares",lugares)
+  }
 }

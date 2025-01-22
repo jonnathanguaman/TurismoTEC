@@ -19,49 +19,54 @@
             <span class="close-modal" (click)="closeCrudModal()">✖</span>
             <h3>Crear o Editar Lugar</h3>
 
-            <form (submit)="onSubmit()" #formLugar="ngForm">
+            <form [formGroup]="lugaresForm">
                 <div class="input-container">
                     <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" [(ngModel)]="lugar.nombre" name="nombre" required minlength="3" #nombre="ngModel" />
-                    <div *ngIf="nombre.invalid && nombre.touched" class="message error">El nombre es obligatorio y debe tener al menos 3 caracteres.</div>
+                    <input type="text" id="nombre" formControlName="nombre" />
+                    <div *ngIf="lugaresForm.get('nombre')?.invalid && lugaresForm.get('nombre')?.touched" class="message error">
+                        El nombre es obligatorio.
+                    </div>
                 </div>
                 <div class="input-container">
                     <label for="descripcion">Descripción:</label>
-                    <textarea id="descripcion" [(ngModel)]="lugar.descripcion" name="descripcion" rows="4" required #descripcion="ngModel"></textarea>
-                    <div *ngIf="descripcion.invalid && descripcion.touched" class="message error">La descripción es obligatoria.</div>
+                    <textarea id="descripcion" formControlName="descripcion" rows="4"></textarea>
+                    <div *ngIf="lugaresForm.get('descripcion')?.invalid && lugaresForm.get('descripcion')?.touched" class="message error">
+                        La descripción es obligatoria.
+                    </div>
                 </div>
                 <div class="input-container">
                     <label for="direccion">Dirección:</label>
-                    <input type="text" id="direccion" [(ngModel)]="lugar.direccion" name="direccion" required #direccion="ngModel" />
-                    <div *ngIf="direccion.invalid && direccion.touched" class="message error">La dirección es obligatoria.</div>
+                    <input type="text" id="direccion" formControlName="direccion" />
+                    <div *ngIf="lugaresForm.get('direccion')?.invalid && lugaresForm.get('direccion')?.touched" class="message error">
+                        La dirección es obligatoria.
+                    </div>
                 </div>
                 <div class="input-container">
                     <label for="areaProtegida">Área Protegida:</label>
-                    <input type="checkbox" id="areaProtegida" [(ngModel)]="lugar.areaProtegida" name="areaProtegida" />
-                </div>
-                <div class="input-container">
-                    <label for="patrimonio">Patrimonio:</label>
-                    <input type="checkbox" id="patrimonio" [(ngModel)]="lugar.patrimonio" name="patrimonio" />
-                </div>
-                <div class="input-container">
-                    <label for="urbano">Urbano:</label>
-                    <input type="checkbox" id="urbano" [(ngModel)]="lugar.urbano" name="urbano" />
-                </div>
-                <div class="input-container">
-                    <label for="rural">Rural:</label>
-                    <input type="checkbox" id="rural" [(ngModel)]="lugar.rural" name="rural" />
-                </div>
-                <div class="input-container">
-                    <label for="imagen">Imagen:</label>
-                    <input type="file" id="imagen" (change)="onImageChange($event)" />
+                    <input type="checkbox" id="areaProtegida" formControlName="areaProtegida" />
                 </div>
 
-                <hr />
+                <div class="input-container">
+                    <label for="areaProtegida">Patrimonio:</label>
+                    <input type="checkbox" id="patrimonio" formControlName="patrimonio" />
+                </div>
+                <div class="input-container">
+                    <label for="tipoZona">Tipo de Zona:</label>
+                    <select id="tipoZona" formControlName="tipoZona">
+                        <option value="urbano">Urbano</option>
+                        <option value="rural">Rural</option>
+                    </select>
+                    <div *ngIf="lugaresForm.get('tipoZona')?.invalid && lugaresForm.get('tipoZona')?.touched" class="message error">
+                        El tipo de zona es obligatorio.
+                    </div>
+                </div>
+
                 <div class="btn-panel">
-                    <button class="btn-opcion" type="submit" [disabled]="formLugar.invalid"><span class="icon">✔️</span> Guardar</button>
+                    <button class="btn-opcion" type="submit" (click)="crearLugares()"><span class="icon">✔️</span> Guardar</button>
                     <button class="btn-opcion" type="button" (click)="limpiarFormulario()"><span class="icon">🧹</span> Limpiar</button>
                 </div>
             </form>
+            
         </div>
     </div>
 
@@ -76,25 +81,22 @@
                     <th>Descripción</th>
                     <th>Área Protegida</th>
                     <th>Patrimonio</th>
-                    <th>Urbano</th>
-                    <th>Rural</th>
-                    <th>Imagen</th>
+                    <th>Tipo de zona</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let lugar of lugares">
+                <tr *ngFor="let lugar of todosLugares">
                     <td>{{ lugar.nombre }}</td>
                     <td>{{ lugar.direccion }}</td>
                     <td>{{ lugar.descripcion }}</td>
                     <td>{{ lugar.areaProtegida ? 'Sí' : 'No' }}</td>
                     <td>{{ lugar.patrimonio ? 'Sí' : 'No' }}</td>
-                    <td>{{ lugar.urbano ? 'Sí' : 'No' }}</td>
-                    <td>{{ lugar.rural ? 'Sí' : 'No' }}</td>
-                    <td><img [src]="lugar.imagen" alt="Imagen Lugar" /></td>
+                    <td>{{ lugar.tipoZona}}</td>
+                    
                     <td>
                         <button class="btn-opcion" (click)="editarLugar(lugar)"><span class="icon">✏️</span> Editar</button>
-                        <button class="btn-opcion" (click)="eliminarLugar(lugar.id_lugar)"><span class="icon">❌</span> Eliminar</button>
+                        <button class="btn-opcion" ><span class="icon">❌</span> Eliminar</button>
                     </td>
                 </tr>
             </tbody>

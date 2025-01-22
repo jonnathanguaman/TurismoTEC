@@ -1,11 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { LugaresService } from '../../Services/Lugares/lugares.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Lugares } from '../../Services/Lugares/lugares';
+import { environment } from '../../../enviroments/enviroment';
 
 @Component({
     selector: 'app-crud-lugar',
     templateUrl: './crud-lugar.component.html',
     styleUrls: ['./crud-lugar.component.css'],
 })
-export class CrudLugarComponent {
+export class CrudLugarComponent implements OnInit{
     lugar = this.nuevoLugar();
     lugares: any[] = [];
     message: string | null = null;
@@ -72,5 +76,46 @@ export class CrudLugarComponent {
                 this.lugar.imagen = reader.result as string;
             };
         }
+    }
+
+    constructor(private lugaresService:LugaresService,
+        private fb: FormBuilder,
+    ){}
+
+    ngOnInit(): void {
+        this.obtenerLugares()
+    }
+
+    lugaresForm = this.fb.group({
+        nombre:['',[Validators.required]],
+        descripcion:['',[Validators.required]],
+        direccion:['',[Validators.required]],
+        tipoZona:['',[Validators.required]],
+        areaProtegida:['',[Validators.required]],
+        patrimonio:['',[Validators.required]]
+    })
+
+    todosLugares!:Lugares[]
+
+    crearLugares(){
+        console.log(this.lugaresForm.value)
+        if(!this.lugaresForm.valid){
+            console.log("Entro a crear")
+            this.lugaresService.guardarLugares(this.lugaresForm.value as unknown as Lugares).subscribe({
+                next:()=>{
+                    environment.mensajeToast('success','Lugar creado','El lugar se creo con exito')
+                },
+                error:()=>{
+                    environment.mensajeToast('error','Error al registrar','Ingrese todos los campos')
+                }
+            })
+        }
+        console.log("No entro")
+    }
+
+    obtenerLugares(){
+        this.lugaresService.getTodosLugares().subscribe(lugares=>{
+            this.todosLugares = lugares
+        })
     }
 }
