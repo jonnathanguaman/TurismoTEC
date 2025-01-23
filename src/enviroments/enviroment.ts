@@ -5,7 +5,7 @@ export const environment = {
   production: false,
   urlHost: 'http://localhost:8080/public/v1',
   urlAut: 'http://localhost:8080',
-
+  urlMap: 'http://localhost:4200/lugar/',
   
   mensajeToast: (tipo: 'success' | 'error' | 'warning' | 'info' | 'question', mensajeCuerpo: string, footer: string) => {
     const Toast = Swal.mixin({

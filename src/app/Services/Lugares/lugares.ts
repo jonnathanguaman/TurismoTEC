@@ -8,5 +8,7 @@ export interface Lugares{
     tipoZona:string;
     areaProtegida:boolean;
     patrimonio:boolean;
+    latitud:number,
+    longitud:number,
     imagenesLugars:ImagenesLugares[]
 }
