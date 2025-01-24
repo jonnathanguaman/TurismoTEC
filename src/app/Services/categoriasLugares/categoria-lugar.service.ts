@@ -10,10 +10,7 @@ import { Observable } from 'rxjs';
 export class CategoriaLugarService {
 
   constructor(private http:HttpClient) {}
-
-
   getTodosLugares():Observable<Etiquetas[]>{
     return this.http.get<Etiquetas[]>(environment.urlHost + "/etiquetasLugares");
   }
-
 }

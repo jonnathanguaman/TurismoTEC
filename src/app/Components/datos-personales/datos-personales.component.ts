@@ -106,7 +106,6 @@ export class DatosPersonalesComponent implements OnInit {
             console.log('UsuarioGuardado');
             this.auth.username = this.usuario;
             this.auth.password = this.contrasena;
-            this.auth.id_usuario = usuario.id_Usuario;
             // if(this.userloginOn){
             //   this.auth.id_auth = this.idauth;
             // console.log(this.auth.id_auth);

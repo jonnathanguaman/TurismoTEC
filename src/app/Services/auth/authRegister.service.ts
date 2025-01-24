@@ -20,7 +20,7 @@ export class AuthRegisterService {
     return this.http.get<any>(`${environment.urlAut+"/public/v1/authGet"}/${nombre}`)
   }
 
-  getIdPerson(nombre:String):Observable<any>{
-    return this.http.get<any>(`${environment.urlAut+"/public/v1/authGetId"}/${nombre}`)
-  }
+  // getIdPerson(nombre:String):Observable<any>{
+  //   return this.http.get<any>(`${environment.urlAut+"/public/v1/authGetId"}/${nombre}`)
+  // }
 }

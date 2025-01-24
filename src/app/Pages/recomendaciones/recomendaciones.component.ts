@@ -94,7 +94,7 @@ export class RecomendacionesComponent implements OnInit {
       layers: [osmLayer, vectorLayer],
       view: new OlView({
         center: coordinates,
-        zoom: 13,
+        zoom: 11,
       }),
     });
 
@@ -133,7 +133,6 @@ export class RecomendacionesComponent implements OnInit {
       tooltipElement.style.display = 'none';  // Ocultar el tooltip cuando no se está sobre un marcador
     }
   });
-  
   }
 
   // Función para agregar un marcador
@@ -145,8 +144,6 @@ export class RecomendacionesComponent implements OnInit {
     this.markers.push(marker);
     marker.set('name',lugar.nombre)
   }
-
-  
   
   // Función para limpiar los marcadores anteriores
   clearMarkers(): void {

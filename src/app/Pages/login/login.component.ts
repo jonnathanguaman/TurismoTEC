@@ -39,12 +39,7 @@ export class LoginComponent {
       this.loginService.login(this.loginForm.value as unknown as LoginRequest).subscribe({
         next:() =>{
           this.loginExitoso = true;
-          this.authRegisterService.getIdPerson(this.username.value!).subscribe(
-            (auth) =>{
-              sessionStorage.setItem("id",<string><unknown>auth)
-            }
-          )
-
+          
         },
         error:(errorData) =>{
           this.loginError = errorData

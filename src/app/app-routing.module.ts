@@ -6,7 +6,6 @@ import { NosotrosComponent } from './Pages/nosotros/nosotros.component';
 import { PerfilComponent } from './Pages/perfil/perfil.component';
 import { RecomendacionesComponent } from './Pages/recomendaciones/recomendaciones.component';
 import { LoginComponent } from './Pages/login/login.component';
-import { DatosPersonalesComponent } from './Components/datos-personales/datos-personales.component';
 import { LugarComponent } from './Pages/lugar/lugar.component';
 import { VerHotelesComponent } from './Pages/ver-hoteles/ver-hoteles.component';
 import { HabitacionesComponent } from './Pages/habitaciones/habitaciones.component';

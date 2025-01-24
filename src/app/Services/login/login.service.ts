@@ -12,7 +12,6 @@ export class AuthService {
   currentUserLoginOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   currentUserData: BehaviorSubject<String> = new BehaviorSubject<String>("");
 
-
   constructor(private http:HttpClient) {
     if (typeof window !== 'undefined' && sessionStorage) {
       this.currentUserLoginOn = new BehaviorSubject<boolean>(sessionStorage.getItem("token") != null);
