@@ -17,6 +17,7 @@ import { LugaresService } from '../../Services/Lugares/lugares.service';
 import { environment } from '../../../enviroments/enviroment';
 import { CategoriaLugarService } from '../../Services/categoriasLugares/categoria-lugar.service';
 import { Categoria } from '../../Services/categoriasLugares/categoriaLugar';
+import { LugaresCategoriasService } from '../../Services/lugares_Categorias/lugares-categorias.service';
 @Component({
   selector: 'app-recomendaciones',
   templateUrl: './recomendaciones.component.html',
@@ -24,23 +25,26 @@ import { Categoria } from '../../Services/categoriasLugares/categoriaLugar';
 })
 export class RecomendacionesComponent implements OnInit {
   map: ol.Map | undefined;
+  markers: Feature[] = [];  // Array para almacenar los marcadores
 
   constructor(
     private lugares: LugaresService,
-    private categoriaService:CategoriaLugarService,  
+    private categoriaService: CategoriaLugarService,
+    private lugares_categoriasService: LugaresCategoriasService,
   ) {}
-  categorias!:Categoria[]
+
+  categorias!: Categoria[];
   todosLugars: Lugares[] = [];
 
   ngOnInit(): void {
-    this.obtenerCategorias()
+    this.obtenerCategorias();
     this.lugares.getTodosLugares().subscribe({
       next: (lugar) => {
         this.todosLugars = lugar;
       },
       complete: () => {
         if (this.todosLugars.length > 0) {
-          this.initMap();
+          this.initMap();  // Cargar el mapa inicialmente
         }
       },
       error: (err) => {
@@ -48,73 +52,98 @@ export class RecomendacionesComponent implements OnInit {
       },
     });
   }
-  
 
   private initMap(): void {
-    const coordinates = fromLonLat([-79.0046, -2.9006]); // Coordenadas de Cuenca
-    const markers: Feature[] = [];
-  
+    // Primero, destruir el mapa si ya existe
+    if (this.map) {
+      this.map.setTarget(null);  // Esto desvincula el mapa del DOM
+    }
+
+    // Coordenadas de Cuenca
+    const coordinates = fromLonLat([-79.0046, -2.9006]); 
+
+    this.clearMarkers();  // Limpiar los marcadores anteriores
+
     this.todosLugars.forEach((lugar) => {
-      markers.push(
-        new Feature({
-          geometry: new Point(fromLonLat([lugar.longitud, lugar.latitud])),
-          url: environment.urlMap+lugar.idLugares,
-        })
-      );
+      this.addMarker(lugar);  // Agregar los nuevos marcadores
     });
-  
+
     const markerStyle = new Style({
       image: new Icon({
         src: 'https://cdn-icons-png.flaticon.com/512/7369/7369110.png',
         scale: 0.1,
       }),
     });
-  
-    markers.forEach(marker => marker.setStyle(markerStyle));
-  
+
+    this.markers.forEach(marker => marker.setStyle(markerStyle));
+
     const vectorSource = new VectorSource({
-      features: markers,
+      features: this.markers,
     });
-  
+
     const vectorLayer = new VectorLayer({
       source: vectorSource,
     });
-  
+
     const osmLayer = new TileLayer({
       source: new OSM(),
     });
-  
+
     this.map = new Map({
-      target: 'map',
+      target: 'map',  // Vincula el mapa al contenedor
       layers: [osmLayer, vectorLayer],
       view: new OlView({
         center: coordinates,
         zoom: 13,
       }),
     });
-  
+
     const select = new Select({
       condition: click,
     });
-  
+
     this.map.addInteraction(select);
-  
+
     select.on('select', (e) => {
-      const selectedFeature = e.selected[0];  // Obtener el marcador seleccionado
+      const selectedFeature = e.selected[0];
       if (selectedFeature) {
-        const url = selectedFeature.get('url');  // Obtener la URL del marcador
+        const url = selectedFeature.get('url');
         if (url) {
-          window.location.href = url;  // Redirigir a la nueva URL y cerrar la ventana actual
+          window.location.href = url;
         }
       }
-    });    
+    });
   }
-  
-  
 
-  obtenerCategorias(){
-    this.categoriaService.getTodosLugares().subscribe(cat =>{
-      this.categorias = cat
-    })
+  // Función para agregar un marcador
+  addMarker(lugar: Lugares): void {
+    const marker = new Feature({
+      geometry: new Point(fromLonLat([lugar.longitud, lugar.latitud])),
+      url: environment.urlMap + lugar.idLugares,
+    });
+    this.markers.push(marker);
+  }
+
+  // Función para limpiar los marcadores anteriores
+  clearMarkers(): void {
+    this.markers = [];  // Limpiar los marcadores existentes
+  }
+
+  obtenerCategorias() {
+    this.categoriaService.getTodosLugares().subscribe(cat => {
+      this.categorias = cat;
+    });
+  }
+
+  obtenerLugaresPorCategoria(idCategoria: number) {
+    this.todosLugars = [];
+    this.lugares_categoriasService.getImagenesHoteles(idCategoria).subscribe(lugarCat => {
+      lugarCat.forEach(lugar => {
+        this.todosLugars.push(lugar.lugares);
+        console.log("Lugares filtrados: ", this.todosLugars);
+      });
+
+      this.initMap();
+    });
   }
 }

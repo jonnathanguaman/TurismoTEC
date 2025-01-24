@@ -13,7 +13,7 @@
 
             <div class="categorias-contenido">
                 <ul *ngFor="let cat of categorias">
-                    <a><li>{{cat.categoria}}</li></a>
+                    <a (click)="obtenerLugaresPorCategoria(cat.idCategoria)"><li>{{cat.categoria}}</li></a>
                 </ul>
             </div>
         </div>
