@@ -1,4 +1,4 @@
-export interface Categoria{
-    idCategoria:number;
-    categoria:string;
+export interface Etiquetas{
+    idEtiqueta:number;
+    etiqueta:string;
 }

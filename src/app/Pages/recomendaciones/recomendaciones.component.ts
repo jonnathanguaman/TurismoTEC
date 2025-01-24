@@ -16,7 +16,7 @@ import { Lugares } from '../../Services/Lugares/lugares';
 import { LugaresService } from '../../Services/Lugares/lugares.service';
 import { environment } from '../../../enviroments/enviroment';
 import { CategoriaLugarService } from '../../Services/categoriasLugares/categoria-lugar.service';
-import { Categoria } from '../../Services/categoriasLugares/categoriaLugar';
+import { Etiquetas } from '../../Services/categoriasLugares/categoriaLugar';
 import { LugaresCategoriasService } from '../../Services/lugares_Categorias/lugares-categorias.service';
 @Component({
   selector: 'app-recomendaciones',
@@ -33,7 +33,7 @@ export class RecomendacionesComponent implements OnInit {
     private lugares_categoriasService: LugaresCategoriasService,
   ) {}
 
-  categorias!: Categoria[];
+  categorias!: Etiquetas[];
   todosLugars: Lugares[] = [];
 
   ngOnInit(): void {
