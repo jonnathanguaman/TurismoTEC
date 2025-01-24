@@ -9,18 +9,17 @@ import { authRegister } from './authRegister';
 })
 export class AuthRegisterService {
 
-  private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
   constructor(private http:HttpClient) {}
 
   registerAuth(auth:authRegister):Observable<any>{
-    return this.http.post<any>(environment.urlAut+"/public/v1/auth",auth,{headers:this.httpHeaders})
+    return this.http.post<any>(environment.urlAut+"/public/v1/auth",auth)
   }
 
   getAuth(nombre:String):Observable<any>{
     return this.http.get<any>(`${environment.urlAut+"/public/v1/authGet"}/${nombre}`)
   }
 
-  // getIdPerson(nombre:String):Observable<any>{
-  //   return this.http.get<any>(`${environment.urlAut+"/public/v1/authGetId"}/${nombre}`)
-  // }
+  getIdPerson(nombre:String):Observable<any>{
+    return this.http.get<any>(`${environment.urlAut+"/public/v1/authGetId"}/${nombre}`)
+  }
 }
