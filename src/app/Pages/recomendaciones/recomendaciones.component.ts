@@ -113,6 +113,27 @@ export class RecomendacionesComponent implements OnInit {
         }
       }
     });
+
+    // Crear el elemento del tooltip
+  const tooltipElement = document.getElementById('tooltip') as HTMLElement;
+
+  this.map.on('pointermove', (event) => {
+    const feature = this.map?.forEachFeatureAtPixel(event.pixel, (feature) => feature);
+    
+    if (feature) {
+      const name = feature.get('name');  // Obtener el nombre del marcador
+      tooltipElement.innerHTML = name || 'Sin nombre';  // Mostrar el nombre en el tooltip
+      const coordinate = event.coordinate;
+      // Convertir las coordenadas del mapa a píxeles del contenedor
+      const pixel = this.map.getPixelFromCoordinate(coordinate);
+      tooltipElement.style.left = `${pixel[0] + 350}px`;  // Posición horizontal
+      tooltipElement.style.top = `${pixel[1] +50}px`; // Ajusta la posición vertical
+      tooltipElement.style.display = 'block';  // Mostrar el tooltip
+    } else {
+      tooltipElement.style.display = 'none';  // Ocultar el tooltip cuando no se está sobre un marcador
+    }
+  });
+  
   }
 
   // Función para agregar un marcador
@@ -122,8 +143,11 @@ export class RecomendacionesComponent implements OnInit {
       url: environment.urlMap + lugar.idLugares,
     });
     this.markers.push(marker);
+    marker.set('name',lugar.nombre)
   }
 
+  
+  
   // Función para limpiar los marcadores anteriores
   clearMarkers(): void {
     this.markers = [];  // Limpiar los marcadores existentes

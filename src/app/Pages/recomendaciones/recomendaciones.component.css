@@ -80,6 +80,7 @@
 }
 
 #map {
+    position: relative;
     height: 600px;
     border: 1px solid #ddd; /* Borde del mapa */
     border-radius: 8px; /* Bordes redondeados */
@@ -96,4 +97,15 @@
     #map {
         height: 400px; /* Reducir la altura del mapa en pantallas pequeñas */
     }
+}
+.tooltip {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  pointer-events: none;
+  position: absolute;  /* Cambiar a posición absoluta para que se ubique sobre el mapa */
+  transform: translate(-50%, -100%); /* Ajuste de la posición para centrarlo sobre el marcador */
+  display: none;  /* Ocultar por defecto */
 }
