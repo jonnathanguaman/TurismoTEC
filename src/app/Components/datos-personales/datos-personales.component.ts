@@ -7,6 +7,7 @@ import { AuthService } from '../../Services/login/login.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DatosPersona } from '../../Services/DatosPersonales/datosPersonales';
 import { authRegister } from '../../Services/auth/authRegister';
+import { environment } from '../../../enviroments/enviroment';
 
 @Component({
   selector: 'app-datos-personales',
@@ -18,7 +19,7 @@ export class DatosPersonalesComponent implements OnInit {
   userloginOn: boolean = false;
   editar!: boolean;
 
-  userId = <number>(<unknown>sessionStorage.getItem('id'));
+  userId: number;
 
   usuario: string = '';
   contrasena: string = '';
@@ -48,29 +49,31 @@ export class DatosPersonalesComponent implements OnInit {
       this.editar = true;
     }
 
-    if (<number>(<unknown>sessionStorage.getItem('id'))) {
-      const token = sessionStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
 
-      if (token) {
-        try {
-          const payload: TokenPayload = jwtDecode(token);
-          this.datosService.getPersonById(this.userId).subscribe((person) => {
-            this.idioma = person.idioma;
-            this.nombre = person.nombre;
-            this.apellido = person.apellido;
-            this.edad = person.edad;
-            this.pais = person.paisOrigen;
-          });
+    if (token) {
+      try {
+        const payload: TokenPayload = jwtDecode(token);
 
-          this.authService.getAuth(payload.sub).subscribe((auth) => {
-            this.contrasena = auth.password;
-            this.usuario = auth.username;
-          });
-        } catch (error) {
-          console.error('Error al decodificar el token:', error);
-        }
-      } else {
-        console.error('No se encontró el token en sessionStorage.');
+        this.authService.getIdPerson(payload.sub).subscribe({
+          next: (idUser) => {
+            this.datosService.getPersonById(idUser).subscribe((person) => {
+              this.idioma = person.idioma;
+              this.nombre = person.nombre;
+              this.apellido = person.apellido;
+              this.edad = person.edad;
+              this.pais = person.paisOrigen;
+            });
+
+            this.authService.getAuth(payload.sub).subscribe((auth) => {
+              this.contrasena = auth.password;
+              this.usuario = auth.username;
+              console.log(auth.authorities);
+            });
+          },
+        });
+      } catch (error) {
+        console.error('Error al decodificar el token:', error);
       }
     }
   }
@@ -84,40 +87,26 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   auth: authRegister = new authRegister();
-  idauth!:number;
-  registrarPersona() {
-    //Validar que el usuario no se repita
-    // this.authService.getAuth(this.usuario).subscribe({
-      // next: (auxauthService) => {
-        // this.idauth = auxauthService.id_auth
-        // console.log(this.idauth)
-        this.persona.nombre = this.nombre;
-        this.persona.apellido = this.apellido;
-        this.persona.edad = this.edad;
-        this.persona.idioma = this.idioma;
-        this.persona.paisOrigen = this.pais;
-        if (this.userloginOn) {
-          console.log('entro aqui');
-          this.persona.id_Usuario = this.userId;
-        }
 
-        this.datosService.guardarPesona(this.persona).subscribe({
-          next: (usuario) => {
-            console.log('UsuarioGuardado');
-            this.auth.username = this.usuario;
-            this.auth.password = this.contrasena;
-            // if(this.userloginOn){
-            //   this.auth.id_auth = this.idauth;
-            // console.log(this.auth.id_auth);
-            // }
-            this.authService.registerAuth(this.auth).subscribe({
-              complete: () => {
-                console.log('AuthRegistrado');
-              },
-            });
+  //Crear el controlador para relacionar
+  //Revisar el guardado
+  registrarPersona() {
+    this.persona.nombre = this.nombre;
+    this.persona.apellido = this.apellido;
+    this.persona.edad = this.edad;
+    this.persona.idioma = this.idioma;
+    this.persona.paisOrigen = this.pais;
+    this.datosService.guardarPesona(this.persona).subscribe({
+      next: (usuario) => {
+        this.auth.username = this.usuario;
+        this.auth.password = this.contrasena;
+        this.auth.id_usuario = usuario.id_Usuario;
+        this.authService.registerAuth(this.auth).subscribe({
+          next: () => {
+            environment.mensajeToast("success","Usuario registrado","Se ha registrado con exito")
           },
         });
-      // },
-    // });
+      },
+    });
   }
 }

@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild, HostListener, OnInit } from '@angular
 import { environment } from '../../../enviroments/enviroment';
 import { AuthService } from '../../Services/login/login.service';
 import { Router } from '@angular/router';
+import { A } from 'ol/renderer/webgl/FlowLayer';
 
 @Component({
   selector: 'app-menu',
@@ -11,17 +12,29 @@ import { Router } from '@angular/router';
 export class MenuComponent implements OnInit{
   menuAbierto: boolean = false;
   userloginOn:boolean = false;
-  
+  admin:boolean = false;
+  user:boolean = true;
+
   @ViewChild('menuItems') menuItems!: ElementRef;
   @ViewChild('menuToggle') menuToggle!: ElementRef;
 
   constructor(private loginService:AuthService, private router:Router){}
 
   ngOnInit(): void {
+    this.loginService.getRoles()
+
     this.loginService.userLoginOn.subscribe(
       {
         next:(userloginOn) =>{
           this.userloginOn = userloginOn
+        }
+      }
+    )
+
+    this.loginService.admin.subscribe(
+      {
+        next:(admin) =>{
+          this.admin = admin
         }
       }
     )

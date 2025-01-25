@@ -1,10 +1,10 @@
-<div *ngIf="user">
+<div *ngIf="!admin">
     <app-menu></app-menu>
     <router-outlet></router-outlet>
     <app-footer></app-footer>
 </div>
 
-<div *ngIf="!user">
+<div *ngIf="admin">
     <app-menu-admin></app-menu-admin>
     <router-outlet></router-outlet>
 </div>

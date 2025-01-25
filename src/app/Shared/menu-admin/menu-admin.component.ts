@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../Services/login/login.service';
 
 @Component({
   selector: 'app-menu-admin',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class MenuAdminComponent {
 
+  constructor(private loginService:AuthService){}
+
+  cerrarSesion(){
+    this.loginService.logOut()
+  }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../Services/login/login.service';
@@ -6,19 +6,27 @@ import { LoginRequest } from '../../Services/login/LoginRequest';
 import { environment } from '../../../enviroments/enviroment';
 import { authRegister } from '../../Services/auth/authRegister';
 import { AuthRegisterService } from '../../Services/auth/authRegister.service';
+import { TokenPayload } from '../../Services/DatosPersonales/TokenPayload ';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
-  
-  loginExitoso:boolean = false;
+export class LoginComponent{
+ 
+  admin:boolean = false
   loginError:String=""
 
-  constructor(private fb:FormBuilder, private router:Router, private loginService:AuthService, private authRegisterService:AuthRegisterService){}
+  constructor(private fb:FormBuilder,
+    private router:Router,
+    private loginService:AuthService,
+    ){}
+  
+    ngOnInit(): void {
 
+    }
   loginForm = this.fb.group({
     username:['',[Validators.required]],
     password:['',Validators.required]
@@ -35,24 +43,34 @@ export class LoginComponent {
 
   login(){
     if(this.loginForm.valid){
-      
       this.loginService.login(this.loginForm.value as unknown as LoginRequest).subscribe({
-        next:() =>{
-          this.loginExitoso = true;
-          
+        next:()=>{
+          this.loginService.getRoles()
+          this.loginService.admin.subscribe(
+            {
+              next:(admin) =>{
+                console.log("admin: " + admin)
+                if(admin){
+                  this.router.navigateByUrl("/admin")
+                  this.loginForm.reset()
+                }else{
+                this.router.navigateByUrl("/")
+                }
+              }
+            }
+          )
         },
-        error:(errorData) =>{
-          this.loginError = errorData
-        },
-        complete:() =>{
-          this.router.navigateByUrl("/")
-          this.loginForm.reset()
+        error:()=>{
+          environment.mensajeToast("error","Credenciales invalidas","Usuario o contraseña incorrectas")
         }
+        
       })
     }
     else{
       this.loginForm.markAllAsTouched();
-      alert("Error al ingresar los datos")
+      environment.mensajeToast("warning","Ingrese los datos","Ingrese el usuario y contraseña")
     }
   }
+
+
 }

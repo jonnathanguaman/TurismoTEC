@@ -113,6 +113,7 @@ export class ForoComponent implements OnInit {
   limpiarCamposComentario(){
     this.comentarioForm.controls.contenido.setValue('')
   }
+  
   guardarPublicacion() {
     if (this.publicacionForm) {
       this.publicacionesService
