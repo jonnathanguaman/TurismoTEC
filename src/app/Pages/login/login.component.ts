@@ -4,10 +4,6 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../Services/login/login.service';
 import { LoginRequest } from '../../Services/login/LoginRequest';
 import { environment } from '../../../enviroments/enviroment';
-import { authRegister } from '../../Services/auth/authRegister';
-import { AuthRegisterService } from '../../Services/auth/authRegister.service';
-import { TokenPayload } from '../../Services/DatosPersonales/TokenPayload ';
-import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-login',

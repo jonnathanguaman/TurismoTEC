@@ -1,7 +1,7 @@
 export class authRegister{
     id_auth!:number;
-    username!:String;
-    password!:String;
+    username!:string;
+    password!:string;
     id_usuario!:number;
     authorities:string[]
 }

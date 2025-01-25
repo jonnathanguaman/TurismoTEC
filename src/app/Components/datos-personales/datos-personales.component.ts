@@ -8,6 +8,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { DatosPersona } from '../../Services/DatosPersonales/datosPersonales';
 import { authRegister } from '../../Services/auth/authRegister';
 import { environment } from '../../../enviroments/enviroment';
+import { AuthRolService } from '../../Services/auth_Rol/auth-rol.service';
+import { Auth_rol } from '../../Services/auth_Rol/auth_rol';
+import { LoginRequest } from '../../Services/login/LoginRequest';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-datos-personales',
@@ -32,10 +36,14 @@ export class DatosPersonalesComponent implements OnInit {
   constructor(
     private datosService: DatosPersonalesService,
     private authService: AuthRegisterService,
-    private loginService: AuthService
+    private loginService: AuthService,
+    private authRolService:AuthRolService,
+    private fb:FormBuilder,
+    private router:Router,
   ) {}
 
   public persona: DatosPersona = new DatosPersona();
+  public auth_Rol:Auth_rol = new Auth_rol()
 
   ngOnInit(): void {
     this.loginService.userLoginOn.subscribe({
@@ -68,7 +76,6 @@ export class DatosPersonalesComponent implements OnInit {
             this.authService.getAuth(payload.sub).subscribe((auth) => {
               this.contrasena = auth.password;
               this.usuario = auth.username;
-              console.log(auth.authorities);
             });
           },
         });
@@ -88,8 +95,13 @@ export class DatosPersonalesComponent implements OnInit {
 
   auth: authRegister = new authRegister();
 
-  //Crear el controlador para relacionar
-  //Revisar el guardado
+
+  loginForm = this.fb.group({
+    username:['',[Validators.required]],
+    password:['',Validators.required]
+  })
+
+
   registrarPersona() {
     this.persona.nombre = this.nombre;
     this.persona.apellido = this.apellido;
@@ -103,7 +115,31 @@ export class DatosPersonalesComponent implements OnInit {
         this.auth.id_usuario = usuario.id_Usuario;
         this.authService.registerAuth(this.auth).subscribe({
           next: () => {
-            environment.mensajeToast("success","Usuario registrado","Se ha registrado con exito")
+            this.authService.getAuth(this.auth.username).subscribe({
+              next:(auth)=>{
+                this.authRolService.guardarAuth_Rol(this.auth_Rol,auth.id_auth).subscribe({
+                  next:() =>{
+                    environment.mensajeToast("success","Usuario registrado","Se ha registrado con exito")
+                    this.loginForm.controls.username.setValue(this.auth.username)
+                    this.loginForm.controls.password.setValue(this.auth.password)
+                  },
+                  complete:()=>{
+                    this.loginService.login(this.loginForm.value as unknown as LoginRequest).subscribe({
+                      next:()=>{
+                        this.loginService.getRoles()
+                      },
+                      complete:()=>{
+                        this.router.navigateByUrl("/")
+                      },
+                      error:()=>{
+                        console.log("No pudiste entrar lo siento")
+                      }
+                    })
+                  }
+                })
+              }
+            })
+
           },
         });
       },
