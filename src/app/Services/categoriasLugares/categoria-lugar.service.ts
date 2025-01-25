@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Etiquetas } from './categoriaLugar';
+import { EtiquetasLugar } from './categoriaLugar';
 import { environment } from '../../../enviroments/enviroment';
 import { Observable } from 'rxjs';
 
@@ -10,7 +10,24 @@ import { Observable } from 'rxjs';
 export class CategoriaLugarService {
 
   constructor(private http:HttpClient) {}
-  getTodosLugares():Observable<Etiquetas[]>{
-    return this.http.get<Etiquetas[]>(environment.urlHost + "/etiquetasLugares");
+
+  crearEtiquetaLugar(etiqueta:EtiquetasLugar):Observable<EtiquetasLugar>{
+    return this.http.post<EtiquetasLugar>(environment.urlHost+ "/etiquetasLugares", etiqueta)
+  }
+
+  getTodosLugares():Observable<EtiquetasLugar[]>{
+    return this.http.get<EtiquetasLugar[]>(environment.urlHost + "/etiquetasLugares");
+  }
+
+  obtenerEtiquetaById(id:number):Observable<EtiquetasLugar>{
+    return this.http.get<any>(`${environment.urlHost+"/etiquetasLugares"}/${id}`)
+  }
+
+  editarEtiquetaLugar(etiqueta:EtiquetasLugar):Observable<EtiquetasLugar>{
+    return this.http.post<any>(environment.urlHost+"/etiquetasLugares",etiqueta)
+  }
+
+  eliminarEtiquetaLugar(id:number):Observable<EtiquetasLugar>{
+     return this.http.delete<EtiquetasLugar>(`${environment.urlHost + "/etiquetasLugares"}/${id}`)
   }
 }

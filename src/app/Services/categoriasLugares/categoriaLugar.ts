@@ -1,4 +1,4 @@
-export interface Etiquetas{
+export interface EtiquetasLugar{
     idEtiqueta:number;
     etiqueta:string;
 }

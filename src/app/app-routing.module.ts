@@ -16,6 +16,7 @@ import { CrudLugarComponent } from './Components/crud-lugar/crud-lugar.component
 import { CrudRestauranteComponent } from './Components/crud-restaurante/crud-restaurante.component';
 import { CrudHotelComponent } from './Components/crud-hotel/crud-hotel.component';
 import { PaginaAdminComponent } from './Pages/pagina-admin/pagina-admin.component';
+import { CrubEtiquetaLugarComponent } from './Components/crub-etiqueta-lugar/crub-etiqueta-lugar.component';
 
 const routes: Routes = [
   {
@@ -74,6 +75,8 @@ const routes: Routes = [
     path:"mesa/:id",
     component:MesasComponent
   },
+  
+ 
   {
     path:"admin",
     component:PaginaAdminComponent,
@@ -90,8 +93,19 @@ const routes: Routes = [
         path:"crudHotel",
         component:CrudHotelComponent
       },
+      {
+        path:"crudEtiquetaLugar",
+        component:CrubEtiquetaLugarComponent,
+        children:[
+          {
+            path:":id",
+            component:CrubEtiquetaLugarComponent
+          }
+        ]
+      },
     ]
   },
+  
 ];
 
 @NgModule({

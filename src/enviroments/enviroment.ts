@@ -28,7 +28,7 @@ export const environment = {
     });
   },
 
-  mensajeEliminar(titulo:string,texto:string,tipo: 'success' | 'error' | 'warning' | 'info' | 'question'){
+  mensajeEmergente(titulo:string,texto:string,tipo: 'success' | 'error' | 'warning' | 'info' | 'question'){
     return Swal.fire({
       title: titulo,
       text: texto,

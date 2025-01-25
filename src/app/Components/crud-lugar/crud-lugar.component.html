@@ -34,6 +34,7 @@
                         La descripción es obligatoria.
                     </div>
                 </div>
+
                 <div class="input-container">
                     <label for="direccion">Dirección:</label>
                     <input type="text" id="direccion" formControlName="direccion" />
@@ -41,6 +42,23 @@
                         La dirección es obligatoria.
                     </div>
                 </div>
+
+                <div class="input-container">
+                    <label for="direccion">Longitud:</label>
+                    <input type="text" id="longitud" formControlName="longitud" />
+                    <div *ngIf="lugaresForm.get('longitud')?.invalid && lugaresForm.get('longitud')?.touched" class="message error">
+                        La longitud es obligatoria.
+                    </div>
+                </div>
+
+                <div class="input-container">
+                    <label for="direccion">Latitud:</label>
+                    <input type="text" id="latitud" formControlName="latitud" />
+                    <div *ngIf="lugaresForm.get('latitud')?.invalid && lugaresForm.get('latitud')?.touched" class="message error">
+                        La latitud es obligatoria.
+                    </div>
+                </div>
+
                 <div class="input-container">
                     <label for="areaProtegida">Área Protegida:</label>
                     <input type="checkbox" id="areaProtegida" formControlName="areaProtegida" />
@@ -61,8 +79,32 @@
                     </div>
                 </div>
 
+                <div class="imgContainer">
+                    <div class="imgContainer-item">
+                        <div  class="img-preview" id="preview1">
+                            <img [src]="imagePreviews[0]" alt="Vista previa">
+                        </div>
+                        <label for="file1" class="file-label">Subir imagen 1</label>
+                        <input accept="image/*" (change)="onFileSelected($event,0)" type="file" id="file1" class="file-input" accept="image/*" onchange="previewImage(event, 'preview1')">
+                    </div>
+                    <div class="imgContainer-item">
+                        <div class="img-preview" id="preview2">
+                            <img [src]="imagePreviews[1]" alt="Vista previa">
+                        </div>
+                        <label for="file2" class="file-label">Subir imagen 2</label>
+                        <input accept="image/*" (change)="onFileSelected($event,1)" type="file" id="file2" class="file-input" accept="image/*" onchange="previewImage(event, 'preview2')">
+                    </div>
+                    <div class="imgContainer-item">
+                        <div class="img-preview" id="preview3">
+                            <img [src]="imagePreviews[2]" alt="Vista previa">
+                        </div>
+                        <label for="file3" class="file-label">Subir imagen 3</label>
+                        <input accept="image/*" (change)="onFileSelected($event,2)" type="file" id="file3" class="file-input" accept="image/*" onchange="previewImage(event, 'preview3')">
+                    </div>
+                </div>
+
                 <div class="btn-panel">
-                    <button class="btn-opcion" type="submit" (click)="crearLugares()"><span class="icon">✔️</span> Guardar</button>
+                    <button class="btn-opcion" type="submit" (click)="crearLugares()">Guardar</button>
                     
                 </div>
             </form>
@@ -79,6 +121,8 @@
                     <th>Área Protegida</th>
                     <th>Patrimonio</th>
                     <th>Tipo de zona</th>
+                    <th>Latitud</th>
+                    <th>Longitud</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -90,10 +134,12 @@
                     <td>{{ lugar.areaProtegida ? 'Sí' : 'No' }}</td>
                     <td>{{ lugar.patrimonio ? 'Sí' : 'No' }}</td>
                     <td>{{ lugar.tipoZona}}</td>
+                    <td>{{lugar.latitud}}</td>
+                    <td>{{lugar.longitud}}</td>
                     
                     <td>
-                        <button class="btn-opcion" ><span class="icon">✏️</span> Editar</button>
-                        <button class="btn-opcion" (click)="eliminarLugar(lugar.idLugares)" ><span class="icon">❌</span> Eliminar</button>
+                        <button class="btn-opcion" >Editar</button>
+                        <button class="btn-opcion" (click)="eliminarLugar(lugar.idLugares)" >Eliminar</button>
                     </td>
                 </tr>
             </tbody>

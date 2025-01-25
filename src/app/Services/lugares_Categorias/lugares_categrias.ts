@@ -1,8 +1,8 @@
-import { Etiquetas } from "../categoriasLugares/categoriaLugar"
+import { EtiquetasLugar } from "../categoriasLugares/categoriaLugar"
 import { Lugares } from "../Lugares/lugares"
 
 export interface Lugares_categoria{
     idLugaresCategoria:number
-    etiquetas:Etiquetas
+    etiquetas:EtiquetasLugar
     lugares:Lugares
 }
