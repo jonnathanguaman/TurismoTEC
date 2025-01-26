@@ -4,6 +4,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Lugares } from '../../Services/Lugares/lugares';
 import { environment } from '../../../enviroments/enviroment';
 import { ImagenesLugaresService } from '../../Services/ImagenesLugares/imagenes-lugares.service';
+import { EtiquetasLugar } from '../../Services/categoriasLugares/categoriaLugar';
+import { CategoriaLugarService } from '../../Services/categoriasLugares/categoria-lugar.service';
+import { LugaresCategoriasService } from '../../Services/lugares_Categorias/lugares-categorias.service';
+import { Lugares_categoria } from '../../Services/lugares_Categorias/lugares_categrias';
 
 @Component({
   selector: 'app-crud-lugar',
@@ -11,9 +15,27 @@ import { ImagenesLugaresService } from '../../Services/ImagenesLugares/imagenes-
   styleUrls: ['./crud-lugar.component.css'],
 })
 export class CrudLugarComponent implements OnInit {
+  
   isCrudModalOpen: boolean = false;
   imagePreviews: string[] = [null, null, null];
   selectedFiles: File[] = [null, null, null];
+  categorias!: EtiquetasLugar[];
+  modalEtiqueta:boolean = false
+  todosLugares!: Lugares[];
+  idLugar:number
+  etiquetasDelLugar:Lugares_categoria[]
+
+  public lugarEtiqueta = new Lugares_categoria()
+
+  abrirModalEtiqueta(){
+    this.obtenerEtiquetas()
+    this.obtenerEtiquetasLugar()
+    this.modalEtiqueta = true
+  }
+
+  cerrarModalEtiqueta(){
+    this.modalEtiqueta = false
+  }
 
   openCrudModal() {
     this.isCrudModalOpen = true;
@@ -24,10 +46,16 @@ export class CrudLugarComponent implements OnInit {
     this.isCrudModalOpen = false;
   }
 
+  guardarIdLugar(idLugar:number){
+    this.idLugar = idLugar
+  }
   constructor(
     private lugaresService: LugaresService,
     private fb: FormBuilder,
-    private imagenesLugaresService: ImagenesLugaresService
+    private imagenesLugaresService: ImagenesLugaresService,
+    private etiqueraLugarService:CategoriaLugarService,
+    private lugarCategoriaService:LugaresCategoriasService,
+
   ) {}
 
   ngOnInit(): void {
@@ -45,7 +73,6 @@ export class CrudLugarComponent implements OnInit {
     latitud: ['', [Validators.required]],
   });
 
-  todosLugares!: Lugares[];
 
   crearLugares() {
     if (this.lugaresForm.valid && this.imagePreviews.length == 3) {
@@ -54,33 +81,29 @@ export class CrudLugarComponent implements OnInit {
         .guardarLugares(this.lugaresForm.value as unknown as Lugares)
         .subscribe({
           next: (lugarCreado: Lugares) => {
+            this.idLugar = lugarCreado.idLugares
             const uploadPromises = this.selectedFiles.map((file) =>
               this.imagenesLugaresService.uploadImage(file, lugarCreado.idLugares).toPromise());
 
             Promise.all(uploadPromises)
               .then(() => {
                 environment.mensajeToast('success','Imágenes subidas','Todas las imágenes se subieron correctamente');
+                
                 this.obtenerLugares();
                 this.closeCrudModal();
                 this.lugaresForm.reset();
                 this.selectedFiles = [null, null, null];
                 this.imagePreviews = [null, null, null];
+                this.obtenerEtiquetas()
+                this.abrirModalEtiqueta()
               })
               .catch((error) => {
                 console.error('Error al subir las imágenes:', error);
-                environment.mensajeToast(
-                  'error',
-                  'Error al subir las imágenes',
-                  'Hemos notificado el error'
-                );
+                environment.mensajeToast('error','Error al subir las imágenes','Ingrese todos los campos y seleccione las imágenes');
               });
           },
           error: () => {
-            environment.mensajeToast(
-              'error',
-              'Error al registrar',
-              'Hemos notificado el error'
-            );
+            environment.mensajeToast('error','Error al registrar','Ingrese todos los campos y seleccione las imágenes');
           },
         });
     } else {
@@ -136,4 +159,52 @@ export class CrudLugarComponent implements OnInit {
       this.imagePreviews[index] = null;
     }
   }
+
+  obtenerEtiquetas(){
+      this.etiqueraLugarService.getEtiquetaLugar().subscribe(cat => {
+        this.categorias = cat;
+      });
+    }
+    
+    asignarEtiquetaLugar(idCategoria:number){
+      environment.mensajeEmergente('Agregar etiqueta','¿Estas seguro que deseas agregar la etiqueta?', 'warning')
+      .then((contunuar)=>{
+        if(contunuar){
+          this.lugarCategoriaService.crearLugareEtiqueta(this.lugarEtiqueta,this.idLugar,idCategoria).subscribe({
+            next:(lugarEtiqueta)=>{
+              console.log(lugarEtiqueta)
+              if(lugarEtiqueta == null){
+                environment.mensajeToast('error','Etiqueta no asiganada','La etiqueta ya pertenece al lugar')
+              }else{
+                environment.mensajeToast('success','Etiqueta asiganada','La etiqueta se asigno con exito')
+              }
+            },
+            complete:()=>{
+              this.obtenerEtiquetasLugar()
+             
+            }
+          })
+        }
+      })
+    }
+
+    obtenerEtiquetasLugar(){
+      this.lugarCategoriaService.getCategoriasDelLugar(this.idLugar).subscribe(etiLugar =>{
+        this.etiquetasDelLugar = etiLugar
+      })
+    }
+    
+
+    eliminarEtiqueta(idEtiquetaLugar:number){
+      environment.mensajeEmergente('¿Estás seguro que deseas eliminar?','Esta operación no es reversible','warning')
+      .then(()=>{
+        this.lugarCategoriaService.eliminarLugarEtiqueta(idEtiquetaLugar).subscribe({
+          complete:()=>{
+            this.obtenerEtiquetasLugar()
+            environment.mensajeToast('success','Eliminado con exito','Se ha eliminado con exito');
+          }
+        })
+      })
+    
+    }
 }

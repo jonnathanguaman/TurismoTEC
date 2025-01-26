@@ -11,7 +11,19 @@ export class LugaresCategoriasService {
 
    constructor(private http:HttpClient) { }
   
-    getImagenesHoteles(idCategoria:number):Observable<Lugares_categoria[]>{
+    getLugaresEtiqueta(idCategoria:number):Observable<Lugares_categoria[]>{
         return this.http.get<Lugares_categoria[]>(`${environment.urlHost + "/lugaresCategoriasFilter"}/${idCategoria}`)
+      }
+
+    getCategoriasDelLugar(idLugar:number):Observable<Lugares_categoria[]>{
+      return this.http.get<Lugares_categoria[]>(`${environment.urlHost + "/categoriasLugaresFilter"}/${idLugar}`)
+    }
+    
+    crearLugareEtiqueta(lugarEtiqueta:Lugares_categoria,idLugar:number,idCategoria:number):Observable<Lugares_categoria>{
+        return this.http.post<Lugares_categoria>(`${environment.urlHost + "/lugaresEtiquetas"}/${idLugar}/${idCategoria}`,lugarEtiqueta)
+    }
+
+    eliminarLugarEtiqueta(id:number):Observable<Lugares_categoria>{
+         return this.http.delete<Lugares_categoria>(`${environment.urlHost + "/lugaresEtiquetas"}/${id}`)
       }
 }

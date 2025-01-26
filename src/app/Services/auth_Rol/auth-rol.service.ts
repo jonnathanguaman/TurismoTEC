@@ -12,7 +12,6 @@ export class AuthRolService {
   constructor(private http:HttpClient) {}
 
     guardarAuth_Rol(authRol:Auth_rol, idAuth:number):Observable<Auth_rol>{
-      
       return this.http.post<Auth_rol>(`${environment.urlHost + "/auth_rol"}/${idAuth}/${1}`,authRol);
     }
 }

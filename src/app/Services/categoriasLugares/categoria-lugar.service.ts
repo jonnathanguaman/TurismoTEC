@@ -15,7 +15,7 @@ export class CategoriaLugarService {
     return this.http.post<EtiquetasLugar>(environment.urlHost+ "/etiquetasLugares", etiqueta)
   }
 
-  getTodosLugares():Observable<EtiquetasLugar[]>{
+  getEtiquetaLugar():Observable<EtiquetasLugar[]>{
     return this.http.get<EtiquetasLugar[]>(environment.urlHost + "/etiquetasLugares");
   }
 

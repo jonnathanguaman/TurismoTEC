@@ -25,7 +25,7 @@ export class CrubEtiquetaLugarComponent implements OnInit{
   }
 
   obtenerEtiquetas(){
-    this.categoriaLugarService.getTodosLugares().subscribe(cat=>{
+    this.categoriaLugarService.getEtiquetaLugar().subscribe(cat=>{
       this.etiquetas = cat
     })
   }

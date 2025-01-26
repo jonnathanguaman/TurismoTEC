@@ -138,11 +138,47 @@
                     <td>{{lugar.longitud}}</td>
                     
                     <td>
-                        <button class="btn-opcion" >Editar</button>
+                        <button (click)="guardarIdLugar(lugar.idLugares)" (click)="abrirModalEtiqueta()" class="btn-opcion">Agregar/quitar etiquetas</button>
+                        <button class="btn-opcion">Editar</button>
                         <button class="btn-opcion" (click)="eliminarLugar(lugar.idLugares)" >Eliminar</button>
                     </td>
                 </tr>
             </tbody>
         </table>
+    </div>
+</div>
+
+<div class="modal-agrgarEtiquetas" *ngIf="modalEtiqueta">
+    <div class="model-agregarEtiquetas-content">
+        <span class="close-modal" (click)="cerrarModalEtiqueta()">✖</span>
+        
+        <div class="model-agregarEtiquetas-content-agregar">
+            <div class="modal-agregarEtiquetas-title">
+                <h3>Agrega etiquetas</h3>
+            </div>
+            <div class="modal-agrgarEtiquetas-p">
+                <p>Haga clic en la etiqueta que desea asignarle al lugar</p>
+            </div>
+            <div class="modal-agregarEtiquetas-etiquetas">
+                <div class="etiqueta" *ngFor="let etiqueta of categorias">
+                    <button (click)="asignarEtiquetaLugar(etiqueta.idEtiqueta)" class="etiqueta-boton">{{etiqueta.etiqueta}}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="model-agregarEtiquetas-content-quitar">
+            <div class="modal-agregarEtiquetas-title">
+                <h3>Quitar etiquetas</h3>
+            </div>
+            <div class="modal-agrgarEtiquetas-p">
+                <p>Haga clic en la etiqueta que desea quitar del lugar</p>
+            </div>
+            <div class="modal-agregarEtiquetas-etiquetas">
+                <div class="etiqueta" *ngFor="let etiqueta of etiquetasDelLugar">
+                    <button (click)="eliminarEtiqueta(etiqueta.idLugaresEtiquetas)" class="etiqueta-boton">{{etiqueta.etiquetas.etiqueta}}</button>
+                </div>
+            </div>
+        </div>
+        
     </div>
 </div>

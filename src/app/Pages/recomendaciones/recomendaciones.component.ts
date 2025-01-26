@@ -151,17 +151,16 @@ export class RecomendacionesComponent implements OnInit {
   }
 
   obtenerCategorias() {
-    this.categoriaService.getTodosLugares().subscribe(cat => {
+    this.categoriaService.getEtiquetaLugar().subscribe(cat => {
       this.categorias = cat;
     });
   }
 
   obtenerLugaresPorCategoria(idCategoria: number) {
     this.todosLugars = [];
-    this.lugares_categoriasService.getImagenesHoteles(idCategoria).subscribe(lugarCat => {
+    this.lugares_categoriasService.getLugaresEtiqueta(idCategoria).subscribe(lugarCat => {
       lugarCat.forEach(lugar => {
         this.todosLugars.push(lugar.lugares);
-        console.log("Lugares filtrados: ", this.todosLugars);
       });
 
       this.initMap();
