@@ -8,6 +8,7 @@ import { EtiquetasLugar } from '../../Services/categoriasLugares/categoriaLugar'
 import { CategoriaLugarService } from '../../Services/categoriasLugares/categoria-lugar.service';
 import { LugaresCategoriasService } from '../../Services/lugares_Categorias/lugares-categorias.service';
 import { Lugares_categoria } from '../../Services/lugares_Categorias/lugares_categrias';
+import { ImagenesLugares } from '../../Services/ImagenesLugares/imagenesLugares';
 
 @Component({
   selector: 'app-crud-lugar',
@@ -17,14 +18,15 @@ import { Lugares_categoria } from '../../Services/lugares_Categorias/lugares_cat
 export class CrudLugarComponent implements OnInit {
   
   isCrudModalOpen: boolean = false;
-  imagePreviews: string[] = [null, null, null];
+  imagePreviews: string[] = [];
   selectedFiles: File[] = [null, null, null];
   categorias!: EtiquetasLugar[];
   modalEtiqueta:boolean = false
   todosLugares!: Lugares[];
   idLugar:number
   etiquetasDelLugar:Lugares_categoria[]
-
+  imgDeLugares:ImagenesLugares[]
+  urlHost:string = environment.urlAut
   public lugarEtiqueta = new Lugares_categoria()
 
   abrirModalEtiqueta(){
@@ -44,6 +46,8 @@ export class CrudLugarComponent implements OnInit {
   closeCrudModal() {
     this.lugaresForm.reset();
     this.isCrudModalOpen = false;
+    this.selectedFiles = [];
+    this.imagePreviews = [];
   }
 
   guardarIdLugar(idLugar:number){
@@ -55,7 +59,6 @@ export class CrudLugarComponent implements OnInit {
     private imagenesLugaresService: ImagenesLugaresService,
     private etiqueraLugarService:CategoriaLugarService,
     private lugarCategoriaService:LugaresCategoriasService,
-
   ) {}
 
   ngOnInit(): void {
@@ -63,6 +66,7 @@ export class CrudLugarComponent implements OnInit {
   }
 
   lugaresForm = this.fb.group({
+    idLugares:[''],
     nombre: ['', [Validators.required]],
     descripcion: ['', [Validators.required]],
     direccion: ['', [Validators.required]],
@@ -75,14 +79,15 @@ export class CrudLugarComponent implements OnInit {
 
 
   crearLugares() {
-    if (this.lugaresForm.valid && this.imagePreviews.length == 3) {
+    console.log(this.imagePreviews.length)
+    if (this.lugaresForm.valid && this.imagePreviews.length >= 3) {
       console.log('Entro a crear');
       this.lugaresService
         .guardarLugares(this.lugaresForm.value as unknown as Lugares)
         .subscribe({
           next: (lugarCreado: Lugares) => {
-            this.idLugar = lugarCreado.idLugares
-            const uploadPromises = this.selectedFiles.map((file) =>
+              this.idLugar = lugarCreado.idLugares
+              const uploadPromises = this.selectedFiles.map((file) =>
               this.imagenesLugaresService.uploadImage(file, lugarCreado.idLugares).toPromise());
 
             Promise.all(uploadPromises)
@@ -101,6 +106,7 @@ export class CrudLugarComponent implements OnInit {
                 console.error('Error al subir las imágenes:', error);
                 environment.mensajeToast('error','Error al subir las imágenes','Ingrese todos los campos y seleccione las imágenes');
               });
+            
           },
           error: () => {
             environment.mensajeToast('error','Error al registrar','Ingrese todos los campos y seleccione las imágenes');
@@ -108,7 +114,7 @@ export class CrudLugarComponent implements OnInit {
         });
     } else {
       environment.mensajeToast(
-        'error','Error al registrar','Ingrese todos los campos y seleccione las imágenes');
+        'error','Error al registrar','Ingrese todos los campos y seleccione las imágenes else');
     }
   }
 
@@ -205,6 +211,37 @@ export class CrudLugarComponent implements OnInit {
           }
         })
       })
-    
+    }
+
+    obtenerLugarById(idLugar:number){
+      environment.mensajeEmergente('Editar','¿Estas seguro que deseas editar el lugar?','warning')
+      .then((cont)=>{
+        if(cont){
+          this.openCrudModal()
+          this.lugaresService.getLugarById(idLugar).subscribe({
+            next:(lugar)=>{
+              this.lugaresForm.controls.idLugares.setValue(<string><unknown>lugar.idLugares)
+              this.lugaresForm.controls.nombre.setValue(lugar.nombre)
+              this.lugaresForm.controls.descripcion.setValue(lugar.descripcion)
+              this.lugaresForm.controls.direccion.setValue(lugar.direccion)
+              this.lugaresForm.controls.tipoZona.setValue(lugar.tipoZona)
+              this.lugaresForm.controls.areaProtegida.setValue(<string><unknown> lugar.areaProtegida)
+              this.lugaresForm.controls.patrimonio.setValue(<string><unknown> lugar.patrimonio)
+              this.lugaresForm.controls.longitud.setValue(<string><unknown> lugar.longitud)
+              this.lugaresForm.controls.latitud.setValue(<string><unknown>lugar.latitud)
+            }
+          })
+        }
+      })
+    }
+
+    obtenerImagesDeLugar(id:number){
+      this.imagePreviews = new Array
+      this.imagenesLugaresService.getImagenesByIdLugares(id).subscribe(imgLugares =>{
+        imgLugares.forEach((lugar) =>{
+        this.imagePreviews.push(this.urlHost + lugar.url)
+       })
+        
+      })
     }
 }

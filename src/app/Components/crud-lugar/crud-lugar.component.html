@@ -139,7 +139,7 @@
                     
                     <td>
                         <button (click)="guardarIdLugar(lugar.idLugares)" (click)="abrirModalEtiqueta()" class="btn-opcion">Agregar/quitar etiquetas</button>
-                        <button class="btn-opcion">Editar</button>
+                        <button (click)="obtenerImagesDeLugar(lugar.idLugares)" (click)="obtenerLugarById(lugar.idLugares)" class="btn-opcion">Editar</button>
                         <button class="btn-opcion" (click)="eliminarLugar(lugar.idLugares)" >Eliminar</button>
                     </td>
                 </tr>
