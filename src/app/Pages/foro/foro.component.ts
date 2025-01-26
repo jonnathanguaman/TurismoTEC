@@ -5,6 +5,9 @@ import { Publicaciones } from '../../Services/publicaciones/publicaciones';
 import Swal from 'sweetalert2';
 import { ComentarioService } from '../../Services/comentario/comentario.service';
 import { Comentario } from '../../Services/comentario/comentario';
+import { AuthRegisterService } from '../../Services/auth/authRegister.service';
+import { TokenPayload } from '../../Services/DatosPersonales/TokenPayload ';
+import { jwtDecode } from 'jwt-decode';
 
 type ToastIcon = 'success' | 'error' | 'warning' | 'info' | 'question';
 
@@ -76,7 +79,8 @@ export class ForoComponent implements OnInit {
   constructor(
     private publicacionesService: PublicacionesService,
     private fb: FormBuilder,
-    private comentarioService: ComentarioService
+    private comentarioService: ComentarioService,
+    private authService: AuthRegisterService,
   ) {}
 
   ngOnInit(): void {
@@ -115,23 +119,29 @@ export class ForoComponent implements OnInit {
   }
   
   guardarPublicacion() {
-    if (this.publicacionForm) {
-      this.publicacionesService
-        .guardarPublicacion(
-          this.publicacionForm.value as unknown as Publicaciones,
-          <number>(<unknown>sessionStorage.getItem('id'))
-        )
-        .subscribe({
-          next: () => {
-            this.limpiarCamposPublicacion()
-            this.obtenerPublicaciones();
-            this.cerrarVentana();
-            this.mensajeToast('success','Publicacion registrada','Gracias por compartir con la comunidad');
-          },
-          error: (e) => {
-            console.log(e);
-          },
-        });
+    const token = sessionStorage.getItem('token');
+    if(token){
+      const payload: TokenPayload = jwtDecode(token); 
+      this.authService.getIdPerson(payload.sub).subscribe({
+        next:(idPersona)=>{
+          if (this.publicacionForm) {
+            this.publicacionesService
+              .guardarPublicacion(this.publicacionForm.value as unknown as Publicaciones,idPersona)
+              .subscribe({
+                next: () => {
+                  this.limpiarCamposPublicacion()
+                  this.obtenerPublicaciones();
+                  this.cerrarVentana();
+                  this.mensajeToast('success','Publicacion registrada','Gracias por compartir con la comunidad');
+                },
+                error: (e) => {
+                  console.log(e);
+                },
+              });
+          }
+        }
+      }
+      )
     }
   }
 
@@ -146,17 +156,24 @@ export class ForoComponent implements OnInit {
   }
 
   guardarComentario() {
-    this.comentarioService.guardarComentario(
-        this.comentarioForm.value as Comentario,
-        <number>(<unknown>sessionStorage.getItem('id')),
-        this.idPublicacionHaComentar
-      )
-      .subscribe({
-        next:()=>{
-          this.limpiarCamposComentario()
-          this.mensajeToast('success','Comentario registrado','Gracias por compartir con la comunidad');
+    const token = sessionStorage.getItem('token');
+
+    if(token){
+      const payload: TokenPayload = jwtDecode(token); 
+      this.authService.getIdPerson(payload.sub).subscribe({
+        next:(idPersona)=>{
+          this.comentarioService.guardarComentario(this.comentarioForm.value as Comentario,idPersona,this.idPublicacionHaComentar).subscribe({
+            next:()=>{
+              this.limpiarCamposComentario()
+              this.mensajeToast('success','Comentario registrado','Gracias por compartir con la comunidad');
+            }
+          });
         }
-      });
+      }
+      )
+    }
+
+    
   }
 
   autoResize(event: any) {
