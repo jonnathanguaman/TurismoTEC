@@ -35,7 +35,8 @@ import { MenuRestauranteComponent } from './Components/menu-restaurante/menu-res
 import { TimeAgoPipe } from './Services/publicaciones/time-ago.pipe';
 import { PaginaAdminComponent } from './Pages/pagina-admin/pagina-admin.component';
 import { MenuAdminComponent } from './Shared/menu-admin/menu-admin.component';
-import { CrubEtiquetaLugarComponent } from './Components/crub-etiqueta-lugar/crub-etiqueta-lugar.component'; 
+import { CrubEtiquetaLugarComponent } from './Components/crub-etiqueta-lugar/crub-etiqueta-lugar.component';
+import { CrubEtiquetaHotelComponent } from './Components/crub-etiqueta-hotel/crub-etiqueta-hotel.component'; 
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { CrubEtiquetaLugarComponent } from './Components/crub-etiqueta-lugar/cru
     PaginaAdminComponent,
     MenuAdminComponent,
     CrubEtiquetaLugarComponent,
+    CrubEtiquetaHotelComponent,
   ],
   imports: [
     BrowserModule,

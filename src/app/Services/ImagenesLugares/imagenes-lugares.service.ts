@@ -30,4 +30,10 @@ export class ImagenesLugaresService {
      `${environment.urlHost + '/imageLugares'}/${idLugar}`,formData,{ responseType: 'text' as 'json' }
     );
   }
+
+  getFile(fileName: string) {
+    return this.http.get(`${environment.urlHost + '/imageLugares/file'}/${fileName}`, {
+      responseType: 'blob', // Importante para manejar archivos binarios
+    });
+  }
 }

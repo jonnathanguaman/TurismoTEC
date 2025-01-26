@@ -19,7 +19,7 @@ export class CrudLugarComponent implements OnInit {
   
   isCrudModalOpen: boolean = false;
   imagePreviews: string[] = [];
-  selectedFiles: File[] = [null, null, null];
+  selectedFiles: File[] = [];
   categorias!: EtiquetasLugar[];
   modalEtiqueta:boolean = false
   todosLugares!: Lugares[];
@@ -97,8 +97,8 @@ export class CrudLugarComponent implements OnInit {
                 this.obtenerLugares();
                 this.closeCrudModal();
                 this.lugaresForm.reset();
-                this.selectedFiles = [null, null, null];
-                this.imagePreviews = [null, null, null];
+                this.selectedFiles = [];
+                this.imagePreviews = [];
                 this.obtenerEtiquetas()
                 this.abrirModalEtiqueta()
               })
@@ -142,6 +142,9 @@ export class CrudLugarComponent implements OnInit {
               'Se ha eliminado con exito'
             );
           },
+          error:()=>{
+            environment.mensajeToast('error','No se puedo eliminar','Elimina las etiquetas')
+          }
         });
       }
     });
@@ -240,8 +243,22 @@ export class CrudLugarComponent implements OnInit {
       this.imagenesLugaresService.getImagenesByIdLugares(id).subscribe(imgLugares =>{
         imgLugares.forEach((lugar) =>{
         this.imagePreviews.push(this.urlHost + lugar.url)
+        this.obtenerFile(this.obtenerNombreDeLaFoto(lugar.url))
+        console.log(this.selectedFiles)
        })
-        
       })
     }
+    obtenerFile(nombreFoto: string) {
+      this.imagenesLugaresService.getFile(nombreFoto).subscribe((file: Blob) => {
+        const fileFromBlob = new File([file], nombreFoto, { type: file.type });
+        this.selectedFiles.push(fileFromBlob)
+      });
+    }
+    
+    obtenerNombreDeLaFoto(url: string): string {
+      const parts = url.split('/');
+      return parts[parts.length - 1];
+    }
+    
+
 }
