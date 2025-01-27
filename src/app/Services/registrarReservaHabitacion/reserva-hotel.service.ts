@@ -14,4 +14,9 @@ export class ReservaHotelService {
   guardarReservaHabitacion(reservaHatitacion:ReservaHatitacion, idusuario:number, idHabitacion:number):Observable<ReservaHatitacion>{
     return this.http.post<ReservaHatitacion>(`${environment.urlHost + "/reservasHabitaciones"}/${idusuario}/${idHabitacion}`,reservaHatitacion);
   }
+
+  getFechasReservadas(idHabitacion:number):Observable<any>{
+    return this.http.get<any>(`${environment.urlHost + "/fechasReservadas"}/${idHabitacion}`);
+  }
+
 }

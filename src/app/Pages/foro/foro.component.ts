@@ -8,6 +8,7 @@ import { Comentario } from '../../Services/comentario/comentario';
 import { AuthRegisterService } from '../../Services/auth/authRegister.service';
 import { TokenPayload } from '../../Services/DatosPersonales/TokenPayload ';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from '../../../enviroments/enviroment';
 
 type ToastIcon = 'success' | 'error' | 'warning' | 'info' | 'question';
 
@@ -143,6 +144,9 @@ export class ForoComponent implements OnInit {
       }
       )
     }
+    else{
+      environment.mensajeToast('warning','No se pudo guargar la publicacion','Por favor registrese o inicie sesión')
+    }
   }
 
   obtenerPublicaciones() {
@@ -171,6 +175,8 @@ export class ForoComponent implements OnInit {
         }
       }
       )
+    }else{
+      environment.mensajeToast('warning','No se pudo guargar la publicacion','Por favor registrese o inicie sesión')
     }
 
     

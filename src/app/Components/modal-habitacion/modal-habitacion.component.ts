@@ -15,18 +15,23 @@ import { TokenPayload } from '../../Services/DatosPersonales/TokenPayload ';
   styleUrl: './modal-habitacion.component.css',
 })
 export class ModalHabitacionComponent implements OnInit{
-
+  @Input() idHabitacion?:number
+  
   constructor(
     private habitacionService:HabitacionesService,
     private reservaHotelService:ReservaHotelService,
     private authService: AuthRegisterService,){}
-  selectedDate:string = ''
+    selectedDate:string = ''
+    fechasReservadas:Date[]
 
-  @Input() idHabitacion?:number
+    disabledDates = [''];
+    
+  ngOnInit(): void {
+  }
 
   fechaActual:string =<string> <unknown>new Date()
 
-  disabledDates = ['2025-01-01', '2025-01-10', '2025-02-14'];
+  
   rangeValue: { Desde: Date; hasta: Date } = {
     Desde: null,
     hasta: null
@@ -37,22 +42,11 @@ export class ModalHabitacionComponent implements OnInit{
   habitacion!:Habitaciones
   isVisible: boolean = false;
 
-  abrirModal(): void {
-    this.isVisible = true;
-    if(this.idHabitacion){
-      this.habitacionService.getHabitacionById(this.idHabitacion).subscribe(auxhabitacion =>{
-        this.habitacion = auxhabitacion
-      })
-    }
-
-  }
-
   cerrarModal(): void {
     this.isVisible = false;
+    this.disabledDates = [];
   }
-  
-  ngOnInit(): void {
-  }
+
 
   public reserva = new ReservaHatitacion();
 
@@ -87,6 +81,7 @@ export class ModalHabitacionComponent implements OnInit{
                 this.limpiarFecha()
                 this.cerrarModal()
                 environment.mensajeToast('success','Reserva registrada',"La reserva se ha registrado, puede verla en su perfil")
+                this.disabledDates = [];
               },
               error:()=>{
                 environment.mensajeToast('error','Lo sentimos algo salio mal','Hemos enviado el error a los responsables, lamentamos las molestias')
@@ -103,6 +98,64 @@ export class ModalHabitacionComponent implements OnInit{
 
   limpiarFecha(){
     this.rangeValue = { Desde: null, hasta: null };
-
   }
+
+  
+  abrirModal(): void {
+    this.cargarFechas().then(() => {
+      this.isVisible = true; // Abre el modal solo después de que las fechas estén cargadas
+    }).catch(error => {
+      console.error('Error al cargar las fechas:', error);
+      // Opcional: Mostrar un mensaje al usuario
+    });
+  }
+  
+  cargarFechas(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (this.idHabitacion) {
+        this.habitacionService.getHabitacionById(this.idHabitacion).subscribe({
+          next: (auxhabitacion) => {
+            this.habitacion = auxhabitacion;
+            this.obtenerFechasReservadas(auxhabitacion.idHabitacion).then(() => {
+              resolve(); // Resuelve la promesa cuando las fechas están listas
+            }).catch(error => {
+              reject(error); // Rechaza la promesa si ocurre un error al cargar las fechas
+            });
+          },
+          error: (err) => {
+            reject(err); // Rechaza la promesa si ocurre un error al obtener la habitación
+          }
+        });
+      } else {
+        reject('No se proporcionó un ID de habitación'); // Manejo de error si no hay ID de habitación
+      }
+    });
+  }
+  
+  obtenerFechasReservadas(idHabitacion: number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.reservaHotelService.getFechasReservadas(idHabitacion).subscribe({
+        next: (fechasReservadas) => {
+          fechasReservadas.forEach((fecha: Date) => {
+            this.disabledDates.push(this.formatearFecha(new Date(fecha)));
+            console.log(this.formatearFecha(new Date(fecha)));
+          });
+          resolve(); // Resuelve la promesa cuando las fechas están completamente procesadas
+        },
+        error: (err) => {
+          console.error('Error al cargar las fechas reservadas:', err);
+          reject(err); // Rechaza la promesa si ocurre un error
+        }
+      });
+    });
+  }
+  
+  formatearFecha(fecha: Date): string {
+    const año = fecha.getFullYear();
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    const día = fecha.getDate().toString().padStart(2, '0');
+    return `${año}-${mes}-${día}`;
+  }
+  
+  
 }

@@ -71,6 +71,12 @@ export class VerRestaurantesComponent implements OnInit{
       this.todosRestaurantes = rest.filter((rest) =>
         rest.nombre.toLowerCase().includes(nombreLower)
       )
+
+      this.todosRestaurantes.forEach(restaurante =>{
+        this.obtenerImgDeRestaurates(restaurante.idRestaurante).then(img =>{
+          restaurante.imagenesRestaurantes = img
+        })
+      })
     })
   }
 
@@ -80,6 +86,11 @@ export class VerRestaurantesComponent implements OnInit{
       this.todosRestaurantes = rest.filter((rest) =>
         rest.nombre.toLowerCase().includes(nombreLower)
       )
+      this.todosRestaurantes.forEach(restaurante =>{
+        this.obtenerImgDeRestaurates(restaurante.idRestaurante).then(img =>{
+          restaurante.imagenesRestaurantes = img
+        })
+      })
     })
   }
 }

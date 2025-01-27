@@ -71,6 +71,12 @@ export class VerHotelesComponent implements OnInit{
       this.todoshoteles = hoteles.filter((hotel) =>
         hotel.nombre.toLowerCase().includes(nombreLower)
       )
+
+      this.todoshoteles.forEach(hotel =>{
+        this.obtenerImagesDeHoteles(hotel.idHotel).then(img => {
+          hotel.imagenesHoteles = img
+        })
+      })
     })
   }
 
@@ -80,6 +86,11 @@ export class VerHotelesComponent implements OnInit{
       this.todoshoteles = hoteles.filter((hotel) =>
         hotel.nombre.toLowerCase().includes(nombreLower)
       )
+      this.todoshoteles.forEach(hotel =>{
+        this.obtenerImagesDeHoteles(hotel.idHotel).then(img => {
+          hotel.imagenesHoteles = img
+        })
+      })
     })
   }
 }
