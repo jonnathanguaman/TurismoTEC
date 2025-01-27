@@ -1,3 +1,5 @@
+import { Hoteles } from "../hoteles/hoteles";
+
 export interface Habitaciones{
     idHabitacion:number;
     nombreHabitacion:string;
@@ -5,4 +7,5 @@ export interface Habitaciones{
     disponible:boolean;
     precio:number;
     numeroHabitacion:number;
+    hoteles:Hoteles
 }

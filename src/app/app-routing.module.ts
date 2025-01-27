@@ -18,6 +18,7 @@ import { CrudHotelComponent } from './Components/crud-hotel/crud-hotel.component
 import { PaginaAdminComponent } from './Pages/pagina-admin/pagina-admin.component';
 import { CrubEtiquetaLugarComponent } from './Components/crub-etiqueta-lugar/crub-etiqueta-lugar.component';
 import { ReviewComponent } from './Components/review/review.component';
+import { CrudReservasHabitacionComponent } from './Components/crud-reservas-habitacion/crud-reservas-habitacion.component';
 
 const routes: Routes = [
   {
@@ -80,11 +81,14 @@ const routes: Routes = [
     path:"review",
     component:ReviewComponent
   },
- 
   {
     path:"admin",
     component:PaginaAdminComponent,
     children:[
+      {
+        path:"crud-reservaciones-habitaciones",
+        component:CrudReservasHabitacionComponent
+      },
       {
         path:"crudRestaurante",
         component:CrudRestauranteComponent

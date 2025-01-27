@@ -32,6 +32,7 @@ export class DatosPersonalesComponent implements OnInit {
   idioma: string = '';
   pais: string = '';
   edad!: number;
+  correo:string=''
 
   constructor(
     private datosService: DatosPersonalesService,
@@ -108,6 +109,7 @@ export class DatosPersonalesComponent implements OnInit {
     this.persona.edad = this.edad;
     this.persona.idioma = this.idioma;
     this.persona.paisOrigen = this.pais;
+    this.persona.correo = this.correo;
     this.datosService.guardarPesona(this.persona).subscribe({
       next: (usuario) => {
         this.auth.username = this.usuario;

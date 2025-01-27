@@ -26,6 +26,17 @@
             </div>
         </div>
         
+        <div>
+            <div [ngClass]="{'datos-personales': !editar, 'datosPersonalesTrue':editar}">
+                <div class="datos-personales-items" [ngClass]="{'input-error': auxnombre.invalid && auxnombre.touched}">
+                    <input type="mail" id="correo" name="correo" [(ngModel)]="correo" #auxcorreo="ngModel" required [disabled]="editar">
+                    <label  for="nombre">Correo</label>
+                </div>
+            </div>
+            <div *ngIf="auxcorreo.invalid && auxcorreo.touched" class="error">
+                Corro es obligatorio.
+            </div>
+        </div>
         <!--Cambiar por fecha de nacimiento-->
         <div>
             <div>

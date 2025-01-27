@@ -38,8 +38,8 @@ import { MenuAdminComponent } from './Shared/menu-admin/menu-admin.component';
 import { CrubEtiquetaLugarComponent } from './Components/crub-etiqueta-lugar/crub-etiqueta-lugar.component';
 import { CrubEtiquetaHotelComponent } from './Components/crub-etiqueta-hotel/crub-etiqueta-hotel.component'; 
 import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
-import { CrubReservacionesHabitacionesComponent } from './Components/crub-reservaciones-habitaciones/crub-reservaciones-habitaciones.component';
-import { ReviewComponent } from './Components/review/review.component'; 
+import { ReviewComponent } from './Components/review/review.component';
+import { CrudReservasHabitacionComponent } from './Components/crud-reservas-habitacion/crud-reservas-habitacion.component'; 
 
 @NgModule({
   declarations: [
@@ -74,8 +74,8 @@ import { ReviewComponent } from './Components/review/review.component';
     MenuAdminComponent,
     CrubEtiquetaLugarComponent,
     CrubEtiquetaHotelComponent,
-    CrubReservacionesHabitacionesComponent,
     ReviewComponent,
+    CrudReservasHabitacionComponent,
   ],
   imports: [
     BrowserModule,

@@ -19,4 +19,7 @@ export class ReservaHotelService {
     return this.http.get<any>(`${environment.urlHost + "/fechasReservadas"}/${idHabitacion}`);
   }
 
+  getReservasHabitaciones():Observable<ReservaHatitacion[]>{
+    return this.http.get<ReservaHatitacion[]>(environment.urlHost + "/reservasHabitaciones");
+}
 }
