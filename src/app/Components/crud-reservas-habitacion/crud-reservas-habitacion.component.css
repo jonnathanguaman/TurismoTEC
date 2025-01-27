@@ -40,36 +40,66 @@
     margin-bottom: 20px;
 }
 
+/* Estilos del formulario */
+.reservation-form {
+    margin-left: 50px;
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    background-color: #ffffff; /* Fondo blanco */
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+/* Input Container */
 .input-container {
-    margin-bottom: 15px;
-    text-align: left;
+    margin-bottom: 20px;
 }
 
 .input-container label {
+    display: block;
     font-size: 14px;
     color: #333;
-    margin-bottom: 5px;
-    display: block;
+    margin-bottom: 8px;
 }
 
-.input-container input,
-.input-container textarea,
-.input-container select {
+/* Estilo del input */
+.custom-flatpickr-input {
     width: 100%;
     padding: 10px;
-    font-size: 16px;
+    font-size: 14px;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
+    border-radius: 8px;
     outline: none;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s;
 }
 
-.input-container input:focus,
-.input-container textarea:focus,
-.input-container select:focus {
-    border-color: #007bff;
+.custom-flatpickr-input:focus {
+    border-color: #007bff; /* Color de enfoque */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
+
+/* Botón */
+.btn-panel {
+    text-align: center;
+}
+
+.btn-opcion {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-opcion:hover {
+    background-color: #0056b3;
+}
+
 
 textarea {
     resize: none;

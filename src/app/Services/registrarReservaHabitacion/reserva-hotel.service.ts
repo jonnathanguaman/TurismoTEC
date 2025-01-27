@@ -21,5 +21,17 @@ export class ReservaHotelService {
 
   getReservasHabitaciones():Observable<ReservaHatitacion[]>{
     return this.http.get<ReservaHatitacion[]>(environment.urlHost + "/reservasHabitaciones");
-}
+  }
+
+  getReservasUser(idUser:number):Observable<ReservaHatitacion[]>{
+    return this.http.get<ReservaHatitacion[]>(`${environment.urlHost + "/reservasDeUsuario"}/${idUser}`);
+  }
+
+  getReservaById(idReserva:number):Observable<ReservaHatitacion>{
+    return this.http.get<ReservaHatitacion>(`${environment.urlHost + "/reservasHabitaciones"}/${idReserva}`);
+  }
+
+  eliminarReservacion(idReserva:number):Observable<ReservaHatitacion>{
+    return this.http.delete<ReservaHatitacion>(`${environment.urlHost + "/reservasHabitaciones"}/${idReserva}`);
+  }
 }

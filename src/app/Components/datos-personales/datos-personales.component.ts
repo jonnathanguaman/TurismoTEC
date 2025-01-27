@@ -19,6 +19,8 @@ import { Router } from '@angular/router';
   styleUrl: './datos-personales.component.css',
 })
 export class DatosPersonalesComponent implements OnInit {
+  
+  
   textBoton: String = 'Registrar';
   userloginOn: boolean = false;
   editar!: boolean;
@@ -72,6 +74,7 @@ export class DatosPersonalesComponent implements OnInit {
               this.apellido = person.apellido;
               this.edad = person.edad;
               this.pais = person.paisOrigen;
+              this.correo = person.correo;
             });
 
             this.authService.getAuth(payload.sub).subscribe((auth) => {
@@ -132,6 +135,7 @@ export class DatosPersonalesComponent implements OnInit {
                       },
                       complete:()=>{
                         this.router.navigateByUrl("/")
+                        window.location.reload();
                       },
                       error:()=>{
                         console.log("No pudiste entrar lo siento")

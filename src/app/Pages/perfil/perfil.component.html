@@ -1,12 +1,3 @@
-<!-- <div class="perfil-image">
-    <div class="perfil-images-item">
-        <img src="/assets/img/perfildefault.png" width="200px">
-    </div>
-    <div class="perfil-images-pie">
-        <p>User name</p>
-    </div>
-</div> -->
-
 <hr>
 
 <div class="tabla-container">
@@ -15,6 +6,9 @@
     </button>
     <button class="tabla" [class.active]="activarTabla === 'tab2'" (click)="seleccionarTablaactiva('tab2')">
         Preferencias
+    </button>
+    <button class="tabla" [class.active]="activarTabla === 'tab3'" (click)="seleccionarTablaactiva('tab3')">
+        Reservas habitaciones
     </button>
 </div>
 
@@ -26,4 +20,8 @@
 
 <div class="tabla-contenido" *ngIf="activarTabla === 'tab2'">
     <app-encuesta></app-encuesta>
+</div>
+
+<div class="tabla-contenido" *ngIf="activarTabla === 'tab3'">
+    <app-crud-reservas-habitacion></app-crud-reservas-habitacion>
 </div>

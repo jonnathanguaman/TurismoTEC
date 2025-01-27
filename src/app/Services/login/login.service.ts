@@ -89,12 +89,15 @@ export class AuthService {
   }
 
   logOut():void{
+    
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("id");
     this.admin.next(false);
     this.user.next(false);
     this.currentUserLoginOn.next(false)
-    this.router.navigateByUrl("/")
+    this.router.navigateByUrl("/").then(()=>{
+      window.location.reload();
+    })
 
   }
   get userDate():Observable<String>{
