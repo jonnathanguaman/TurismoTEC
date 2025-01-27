@@ -17,6 +17,7 @@ import { CrudRestauranteComponent } from './Components/crud-restaurante/crud-res
 import { CrudHotelComponent } from './Components/crud-hotel/crud-hotel.component';
 import { PaginaAdminComponent } from './Pages/pagina-admin/pagina-admin.component';
 import { CrubEtiquetaLugarComponent } from './Components/crub-etiqueta-lugar/crub-etiqueta-lugar.component';
+import { ReviewComponent } from './Components/review/review.component';
 
 const routes: Routes = [
   {
@@ -75,7 +76,10 @@ const routes: Routes = [
     path:"mesa/:id",
     component:MesasComponent
   },
-  
+  {
+    path:"review",
+    component:ReviewComponent
+  },
  
   {
     path:"admin",

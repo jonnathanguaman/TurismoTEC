@@ -1,0 +1,69 @@
+<div class="crud-container">
+    <div class="review-header">
+      <div class="review-description">
+        <p>Descripción del producto o servicio.</p>
+      </div>
+      <button class="btn-opcion" (click)="openModal()">Reseñas</button>
+    </div>
+  
+    <!-- Modal -->
+    <div class="crud-modal" *ngIf="isModalOpen">
+      <div class="crud-modal-content">
+        <span class="close-modal" (click)="closeModal()">&times;</span>
+        <h3>Agregar Reseña</h3>
+        <div class="input-container">
+          <label for="reviewContent">Contenido de la reseña:</label>
+          <textarea
+            id="reviewContent"
+            [(ngModel)]="reviewContent"
+            rows="4"
+            placeholder="Escribe tu reseña aquí..."
+          ></textarea>
+        </div>
+        <div class="input-container">
+          <label for="reviewDate">Fecha y hora:</label>
+          <input
+            type="text"
+            id="reviewDate"
+            [value]="currentDate"
+            disabled
+          />
+        </div>
+        <div class="input-container">
+          <label>Calificación:</label>
+          <div class="stars">
+            <span
+              *ngFor="let star of stars; let i = index"
+              (click)="rate(i + 1)"
+              [class.filled]="i < rating"
+              class="star"
+            >
+              ★
+            </span>
+          </div>
+        </div>
+        <div class="btn-container">
+          <button class="btn-opcion" (click)="submitReview()">Calificar</button>
+          <button class="btn-opcion" (click)="closeModal()">Salir</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Lista de reseñas -->
+    <div class="reviews-list">
+        <div *ngFor="let review of reviews" class="review-item">
+          <p><strong>Fecha:</strong> {{ review.date }}</p>
+          <p><strong>Reseña:</strong> {{ review.content }}</p>
+          <p><strong>Calificación:</strong></p>
+          <div class="stars">
+            <span
+              *ngFor="let star of stars; let i = index"
+              [class.filled]="i < review.stars"
+              class="star"
+            >
+              ★
+            </span>
+          </div>
+          <hr />
+        </div>
+      </div>
