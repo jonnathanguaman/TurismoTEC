@@ -131,38 +131,3 @@ label {
     }
 }
 
-/* Cambiar el color del fondo del calendario */
-.flatpickr-calendar {
-  background-color: #f0f8ff;
-}
-
-/* Cambiar el color del texto de las fechas seleccionadas */
-.flatpickr-day.selected {
-  background-color: #ff6347;
-  color: white;
-}
-
-/* Cambiar el color del borde de la caja de entrada */
-.flatpickr-input {
-  border: 2px solid #ff6347;
-  padding: 10px;
-  font-size: 16px;
-}
-
-/* Cambiar el estilo del calendario (borde, sombra) */
-.flatpickr-calendar {
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Estilo de los días del mes */
-.flatpickr-day {
-  font-size: 18px;
-  color: #333;
-}
-
-/* Cambiar el color de los días actuales */
-.flatpickr-day.today {
-  background-color: #ff6347;
-  color: white;
-}

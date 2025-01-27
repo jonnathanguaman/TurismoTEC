@@ -37,6 +37,7 @@ import { PaginaAdminComponent } from './Pages/pagina-admin/pagina-admin.componen
 import { MenuAdminComponent } from './Shared/menu-admin/menu-admin.component';
 import { CrubEtiquetaLugarComponent } from './Components/crub-etiqueta-lugar/crub-etiqueta-lugar.component';
 import { CrubEtiquetaHotelComponent } from './Components/crub-etiqueta-hotel/crub-etiqueta-hotel.component'; 
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 
 @NgModule({
   declarations: [
@@ -78,10 +79,12 @@ import { CrubEtiquetaHotelComponent } from './Components/crub-etiqueta-hotel/cru
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    FlatpickrDirective
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:JwtInterceptorService,multi:true},
     {provide:HTTP_INTERCEPTORS, useClass:ErrorInterceptorService,multi:true},
+    provideFlatpickrDefaults()
   ],
   bootstrap: [AppComponent]
 })

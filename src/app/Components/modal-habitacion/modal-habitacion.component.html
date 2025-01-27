@@ -1,34 +1,34 @@
-
 <div class="modal" *ngIf="isVisible">
     <div class="modal-content">
-      <span class="cerrar" (click)="cerrarModal()">×</span>
+        <span class="cerrar" (click)="cerrarModal()">×</span>
 
-      <div class="modal-content-principal">
+        <div class="modal-content-principal">
             <div class="modal-content-principal-item">
-                
+
                 <div class="modal-content-principal-item-imgPrincipal">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTD-uZbAICjNy10pTQaHGjGOVUrwmmIRRmCg&s" alt="">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTD-uZbAICjNy10pTQaHGjGOVUrwmmIRRmCg&s"
+                        alt="">
                 </div>
 
                 <div class="modal-content-principal-item-img-secundarias">
                     <div class="modal-content-principal-item-img">
-                    
+
                     </div>
-    
+
                     <div class="modal-content-principal-item-img">
-                        
+
                     </div>
-    
+
                     <div class="modal-content-principal-item-img">
-                        
+
                     </div>
                 </div>
             </div>
 
             <div class="modal-content-principal-item" *ngIf="idHabitacion">
-                
+
                 <div class="modal-titulo">
-                      <h3>{{habitacion.nombreHabitacion}}</h3>
+                    <h3>{{habitacion.nombreHabitacion}}</h3>
                 </div>
 
                 <div class="modal-descripcio">
@@ -40,16 +40,16 @@
                 </div>
 
                 <div class="modal-fechaReserva">
+
                     <div class="modal-fechaReserva-inicio">
                         <label>Fecha de incio de la reserva:</label>
                         <br>
-                        <input type="date">
-                    </div>
-
-                    <div class="modal-fechaReserva-fin">
-                        <label>Fecha final de la reserva:</label>
-                        <br>
-                        <input type="date">
+                        <input class="custom-flatpickr-input"
+                        [disable]="disabledDates" 
+                        [minDate]="fechaActual"
+                        type="text" 
+                        mwlFlatpickr [(ngModel)]="rangeValue" [altInput]="true"
+                        mode="range" placeholder="Selecciona un rango de fechas" />
                     </div>
                 </div>
 
@@ -58,10 +58,9 @@
                 </div>
 
                 <div class="modal-boton">
-                    <button class="botonReservar">Reservar</button>
+                    <button (click)="crearReservacionDeHabitacion()" class="botonReservar">Reservar</button>
                 </div>
             </div>
-      </div>
+        </div>
     </div>
-  </div>
-  
+</div>
