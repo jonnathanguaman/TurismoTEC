@@ -1,0 +1,134 @@
+<div class="crud-container">
+    <div class="container-header">
+        <div class="contenedor-izq">
+            <h2>Gestión de usuarios</h2>
+        </div>
+        <div class="contenedor-derecho">
+            <div class="search-container">
+                <input type="text" placeholder="Buscar" class="search-input" />
+                <button class="search-button"><span class="icon">🔍</span></button>
+            </div>
+            <button class="btn-opcion" (click)="openCrudModal()">Crear personas</button>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Idioma</th>
+                    <th>Edad</th>
+                    <th>Correo</th>
+                    <th>Pais</th>
+                    <th>Usuario</th>
+                    <th>Contraseña</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let persona of personas">
+                    <td>{{ persona.nombre }}</td>
+                    <td>{{ persona.apellido }}</td>
+                    <td>{{ persona.idioma }}</td>
+                    <td>{{ persona.edad }}</td>
+                    <td>{{ persona.correo }}</td>
+                    <td>{{ persona.paisOrigen }}</td>
+                    <td>{{ persona.auth.username }}</td>
+                    <td>{{ persona.auth.password}}</td>
+                    
+                    <td>
+                        <button  class="btn-opcion" >Rol</button>
+                        <button (click)="editarUsuario(persona.id_Usuario)" class="btn-opcion" >Editar</button>
+                        <button class="btn-opcion">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- Modal para el CRUD -->
+<div class="crud-modal" *ngIf="isCrudModalOpen">
+    <div class="crud-modal-content">
+        <span class="close-modal" (click)="closeCrudModal()">✖</span>
+        <h3>Crear o editar personas</h3>
+
+        <form [formGroup]="personaForm">
+
+            <div class="input-container">
+                <label for="nombre">Nombre:</label>
+                <input formControlName="nombre" type="text" id="nombre" name="nombre"/>
+                <div *ngIf="nombre.invalid && nombre.touched" class="message error">
+                    El nombre es obligatorio.
+                </div>
+            </div>
+
+            <div class="input-container">
+                <label for="nombre">Apellido:</label>
+                <input formControlName="apellido" type="text" id="edad" name="apellido"/>
+                <div *ngIf="apellido.invalid && apellido.touched" class="message error">
+                    El apellido es obligatorio.
+                </div>
+            </div>
+
+            <div class="input-container">
+                <label for="nombre">Edad:</label>
+                <input formControlName="edad" type="number" id="edad"/>
+                <div *ngIf="edad.invalid && edad.touched" class="message error">
+                    El edad es obligatoria.
+                </div>
+            </div>
+
+            <div class="input-container">
+                <label for="nombre">Pais de origen:</label>
+                <input formControlName="paisOrigen" type="text" id="paisOrigen" name="paisOrigen"/>
+                <div *ngIf="paisOrigen.invalid && paisOrigen.touched" class="message error">
+                    El edad es obligatoria.
+                </div>
+            </div>
+
+
+            <div class="input-container">
+                <label for="idioma">Idioma:</label>
+                <input formControlName="idioma" type="text" id="idioma" name="idioma"/>
+                <div *ngIf="idioma.invalid && idioma.touched" class="message error">
+                    El idioma es obligatorio.
+                </div>
+            </div>
+
+            <div class="input-container">
+                <label for="correo">Correo:</label>
+                <input formControlName="correo" type="text" id="correo" name="correo"/>
+                <div *ngIf="correo.invalid && correo.touched" class="message error">
+                    El correo es obligatorio.
+                </div>
+            </div>
+
+            <form [formGroup]="authForm">
+                <div class="input-container">
+                    <label for="correo">Usuario:</label>
+                    <input formControlName="username" type="text" id="username" name="username"/>
+                    <div *ngIf="username.invalid && username.touched" class="message error">
+                        El correo es obligatorio.
+                    </div>
+                </div>
+
+                <div class="input-container">
+                    <label for="correo">Contraseña:</label>
+                    <input formControlName="password" type="password" id="password" name="password"/>
+                    <div *ngIf="password.invalid && password.touched" class="message error">
+                        El correo es obligatorio.
+                    </div>
+                </div>
+            </form>
+
+            <div class="btn-panel">
+                <button (click)="editarPersonaYauth()" class="btn-opcion" type="submit" >Guardar</button>
+            </div>
+        </form>
+        
+    </div>
+</div>

@@ -1,6 +1,5 @@
 <form #form="ngForm"> <!--Poner (ngSubmit)="onSubmit(form)"-->
     <div class="formularioSugerencia">
-
         <div>
             <div [ngClass]="{'datos-personales': !editar, 'datosPersonalesTrue':editar}">
                 <div class="datos-personales-items" [ngClass]="{'input-error': auxnombre.invalid && auxnombre.touched}">

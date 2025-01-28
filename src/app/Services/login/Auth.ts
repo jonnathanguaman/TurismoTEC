@@ -1,5 +1,5 @@
 export interface Auth{
-    id:number;
+    id_auth:number;
     username:String;
     password:String;
 }

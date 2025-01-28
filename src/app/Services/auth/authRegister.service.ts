@@ -5,6 +5,7 @@ import { environment } from '../../../enviroments/enviroment';
 import { authRegister } from './authRegister';
 import { TokenPayload } from '../DatosPersonales/TokenPayload ';
 import { jwtDecode } from 'jwt-decode';
+import { Auth } from '../login/Auth';
 
 @Injectable({
   providedIn: 'root',
@@ -34,5 +35,11 @@ export class AuthRegisterService {
     );
   }
 
+  getAuthByIdPersona(idPersona:number):Observable<any>{
+    return this.http.get<any>(`${environment.urlAut + '/public/v1/authByIdUser'}/${idPersona} `)
+  }
   
+  editarAuth(user:string,password:string,id:number): Observable<any> {
+    return this.http.patch<any>(`${environment.urlAut + '/public/v1/auth'}/${user}/${password}/${id}`, null);
+  }
 }
