@@ -40,6 +40,7 @@
     background-color: #34495e;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    cursor: pointer;
   }
   
   .menu-item:hover {

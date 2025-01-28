@@ -48,14 +48,10 @@ export class LoginComponent{
                 console.log("admin: " + admin)
                 if(admin){
                   
-                  this.router.navigateByUrl("/admin").then(()=>{
-                    window.location.reload();
-                  })
+                  this.router.navigateByUrl("/admin").then()
                   this.loginForm.reset()
                 }else{
-                this.router.navigateByUrl("/").then(()=>{
-                  window.location.reload();
-                })
+                this.router.navigateByUrl("/").then()
                 }
               }
             }

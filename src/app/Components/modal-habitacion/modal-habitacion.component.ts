@@ -9,6 +9,7 @@ import { environment } from '../../../enviroments/enviroment';
 import { AuthRegisterService } from '../../Services/auth/authRegister.service';
 import { jwtDecode } from 'jwt-decode';
 import { TokenPayload } from '../../Services/DatosPersonales/TokenPayload ';
+import { MailService } from '../../Services/mailService/mail.service';
 @Component({
   selector: 'app-modal-habitacion',
   templateUrl: './modal-habitacion.component.html',
@@ -20,10 +21,11 @@ export class ModalHabitacionComponent implements OnInit{
   constructor(
     private habitacionService:HabitacionesService,
     private reservaHotelService:ReservaHotelService,
-    private authService: AuthRegisterService,){}
+    private authService: AuthRegisterService,
+    private mailService:MailService,)
+    {}
     selectedDate:string = ''
     fechasReservadas:Date[]
-
     disabledDates = [''];
     
   ngOnInit(): void {
@@ -80,8 +82,11 @@ export class ModalHabitacionComponent implements OnInit{
               complete:()=>{
                 this.limpiarFecha()
                 this.cerrarModal()
-                environment.mensajeToast('success','Reserva registrada',"La reserva se ha registrado, puede verla en su perfil")
+                environment.mensajeToast('success','Reserva registrada',"La reserva se ha registrado, en breve te llegara un correo de confirmación")
                 this.disabledDates = [];
+                this.mailService.enviarCorreoAUsuario(idUsuario).subscribe((mensaje)=>{
+                  console.log("Mensaje del servidor del correo "+mensaje)
+                })
               },
               error:()=>{
                 environment.mensajeToast('error','Lo sentimos algo salio mal','Hemos enviado el error a los responsables, lamentamos las molestias')

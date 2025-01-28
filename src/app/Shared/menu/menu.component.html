@@ -7,7 +7,7 @@
       <li><a routerLink="/">Inicio</a></li>
       <li><a routerLink="/nosotros">Nosotros</a></li>
       <li><a routerLink="/recomendaciones">Lugares</a></li>
-      <li *ngIf="userloginOn"><a routerLink="/perfil">Perfil</a></li>
+      <li *ngIf="userloginOn"><a (click)="perfil()" >Perfil</a></li>
       <li *ngIf="admin"><a routerLink="/admin">Admin</a></li>
       <li><a routerLink="/hoteles">Hoteles</a></li>
       <li><a routerLink="/restaurantes">Restaurante</a></li>

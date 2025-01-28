@@ -46,7 +46,10 @@ body {
     gap: 15px;
     margin: 0;
     padding: 0;
+    cursor: pointer;
 }
+
+
 
 .menu-items li {
     margin: 0;
