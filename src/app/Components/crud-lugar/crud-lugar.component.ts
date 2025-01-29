@@ -33,20 +33,24 @@ export class CrudLugarComponent implements OnInit {
   urlHost:string = environment.urlAut
   public lugarEtiqueta = new Lugares_categoria()
 
+  //Abre la pestaña para poner etiquetas
   abrirModalEtiqueta(){
     this.obtenerEtiquetas()
     this.obtenerEtiquetasLugar()
     this.modalEtiqueta = true
   }
 
+  //Cierra la pestaña para poner etiquetas
   cerrarModalEtiqueta(){
     this.modalEtiqueta = false
   }
 
+  //Abre la pestaña para crear lugaes
   openCrudModal() {
     this.isCrudModalOpen = true;
   }
 
+  //Cierra la pestaña para crear lugaes
   closeCrudModal() {
     this.lugaresForm.reset();
     this.isCrudModalOpen = false;
@@ -54,9 +58,11 @@ export class CrudLugarComponent implements OnInit {
     this.imagePreviews = [];
   }
 
+  //Guardammos el id del lugar cuando damos click en algun boton del html
   guardarIdLugar(idLugar:number){
     this.idLugar = idLugar
   }
+
   constructor(
     private lugaresService: LugaresService,
     private fb: FormBuilder,
@@ -70,6 +76,7 @@ export class CrudLugarComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerLugares();
   }
+
 
   lugaresForm = this.fb.group({
     idLugares:[''],
@@ -90,24 +97,30 @@ export class CrudLugarComponent implements OnInit {
   crearLugares() {
     console.log(this.imagePreviews.length)
     if (this.lugaresForm.valid && this.imagePreviews.length >= 3) {
-     
+      
+      const token = sessionStorage.getItem("token")//Obtenemos el token del sesionStorage
 
-      const token = sessionStorage.getItem("token")
-      const payload: TokenPayload = jwtDecode(token);
+      const payload: TokenPayload = jwtDecode(token); //Decodificamos el token, nos devuleve el nombre del usuario
+
+        //Buscamos al usuario por su usermane para obtener el idUsuer
         this.authService.getIdPerson(payload.sub).subscribe({
           next: (idUser) => {
+
+            //Guardamos el lugar 
             this.lugaresService
-            .guardarLugares(this.lugaresForm.value as unknown as Lugares,idUser)
-            .subscribe({
+            .guardarLugares(this.lugaresForm.value as unknown as Lugares,idUser).subscribe({
               next: (lugarCreado: Lugares) => {
-                  this.idLugar = lugarCreado.idLugares
-                  const uploadPromises = this.selectedFiles.map((file) =>
-                  this.imagenesLugaresService.uploadImage(file, lugarCreado.idLugares).toPromise());
-    
+                
+                  this.idLugar = lugarCreado.idLugares //Capturamos el id del lugar 
+
+                //Creamos una promesa para que primero se guarden todas las fotos 
+                const uploadPromises = this.selectedFiles.map((file) =>
+                this.imagenesLugaresService.uploadImage(file, lugarCreado.idLugares).toPromise());
+                
+                //Continuamos con el flujo cuando la promesa se resuelve si no realizamos esto puede que las imagenes no se suban
                 Promise.all(uploadPromises)
                   .then(() => {
                     environment.mensajeToast('success','Imágenes subidas','Todas las imágenes se subieron correctamente');
-                    
                     this.obtenerLugares();
                     this.closeCrudModal();
                     this.lugaresForm.reset();
@@ -134,6 +147,9 @@ export class CrudLugarComponent implements OnInit {
     }
   }
 
+  //ESTO NO VA EN HOTELES Y RESTAURANTES
+
+  //Cuando el usuario crea un lugar usamos este metodo para aprobar la peticion
   aprobarLugar(id: number) {
     this.lugaresService.aprobarLugar(id, true).subscribe({
       next: () => {
@@ -144,12 +160,16 @@ export class CrudLugarComponent implements OnInit {
     });
   }
 
+  //Enviamos el correo de confirmacion para el usuario
   enviarCorreoAprobado(idUser:number){
     this.mailService.enviarCorreoAprobado(idUser).subscribe((response)=>{
       console.log(response)
     })
   }
 
+  //HASTA AQUI
+
+  //Obtenemos la lista completa de los lugares
   obtenerLugares() {
     this.lugaresService.getLugaresAdmin().subscribe((lugares) => {
       this.todosLugares = lugares;
@@ -157,12 +177,7 @@ export class CrudLugarComponent implements OnInit {
   }
 
   eliminarLugar(idLugar: number) {
-    const mensajeError = environment.mensajeEmergente(
-      '¿Estás seguro que deseas eliminar?',
-      'Esta operación no es reversible',
-      'warning'
-    );
-
+    const mensajeError = environment.mensajeEmergente('¿Estás seguro que deseas eliminar?','Esta operación no es reversible','warning');
     mensajeError.then((confirmado) => {
       if (confirmado) {
         this.lugaresService.eliminarLugar(idLugar).subscribe({
@@ -182,15 +197,17 @@ export class CrudLugarComponent implements OnInit {
     });
   }
 
+  //COPIAR TAL CUAL 
+  //Este metodo nos ayuda a guardar las imagenes, guarga el archivo file y guarda el nombre
   onFileSelected(event: Event, index: number): void {
+    
+    //Esto es javaScrip basico solo que en lenguaje de ts
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
-
+    
     if (file) {
       this.selectedFiles[index] = file;
-
       const reader = new FileReader();
-
       reader.onload = (e: ProgressEvent<FileReader>) => {
         this.imagePreviews[index] = e.target?.result as string;
       };
@@ -201,6 +218,7 @@ export class CrudLugarComponent implements OnInit {
     }
   }
 
+  //ESTO NO VA, USAR TU LOGICA
   obtenerEtiquetas(){
       this.etiqueraLugarService.getEtiquetaLugar().subscribe(cat => {
         this.categorias = cat;
@@ -222,7 +240,6 @@ export class CrudLugarComponent implements OnInit {
             },
             complete:()=>{
               this.obtenerEtiquetasLugar()
-             
             }
           })
         }
@@ -247,7 +264,10 @@ export class CrudLugarComponent implements OnInit {
         })
       })
     }
+    //HASTA AQUI
 
+
+    //Usamos para cargar al momento de editar
     obtenerLugarById(idLugar:number){
       environment.mensajeEmergente('Editar','¿Estas seguro que deseas editar el lugar?','warning')
       .then((cont)=>{
@@ -272,16 +292,23 @@ export class CrudLugarComponent implements OnInit {
       })
     }
 
+    //Obtenemos las images de un lugar en especifico y las agregamos al los arrays para poder subir cuando hacemos el update
     obtenerImagesDeLugar(id:number){
       this.imagePreviews = new Array
       this.imagenesLugaresService.getImagenesByIdLugares(id).subscribe(imgLugares =>{
         imgLugares.forEach((lugar) =>{
+
+        //Contruimos la url para la previsualizacion
         this.imagePreviews.push(this.urlHost + lugar.url)
+        
         this.obtenerFile(this.obtenerNombreDeLaFoto(lugar.url))
         console.log(this.selectedFiles)
        })
       })
     }
+
+
+    //Obtenemos el la foto en tipo archivo de un lugar en especifico y las agregamos al los arrays para poder subir cuando hacemos el update
     obtenerFile(nombreFoto: string) {
       this.imagenesLugaresService.getFile(nombreFoto).subscribe((file: Blob) => {
         const fileFromBlob = new File([file], nombreFoto, { type: file.type });
@@ -289,6 +316,7 @@ export class CrudLugarComponent implements OnInit {
       });
     }
     
+    //Obtenermos el nomnbre el archivo para poder buscarlo en la base de datos y obtener el archivo en formato blob
     obtenerNombreDeLaFoto(url: string): string {
       const parts = url.split('/');
       return parts[parts.length - 1];

@@ -10,18 +10,21 @@ import { environment } from '../../../enviroments/enviroment';
 export class ImagenesLugaresService {
   constructor(private http: HttpClient) {}
 
+
   getImgesLugares(): Observable<ImagenesLugares[]> {
     return this.http.get<ImagenesLugares[]>(
       environment.urlHost + '/imageLugares'
     );
   }
 
+  //Obtenemos las imagenes que le pertenecen a un lugar en especifico
   getImagenesByIdLugares(idLugar: number): Observable<ImagenesLugares[]> {
     return this.http.get<ImagenesLugares[]>(
       `${environment.urlHost + '/imageLugares'}/${idLugar}`
     );
   }
 
+  //Subimos las imagnes a la base de datos
   uploadImage(file: File, idLugar:number): Observable<string> {
     const formData = new FormData();
     formData.append('file', file);
@@ -31,6 +34,7 @@ export class ImagenesLugaresService {
     );
   }
 
+  //Obtenernos los archivos de las images por nombre de imagen 
   getFile(fileName: string) {
     return this.http.get(`${environment.urlHost + '/imageLugares/file'}/${fileName}`, {
       responseType: 'blob', // Importante para manejar archivos binarios

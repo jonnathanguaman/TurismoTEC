@@ -6,6 +6,10 @@ import { Auth } from '../../Services/login/Auth';
 import { AuthRegisterService } from '../../Services/auth/authRegister.service';
 import { authRegister } from '../../Services/auth/authRegister';
 import { environment } from '../../../enviroments/enviroment';
+import { RolService } from '../../Services/rol/rol.service';
+import { Rol } from '../../Services/rol/rol';
+import { AuthRolService } from '../../Services/auth_Rol/auth-rol.service';
+import { Auth_rol } from '../../Services/auth_Rol/auth_rol';
 
 @Component({
   selector: 'app-crud-personas',
@@ -19,7 +23,11 @@ export class CrudPersonasComponent implements OnInit{
   constructor(
     private personaService:DatosPersonalesService,
     private fb:FormBuilder,
-    private authRegisterService:AuthRegisterService){}
+    private authRegisterService:AuthRegisterService,
+    private rolService:RolService,
+    private authRolService:AuthRolService,
+
+  ){}
 
   ngOnInit(): void {
     this.obtenerPersonas()
@@ -84,6 +92,8 @@ export class CrudPersonasComponent implements OnInit{
   closeCrudModal() {
     this.obtenerPersonas()
     this.isCrudModalOpen = false;
+    this.personaForm.reset();
+    this.authForm.reset();
   }
 
   obtenerPersonas(){
@@ -161,17 +171,30 @@ export class CrudPersonasComponent implements OnInit{
     
   }
 
+  idAuth:number
+
   crearPersonaAuth(){
     this.personaService.guardarPesona(this.personaForm.value as unknown as Persona).subscribe({
       next:(persona)=>{
         this.authForm.controls.id_usuario.setValue(<string><unknown> persona.id_Usuario)
         this.authRegisterService.registerAuth(this.authForm.value as unknown as authRegister).subscribe({
+          next:()=>{
+            this.authRegisterService.getAuth(this.username.value).subscribe({
+              next:(auth)=>{
+                this.abrirModalRol(auth.id_auth)
+                this.obtenerRoles()
+                this.closeCrudModal()
+              }
+            })
+            
+          },
           error:()=>{
             environment.mensajeToast('error','Ups ha ocurrido un error al crear las credenciales','Sentimos los inconvenientes, hemos notificado el error a los responsable')
           }
         })
       },
       complete:()=>{
+        
         environment.mensajeToast('success','Creado con exito','El usuario ha sido creado con exito')
       },
       error:()=>{
@@ -203,6 +226,47 @@ export class CrudPersonasComponent implements OnInit{
           );
           }
         })
+      }
+    })
+  }
+
+  roles:Rol[]
+
+  obtenerRoles(){this.rolService.getTodosRestaurantes().subscribe({next:(roles)=>{this.roles = roles}})}
+
+  modalRoles = false
+
+  cerrarModalRol(){
+    this.modalRoles = false
+  }
+
+  abrirModalRol(id_auth:number){
+    this.idAuth = id_auth
+    this.modalRoles = true
+    this.obtenerRoles()
+    this.obtenerRolesDeAuth()
+  }
+  public auth_rol = new Auth_rol;
+
+  asignarRol(idRol:number){
+    
+    this.authRolService.guardarAuth_RolAdmin(this.auth_rol,this.idAuth,idRol).subscribe({
+      next:(rolAsiganado)=>{
+        if(rolAsiganado == null){
+          environment.mensajeToast('error','Etiqueta no asiganada','La etiqueta ya pertenece al lugar')
+        }else{
+          environment.mensajeToast('success','Etiqueta asiganada','La etiqueta se asigno con exito')
+        }
+      }
+    })
+  }
+
+  rolesDeAuth:Auth_rol[]
+
+  obtenerRolesDeAuth(){
+    this.authRolService.getRolesDeAuth(this.idAuth).subscribe({
+      next:(roles)=>{
+        this.rolesDeAuth = roles
       }
     })
   }

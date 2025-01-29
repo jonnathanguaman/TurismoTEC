@@ -39,7 +39,7 @@
                     <td>{{ persona.auth.password}}</td>
                     
                     <td>
-                        <button  class="btn-opcion" >Rol</button>
+                        <button (click)="abrirModalRol(persona.auth.id_auth)" class="btn-opcion" >Rol</button>
                         <button (click)="editarUsuario(persona.id_Usuario)" class="btn-opcion" >Editar</button>
                         <button (click)="elinimarPesona(persona.id_Usuario, persona.auth.id_auth)" class="btn-opcion">Eliminar</button>
                     </td>
@@ -129,6 +129,41 @@
                 <button (click)="crearEditarAuth()" class="btn-opcion" type="submit" >Guardar</button>
             </div>
         </form>
+        
+    </div>
+</div>
+
+<div class="modal-agrgarEtiquetas" *ngIf="modalRoles">
+    <div class="model-agregarEtiquetas-content">
+        <span class="close-modal" (click)="cerrarModalRol()">✖</span>
+        
+        <div class="model-agregarEtiquetas-content-agregar">
+            <div class="modal-agregarEtiquetas-title">
+                <h3>Agrega rol</h3>
+            </div>
+            <div class="modal-agrgarEtiquetas-p">
+                <p>Haga clic en la rol que desea asignarle a la persona</p>
+            </div>
+            <div class="modal-agregarEtiquetas-etiquetas">
+                <div class="etiqueta" *ngFor="let rol of roles">
+                    <button (click)="asignarRol(rol.rolId)" class="etiqueta-boton">{{rol.rolNombre}}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="model-agregarEtiquetas-content-quitar">
+            <div class="modal-agregarEtiquetas-title">
+                <h3>Quitar etiquetas</h3>
+            </div>
+            <div class="modal-agrgarEtiquetas-p">
+                <p>Haga clic en la etiqueta que desea quitar del lugar</p>
+            </div>
+            <div class="modal-agregarEtiquetas-etiquetas">
+                <div class="etiqueta" *ngFor="let rolesDeAuth of rolesDeAuth">
+                    <button  class="etiqueta-boton">{{rolesDeAuth.rol.rolNombre}}</button>
+                </div>
+            </div>
+        </div>
         
     </div>
 </div>
