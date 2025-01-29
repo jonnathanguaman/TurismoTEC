@@ -21,7 +21,7 @@
             <p class="detalles">Zona {{lugarEcontrado.tipoZona}}</p>
         </div>
         
-        <div class="menu">
+        <div class="menu" *ngIf="lugarEcontrado.creadoPor">
             <a class="ubucacion" (click)="abrirMapa()" [routerLink]="['/lugar/',lugarEcontrado.idLugares]">Ver ubicación</a>
             <a class="hotel" (click)="abrirHoteles()" [routerLink]="['/lugar/',lugarEcontrado.idLugares]">Ver Hoteles</a>
             <a class="restaurante" (click)="abrirRestaurantes()" [routerLink]="['/lugar/',lugarEcontrado.idLugares]">Ver restaurantes</a>

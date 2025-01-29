@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './perfil.component.css'
 })
 export class PerfilComponent {
-  activarTabla: string = 'tab1'; 
+  activarTabla: string = 'tab4'; 
 
   seleccionarTablaactiva(tab: string): void {
     this.activarTabla = tab;

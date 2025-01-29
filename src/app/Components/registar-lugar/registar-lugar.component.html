@@ -55,6 +55,17 @@
                 </div>
             </div>
 
+            <div class="input-container">
+                <label for="visualizacion">Publicar como:</label>
+                <select id="visualizacion" formControlName="visualizacion">
+                    <option [value]="true">Publico</option>
+                    <option [value]="false">Privado</option>
+                </select>
+                <div *ngIf="lugaresForm.get('visualizacion')?.invalid && lugaresForm.get('visualizacion')?.touched" class="message error">
+                    El estado es obligatorio.
+                </div>
+            </div>
+
             <div class="imgContainer">
                 <div class="imgContainer-item">
                     <div  class="img-preview" id="preview1">

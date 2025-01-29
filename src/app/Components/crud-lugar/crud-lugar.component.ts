@@ -79,6 +79,9 @@ export class CrudLugarComponent implements OnInit {
     patrimonio: [''],
     longitud: ['', [Validators.required]],
     latitud: ['', [Validators.required]],
+    visualizacion:['', [Validators.required]],
+    aprobado:[true],
+    creadoPor:[true]
   });
 
 
@@ -129,8 +132,18 @@ export class CrudLugarComponent implements OnInit {
     }
   }
 
+  aprobarLugar(id: number) {
+    this.lugaresService.aprobarLugar(id, true).subscribe({
+      next: () => {
+        environment.mensajeToast('success','El lugar se ha sido aprobado','Has aprobado el lugar')
+        this.obtenerLugares();
+      },
+      error: (error) => console.error('Error al aprobar lugar', error)
+    });
+  }
+
   obtenerLugares() {
-    this.lugaresService.getTodosLugares().subscribe((lugares) => {
+    this.lugaresService.getLugaresAdmin().subscribe((lugares) => {
       this.todosLugares = lugares;
     });
   }
@@ -243,6 +256,8 @@ export class CrudLugarComponent implements OnInit {
               this.lugaresForm.controls.patrimonio.setValue(<string><unknown> lugar.patrimonio)
               this.lugaresForm.controls.longitud.setValue(<string><unknown> lugar.longitud)
               this.lugaresForm.controls.latitud.setValue(<string><unknown>lugar.latitud)
+              this.lugaresForm.controls.aprobado.setValue(lugar.aprobado)
+              this.lugaresForm.controls.visualizacion.setValue(<string><unknown> lugar.visualizacion)
             }
           })
         }

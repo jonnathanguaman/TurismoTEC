@@ -13,4 +13,12 @@ export interface Lugares{
     longitud:number,
     imagenesLugars:ImagenesLugares[]
     usuario:DatosPersona
+    // True publico
+    // False privado
+    visualizacion:boolean
+
+    aprobado:boolean
+    // True admin
+    // False user
+    creadoPor:boolean
 }

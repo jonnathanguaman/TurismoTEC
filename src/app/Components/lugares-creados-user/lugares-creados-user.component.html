@@ -1,0 +1,18 @@
+<div class="nosotros">
+    
+    <div class="integrante" *ngFor="let lugares of lugaresUser">
+        <div class="front">
+            <img [src]="[urlHost + lugares.imagenesLugars[0].url]" alt="Foto de Jonnathan">
+            <h3>{{lugares.nombre}}</h3>
+        </div>
+        <div class="back">
+            <p>{{lugares.descripcion}}</p>
+            <p *ngIf="lugares.patrimonio">Es un lugar patrimonial</p>
+            <p *ngIf="!lugares.patrimonio">No es un lugar patrimonial</p>
+            <p *ngIf="lugares.visualizacion">Lugar marcado como publico</p>
+            <p *ngIf="!lugares.visualizacion">Lugar marcado como privado</p>
+            <p *ngIf="!lugares.aprobado && lugares.visualizacion">Aun no ha sido aprobado</p>
+            <p *ngIf="lugares.aprobado">Felicidades ha sido aprobado</p>
+        </div>
+    </div>
+</div>

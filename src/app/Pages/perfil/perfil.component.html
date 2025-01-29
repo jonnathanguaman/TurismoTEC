@@ -10,6 +10,9 @@
     <button class="tabla" [class.active]="activarTabla === 'tab3'" (click)="seleccionarTablaactiva('tab3')">
         Reservas habitaciones
     </button>
+    <button class="tabla" [class.active]="activarTabla === 'tab4'" (click)="seleccionarTablaactiva('tab4')">
+        Lugares creados
+    </button>
 </div>
 
 <hr>
@@ -24,4 +27,7 @@
 
 <div class="tabla-contenido" *ngIf="activarTabla === 'tab3'">
     <app-crud-reservas-habitacion></app-crud-reservas-habitacion>
+</div>
+<div class="tabla-contenido" *ngIf="activarTabla === 'tab4'">
+    <app-lugares-creados-user></app-lugares-creados-user>
 </div>

@@ -12,6 +12,10 @@ export class LugaresService {
   constructor(private http:HttpClient) {}
 
   getTodosLugares():Observable<Lugares[]>{
+    return this.http.get<Lugares[]>(environment.urlHost + "/lugaresPublicos");
+  }
+
+  getLugaresAdmin():Observable<Lugares[]>{
     return this.http.get<Lugares[]>(environment.urlHost + "/lugares");
   }
 
@@ -26,4 +30,13 @@ export class LugaresService {
   eliminarLugar(id:number):Observable<Lugares>{
     return this.http.delete<Lugares>(`${environment.urlHost + "/lugares"}/${id}`)
   }
+
+  getLugaresByIdUser(idUser:number):Observable<Lugares[]>{
+    return this.http.get<Lugares[]>(`${environment.urlHost + "/lugaresByIdUser"}/${idUser}`)
+  }
+
+  aprobarLugar(id: number, aprobado: boolean): Observable<Lugares> {
+    return this.http.patch<Lugares>(`${environment.urlHost}/lugares/${id}`, { aprobado });
+  }
+  
 }
