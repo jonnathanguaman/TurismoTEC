@@ -123,6 +123,7 @@
                     <th>Tipo de zona</th>
                     <th>Latitud</th>
                     <th>Longitud</th>
+                    <th>Creado por</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -136,6 +137,7 @@
                     <td>{{ lugar.tipoZona}}</td>
                     <td>{{lugar.latitud}}</td>
                     <td>{{lugar.longitud}}</td>
+                    <td>{{lugar.usuario.correo}}</td>
                     
                     <td>
                         <button (click)="guardarIdLugar(lugar.idLugares)" (click)="abrirModalEtiqueta()" class="btn-opcion">Agregar/quitar etiquetas</button>

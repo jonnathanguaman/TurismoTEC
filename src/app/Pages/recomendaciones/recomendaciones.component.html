@@ -26,4 +26,9 @@
     
 </div>
 
-
+<div id="crudLugarModal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-btn" (click)="closeCrudLugar()">X</span>
+      <app-registar-lugar [latitud]="latitud" [longitud]="longitud"></app-registar-lugar>
+    </div>
+  </div>

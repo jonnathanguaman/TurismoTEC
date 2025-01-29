@@ -30,18 +30,20 @@ import { SliderRestauranteComponent } from './Components/slider-restaurante/slid
 import { ModalMesaComponent } from './Components/modal-mesa/modal-mesa.component';
 import { CrudLugarComponent } from './Components/crud-lugar/crud-lugar.component';
 import { CrudRestauranteComponent } from './Components/crud-restaurante/crud-restaurante.component';
-import { CrudHotelComponent } from './Components/crud-hotel/crud-hotel.component'; 
+import { CrudHotelComponent } from './Components/crud-hotel/crud-hotel.component';
 import { MenuRestauranteComponent } from './Components/menu-restaurante/menu-restaurante.component';
 import { TimeAgoPipe } from './Services/publicaciones/time-ago.pipe';
 import { PaginaAdminComponent } from './Pages/pagina-admin/pagina-admin.component';
 import { MenuAdminComponent } from './Shared/menu-admin/menu-admin.component';
 import { CrubEtiquetaLugarComponent } from './Components/crub-etiqueta-lugar/crub-etiqueta-lugar.component';
-import { CrubEtiquetaHotelComponent } from './Components/crub-etiqueta-hotel/crub-etiqueta-hotel.component'; 
+import { CrubEtiquetaHotelComponent } from './Components/crub-etiqueta-hotel/crub-etiqueta-hotel.component';
 import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
 import { ReviewComponent } from './Components/review/review.component';
 import { CrudReservasHabitacionComponent } from './Components/crud-reservas-habitacion/crud-reservas-habitacion.component';
 import { CrudPersonasComponent } from './Components/crud-personas/crud-personas.component';
-import { CrudEtiquetaRestauranteComponent } from './Components/crud-etiqueta-restaurante/crud-etiqueta-restaurante.component'; 
+import { CrudEtiquetaRestauranteComponent } from './Components/crud-etiqueta-restaurante/crud-etiqueta-restaurante.component';
+import { RegistarLugarComponent } from './Components/registar-lugar/registar-lugar.component';
+
 
 @NgModule({
   declarations: [
@@ -80,6 +82,7 @@ import { CrudEtiquetaRestauranteComponent } from './Components/crud-etiqueta-res
     CrudReservasHabitacionComponent,
     CrudPersonasComponent,
     CrudEtiquetaRestauranteComponent,
+    RegistarLugarComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,8 +93,8 @@ import { CrudEtiquetaRestauranteComponent } from './Components/crud-etiqueta-res
     FlatpickrDirective
   ],
   providers: [
-    {provide:HTTP_INTERCEPTORS,useClass:JwtInterceptorService,multi:true},
-    {provide:HTTP_INTERCEPTORS, useClass:ErrorInterceptorService,multi:true},
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true },
     provideFlatpickrDefaults()
   ],
   bootstrap: [AppComponent]

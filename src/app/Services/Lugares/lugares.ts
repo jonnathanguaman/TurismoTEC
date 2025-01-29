@@ -1,3 +1,4 @@
+import { DatosPersona } from "../DatosPersonales/datosPersonales";
 import { ImagenesLugares } from "../ImagenesLugares/imagenesLugares";
 
 export interface Lugares{
@@ -11,4 +12,5 @@ export interface Lugares{
     latitud:number,
     longitud:number,
     imagenesLugars:ImagenesLugares[]
+    usuario:DatosPersona
 }
