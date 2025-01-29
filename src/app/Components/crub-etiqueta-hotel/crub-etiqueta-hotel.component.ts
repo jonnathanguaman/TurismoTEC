@@ -41,7 +41,7 @@ export class CrubEtiquetaHotelComponent implements OnInit {
   }
 
   etiquetaForm = this.fb.group({
-    idEtiqueta: [''],
+    idEtiquetaHoteles: [''],
     etiqueta: ['', [Validators.required]]
   })
 
@@ -90,7 +90,7 @@ export class CrubEtiquetaHotelComponent implements OnInit {
         this.editar = true
         this.etiquetaHotelService.obtenerEtiquetaById(id).subscribe(etiqueta => {
           this.etiquetaForm.controls.etiqueta.setValue(etiqueta.etiqueta)
-          this.etiquetaForm.controls.idEtiqueta.setValue(<string><unknown>etiqueta.idEtiquetaHoteles)
+          this.etiquetaForm.controls.idEtiquetaHoteles.setValue(<string><unknown>etiqueta.idEtiquetaHoteles)
         })
       }
     })

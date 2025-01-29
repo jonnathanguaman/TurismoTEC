@@ -43,6 +43,7 @@ import { CrudReservasHabitacionComponent } from './Components/crud-reservas-habi
 import { CrudPersonasComponent } from './Components/crud-personas/crud-personas.component';
 import { RegistarLugarComponent } from './Components/registar-lugar/registar-lugar.component';
 import { LugaresCreadosUserComponent } from './Components/lugares-creados-user/lugares-creados-user.component'; 
+import { CrudEtiquetaRestauranteComponent } from './Components/crud-etiqueta-restaurante/crud-etiqueta-restaurante.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { LugaresCreadosUserComponent } from './Components/lugares-creados-user/l
     CrudPersonasComponent,
     RegistarLugarComponent,
     LugaresCreadosUserComponent,
+    CrudEtiquetaRestauranteComponent
   ],
   imports: [
     BrowserModule,
