@@ -22,4 +22,12 @@ export class HotelesService {
   gethotelesDeLugar(id:number):Observable<Hoteles[]>{
     return this.http.get<Hoteles[]>(`${environment.urlHost + "/hotelesDeLugar"}/${id}`)
   }
+
+  guardarLugares(hotel: Hoteles): Observable<Hoteles> {
+      return this.http.post<Hoteles>(environment.urlHost + "/hotel", hotel)
+    }
+
+  eliminarHotel(id:number):Observable<Hoteles>{
+      return this.http.delete<Hoteles>(`${environment.urlHost + "/hotel"}/${id}`)
+    }
 }

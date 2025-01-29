@@ -9,17 +9,24 @@ import { environment } from '../../../enviroments/enviroment';
 })
 export class RestauranteService {
 
-  constructor(private http:HttpClient) {}
-  
-    getTodosRestaurantes():Observable<Restaurante[]>{
-      return this.http.get<Restaurante[]>(environment.urlHost + "/restaurante");
-    }
+  constructor(private http: HttpClient) { }
 
-     getRestaurantesById(id:number):Observable<Restaurante>{
-        return this.http.get<Restaurante>(`${environment.urlHost + "/restaurante"}/${id}`)
-      }
+  getTodosRestaurantes(): Observable<Restaurante[]> {
+    return this.http.get<Restaurante[]>(environment.urlHost + "/restaurante");
+  }
 
-      getRestauranteDeLugar(id:number):Observable<Restaurante[]>{
-          return this.http.get<Restaurante[]>(`${environment.urlHost + "/restauranteDeLugar"}/${id}`)
-        }
+  getRestaurantesById(id: number): Observable<Restaurante> {
+    return this.http.get<Restaurante>(`${environment.urlHost + "/restaurante"}/${id}`)
+  }
+
+  getRestauranteDeLugar(id: number): Observable<Restaurante[]> {
+    return this.http.get<Restaurante[]>(`${environment.urlHost + "/restauranteDeLugar"}/${id}`)
+  }
+  guardarLugares(restaurante: Restaurante): Observable<Restaurante> {
+    return this.http.post<Restaurante>(environment.urlHost + "/restaurante", restaurante)
+  }
+
+  eliminarLugar(id: number): Observable<Restaurante> {
+    return this.http.delete<Restaurante>(`${environment.urlHost + "/restaurante"}/${id}`)
+  }
 }

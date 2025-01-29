@@ -20,105 +20,125 @@ import { CrubEtiquetaLugarComponent } from './Components/crub-etiqueta-lugar/cru
 import { ReviewComponent } from './Components/review/review.component';
 import { CrudReservasHabitacionComponent } from './Components/crud-reservas-habitacion/crud-reservas-habitacion.component';
 import { CrudPersonasComponent } from './Components/crud-personas/crud-personas.component';
+import { CrubEtiquetaHotelComponent } from './Components/crub-etiqueta-hotel/crub-etiqueta-hotel.component';
+import { CrudEtiquetaRestauranteComponent } from './Components/crud-etiqueta-restaurante/crud-etiqueta-restaurante.component';
 
 const routes: Routes = [
   {
-    path:"registro",
-    component:RegistroPersonaComponent
+    path: "registro",
+    component: RegistroPersonaComponent
   },
   {
-    path:"",
-    component:InicioComponent
+    path: "",
+    component: InicioComponent
   },
   {
-    path:"nosotros",
-    component:NosotrosComponent
+    path: "nosotros",
+    component: NosotrosComponent
   },
   {
-    path:"perfil",
-    component:PerfilComponent
+    path: "perfil",
+    component: PerfilComponent
   },
   {
-    path:"recomendaciones",
-    component:RecomendacionesComponent
+    path: "recomendaciones",
+    component: RecomendacionesComponent
   },
   {
-    path:"login",
-    component:LoginComponent
+    path: "login",
+    component: LoginComponent
   },
   {
-    path:"lugar",
-    component:LugarComponent
+    path: "lugar",
+    component: LugarComponent
   },
   {
-    path:"lugar/:id",
-    component:LugarComponent
+    path: "lugar/:id",
+    component: LugarComponent
   },
   {
-    path:"hoteles",
-    component:VerHotelesComponent
+    path: "hoteles",
+    component: VerHotelesComponent
   },
   {
-    path:"habitacion/:id",
-    component:HabitacionesComponent
+    path: "habitacion/:id",
+    component: HabitacionesComponent
   },
   {
-    path:"foro",
-    component:ForoComponent
+    path: "foro",
+    component: ForoComponent
   },
   {
-    path:"restaurantes",
-    component:VerRestaurantesComponent
+    path: "restaurantes",
+    component: VerRestaurantesComponent
   },
   {
-    path:"restaurantes",
-    component:VerRestaurantesComponent
+    path: "restaurantes",
+    component: VerRestaurantesComponent
   },
   {
-    path:"mesa/:id",
-    component:MesasComponent
+    path: "mesa/:id",
+    component: MesasComponent
   },
   {
-    path:"review",
-    component:ReviewComponent
+    path: "review",
+    component: ReviewComponent
   },
   {
-    path:"admin",
-    component:PaginaAdminComponent,
-    children:[
+    path: "admin",
+    component: PaginaAdminComponent,
+    children: [
       {
-        path:"crud-reservaciones-habitaciones",
-        component:CrudReservasHabitacionComponent
+        path: "crud-reservaciones-habitaciones",
+        component: CrudReservasHabitacionComponent
       },
       {
-        path:"crudRestaurante",
-        component:CrudRestauranteComponent
+        path: "crudRestaurante",
+        component: CrudRestauranteComponent
       },
       {
-        path:"crudLugar",
-        component:CrudLugarComponent
+        path: "crudLugar",
+        component: CrudLugarComponent
       },
       {
-        path:"crudHotel",
-        component:CrudHotelComponent
+        path: "crudHotel",
+        component: CrudHotelComponent
       },
       {
-        path:"crudPersonas",
-        component:CrudPersonasComponent
+        path: "crudPersonas",
+        component: CrudPersonasComponent
       },
       {
-        path:"crudEtiquetaLugar",
-        component:CrubEtiquetaLugarComponent,
-        children:[
+        path: "crudEtiquetaLugar",
+        component: CrubEtiquetaLugarComponent,
+        children: [
           {
-            path:":id",
-            component:CrubEtiquetaLugarComponent
+            path: ":id",
+            component: CrubEtiquetaLugarComponent
+          }
+        ]
+      }, {
+        path: "crudEtiquetaHotel",
+        component: CrubEtiquetaHotelComponent,
+        children: [
+          {
+            path: ":id",
+            component: CrubEtiquetaHotelComponent
+          }
+        ]
+      }, {
+        path: "crudEtiquetaHotel",
+        component: CrudEtiquetaRestauranteComponent,
+        children: [
+          {
+            path: ":id",
+            component: CrudEtiquetaRestauranteComponent
           }
         ]
       },
     ]
   },
-  
+
 ];
 
 @NgModule({
