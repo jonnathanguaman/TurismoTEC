@@ -15,8 +15,7 @@ export class ErrorInterceptorService implements HttpInterceptor{
       catchError((error:HttpErrorResponse) =>{
         if (error.status === 0 || error.status >= 400 && error.status <= 500) {
           // Error del lado del cliente o red
-          sessionStorage.removeItem('token');
-          sessionStorage.removeItem('id');
+          // sessionStorage.removeItem('token');
         } 
         return throwError("");
       })
