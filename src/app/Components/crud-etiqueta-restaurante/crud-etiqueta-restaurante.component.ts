@@ -42,7 +42,7 @@ export class CrudEtiquetaRestauranteComponent implements OnInit{
   }
 
   etiquetaForm = this.fb.group({
-    idEtiqueta: [''],
+    idEtiquetaRestaurante: [''],
     etiqueta: ['', [Validators.required]]
   })
 
@@ -91,7 +91,7 @@ export class CrudEtiquetaRestauranteComponent implements OnInit{
         this.editar = true
         this.etiqueRestauranteService.obtenerEtiquetaById(id).subscribe(etiqueta => {
           this.etiquetaForm.controls.etiqueta.setValue(etiqueta.etiqueta)
-          this.etiquetaForm.controls.idEtiqueta.setValue(<string><unknown>etiqueta.idEtiquetaRestaurante)
+          this.etiquetaForm.controls.idEtiquetaRestaurante.setValue(<string><unknown>etiqueta.idEtiquetaRestaurante)
         })
       }
     })

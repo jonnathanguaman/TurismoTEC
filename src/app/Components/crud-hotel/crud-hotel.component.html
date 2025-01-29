@@ -1,0 +1,207 @@
+<div class="crud-container">
+    <div class="container-header">
+        <div class="contenedor-izq">
+            <h2>Gestión de Lugares</h2>
+            <p>Descripción general de la gestión de lugares y otras opciones.</p>
+        </div>
+        <div class="contenedor-derecho">
+            <div class="search-container">
+                <input type="text" placeholder="Buscar" class="search-input" />
+                <button class="search-button"><span class="icon">🔍</span></button>
+            </div>
+            <button class="btn-opcion" (click)="openCrudModal()">Crear Lugar</button>
+        </div>
+    </div>
+
+    <!-- Modal para el CRUD -->
+    <!-- <div class="crud-modal" *ngIf="isCrudModalOpen">
+        <div class="crud-modal-content">
+            <span class="close-modal" (click)="closeCrudModal()">✖</span>
+            <h3>Crear o Editar Lugar</h3>
+
+            <form [formGroup]="lugaresForm">
+                <div class="input-container">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" formControlName="nombre" />
+                    <div *ngIf="lugaresForm.get('nombre')?.invalid && lugaresForm.get('nombre')?.touched" class="message error">
+                        El nombre es obligatorio.
+                    </div>
+                </div>
+                <div class="input-container">
+                    <label for="descripcion">Descripción:</label>
+                    <textarea id="descripcion" formControlName="descripcion" rows="4"></textarea>
+                    <div *ngIf="lugaresForm.get('descripcion')?.invalid && lugaresForm.get('descripcion')?.touched" class="message error">
+                        La descripción es obligatoria.
+                    </div>
+                </div>
+
+                <div class="input-container">
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" id="direccion" formControlName="direccion" />
+                    <div *ngIf="lugaresForm.get('direccion')?.invalid && lugaresForm.get('direccion')?.touched" class="message error">
+                        La dirección es obligatoria.
+                    </div>
+                </div>
+
+                <div class="input-container">
+                    <label for="direccion">Longitud:</label>
+                    <input type="text" id="longitud" formControlName="longitud" />
+                    <div *ngIf="lugaresForm.get('longitud')?.invalid && lugaresForm.get('longitud')?.touched" class="message error">
+                        La longitud es obligatoria.
+                    </div>
+                </div>
+
+                <div class="input-container">
+                    <label for="direccion">Latitud:</label>
+                    <input type="text" id="latitud" formControlName="latitud" />
+                    <div *ngIf="lugaresForm.get('latitud')?.invalid && lugaresForm.get('latitud')?.touched" class="message error">
+                        La latitud es obligatoria.
+                    </div>
+                </div>
+
+                <div class="input-container">
+                    <label for="areaProtegida">Área Protegida:</label>
+                    <input type="checkbox" id="areaProtegida" formControlName="areaProtegida" />
+                </div>
+
+                <div class="input-container">
+                    <label for="areaProtegida">Patrimonio:</label>
+                    <input type="checkbox" id="patrimonio" formControlName="patrimonio" />
+                </div>
+                <div class="input-container">
+                    <label for="tipoZona">Tipo de Zona:</label>
+                    <select id="tipoZona" formControlName="tipoZona">
+                        <option value="urbano">Urbano</option>
+                        <option value="rural">Rural</option>
+                    </select>
+                    <div *ngIf="lugaresForm.get('tipoZona')?.invalid && lugaresForm.get('tipoZona')?.touched" class="message error">
+                        El tipo de zona es obligatorio.
+                    </div>
+
+                    <div class="input-container">
+                        <label for="visualizacion">Publicar como:</label>
+                        <select id="visualizacion" formControlName="visualizacion">
+                            <option [value]="true">Publico</option>
+                            <option [value]="false">Privado</option>
+                        </select>
+                        <div *ngIf="lugaresForm.get('visualizacion')?.invalid && lugaresForm.get('visualizacion')?.touched" class="message error">
+                            El estado es obligatorio.
+                        </div>
+                    </div>
+
+                    <div class="input-container">
+                        <label for="aprobado">Aprobado para publicar:</label>
+                        <input type="checkbox" id="aprobado" formControlName="aprobado" />
+                    </div>
+                </div>
+
+                <div class="imgContainer">
+                    <div class="imgContainer-item">
+                        <div  class="img-preview" id="preview1">
+                            <img [src]="imagePreviews[0]" alt="Vista previa">
+                        </div>
+                        <label for="file1" class="file-label">Subir imagen</label>
+                        <input accept="image/*" (change)="onFileSelected($event,0)" type="file" id="file1" class="file-input" accept="image/*" onchange="previewImage(event, 'preview1')">
+                    </div>
+                    <div class="imgContainer-item">
+                        <div class="img-preview" id="preview2">
+                            <img [src]="imagePreviews[1]" alt="Vista previa">
+                        </div>
+                        <label for="file2" class="file-label">Subir imagen</label>
+                        <input accept="image/*" (change)="onFileSelected($event,1)" type="file" id="file2" class="file-input" accept="image/*" onchange="previewImage(event, 'preview2')">
+                    </div>
+                    <div class="imgContainer-item">
+                        <div class="img-preview" id="preview3">
+                            <img [src]="imagePreviews[2]" alt="Vista previa">
+                        </div>
+                        <label for="file3" class="file-label">Subir imagen</label>
+                        <input accept="image/*" (change)="onFileSelected($event,2)" type="file" id="file3" class="file-input" accept="image/*" onchange="previewImage(event, 'preview3')">
+                    </div>
+                </div>
+
+                <div class="btn-panel">
+                    <button class="btn-opcion" type="submit" (click)="crearLugares()">Guardar</button>
+                    
+                </div>
+            </form>
+            
+        </div>
+    </div> -->
+    <!-- <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Dirección</th>
+                    <th>Descripción</th>
+                    <th>Área Protegida</th>
+                    <th>Patrimonio</th>
+                    <th>Tipo de zona</th>
+                    <th>Publico</th>
+                    <th>Aprobado</th>
+                    <th>Latitud</th>
+                    <th>Longitud</th>
+                    <th>Creado por</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let lugar of todosLugares">
+                    <td>{{ lugar.nombre }}</td>
+                    <td>{{ lugar.direccion }}</td>
+                    <td>{{ lugar.descripcion }}</td>
+                    <td>{{ lugar.areaProtegida ? 'Sí' : 'No' }}</td>
+                    <td>{{ lugar.patrimonio ? 'Sí' : 'No' }}</td>
+                    <td>{{ lugar.tipoZona}}</td>
+                    <td>{{lugar.visualizacion}}</td>
+                    <td>{{lugar.aprobado}}</td>
+                    <td>{{lugar.latitud}}</td>
+                    <td>{{lugar.longitud}}</td>
+                    <td>{{lugar.usuario.correo}}</td>
+                    
+                    <td>
+                        <button *ngIf="!lugar.aprobado" (click)="enviarCorreoAprobado(lugar.usuario.id_Usuario)" (click)="aprobarLugar(lugar.idLugares)" class="btn-opcion">Aprobar publicacion</button>
+                        <button *ngIf="lugar.creadoPor" (click)="guardarIdLugar(lugar.idLugares)" (click)="abrirModalEtiqueta()" class="btn-opcion">Agregar/quitar etiquetas</button>
+                        <button *ngIf="lugar.creadoPor" (click)="obtenerImagesDeLugar(lugar.idLugares)" (click)="obtenerLugarById(lugar.idLugares)" class="btn-opcion">Editar</button>
+                        <button class="btn-opcion" (click)="eliminarLugar(lugar.idLugares)" >Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+</div>
+
+<!-- <div class="modal-agrgarEtiquetas" *ngIf="modalEtiqueta">
+    <div class="model-agregarEtiquetas-content">
+        <span class="close-modal" (click)="cerrarModalEtiqueta()">✖</span>
+        
+        <div class="model-agregarEtiquetas-content-agregar">
+            <div class="modal-agregarEtiquetas-title">
+                <h3>Agrega etiquetas</h3>
+            </div>
+            <div class="modal-agrgarEtiquetas-p">
+                <p>Haga clic en la etiqueta que desea asignarle al lugar</p>
+            </div>
+            <div class="modal-agregarEtiquetas-etiquetas">
+                <div class="etiqueta" *ngFor="let etiqueta of categorias">
+                    <button (click)="asignarEtiquetaLugar(etiqueta.idEtiqueta)" class="etiqueta-boton">{{etiqueta.etiqueta}}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="model-agregarEtiquetas-content-quitar">
+            <div class="modal-agregarEtiquetas-title">
+                <h3>Quitar etiquetas</h3>
+            </div>
+            <div class="modal-agrgarEtiquetas-p">
+                <p>Haga clic en la etiqueta que desea quitar del lugar</p>
+            </div>
+            <div class="modal-agregarEtiquetas-etiquetas">
+                <div class="etiqueta" *ngFor="let etiqueta of etiquetasDelLugar">
+                    <button (click)="eliminarEtiqueta(etiqueta.idLugaresEtiquetas)" class="etiqueta-boton">{{etiqueta.etiquetas.etiqueta}}</button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div> -->
