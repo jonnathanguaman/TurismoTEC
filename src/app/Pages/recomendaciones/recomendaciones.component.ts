@@ -3,7 +3,7 @@ import * as ol from 'ol';
 import { OSM } from 'ol/source'; // Fuente de OpenStreetMap
 import { Map } from 'ol';
 import { View as OlView } from 'ol';
-import { fromLonLat } from 'ol/proj';
+import { fromLonLat, toLonLat } from 'ol/proj';
 import { Feature } from 'ol';
 import { Point } from 'ol/geom';
 import { Vector as VectorLayer } from 'ol/layer';
@@ -27,6 +27,8 @@ export class RecomendacionesComponent implements OnInit {
   map: ol.Map | undefined;
   markers: Feature[] = [];  // Array para almacenar los marcadores
 
+  latitud:number
+  longitud:number
   constructor(
     private lugares: LugaresService,
     private categoriaService: CategoriaLugarService,
@@ -133,7 +135,38 @@ export class RecomendacionesComponent implements OnInit {
       tooltipElement.style.display = 'none';  // Ocultar el tooltip cuando no se está sobre un marcador
     }
   });
+
+
+   //Abre el modal y mada las cordenadas
+   this.map.addInteraction(select);
+   this.map.getViewport().addEventListener('contextmenu', (event: MouseEvent) => {
+     event.preventDefault(); 
+     const pixel = this.map.getEventPixel(event); 
+     const coordinate = this.map.getCoordinateFromPixel(pixel); 
+     const lonLat = toLonLat(coordinate); 
+     this.openCrudLugar(lonLat[1],lonLat[0]);
+   });
   }
+
+  openCrudLugar(latitud:number,longitud:number): void {
+    const token = sessionStorage.getItem('token')
+ 
+    if(token){
+     this.longitud = longitud
+     this.latitud = latitud
+     const modal = document.getElementById('crudLugarModal') as HTMLElement;
+     modal.classList.remove('hidden');
+    }else{
+     environment.mensajeToast('warning','Inicia sesión','Para registrar un lugar tienes que iniciar sesión')
+    }
+ 
+   }
+   
+   // Método para cerrar el modal
+   closeCrudLugar(): void {
+     const modal = document.getElementById('crudLugarModal') as HTMLElement;
+     modal.classList.add('hidden');
+   }
 
   // Función para agregar un marcador
   addMarker(lugar: Lugares): void {
