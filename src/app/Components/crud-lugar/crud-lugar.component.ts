@@ -9,6 +9,9 @@ import { CategoriaLugarService } from '../../Services/categoriasLugares/categori
 import { LugaresCategoriasService } from '../../Services/lugares_Categorias/lugares-categorias.service';
 import { Lugares_categoria } from '../../Services/lugares_Categorias/lugares_categrias';
 import { ImagenesLugares } from '../../Services/ImagenesLugares/imagenesLugares';
+import { AuthRegisterService } from '../../Services/auth/authRegister.service';
+import { TokenPayload } from '../../Services/DatosPersonales/TokenPayload ';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-crud-lugar',
@@ -59,6 +62,7 @@ export class CrudLugarComponent implements OnInit {
     private imagenesLugaresService: ImagenesLugaresService,
     private etiqueraLugarService:CategoriaLugarService,
     private lugarCategoriaService:LugaresCategoriasService,
+    private authService: AuthRegisterService,
   ) {}
 
   ngOnInit(): void {
@@ -81,37 +85,44 @@ export class CrudLugarComponent implements OnInit {
   crearLugares() {
     console.log(this.imagePreviews.length)
     if (this.lugaresForm.valid && this.imagePreviews.length >= 3) {
-      console.log('Entro a crear');
-      this.lugaresService
-        .guardarLugares(this.lugaresForm.value as unknown as Lugares)
-        .subscribe({
-          next: (lugarCreado: Lugares) => {
-              this.idLugar = lugarCreado.idLugares
-              const uploadPromises = this.selectedFiles.map((file) =>
-              this.imagenesLugaresService.uploadImage(file, lugarCreado.idLugares).toPromise());
+     
 
-            Promise.all(uploadPromises)
-              .then(() => {
-                environment.mensajeToast('success','Imágenes subidas','Todas las imágenes se subieron correctamente');
+      const token = sessionStorage.getItem("token")
+      const payload: TokenPayload = jwtDecode(token);
+        this.authService.getIdPerson(payload.sub).subscribe({
+          next: (idUser) => {
+            this.lugaresService
+            .guardarLugares(this.lugaresForm.value as unknown as Lugares,idUser)
+            .subscribe({
+              next: (lugarCreado: Lugares) => {
+                  this.idLugar = lugarCreado.idLugares
+                  const uploadPromises = this.selectedFiles.map((file) =>
+                  this.imagenesLugaresService.uploadImage(file, lugarCreado.idLugares).toPromise());
+    
+                Promise.all(uploadPromises)
+                  .then(() => {
+                    environment.mensajeToast('success','Imágenes subidas','Todas las imágenes se subieron correctamente');
+                    
+                    this.obtenerLugares();
+                    this.closeCrudModal();
+                    this.lugaresForm.reset();
+                    this.selectedFiles = [];
+                    this.imagePreviews = [];
+                    this.obtenerEtiquetas()
+                    this.abrirModalEtiqueta()
+                  })
+                  .catch((error) => {
+                    console.error('Error al subir las imágenes:', error);
+                    environment.mensajeToast('error','Error al subir las imágenes','Ingrese todos los campos y seleccione las imágenes');
+                  });
                 
-                this.obtenerLugares();
-                this.closeCrudModal();
-                this.lugaresForm.reset();
-                this.selectedFiles = [];
-                this.imagePreviews = [];
-                this.obtenerEtiquetas()
-                this.abrirModalEtiqueta()
-              })
-              .catch((error) => {
-                console.error('Error al subir las imágenes:', error);
-                environment.mensajeToast('error','Error al subir las imágenes','Ingrese todos los campos y seleccione las imágenes');
-              });
-            
-          },
-          error: () => {
-            environment.mensajeToast('error','Error al registrar','Ingrese todos los campos y seleccione las imágenes');
-          },
-        });
+              },
+              error: () => {
+                environment.mensajeToast('error','Error al registrar','Ingrese todos los campos y seleccione las imágenes');
+              },
+            });
+          }})
+
     } else {
       environment.mensajeToast(
         'error','Error al registrar','Ingrese todos los campos y seleccione las imágenes else');

@@ -7,22 +7,24 @@ import { LugaresCategoriasService } from '../../Services/lugares_Categorias/luga
 import { Router } from 'express';
 import { Lugares } from '../../Services/Lugares/lugares';
 import { environment } from '../../../enviroments/enviroment';
+import { AuthRegisterService } from '../../Services/auth/authRegister.service';
+import { TokenPayload } from '../../Services/DatosPersonales/TokenPayload ';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-registar-lugar',
   templateUrl: './registar-lugar.component.html',
-  styleUrl: './registar-lugar.component.css'
+  styleUrl: './registar-lugar.component.css',
 })
 export class RegistarLugarComponent {
-
-  @Input() longitud!:number
-  @Input() latitud!:number
+  @Input() longitud!: number;
+  @Input() latitud!: number;
 
   imagePreviews: string[] = [];
   selectedFiles: File[] = [];
 
-  auxlongitud!:number
-  auxlatitud!:number
+  auxlongitud!: number;
+  auxlatitud!: number;
 
   ngOnChanges(): void {
     if (this.latitud !== undefined && this.longitud !== undefined) {
@@ -30,27 +32,32 @@ export class RegistarLugarComponent {
         latitud: this.latitud,
         longitud: this.longitud,
       });
-      console.log('Latitud y Longitud actualizadas:', this.latitud, this.longitud);
+      console.log(
+        'Latitud y Longitud actualizadas:',
+        this.latitud,
+        this.longitud
+      );
     }
   }
   constructor(
-      private lugaresService: LugaresService,
-      private fb: FormBuilder,
-      private imagenesLugaresService: ImagenesLugaresService,
-      private etiqueraLugarService:CategoriaLugarService,
-      private lugarCategoriaService:LugaresCategoriasService,
+    private lugaresService: LugaresService,
+    private fb: FormBuilder,
+    private imagenesLugaresService: ImagenesLugaresService,
+    private etiqueraLugarService: CategoriaLugarService,
+    private lugarCategoriaService: LugaresCategoriasService,
+    private authService: AuthRegisterService
   ) {}
 
   lugaresForm = this.fb.group({
-    idLugares:[''],
+    idLugares: [''],
     nombre: ['', [Validators.required]],
     descripcion: ['', [Validators.required]],
     direccion: ['', [Validators.required]],
     tipoZona: ['', [Validators.required]],
     areaProtegida: [''],
     patrimonio: [''],
-    longitud: [{value: null}, [Validators.required]],
-    latitud: [ {value: null}, [Validators.required]],
+    longitud: [{ value: null }, [Validators.required]],
+    latitud: [{ value: null }, [Validators.required]],
   });
 
   onFileSelected(event: Event, index: number): void {
@@ -73,37 +80,65 @@ export class RegistarLugarComponent {
   }
 
   crearLugares() {
-    // if (this.lugaresForm.valid && this.imagePreviews.length >= 3) {
-    //   this.lugaresService.guardarLugares(this.lugaresForm.value as unknown as Lugares).subscribe({
-    //       next: (lugarCreado: Lugares) => {
-    //           const uploadPromises = this.selectedFiles.map((file) =>
-    //           this.imagenesLugaresService.uploadImage(file, lugarCreado.idLugares).toPromise());
+    const token = sessionStorage.getItem('token');
+    const payload: TokenPayload = jwtDecode(token);
+    this.authService.getIdPerson(payload.sub).subscribe({
+      next: (idUser) => {
+        if (this.lugaresForm.valid && this.imagePreviews.length >= 3) {
+          this.lugaresService
+            .guardarLugares(
+              this.lugaresForm.value as unknown as Lugares,
+              idUser
+            )
+            .subscribe({
+              next: (lugarCreado: Lugares) => {
+                const uploadPromises = this.selectedFiles.map((file) =>
+                  this.imagenesLugaresService
+                    .uploadImage(file, lugarCreado.idLugares)
+                    .toPromise()
+                );
 
-    //         Promise.all(uploadPromises)
-    //           .then(() => {
-    //             environment.mensajeToast('success','Imágenes subidas','Todas las imágenes se subieron correctamente');
-    //             this.lugaresForm.reset();
-    //             this.selectedFiles = [];
-    //             this.imagePreviews = [];
-    //             this.volver()
-    //           })
-    //           .catch((error) => {
-    //             console.error('Error al subir las imágenes:', error);
-    //             environment.mensajeToast('error','Error al subir las imágenes','Ingrese todos los campos y seleccione las imágenes');
-    //           });
-            
-    //       },
-    //       error: () => {
-    //         environment.mensajeToast('error','Error al registrar','Ingrese todos los campos y seleccione las imágenes');
-    //       },
-    //     });
-    // } else {
-    //   environment.mensajeToast(
-    //     'error','Error al registrar','Ingrese todos los campos y seleccione las imágenes else');
-    // }
+                Promise.all(uploadPromises)
+                  .then(() => {
+                    environment.mensajeToast(
+                      'success',
+                      'Imágenes subidas',
+                      'Todas las imágenes se subieron correctamente'
+                    );
+                    this.lugaresForm.reset();
+                    this.selectedFiles = [];
+                    this.imagePreviews = [];
+                    this.volver();
+                  })
+                  .catch((error) => {
+                    console.error('Error al subir las imágenes:', error);
+                    environment.mensajeToast(
+                      'error',
+                      'Error al subir las imágenes',
+                      'Ingrese todos los campos y seleccione las imágenes'
+                    );
+                  });
+              },
+              error: () => {
+                environment.mensajeToast(
+                  'error',
+                  'Error al registrar',
+                  'Ingrese todos los campos y seleccione las imágenes'
+                );
+              },
+            });
+        } else {
+          environment.mensajeToast(
+            'error',
+            'Error al registrar',
+            'Ingrese todos los campos y seleccione las imágenes else'
+          );
+        }
+      },
+    });
   }
 
-  volver(){
-    window.location.reload()
+  volver() {
+    window.location.reload();
   }
 }

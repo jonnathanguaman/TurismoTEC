@@ -19,8 +19,8 @@ export class LugaresService {
     return this.http.get<Lugares>(`${environment.urlHost + "/lugares"}/${id}`)
   }
 
-  guardarLugares(lugares:Lugares):Observable<Lugares>{
-    return this.http.post<Lugares>(environment.urlHost + "/lugares",lugares)
+  guardarLugares(lugares:Lugares,idUser:number):Observable<Lugares>{
+    return this.http.post<Lugares>(`${environment.urlHost + "/lugares"}/${idUser}`,lugares)
   }
 
   eliminarLugar(id:number):Observable<Lugares>{
