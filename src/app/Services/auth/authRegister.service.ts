@@ -42,4 +42,8 @@ export class AuthRegisterService {
   editarAuth(user:string,password:string,id:number): Observable<any> {
     return this.http.patch<any>(`${environment.urlAut + '/public/v1/auth'}/${user}/${password}/${id}`, null);
   }
+
+  eliminarAuth(idAuth:number):Observable<any>{
+    return this.http.delete<any>(`${environment.urlAut+"/public/v1/auth"}/${idAuth}`)
+  }
 }

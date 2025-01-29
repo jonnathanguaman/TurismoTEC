@@ -26,4 +26,8 @@ export class DatosPersonalesService {
     return this.http.get<Persona[]>(environment.urlAut+"/public/api/usuario")
   }
 
+  eliminarPersona(idPersona:number):Observable<DatosPersona>{
+    return this.http.delete<DatosPersona>(`${environment.urlAut+"/public/api/usuario"}/${idPersona}`)
+  }
+
 }
