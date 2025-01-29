@@ -98,8 +98,11 @@ export class CrudPersonasComponent implements OnInit{
     })
   }
 
+  editar:boolean = false
+  
   editarUsuario(idUsuario:number){
     this.isCrudModalOpen = true;
+    this.editar = true
     this.personaService.getPersonById(idUsuario).subscribe({
       next:(persona)=>{
         this.personaForm.controls.id_Usuario.setValue(persona.id_Usuario);
@@ -124,9 +127,19 @@ export class CrudPersonasComponent implements OnInit{
       }
     })
   }
- 
 
-  //Verificar por que no actualiza y arreglar la codificacion de la contraseña
+
+  crearEditarAuth(){
+    // if(this.authForm.valid && this.personaForm.valid){
+      if(this.editar){
+        this.editarPersonaYauth()
+      }else{
+        this.crearPersonaAuth()
+      }
+    // }else{
+    //   environment.mensajeToast('error','Faltan datos','Por favor ingrese todos los datos')
+    // }
+  }
 
   editarPersonaYauth(){
     this.personaService.guardarPesona(this.personaForm.value as unknown as Persona).subscribe({
@@ -146,5 +159,51 @@ export class CrudPersonasComponent implements OnInit{
       }
     })
     
+  }
+
+  crearPersonaAuth(){
+    this.personaService.guardarPesona(this.personaForm.value as unknown as Persona).subscribe({
+      next:(persona)=>{
+        this.authForm.controls.id_usuario.setValue(<string><unknown> persona.id_Usuario)
+        this.authRegisterService.registerAuth(this.authForm.value as unknown as authRegister).subscribe({
+          error:()=>{
+            environment.mensajeToast('error','Ups ha ocurrido un error al crear las credenciales','Sentimos los inconvenientes, hemos notificado el error a los responsable')
+          }
+        })
+      },
+      complete:()=>{
+        environment.mensajeToast('success','Creado con exito','El usuario ha sido creado con exito')
+      },
+      error:()=>{
+        environment.mensajeToast('error','Ups ha ocurrido un error','Sentimos los inconvenientes, hemos notificado el error a los responsable')
+      }
+    }
+  )
+  }
+
+  elinimarPesona(idPersona:number, idAuth:number){
+    environment.mensajeEmergente('Eliminar persona','¿Estas seguro que deseas eliminar a la persona?','warning')
+    .then((confirmar) =>{
+      if(confirmar){
+        this.authRegisterService.eliminarAuth(idAuth).subscribe()
+        this.personaService.eliminarPersona(idPersona).subscribe({
+          next:()=>{
+            this.obtenerPersonas()
+            environment.mensajeToast(
+              'success',
+              'Eliminado con exito',
+              'Se ha eliminado con exito'
+          );
+          },
+          error:()=>{
+            environment.mensajeToast(
+              'error',
+              'No se pudo eliminar',
+              'No se ha podido eliminar porque esta relacionado con otros objetos'
+          );
+          }
+        })
+      }
+    })
   }
 }

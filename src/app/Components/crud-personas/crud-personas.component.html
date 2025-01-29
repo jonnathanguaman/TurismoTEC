@@ -41,7 +41,7 @@
                     <td>
                         <button  class="btn-opcion" >Rol</button>
                         <button (click)="editarUsuario(persona.id_Usuario)" class="btn-opcion" >Editar</button>
-                        <button class="btn-opcion">Eliminar</button>
+                        <button (click)="elinimarPesona(persona.id_Usuario, persona.auth.id_auth)" class="btn-opcion">Eliminar</button>
                     </td>
                 </tr>
             </tbody>
@@ -68,7 +68,7 @@
 
             <div class="input-container">
                 <label for="nombre">Apellido:</label>
-                <input formControlName="apellido" type="text" id="edad" name="apellido"/>
+                <input formControlName="apellido" type="text" id="apellido" name="apellido"/>
                 <div *ngIf="apellido.invalid && apellido.touched" class="message error">
                     El apellido es obligatorio.
                 </div>
@@ -76,7 +76,7 @@
 
             <div class="input-container">
                 <label for="nombre">Edad:</label>
-                <input formControlName="edad" type="number" id="edad"/>
+                <input formControlName="edad" type="number" id="edad" name="edad"/>
                 <div *ngIf="edad.invalid && edad.touched" class="message error">
                     El edad es obligatoria.
                 </div>
@@ -126,7 +126,7 @@
             </form>
 
             <div class="btn-panel">
-                <button (click)="editarPersonaYauth()" class="btn-opcion" type="submit" >Guardar</button>
+                <button (click)="crearEditarAuth()" class="btn-opcion" type="submit" >Guardar</button>
             </div>
         </form>
         
