@@ -58,6 +58,8 @@ export class RegistarLugarComponent {
     patrimonio: [''],
     longitud: [{ value: null }, [Validators.required]],
     latitud: [{ value: null }, [Validators.required]],
+    visualizacion:['', [Validators.required]],
+    creadoPor:[false]
   });
 
   onFileSelected(event: Event, index: number): void {

@@ -12,6 +12,7 @@ import { ImagenesLugares } from '../../Services/ImagenesLugares/imagenesLugares'
 import { AuthRegisterService } from '../../Services/auth/authRegister.service';
 import { TokenPayload } from '../../Services/DatosPersonales/TokenPayload ';
 import { jwtDecode } from 'jwt-decode';
+import { MailService } from '../../Services/mailService/mail.service';
 
 @Component({
   selector: 'app-crud-lugar',
@@ -63,6 +64,7 @@ export class CrudLugarComponent implements OnInit {
     private etiqueraLugarService:CategoriaLugarService,
     private lugarCategoriaService:LugaresCategoriasService,
     private authService: AuthRegisterService,
+    private mailService:MailService
   ) {}
 
   ngOnInit(): void {
@@ -79,6 +81,9 @@ export class CrudLugarComponent implements OnInit {
     patrimonio: [''],
     longitud: ['', [Validators.required]],
     latitud: ['', [Validators.required]],
+    visualizacion:['', [Validators.required]],
+    aprobado:[true],
+    creadoPor:[true]
   });
 
 
@@ -129,8 +134,24 @@ export class CrudLugarComponent implements OnInit {
     }
   }
 
+  aprobarLugar(id: number) {
+    this.lugaresService.aprobarLugar(id, true).subscribe({
+      next: () => {
+        environment.mensajeToast('success','El lugar se ha sido aprobado','Has aprobado el lugar')
+        this.obtenerLugares();
+      },
+      error: (error) => console.error('Error al aprobar lugar', error)
+    });
+  }
+
+  enviarCorreoAprobado(idUser:number){
+    this.mailService.enviarCorreoAprobado(idUser).subscribe((response)=>{
+      console.log(response)
+    })
+  }
+
   obtenerLugares() {
-    this.lugaresService.getTodosLugares().subscribe((lugares) => {
+    this.lugaresService.getLugaresAdmin().subscribe((lugares) => {
       this.todosLugares = lugares;
     });
   }
@@ -243,6 +264,8 @@ export class CrudLugarComponent implements OnInit {
               this.lugaresForm.controls.patrimonio.setValue(<string><unknown> lugar.patrimonio)
               this.lugaresForm.controls.longitud.setValue(<string><unknown> lugar.longitud)
               this.lugaresForm.controls.latitud.setValue(<string><unknown>lugar.latitud)
+              this.lugaresForm.controls.aprobado.setValue(lugar.aprobado)
+              this.lugaresForm.controls.visualizacion.setValue(<string><unknown> lugar.visualizacion)
             }
           })
         }
@@ -271,5 +294,4 @@ export class CrudLugarComponent implements OnInit {
       return parts[parts.length - 1];
     }
     
-
 }

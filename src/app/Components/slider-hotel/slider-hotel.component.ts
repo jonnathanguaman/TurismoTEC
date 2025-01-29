@@ -24,7 +24,9 @@ export class SliderHotelComponent implements OnInit{
   }
 
   obtenerImagenesByIdHotel(idHotel:number){
+
       this.imgHotelesService.getImagenesByIdHoteles(idHotel).subscribe(imgHotel =>{
+
         this.imgHoteles = imgHotel
       })
   }

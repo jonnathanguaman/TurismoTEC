@@ -77,6 +77,22 @@
                     <div *ngIf="lugaresForm.get('tipoZona')?.invalid && lugaresForm.get('tipoZona')?.touched" class="message error">
                         El tipo de zona es obligatorio.
                     </div>
+
+                    <div class="input-container">
+                        <label for="visualizacion">Publicar como:</label>
+                        <select id="visualizacion" formControlName="visualizacion">
+                            <option [value]="true">Publico</option>
+                            <option [value]="false">Privado</option>
+                        </select>
+                        <div *ngIf="lugaresForm.get('visualizacion')?.invalid && lugaresForm.get('visualizacion')?.touched" class="message error">
+                            El estado es obligatorio.
+                        </div>
+                    </div>
+
+                    <div class="input-container">
+                        <label for="aprobado">Aprobado para publicar:</label>
+                        <input type="checkbox" id="aprobado" formControlName="aprobado" />
+                    </div>
                 </div>
 
                 <div class="imgContainer">
@@ -121,6 +137,8 @@
                     <th>Área Protegida</th>
                     <th>Patrimonio</th>
                     <th>Tipo de zona</th>
+                    <th>Publico</th>
+                    <th>Aprobado</th>
                     <th>Latitud</th>
                     <th>Longitud</th>
                     <th>Creado por</th>
@@ -135,13 +153,16 @@
                     <td>{{ lugar.areaProtegida ? 'Sí' : 'No' }}</td>
                     <td>{{ lugar.patrimonio ? 'Sí' : 'No' }}</td>
                     <td>{{ lugar.tipoZona}}</td>
+                    <td>{{lugar.visualizacion}}</td>
+                    <td>{{lugar.aprobado}}</td>
                     <td>{{lugar.latitud}}</td>
                     <td>{{lugar.longitud}}</td>
                     <td>{{lugar.usuario.correo}}</td>
                     
                     <td>
-                        <button (click)="guardarIdLugar(lugar.idLugares)" (click)="abrirModalEtiqueta()" class="btn-opcion">Agregar/quitar etiquetas</button>
-                        <button (click)="obtenerImagesDeLugar(lugar.idLugares)" (click)="obtenerLugarById(lugar.idLugares)" class="btn-opcion">Editar</button>
+                        <button *ngIf="!lugar.aprobado" (click)="enviarCorreoAprobado(lugar.usuario.id_Usuario)" (click)="aprobarLugar(lugar.idLugares)" class="btn-opcion">Aprobar publicacion</button>
+                        <button *ngIf="lugar.creadoPor" (click)="guardarIdLugar(lugar.idLugares)" (click)="abrirModalEtiqueta()" class="btn-opcion">Agregar/quitar etiquetas</button>
+                        <button *ngIf="lugar.creadoPor" (click)="obtenerImagesDeLugar(lugar.idLugares)" (click)="obtenerLugarById(lugar.idLugares)" class="btn-opcion">Editar</button>
                         <button class="btn-opcion" (click)="eliminarLugar(lugar.idLugares)" >Eliminar</button>
                     </td>
                 </tr>
