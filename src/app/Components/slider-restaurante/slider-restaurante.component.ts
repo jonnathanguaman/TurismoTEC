@@ -24,7 +24,7 @@ export class SliderRestauranteComponent implements OnInit{
   }
 
   obtenerImagenesByIdRestaurante(idRestaurant:number){
-    this.imgRestaurante.getImagenesRestaurantes(idRestaurant).subscribe(imgRest =>{
+    this.imgRestaurante.getImagenesByIdRestaurantes(idRestaurant).subscribe(imgRest =>{
       this.imgRestaurantes = imgRest
     })
 }

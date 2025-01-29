@@ -1,1 +1,61 @@
-<p>crub-etiqueta-hotel works!</p>
+<div class="crud-container">
+    <div class="container-header">
+        <div class="contenedor-izq">
+            <h2>Gestión de etiquetas de hoteles</h2>
+            <p>Descripción general de la gestión de etiquetas de hoteles</p>
+        </div>
+        <div class="contenedor-derecho">
+            <div class="search-container">
+                <input type="text" placeholder="Buscar" class="search-input" />
+                <button class="search-button"><span class="icon">🔍</span></button>
+            </div>
+            <button class="btn-opcion" (click)="openCrudModal()">Crear etiquetas</button>
+        </div>
+    </div>
+
+    <!-- Modal para el CRUD -->
+    <div class="crud-modal" *ngIf="isCrudModalOpen">
+        <div class="crud-modal-content">
+            <span class="close-modal" (click)="closeCrudModal()">✖</span>
+            <h3>Crear o editar etiquetas</h3>
+
+            <form [formGroup]="etiquetaForm">
+                <div class="input-container">
+                    <label for="etiqueta">Nombre:</label>
+                    <input type="text" id="etiqueta" formControlName="etiqueta" />
+                    <div *ngIf="etiquetaForm.get('etiqueta')?.invalid && etiquetaForm.get('etiqueta')?.touched" class="message error">
+                        El nombre es obligatorio.
+                    </div>
+                </div>
+
+                <div class="btn-panel">
+                    <button class="btn-opcion" (click)="crearEtiqueta()" type="submit" >Guardar</button>
+                    
+                </div>
+            </form>
+            
+        </div>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Id etiqueta</th>
+                    <th>Etiqueta</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let etiqueta of etiquetas">
+                    <td>{{ etiqueta.idEtiquetaHoteles }}</td>
+                    <td>{{ etiqueta.etiqueta }}</td>
+                    
+                    <td>
+                        <button (click)="editarEtiqueta(etiqueta.idEtiquetaHoteles)" class="btn-opcion" >Editar</button>
+                        <button (click)="eliminarEtiqueta(etiqueta.idEtiquetaHoteles)" class="btn-opcion">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

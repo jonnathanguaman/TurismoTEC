@@ -45,7 +45,7 @@ export class VerHotelesComponent implements OnInit{
 
     obtenerImagesDeHoteles(idHoteles:number):Promise<ImagenesHoteles[]>{
       return new Promise((resolve,reject) =>{
-          this.imgDeHotelService.getImagenesHoteles(idHoteles).subscribe(
+          this.imgDeHotelService.getImagenesByIdHoteles(idHoteles).subscribe(
             imgHoteles => resolve(imgHoteles),
             error => reject(error)
           )

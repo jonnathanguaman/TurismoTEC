@@ -127,7 +127,7 @@ const routes: Routes = [
           }
         ]
       }, {
-        path: "crudEtiquetaHotel",
+        path: "crudEtiquetaRestaurante",
         component: CrudEtiquetaRestauranteComponent,
         children: [
           {

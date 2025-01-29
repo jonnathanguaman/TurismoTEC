@@ -46,7 +46,7 @@ export class VerRestaurantesComponent implements OnInit{
 
   obtenerImgDeRestaurates(idRestaurate:number):Promise<ImagenesRestaurantes[]>{
     return new Promise((resolve, reject) =>{
-      this.imgRestaurantesService.getImagenesRestaurantes(idRestaurate).subscribe(
+      this.imgRestaurantesService.getImagenesByIdRestaurantes(idRestaurate).subscribe(
         imgRestante => resolve(imgRestante),
         error => reject(error)
       )
