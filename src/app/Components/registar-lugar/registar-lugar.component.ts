@@ -4,12 +4,13 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ImagenesLugaresService } from '../../Services/ImagenesLugares/imagenes-lugares.service';
 import { CategoriaLugarService } from '../../Services/categoriasLugares/categoria-lugar.service';
 import { LugaresCategoriasService } from '../../Services/lugares_Categorias/lugares-categorias.service';
-import { Router } from 'express';
 import { Lugares } from '../../Services/Lugares/lugares';
 import { environment } from '../../../enviroments/enviroment';
 import { AuthRegisterService } from '../../Services/auth/authRegister.service';
 import { TokenPayload } from '../../Services/DatosPersonales/TokenPayload ';
 import { jwtDecode } from 'jwt-decode';
+import { EtiquetasLugar } from '../../Services/categoriasLugares/categoriaLugar';
+import { Lugares_categoria } from '../../Services/lugares_Categorias/lugares_categrias';
 
 @Component({
   selector: 'app-registar-lugar',
@@ -25,6 +26,12 @@ export class RegistarLugarComponent {
 
   auxlongitud!: number;
   auxlatitud!: number;
+
+  modalEtiqueta:boolean = false
+  categorias!: EtiquetasLugar[];
+  idLugar:number
+  etiquetasDelLugar:Lugares_categoria[]
+  public lugarEtiqueta = new Lugares_categoria()
 
   ngOnChanges(): void {
     if (this.latitud !== undefined && this.longitud !== undefined) {
@@ -45,7 +52,7 @@ export class RegistarLugarComponent {
     private imagenesLugaresService: ImagenesLugaresService,
     private etiqueraLugarService: CategoriaLugarService,
     private lugarCategoriaService: LugaresCategoriasService,
-    private authService: AuthRegisterService
+    private authService: AuthRegisterService,
   ) {}
 
   lugaresForm = this.fb.group({
@@ -87,13 +94,12 @@ export class RegistarLugarComponent {
     this.authService.getIdPerson(payload.sub).subscribe({
       next: (idUser) => {
         if (this.lugaresForm.valid && this.imagePreviews.length >= 3) {
-          this.lugaresService
-            .guardarLugares(
-              this.lugaresForm.value as unknown as Lugares,
-              idUser
-            )
+          this.lugaresService.guardarLugares(this.lugaresForm.value as unknown as Lugares,idUser)
             .subscribe({
               next: (lugarCreado: Lugares) => {
+
+                this.idLugar = lugarCreado.idLugares
+
                 const uploadPromises = this.selectedFiles.map((file) =>
                   this.imagenesLugaresService
                     .uploadImage(file, lugarCreado.idLugares)
@@ -110,7 +116,7 @@ export class RegistarLugarComponent {
                     this.lugaresForm.reset();
                     this.selectedFiles = [];
                     this.imagePreviews = [];
-                    this.volver();
+                    this.abrirModalEtiqueta()
                   })
                   .catch((error) => {
                     console.error('Error al subir las imágenes:', error);
@@ -142,5 +148,63 @@ export class RegistarLugarComponent {
 
   volver() {
     window.location.reload();
+  }
+
+  abrirModalEtiqueta(){
+    this.obtenerEtiquetas()
+    this.obtenerEtiquetasLugar()
+    this.modalEtiqueta = true
+  }
+
+  //Cierra la pestaña para poner etiquetas
+  cerrarModalEtiqueta(){
+    this.modalEtiqueta = false
+    this.volver();
+  }
+
+  obtenerEtiquetas(){
+    this.etiqueraLugarService.getEtiquetaLugar().subscribe(cat => {
+      this.categorias = cat;
+    });
+  }
+  
+  asignarEtiquetaLugar(idCategoria:number){
+    environment.mensajeEmergente('Agregar etiqueta','¿Estas seguro que deseas agregar la etiqueta?', 'warning')
+    .then((contunuar)=>{
+      if(contunuar){
+        this.lugarCategoriaService.crearLugareEtiqueta(this.lugarEtiqueta,this.idLugar,idCategoria).subscribe({
+          next:(lugarEtiqueta)=>{
+            console.log(lugarEtiqueta)
+            if(lugarEtiqueta == null){
+              environment.mensajeToast('error','Etiqueta no asiganada','La etiqueta ya pertenece al lugar')
+            }else{
+              environment.mensajeToast('success','Etiqueta asiganada','La etiqueta se asigno con exito')
+            }
+          },
+          complete:()=>{
+            this.obtenerEtiquetasLugar()
+          }
+        })
+      }
+    })
+  }
+
+  obtenerEtiquetasLugar(){
+    this.lugarCategoriaService.getCategoriasDelLugar(this.idLugar).subscribe(etiLugar =>{
+      this.etiquetasDelLugar = etiLugar
+    })
+  }
+  
+
+  eliminarEtiqueta(idEtiquetaLugar:number){
+    environment.mensajeEmergente('¿Estás seguro que deseas eliminar?','Esta operación no es reversible','warning')
+    .then(()=>{
+      this.lugarCategoriaService.eliminarLugarEtiqueta(idEtiquetaLugar).subscribe({
+        complete:()=>{
+          this.obtenerEtiquetasLugar()
+          environment.mensajeToast('success','Eliminado con exito','Se ha eliminado con exito');
+        }
+      })
+    })
   }
 }
