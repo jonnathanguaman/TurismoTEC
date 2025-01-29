@@ -13,4 +13,8 @@ export class MailService {
   enviarCorreoAUsuario(idUsuario:number):Observable<any>{
     return this.http.post<any>(`${environment.urlHost + "/send-email"}/${idUsuario}`,null)
   }
+
+  enviarCorreoAprobado(idUsuario:number):Observable<any>{
+    return this.http.post<any>(`${environment.urlHost + "/send-email-aprobado"}/${idUsuario}`,null)
+  }
 }

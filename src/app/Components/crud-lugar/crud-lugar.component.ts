@@ -12,6 +12,7 @@ import { ImagenesLugares } from '../../Services/ImagenesLugares/imagenesLugares'
 import { AuthRegisterService } from '../../Services/auth/authRegister.service';
 import { TokenPayload } from '../../Services/DatosPersonales/TokenPayload ';
 import { jwtDecode } from 'jwt-decode';
+import { MailService } from '../../Services/mailService/mail.service';
 
 @Component({
   selector: 'app-crud-lugar',
@@ -63,6 +64,7 @@ export class CrudLugarComponent implements OnInit {
     private etiqueraLugarService:CategoriaLugarService,
     private lugarCategoriaService:LugaresCategoriasService,
     private authService: AuthRegisterService,
+    private mailService:MailService
   ) {}
 
   ngOnInit(): void {
@@ -140,6 +142,12 @@ export class CrudLugarComponent implements OnInit {
       },
       error: (error) => console.error('Error al aprobar lugar', error)
     });
+  }
+
+  enviarCorreoAprobado(idUser:number){
+    this.mailService.enviarCorreoAprobado(idUser).subscribe((response)=>{
+      console.log(response)
+    })
   }
 
   obtenerLugares() {
@@ -286,5 +294,4 @@ export class CrudLugarComponent implements OnInit {
       return parts[parts.length - 1];
     }
     
-
 }
