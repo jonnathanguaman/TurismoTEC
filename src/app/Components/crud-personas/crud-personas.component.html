@@ -153,14 +153,14 @@
 
         <div class="model-agregarEtiquetas-content-quitar">
             <div class="modal-agregarEtiquetas-title">
-                <h3>Quitar etiquetas</h3>
+                <h3>Quitar roles</h3>
             </div>
             <div class="modal-agrgarEtiquetas-p">
                 <p>Haga clic en la etiqueta que desea quitar del lugar</p>
             </div>
             <div class="modal-agregarEtiquetas-etiquetas">
                 <div class="etiqueta" *ngFor="let rolesDeAuth of rolesDeAuth">
-                    <button  class="etiqueta-boton">{{rolesDeAuth.rol.rolNombre}}</button>
+                    <button  (click)="eliminarEtiqueta(rolesDeAuth.usuarioRolId)" class="etiqueta-boton">{{rolesDeAuth.rol.rolNombre}}</button>
                 </div>
             </div>
         </div>

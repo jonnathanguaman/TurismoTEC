@@ -253,10 +253,13 @@ export class CrudPersonasComponent implements OnInit{
     this.authRolService.guardarAuth_RolAdmin(this.auth_rol,this.idAuth,idRol).subscribe({
       next:(rolAsiganado)=>{
         if(rolAsiganado == null){
-          environment.mensajeToast('error','Etiqueta no asiganada','La etiqueta ya pertenece al lugar')
+          environment.mensajeToast('error','El usuario ya cuenta con ese rol','El usuario ya cuenta con ese r')
         }else{
-          environment.mensajeToast('success','Etiqueta asiganada','La etiqueta se asigno con exito')
+          environment.mensajeToast('success','Rol asignado','El rol se asigno con exito')
         }
+      },
+      complete:()=>{
+        this.obtenerRolesDeAuth()
       }
     })
   }
@@ -265,9 +268,19 @@ export class CrudPersonasComponent implements OnInit{
 
   obtenerRolesDeAuth(){
     this.authRolService.getRolesDeAuth(this.idAuth).subscribe({
-      next:(roles)=>{
-        this.rolesDeAuth = roles
-      }
+      next:(roles)=>{this.rolesDeAuth = roles}
+    })
+  }
+
+  eliminarEtiqueta(IdAuthRol:number){
+    environment.mensajeEmergente('¿Estás seguro que deseas quitarle el rol?','Esta operación no es reversible','warning')
+    .then(()=>{
+      this.authRolService.elimarRolDelUsuario(IdAuthRol).subscribe({
+        complete:()=>{
+          this.obtenerRolesDeAuth()
+          environment.mensajeToast('success','Eliminado con exito','Se ha eliminado con exito');
+        }
+      })
     })
   }
 }

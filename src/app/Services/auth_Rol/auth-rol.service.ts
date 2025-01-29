@@ -20,6 +20,10 @@ export class AuthRolService {
     }
 
     getRolesDeAuth(idAuth:number):Observable<Auth_rol[]>{
-          return this.http.get<Auth_rol[]>(`${environment.urlHost + "/rolesByIdAuth"}/${idAuth}`)
+      return this.http.get<Auth_rol[]>(`${environment.urlHost + "/rolesByIdAuth"}/${idAuth}`)
+    }
+
+    elimarRolDelUsuario(id:number):Observable<Auth_rol>{
+      return this.http.delete<Auth_rol>(`${environment.urlHost + "/auth_rol"}/${id}`)
     }
 }
