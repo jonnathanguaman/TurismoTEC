@@ -1,0 +1,50 @@
+<div class="crud-container">
+    <div class="review-header">
+      <div class="review-description">
+        <p>Descripción del producto o servicio.</p>
+      </div>
+      <button class="btn-opcion" (click)="openModal()">Reseñas</button>
+    </div>
+  
+    <!-- Modal -->
+    <div class="crud-modal" *ngIf="isModalOpen">
+      <form [formGroup]="reviewForm">
+        <div class="crud-modal-content">
+          <span class="close-modal" (click)="closeModal()">&times;</span>
+          <h3>Agregar Reseña</h3>
+          <div class="input-container">
+            <label for="reviewContent">Contenido de la reseña:</label>
+            <textarea formControlName="contenido" name="contenido" id="contenido" rows="4"
+              placeholder="Escribe tu reseña aquí..."></textarea>
+          </div>
+          <div class="input-container">
+            <label>Calificación:</label>
+            <div class="stars">
+              <span *ngFor="let star of stars; let i = index" (click)="rate(i + 1)" [class.filled]="i < rating"
+                class="star">
+                ★
+              </span>
+            </div>
+          </div>
+          <div class="btn-container">
+            <button class="btn-opcion" (click)="crearReviewHotel()">Calificar</button>
+            <button class="btn-opcion" (click)="closeModal()">Salir</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  
+    <!-- Lista de reseñas -->
+    <div class="reviews-list">
+      <div *ngFor="let review of todasreviewRestaurantes" class="review-item">
+        <p><strong>Fecha:</strong> {{ review.fechaReview | date:'dd/MM/yyyy'  }}</p>
+        <p><strong>Reseña:</strong> {{ review.contenido }}</p>
+        <p><strong>Calificación:</strong></p>
+        <div class="stars">
+          <span *ngFor="let star of stars; let i = index" [class.filled]="i < review.calificacion" class="star">
+            ★
+          </span>
+        </div>
+        <hr />
+      </div>
+    </div>

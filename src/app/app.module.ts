@@ -45,6 +45,7 @@ import { RegistarLugarComponent } from './Components/registar-lugar/registar-lug
 import { LugaresCreadosUserComponent } from './Components/lugares-creados-user/lugares-creados-user.component'; 
 import { CrudEtiquetaRestauranteComponent } from './Components/crud-etiqueta-restaurante/crud-etiqueta-restaurante.component';
 import { ReviewHotelComponent } from './Components/review-hotel/review-hotel.component';
+import { ReviewRestauranteComponent } from './Components/review-restaurante/review-restaurante.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { ReviewHotelComponent } from './Components/review-hotel/review-hotel.com
     RegistarLugarComponent,
     LugaresCreadosUserComponent,
     CrudEtiquetaRestauranteComponent,
-    ReviewHotelComponent
+    ReviewHotelComponent,
+    ReviewRestauranteComponent
   ],
   imports: [
     BrowserModule,

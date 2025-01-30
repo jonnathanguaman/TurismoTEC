@@ -13,7 +13,6 @@
       <li><a routerLink="/restaurantes">Restaurante</a></li>
       <li><a routerLink="/foro">Foro</a></li>
       <li *ngIf="!userloginOn"><a routerLink="/login">Iniciar sesión</a></li>
-      <li *ngIf="!userloginOn"><a routerLink="/registro">Registrarse</a></li>
       <li *ngIf="userloginOn"><a (click)="cerrarSesion()" routerLink="/">Cerrar sesión</a></li>
       <li><a routerLink="/review">Reseñas</a></li>
 
