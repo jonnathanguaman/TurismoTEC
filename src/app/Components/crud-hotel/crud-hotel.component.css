@@ -1,3 +1,40 @@
+.combo-container {
+    margin-bottom: 15px;
+    text-align: left;
+    width: 50%;
+}
+
+.combo-container label {
+    font-size: 14px;
+    color: #000000;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.combo-container select {
+    text-align: left;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.combo-container select:focus {
+    border-color: #1900ff;
+}
+
+.combo-container option {
+    padding: 10px;
+    font-size: 14px;
+    background-color: blue;
+    color: white;
+    text-align: center;
+}
+
 .crud-container {
     font-family: Arial, sans-serif;
     background-color: #fff;

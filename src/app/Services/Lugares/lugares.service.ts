@@ -45,4 +45,8 @@ export class LugaresService {
     return this.http.patch<Lugares>(`${environment.urlHost}/lugares/${id}`, { aprobado });
   }
   
+  getTodosLugaresDeAdmin(): Observable<Lugares[]> {
+    return this.http.get<Lugares[]>(environment.urlHost + "/lugaresCreadoPorAdmin")
+  }
+
 }

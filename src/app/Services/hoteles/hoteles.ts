@@ -1,4 +1,6 @@
+import { DatosPersona } from "../DatosPersonales/datosPersonales";
 import { ImagenesHoteles } from "../imagenesHoteles/imagesHoteles";
+import { Lugares } from "../Lugares/lugares";
 
 export interface Hoteles{
     idHotel:number;
@@ -6,6 +8,7 @@ export interface Hoteles{
     direccion:string;
     telefono:string;
     descripcion:string;
-    //calificacion:number;
     imagenesHoteles:ImagenesHoteles[];
+    usuario:DatosPersona;
+    lugar:Lugares;
 }

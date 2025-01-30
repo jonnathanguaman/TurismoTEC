@@ -9,25 +9,32 @@ import { environment } from '../../../enviroments/enviroment';
 })
 export class HotelesService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  getTodosHoteles():Observable<Hoteles[]>{
-    return this.http.get<Hoteles[]>(environment.urlHost +"/hotel")
+  getTodosHoteles(): Observable<Hoteles[]> {
+    return this.http.get<Hoteles[]>(environment.urlHost + "/hotel")
   }
 
-  getHotelById(id:number):Observable<Hoteles>{
+  getHotelById(id: number): Observable<Hoteles> {
     return this.http.get<Hoteles>(`${environment.urlHost + "/hotel"}/${id}`)
-  } 
+  }
 
-  gethotelesDeLugar(id:number):Observable<Hoteles[]>{
+  gethotelesDeLugar(id: number): Observable<Hoteles[]> {
     return this.http.get<Hoteles[]>(`${environment.urlHost + "/hotelesDeLugar"}/${id}`)
   }
 
-  guardarLugares(hotel: Hoteles): Observable<Hoteles> {
-      return this.http.post<Hoteles>(environment.urlHost + "/hotel", hotel)
-    }
+  guardarHotel(hotel: Hoteles, idUser: number, idLugar: number): Observable<Hoteles> {
+    return this.http.post<Hoteles>(`${environment.urlHost + "/hoteles"}/${idUser}/${idLugar}`, hotel)
+  }
 
-  eliminarHotel(id:number):Observable<Hoteles>{
-      return this.http.delete<Hoteles>(`${environment.urlHost + "/hotel"}/${id}`)
-    }
+  eliminarHotel(id: number): Observable<Hoteles> {
+    return this.http.delete<Hoteles>(`${environment.urlHost + "/hotel"}/${id}`)
+  }
+
+  //Obtener los Hoteles por el nombre del usuario, para mostrar en el perfil que lugares creo esa persona 
+  getHotelesByIdUser(idUser: number): Observable<Hoteles[]> {
+    return this.http.get<Hoteles[]>(`${environment.urlHost + "/hotelesByIdUser"}/${idUser}`)
+  }
+
+  
 }

@@ -11,6 +11,16 @@
             </div>
             <button class="btn-opcion" (click)="openCrudModal()">Crear Lugar</button>
         </div>
+        <div class="combo-container">
+            <label for="lugares">Selecciona un lugar:</label>
+            <select id="lugares" (change)="onLugarChange($event)">
+                <option *ngFor="let lugar of todosLosLugaresCreadosPorAdmin" [value]="lugar.idLugares">
+                    Nombre: {{ lugar.nombre }} Direccion: {{ lugar.direccion }}
+                </option>
+            </select>
+        </div>
+        
+
     </div>
 
     <!-- Modal para el CRUD -->
@@ -114,7 +124,7 @@
 
                         <button (click)="obtenerImagesDeHotel(hotel.idHotel)" (click)="obtenerHotelById(hotel.idHotel)"
                             class="btn-opcion">Editar</button>
-                            
+
                         <button class="btn-opcion" (click)="eliminarHotel(hotel.idHotel)">Eliminar</button>
                     </td>
                 </tr>

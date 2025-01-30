@@ -7,6 +7,10 @@ import { ImagenesHotelesService } from '../../Services/imagenesHoteles/imagenes-
 import { EtiquetaHotel } from '../../Services/crub-etiqueta-hotel/etiqueta-hotel';
 import { EtiquetaHotelService } from '../../Services/crub-etiqueta-hotel/etiqueta-hotel.service';
 import { AuthRegisterService } from '../../Services/auth/authRegister.service';
+import { TokenPayload } from '../../Services/DatosPersonales/TokenPayload ';
+import { jwtDecode } from 'jwt-decode';
+import { Lugares } from '../../Services/Lugares/lugares';
+import { LugaresService } from '../../Services/Lugares/lugares.service';
 
 @Component({
     selector: 'app-crud-hotel',
@@ -21,10 +25,30 @@ export class CrudHotelComponent implements OnInit {
     etiquetas!: EtiquetaHotel[];
     modalEtiqueta: boolean = false;
     todosHoteles!: Hoteles[];
+    todosLosLugaresCreadosPorAdmin!: Lugares[];
     idHotel: number;
+    idLugarSeleccionado: number;
     etiquetasDelHotel: EtiquetaHotel[];
     urlHost: string = environment.urlHost;
-    public hotelEtiqueta = new EtiquetaHotel();
+    //public hotelEtiqueta = new EtiquetaHotel();
+
+    obtenerLugaresDeAdmin() {
+        this.lugaresService.getTodosLugaresDeAdmin().subscribe({
+            next: (lugares) => {
+                this.todosLosLugaresCreadosPorAdmin = lugares;
+            }
+        })
+    }
+
+    onLugarChange(event: any) {
+        const lugarId = event.target.value;
+        this.idLugarSeleccionado = (this.todosLosLugaresCreadosPorAdmin.find(lugar => lugar.idLugares === +lugarId) || null).idLugares;
+        console.log(this.idLugarSeleccionado);
+    }
+
+
+    obtenerEtiquetas() {
+    }
 
     abrirModalEtiqueta() {
         this.obtenerEtiquetas();
@@ -52,6 +76,7 @@ export class CrudHotelComponent implements OnInit {
 
     constructor(
         private hotelesService: HotelesService,
+        private lugaresService: LugaresService,
         private fb: FormBuilder,
         private imagenesHotelesService: ImagenesHotelesService,
         private etiquetaHotelService: EtiquetaHotelService,
@@ -60,6 +85,7 @@ export class CrudHotelComponent implements OnInit {
 
     ngOnInit(): void {
         this.obtenerHoteles();
+        this.obtenerLugaresDeAdmin();
     }
 
     hotelForm = this.fb.group({
@@ -68,11 +94,53 @@ export class CrudHotelComponent implements OnInit {
         direccion: ['', [Validators.required]],
         telefono: ['', [Validators.required]],
         descripcion: ['', [Validators.required]],
-        calificacion: ['', [Validators.required]]
     });
 
     crearHotel() {
+        console.log(this.imagePreviews.length)
+        if (this.hotelForm.valid && this.imagePreviews.length >= 3) {
+            const token = sessionStorage.getItem("token")//Obtenemos el token del sesionStorage
+            const payload: TokenPayload = jwtDecode(token); //Decodificamos el token, nos devuleve el nombre del usuario
+            this.authService.getIdPerson(payload.sub).subscribe({
+                next: (idUser) => {
+                    this.hotelesService
+                        .guardarHotel(this.hotelForm.value as unknown as Hoteles, idUser, this.idLugarSeleccionado).subscribe({
+                            next: (hotelcreado: Hoteles) => {
+                                this.idHotel = hotelcreado.idHotel;
+                                const uploadPromises = this.selectedFiles.map((file) =>
+                                    this.imagenesHotelesService.uploadImage(file, hotelcreado.idHotel).toPromise());
+                                Promise.all(uploadPromises)
+                                    .then(() => {
+                                        environment.mensajeToast('success', 'Hotel creado', 'Se ha creado el hotel con exito');
+                                        this.obtenerHoteles();
+                                        this.closeCrudModal();
+                                        this.hotelForm.reset();
+                                        this.selectedFiles = [];
+                                        this.imagePreviews = [];
+                                        this.obtenerEtiquetas()
+                                        this.abrirModalEtiqueta()
+                                    })
+                                    .catch((error) => {
+                                        console.error('Error al subir las imágenes:', error);
+                                        environment.mensajeToast('error', 'Error al subir las imágenes', 'Ingrese todos los campos y seleccione las imágenes');
+                                    });
+                            },
+                            error: () => {
+                                environment.mensajeToast('error', 'Error al registrar', 'Ingrese todos los campos y seleccione las imágenes');
+                            }
+                        })
+                }
+            })
+        } else {
+            environment.mensajeToast(
+                'error', 'Error al registrar', 'Ingrese todos los campos y seleccione las imágenes else');
+        }
+    }
 
+    obtenerHoteles() {
+        this.hotelesService.getTodosHoteles().subscribe((hoteles) => {
+            this.todosHoteles = hoteles;
+        });
     }
 
     eliminarHotel(idHotel: number) {
@@ -100,49 +168,15 @@ export class CrudHotelComponent implements OnInit {
         });
     }
 
-    obtenerHoteles() {
-        this.hotelesService.getTodosHoteles().subscribe((hoteles) => {
-            this.todosHoteles = hoteles;
-        });
-    }
-
-    obtenerEtiquetas() {
-        this.etiquetaHotelService.getEtiquetaHotel().subscribe(etiquetas => {
-            this.etiquetas = etiquetas;
-        });
-    }
-
-    asignarEtiquetaHotel(idEtiqueta: number) {
-
-    }
-
-    obtenerEtiquetasHotel() {
-        this.etiquetaHotelService.getEtiquetaDelHotel(this.idHotel).subscribe(etiquetasHotel => {
-            this.etiquetasDelHotel = etiquetasHotel;
-        });
-    }
-
-    eliminarEtiqueta(idEtiquetaHotel: number) {
-        environment.mensajeEmergente('¿Estás seguro que deseas eliminar?', 'Esta operación no es reversible', 'warning')
-            .then(() => {
-                this.etiquetaHotelService.eliminarEtiquetaHotel(idEtiquetaHotel).subscribe({
-                    complete: () => {
-                        this.obtenerEtiquetasHotel();
-                        environment.mensajeToast('success', 'Eliminado con éxito', 'Se ha eliminado con éxito');
-                    }
-                });
-            });
-    }
-
     onFileSelected(event: Event, index: number): void {
+
+        //Esto es javaScrip basico solo que en lenguaje de ts
         const input = event.target as HTMLInputElement;
         const file = input.files?.[0];
 
         if (file) {
             this.selectedFiles[index] = file;
-
             const reader = new FileReader();
-
             reader.onload = (e: ProgressEvent<FileReader>) => {
                 this.imagePreviews[index] = e.target?.result as string;
             };
@@ -154,42 +188,29 @@ export class CrudHotelComponent implements OnInit {
     }
 
     obtenerHotelById(idHotel: number) {
-        environment.mensajeEmergente('Editar', '¿Estas seguro que deseas editar el hotel?', 'warning')
-            .then((continuar) => {
-                if (continuar) {
-                    this.openCrudModal();
-                    this.hotelesService.getHotelById(idHotel).subscribe({
-                        next: (hotel) => {
-                            this.hotelForm.controls.idHotel.setValue(<string><unknown>hotel.idHotel);
-                            this.hotelForm.controls.nombre.setValue(hotel.nombre);
-                            this.hotelForm.controls.direccion.setValue(hotel.direccion);
-                            this.hotelForm.controls.telefono.setValue(hotel.telefono);
-                            this.hotelForm.controls.descripcion.setValue(hotel.descripcion);
-                        }
-                    });
-                }
-            });
+
+
+
     }
 
     obtenerImagesDeHotel(id: number) {
-        this.imagePreviews = new Array();
-        this.imagenesHotelesService.getImagenesByIdHoteles(id).subscribe(imgHoteles => {
-            imgHoteles.forEach((hotel) => {
-                this.imagePreviews.push(this.urlHost + hotel.url);
-                this.obtenerFile(this.obtenerNombreDeLaFoto(hotel.url));
-            });
-        });
+
+
+
     }
 
+    //Obtenemos el la foto en tipo archivo de un lugar en especifico y las agregamos al los arrays para poder subir cuando hacemos el update
     obtenerFile(nombreFoto: string) {
         this.imagenesHotelesService.getFile(nombreFoto).subscribe((file: Blob) => {
             const fileFromBlob = new File([file], nombreFoto, { type: file.type });
-            this.selectedFiles.push(fileFromBlob);
+            this.selectedFiles.push(fileFromBlob)
         });
     }
 
+    //Obtenermos el nomnbre el archivo para poder buscarlo en la base de datos y obtener el archivo en formato blob
     obtenerNombreDeLaFoto(url: string): string {
         const parts = url.split('/');
         return parts[parts.length - 1];
     }
+
 }
