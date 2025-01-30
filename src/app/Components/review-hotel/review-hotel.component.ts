@@ -1,23 +1,24 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ReviewLugaresService } from '../../Services/review-lugares/review-lugares.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ReviewLugar } from '../../Services/review-lugares/reviewLugares';
-import { environment } from '../../../enviroments/enviroment';
 import { AuthRegisterService } from '../../Services/auth/authRegister.service';
+import { ReviewLugar } from '../../Services/review-lugares/reviewLugares';
 import { TokenPayload } from '../../Services/DatosPersonales/TokenPayload ';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from '../../../enviroments/enviroment';
+import { ReviewHotelesService } from '../../Services/review-hoteles/review-hoteles.service';
+import { ReviewHoteles } from '../../Services/review-hoteles/review-hoteles';
 
 @Component({
-  selector: 'app-review',
-  templateUrl: './review.component.html',
-  styleUrls: ['./review.component.css'],
+  selector: 'app-review-hotel',
+  templateUrl: './review-hotel.component.html',
+  styleUrl: './review-hotel.component.css'
 })
-export class ReviewComponent implements OnInit{
-  
-  @Input() idLugar?:number
+export class ReviewHotelComponent {
+@Input() idHotel?:number
 
   constructor(
-    private reviewLugares:ReviewLugaresService,
+    private reviewHotelesService:ReviewHotelesService,
     private fb:FormBuilder,
     private authService: AuthRegisterService,
   ){}
@@ -41,12 +42,12 @@ export class ReviewComponent implements OnInit{
     this.obtenerReseña()
   }
 
-  todasreviewLugares:ReviewLugar[]
+  todasreviewHoteles:ReviewHoteles[]
 
   obtenerReseña(){
-    this.reviewLugares.obtenerReviewByIdLugares(this.idLugar).subscribe({
-      next:(lugares)=>{
-        this.todasreviewLugares = lugares
+    this.reviewHotelesService.obtenerReviewByIdHotel(this.idHotel).subscribe({
+      next:(hoteles)=>{
+        this.todasreviewHoteles = hoteles
       }
     })
   }
@@ -56,14 +57,14 @@ export class ReviewComponent implements OnInit{
     calificacion:[0,[Validators.required]]
   })
 
-  crearReviewLugar(){
+  crearReviewHotel(){
     const token = sessionStorage.getItem("token")
-    const payload: TokenPayload = jwtDecode(token);
     if(token){
+    const payload: TokenPayload = jwtDecode(token);
       this.authService.getIdPerson(payload.sub).subscribe({
         next: (idUser) => {
           this.reviewForm.controls.calificacion.setValue(this.rating)
-          this.reviewLugares.crearReviewLugares(this.reviewForm.value as unknown as ReviewLugar,idUser,this.idLugar).subscribe({
+          this.reviewHotelesService.crearReviewHotel(this.reviewForm.value as unknown as ReviewHoteles,idUser,this.idHotel).subscribe({
             next:()=>{
               environment.mensajeToast('success','Reseña publicada','Gracias con compartir tu experiencia')
             },
@@ -77,5 +78,4 @@ export class ReviewComponent implements OnInit{
         environment.mensajeToast('warning','Error al crear la reseña','Por favor inicie sesión')
       }
     }
-    
 }

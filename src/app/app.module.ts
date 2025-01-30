@@ -44,6 +44,7 @@ import { CrudPersonasComponent } from './Components/crud-personas/crud-personas.
 import { RegistarLugarComponent } from './Components/registar-lugar/registar-lugar.component';
 import { LugaresCreadosUserComponent } from './Components/lugares-creados-user/lugares-creados-user.component'; 
 import { CrudEtiquetaRestauranteComponent } from './Components/crud-etiqueta-restaurante/crud-etiqueta-restaurante.component';
+import { ReviewHotelComponent } from './Components/review-hotel/review-hotel.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,8 @@ import { CrudEtiquetaRestauranteComponent } from './Components/crud-etiqueta-res
     CrudPersonasComponent,
     RegistarLugarComponent,
     LugaresCreadosUserComponent,
-    CrudEtiquetaRestauranteComponent
+    CrudEtiquetaRestauranteComponent,
+    ReviewHotelComponent
   ],
   imports: [
     BrowserModule,

@@ -18,7 +18,7 @@ export class ImagenesRestaurantesService {
 
   getImagenesByIdRestaurantes(idRestaurante: number): Observable<ImagenesRestaurantes[]> {
     return this.http.get<ImagenesRestaurantes[]>(
-      `${environment.urlHost + '/imageRestaurantes'}/${idRestaurante}`
+      `${environment.urlHost + '/imageRestaurante'}/${idRestaurante}`
     );
   }
 
