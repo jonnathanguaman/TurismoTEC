@@ -1,6 +1,6 @@
 import { Hoteles } from "../hoteles/hoteles";
 
-export interface EtiquetaHotel {
+export class EtiquetaHotel {
     idEtiquetaHoteles: number;
     etiqueta: string;
     hoteles: Hoteles[];

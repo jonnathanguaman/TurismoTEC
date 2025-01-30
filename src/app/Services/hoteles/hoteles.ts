@@ -6,6 +6,6 @@ export interface Hoteles{
     direccion:string;
     telefono:string;
     descripcion:string;
-    calificacion:number;
+    //calificacion:number;
     imagenesHoteles:ImagenesHoteles[];
 }

@@ -7,10 +7,6 @@ import { ImagenesHotelesService } from '../../Services/imagenesHoteles/imagenes-
 import { EtiquetaHotel } from '../../Services/crub-etiqueta-hotel/etiqueta-hotel';
 import { EtiquetaHotelService } from '../../Services/crub-etiqueta-hotel/etiqueta-hotel.service';
 import { AuthRegisterService } from '../../Services/auth/authRegister.service';
-import { MailService } from '../../Services/mailService/mail.service';
-import { TokenPayload } from '../../Services/DatosPersonales/TokenPayload ';
-import { jwtDecode } from 'jwt-decode';
-
 
 @Component({
     selector: 'app-crud-hotel',
@@ -28,7 +24,7 @@ export class CrudHotelComponent implements OnInit {
     idHotel: number;
     etiquetasDelHotel: EtiquetaHotel[];
     urlHost: string = environment.urlHost;
-    //public hotelEtiqueta = new EtiquetaHotel();
+    public hotelEtiqueta = new EtiquetaHotel();
 
     abrirModalEtiqueta() {
         this.obtenerEtiquetas();
@@ -59,8 +55,7 @@ export class CrudHotelComponent implements OnInit {
         private fb: FormBuilder,
         private imagenesHotelesService: ImagenesHotelesService,
         private etiquetaHotelService: EtiquetaHotelService,
-        private authService: AuthRegisterService,
-        private mailService: MailService
+        private authService: AuthRegisterService
     ) { }
 
     ngOnInit(): void {
@@ -76,48 +71,34 @@ export class CrudHotelComponent implements OnInit {
         calificacion: ['', [Validators.required]]
     });
 
-    // crearLugares() {
-    //     console.log(this.imagePreviews.length)
-    //     if (this.hotelForm.valid && this.imagePreviews.length >= 3) {
+    crearHotel() {
 
-    //         const token = sessionStorage.getItem("token")
-    //         const payload: TokenPayload = jwtDecode(token);
-    //         this.authService.getIdPerson(payload.sub).subscribe({
-    //             next: (idUser) => {
-    //                 this.hotelesService
-    //                     .guardarLugares(this.hotelForm.value as unknown as Hoteles, idUser)
-    //                     .subscribe({
-    //                         next: (hotelCreado: Hoteles) => {
-    //                             this.idLugar = lugarCreado.idLugares
-    //                             const uploadPromises = this.selectedFiles.map((file) =>
-    //                                 this.imagenesLugaresService.uploadImage(file, lugarCreado.idLugares).toPromise());
+    }
 
-    //                             Promise.all(uploadPromises)
-    //                                 .then(() => {
-    //                                     environment.mensajeToast('success', 'Imágenes subidas', 'Todas las imágenes se subieron correctamente');
-
-    //                                     this.obtenerLugares();
-    //                                     this.closeCrudModal();
-    //                                     this.lugaresForm.reset();
-    //                                     this.selectedFiles = [];
-    //                                     this.imagePreviews = [];
-    //                                     this.obtenerEtiquetas()
-    //                                     this.abrirModalEtiqueta()
-    //                                 })
-    //                                 .catch((error) => {
-    //                                     console.error('Error al subir las imágenes:', error);
-    //                                     environment.mensajeToast('error', 'Error al subir las imágenes', 'Ingrese todos los campos y seleccione las imágenes');
-    //                                 });
-
-    //                         },
-    //                         error: () => {
-    //                             environment.mensajeToast('error', 'Error al registrar', 'Ingrese todos los campos y seleccione las imágenes');
-    //                         },
-    //                     });
-    //             }
-    //         })
-    //     }
-    // }
+    eliminarHotel(idHotel: number) {
+        const mensajeError = environment.mensajeEmergente(
+            '¿Estás seguro que deseas eliminar?',
+            'Esta operación no es reversible',
+            'warning'
+        );
+        mensajeError.then((confirmado) => {
+            if (confirmado) {
+                this.hotelesService.eliminarHotel(idHotel).subscribe({
+                    next: () => {
+                        this.obtenerHoteles();
+                        environment.mensajeToast(
+                            'success',
+                            'Eliminado con exito',
+                            'Se ha eliminado con exito'
+                        );
+                    },
+                    error: () => {
+                        environment.mensajeToast('error', 'No se puedo eliminar', 'Elimina las etiquetas')
+                    }
+                });
+            }
+        });
+    }
 
     obtenerHoteles() {
         this.hotelesService.getTodosHoteles().subscribe((hoteles) => {
@@ -131,7 +112,27 @@ export class CrudHotelComponent implements OnInit {
         });
     }
 
+    asignarEtiquetaHotel(idEtiqueta: number) {
 
+    }
+
+    obtenerEtiquetasHotel() {
+        this.etiquetaHotelService.getEtiquetaDelHotel(this.idHotel).subscribe(etiquetasHotel => {
+            this.etiquetasDelHotel = etiquetasHotel;
+        });
+    }
+
+    eliminarEtiqueta(idEtiquetaHotel: number) {
+        environment.mensajeEmergente('¿Estás seguro que deseas eliminar?', 'Esta operación no es reversible', 'warning')
+            .then(() => {
+                this.etiquetaHotelService.eliminarEtiquetaHotel(idEtiquetaHotel).subscribe({
+                    complete: () => {
+                        this.obtenerEtiquetasHotel();
+                        environment.mensajeToast('success', 'Eliminado con éxito', 'Se ha eliminado con éxito');
+                    }
+                });
+            });
+    }
 
     onFileSelected(event: Event, index: number): void {
         const input = event.target as HTMLInputElement;
@@ -152,8 +153,33 @@ export class CrudHotelComponent implements OnInit {
         }
     }
 
+    obtenerHotelById(idHotel: number) {
+        environment.mensajeEmergente('Editar', '¿Estas seguro que deseas editar el hotel?', 'warning')
+            .then((continuar) => {
+                if (continuar) {
+                    this.openCrudModal();
+                    this.hotelesService.getHotelById(idHotel).subscribe({
+                        next: (hotel) => {
+                            this.hotelForm.controls.idHotel.setValue(<string><unknown>hotel.idHotel);
+                            this.hotelForm.controls.nombre.setValue(hotel.nombre);
+                            this.hotelForm.controls.direccion.setValue(hotel.direccion);
+                            this.hotelForm.controls.telefono.setValue(hotel.telefono);
+                            this.hotelForm.controls.descripcion.setValue(hotel.descripcion);
+                        }
+                    });
+                }
+            });
+    }
 
-
+    obtenerImagesDeHotel(id: number) {
+        this.imagePreviews = new Array();
+        this.imagenesHotelesService.getImagenesByIdHoteles(id).subscribe(imgHoteles => {
+            imgHoteles.forEach((hotel) => {
+                this.imagePreviews.push(this.urlHost + hotel.url);
+                this.obtenerFile(this.obtenerNombreDeLaFoto(hotel.url));
+            });
+        });
+    }
 
     obtenerFile(nombreFoto: string) {
         this.imagenesHotelesService.getFile(nombreFoto).subscribe((file: Blob) => {
