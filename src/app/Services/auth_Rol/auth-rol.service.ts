@@ -14,4 +14,16 @@ export class AuthRolService {
     guardarAuth_Rol(authRol:Auth_rol, idAuth:number):Observable<Auth_rol>{
       return this.http.post<Auth_rol>(`${environment.urlHost + "/auth_rol"}/${idAuth}/${1}`,authRol);
     }
+
+    guardarAuth_RolAdmin(authRol:Auth_rol, idAuth:number, idRol:number):Observable<Auth_rol>{
+      return this.http.post<Auth_rol>(`${environment.urlHost + "/auth_rol"}/${idAuth}/${idRol}`,authRol);
+    }
+
+    getRolesDeAuth(idAuth:number):Observable<Auth_rol[]>{
+      return this.http.get<Auth_rol[]>(`${environment.urlHost + "/rolesByIdAuth"}/${idAuth}`)
+    }
+
+    elimarRolDelUsuario(id:number):Observable<Auth_rol>{
+      return this.http.delete<Auth_rol>(`${environment.urlHost + "/auth_rol"}/${id}`)
+    }
 }

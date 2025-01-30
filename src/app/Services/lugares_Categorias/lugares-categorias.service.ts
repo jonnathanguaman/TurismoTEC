@@ -25,5 +25,5 @@ export class LugaresCategoriasService {
 
     eliminarLugarEtiqueta(id:number):Observable<Lugares_categoria>{
          return this.http.delete<Lugares_categoria>(`${environment.urlHost + "/lugaresEtiquetas"}/${id}`)
-      }
+    }
 }
