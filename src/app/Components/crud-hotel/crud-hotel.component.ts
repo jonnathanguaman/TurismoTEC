@@ -29,7 +29,7 @@ export class CrudHotelComponent implements OnInit {
     idHotel: number;
     idLugarSeleccionado: number;
     etiquetasDelHotel: EtiquetaHotel[];
-    urlHost: string = environment.urlHost;
+    urlHost: string = environment.urlAut;
     //public hotelEtiqueta = new EtiquetaHotel();
 
     obtenerLugaresDeAdmin() {
@@ -47,11 +47,21 @@ export class CrudHotelComponent implements OnInit {
     }
 
 
+    obtenerEtiquetasHotel() {
+        this.etiquetaHotelService.getEtiquetaDelHotel(this.idHotel).subscribe(etiquetasHotel => {
+            this.etiquetasDelHotel = etiquetasHotel
+        })
+    }
+
+
     obtenerEtiquetas() {
+        this.etiquetaHotelService.getEtiquetaHotel().subscribe(etiquetasObetenidas => {
+            this.etiquetas = etiquetasObetenidas;
+        });
     }
 
     abrirModalEtiqueta() {
-        this.obtenerEtiquetas();
+        //this.obtenerEtiquetas();
         this.modalEtiqueta = true;
     }
 
@@ -188,19 +198,49 @@ export class CrudHotelComponent implements OnInit {
     }
 
     obtenerHotelById(idHotel: number) {
-
-
-
+        environment.mensajeEmergente('Editar', '¿Estas seguro que deseas editar el lugar?', 'warning')
+            .then((cont) => {
+                if (cont) {
+                    this.openCrudModal()
+                    this.hotelesService.getHotelById(idHotel).subscribe({
+                        next: (hotel) => {
+                            this.hotelForm.controls.idHotel.setValue(<string><unknown>hotel.idHotel)
+                            this.hotelForm.controls.nombre.setValue(hotel.nombre)
+                            this.hotelForm.controls.descripcion.setValue(hotel.descripcion)
+                            this.hotelForm.controls.direccion.setValue(hotel.direccion)
+                            this.hotelForm.controls.telefono.setValue(hotel.telefono)
+                        }
+                    })
+                }
+            })
     }
 
     obtenerImagesDeHotel(id: number) {
+        console.log("Entro aqui")
+        this.imagePreviews = new Array
+        this.imagenesHotelesService.getImagenesByIdHoteles(id).subscribe({
+            next: (imgHoteles) => {
+                console.log("next")
+                console.log(imgHoteles)
+                imgHoteles.forEach((Hotel) => {
 
+                    //Contruimos la url para la previsualizacion
+                    this.imagePreviews.push(this.urlHost + Hotel.url)
+                    console.log(this.imagePreviews)
+                    this.obtenerFile(this.obtenerNombreDeLaFoto(Hotel.url))
+                    console.log(this.selectedFiles)
+                })
+            },
+            error: (e) => {
+                console.log("Error al obtener imagenes" + e)
+            }
 
-
+        })
     }
 
     //Obtenemos el la foto en tipo archivo de un lugar en especifico y las agregamos al los arrays para poder subir cuando hacemos el update
     obtenerFile(nombreFoto: string) {
+        console.log("Entro a obtener file")
         this.imagenesHotelesService.getFile(nombreFoto).subscribe((file: Blob) => {
             const fileFromBlob = new File([file], nombreFoto, { type: file.type });
             this.selectedFiles.push(fileFromBlob)

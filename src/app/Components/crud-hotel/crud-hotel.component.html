@@ -107,7 +107,7 @@
                     <th>Nombre</th>
                     <th>Dirección</th>
                     <th>Descripción</th>
-                    <th>teléfono>
+                    <th>teléfono</th>
                 </tr>
             </thead>
             <tbody>
@@ -133,7 +133,7 @@
     </div>
 </div>
 
-<!-- <div class="modal-agrgarEtiquetas" *ngIf="modalEtiqueta">
+<div class="modal-agrgarEtiquetas" *ngIf="modalEtiqueta">
     <div class="model-agregarEtiquetas-content">
         <span class="close-modal" (click)="cerrarModalEtiqueta()">✖</span>
         
@@ -145,25 +145,26 @@
                 <p>Haga clic en la etiqueta que desea asignarle al lugar</p>
             </div>
             <div class="modal-agregarEtiquetas-etiquetas">
-                <div class="etiqueta" *ngFor="let etiqueta of categorias">
-                    <button (click)="asignarEtiquetaLugar(etiqueta.idEtiqueta)" class="etiqueta-boton">{{etiqueta.etiqueta}}</button>
+                <div class="etiqueta" *ngFor="let etiqueta of etiquetas">
+                    <button  class="etiqueta-boton">{{etiqueta.etiqueta}}</button>
                 </div>
             </div>
         </div>
-
+        <!-- (click)="asignarEtiquetaLugar(etiqueta.idEtiqueta)" -->
         <div class="model-agregarEtiquetas-content-quitar">
             <div class="modal-agregarEtiquetas-title">
                 <h3>Quitar etiquetas</h3>
             </div>
             <div class="modal-agrgarEtiquetas-p">
-                <p>Haga clic en la etiqueta que desea quitar del lugar</p>
+                <p>Haga clic en la etiqueta que desea quitar del hotel</p>
             </div>
             <div class="modal-agregarEtiquetas-etiquetas">
-                <div class="etiqueta" *ngFor="let etiqueta of etiquetasDelLugar">
-                    <button (click)="eliminarEtiqueta(etiqueta.idLugaresEtiquetas)" class="etiqueta-boton">{{etiqueta.etiquetas.etiqueta}}</button>
+                <div class="etiqueta" *ngFor="let etiqueta of etiquetasDelHotel">
+                    <button  class="etiqueta-boton">{{etiqueta.etiqueta}}</button>
                 </div>
+                <!-- (click)="eliminarEtiqueta(etiqueta.idLugaresEtiquetas)" -->
             </div>
         </div>
         
     </div>
-</div> -->
+</div>

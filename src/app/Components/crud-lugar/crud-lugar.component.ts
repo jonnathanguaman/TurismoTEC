@@ -19,6 +19,7 @@ import { MailService } from '../../Services/mailService/mail.service';
   templateUrl: './crud-lugar.component.html',
   styleUrls: ['./crud-lugar.component.css'],
 })
+
 export class CrudLugarComponent implements OnInit {
   
   isCrudModalOpen: boolean = false;
