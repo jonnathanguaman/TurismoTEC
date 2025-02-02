@@ -46,6 +46,7 @@ import { LugaresCreadosUserComponent } from './Components/lugares-creados-user/l
 import { CrudEtiquetaRestauranteComponent } from './Components/crud-etiqueta-restaurante/crud-etiqueta-restaurante.component';
 import { ReviewHotelComponent } from './Components/review-hotel/review-hotel.component';
 import { ReviewRestauranteComponent } from './Components/review-restaurante/review-restaurante.component';
+import { ChatbotComponent } from './chatbot/chatbot.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { ReviewRestauranteComponent } from './Components/review-restaurante/revi
     LugaresCreadosUserComponent,
     CrudEtiquetaRestauranteComponent,
     ReviewHotelComponent,
-    ReviewRestauranteComponent
+    ReviewRestauranteComponent,
+    ChatbotComponent
   ],
   imports: [
     BrowserModule,
