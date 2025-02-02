@@ -8,6 +8,7 @@ import { jwtDecode } from 'jwt-decode';
 import { AuthRegisterService } from '../auth/authRegister.service';
 import { authRegister } from '../auth/authRegister';
 import { Router } from '@angular/router';
+import { AuthRolService } from '../auth_Rol/auth-rol.service';
 
 
 @Injectable({
@@ -20,7 +21,7 @@ export class AuthService {
   currentUserLoginOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   currentUserData: BehaviorSubject<String> = new BehaviorSubject<String>("");
 
-  constructor(private http:HttpClient, private authRegisterService:AuthRegisterService,private router:Router) {
+  constructor(private http:HttpClient, private authRegisterService:AuthRegisterService,private router:Router, private authRolService:AuthRolService ) {
     if (typeof window !== 'undefined' && sessionStorage) {
       this.currentUserLoginOn = new BehaviorSubject<boolean>(sessionStorage.getItem("token") != null);
       this.currentUserData = new BehaviorSubject<String>(sessionStorage.getItem("token") || "");
@@ -51,16 +52,23 @@ export class AuthService {
         const payload: TokenPayload = jwtDecode(token);
   
         // Consultar roles desde el backend
-        this.authRegisterService.getIdPerson(payload.sub).subscribe({
+        //Cambiar esto, esta mal, esta evaluando el id del usuario y no del auth
+        this.authRegisterService.getAuth(payload.sub).subscribe({
           next: (idUser) => {
-            this.authRegisterService.getAuthById(idUser).subscribe({
-              next: (auth: authRegister) => {
+            this.authRolService.getRolesDeAuth(idUser.id_auth).subscribe({
+              next: (auth) => {
   
-                const isAdmin = auth.authorities.some((role: any) => role.authority === 'admin');
-                const isUser = auth.authorities.some((role: any) => role.authority === 'user');
-  
-                this.admin.next(isAdmin);
-                this.user.next(isUser);
+                console.log(auth)
+                auth.forEach((roles)=>{
+                  roles.rol.rolNombre
+                  if(roles.rol.rolNombre === 'user'){
+                    this.user.next(true);
+                  }else if(roles.rol.rolNombre === 'admin'){
+                    this.admin.next(true);
+                  }
+                })
+                // const isAdmin = auth.authorities.some((role: any) => role.authority === 'admin');
+                // const isUser = auth.authorities.some((role: any) => role.authority === 'user');
               },
               error: (err) => {
                 console.error('Error al obtener roles desde el backend:', err);

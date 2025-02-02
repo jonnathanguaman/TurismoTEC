@@ -130,12 +130,8 @@ export class DatosPersonalesComponent implements OnInit {
                   },
                   complete:()=>{
                     this.loginService.login(this.loginForm.value as unknown as LoginRequest).subscribe({
-                      next:()=>{
-                        this.loginService.getRoles()
-                      },
                       complete:()=>{
                         this.router.navigateByUrl("/")
-                        window.location.reload();
                       },
                       error:()=>{
                         console.log("No pudiste entrar lo siento")
