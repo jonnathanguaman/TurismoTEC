@@ -29,7 +29,7 @@ export class MesasComponent implements OnInit {
     this.activedRouter.params.subscribe((params) => {
       let id = params['id'];
       if (id) {
-        this.restauranteService.getRestaurantesById(id).subscribe((rest) => {
+        this.restauranteService.getRestauranteById(id).subscribe((rest) => {
           this.restauranteEncontrado = rest;
           this.obtenerMesasDeRestaurante(id);
         });

@@ -16,71 +16,154 @@
     <!-- Modal para el CRUD -->
     <div class="crud-modal" *ngIf="isCrudModalOpen">
         <div class="crud-modal-content">
-            
+            <span class="close-modal" (click)="closeCrudModal()">✖</span>
             <h3>Crear o Editar Restaurante</h3>
 
-            <form (submit)="onSubmit()" #formRestaurante="ngForm">
+            <div class="combo-container">
+                <label for="lugares">Selecciona un lugar:</label>
+                <select id="lugares" [(ngModel)]="idLugarSeleccionado">
+                    <option *ngFor="let lugar of todosLosLugaresCreadosPorAdmin" [value]="lugar.idLugares">
+                        Nombre: {{ lugar.nombre }} Dirección: {{ lugar.direccion }}
+                    </option>
+                </select>
+            </div>
+            <form [formGroup]="restauranteForm">
                 <div class="input-container">
                     <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" [(ngModel)]="restaurante.nombre" name="nombre" required minlength="3" #nombre="ngModel" />
-                    <div *ngIf="nombre.invalid && nombre.touched" class="message error">El nombre es obligatorio y debe tener al menos 3 caracteres.</div>
+                    <input type="text" id="nombre" formControlName="nombre" />
+                    <div *ngIf="restauranteForm.get('nombre')?.invalid && restauranteForm.get('nombre')?.touched"
+                        class="message error">
+                        El nombre es obligatorio.
+                    </div>
                 </div>
                 <div class="input-container">
                     <label for="descripcion">Descripción:</label>
-                    <textarea id="descripcion" [(ngModel)]="restaurante.descripcion" name="descripcion" rows="4" required #descripcion="ngModel"></textarea>
-                    <div *ngIf="descripcion.invalid && descripcion.touched" class="message error">La descripción es obligatoria.</div>
+                    <textarea id="descripcion" formControlName="descripcion" rows="4"></textarea>
+                    <div *ngIf="restauranteForm.get('descripcion')?.invalid && restauranteForm.get('descripcion')?.touched"
+                        class="message error">
+                        La descripción es obligatoria.
+                    </div>
                 </div>
                 <div class="input-container">
                     <label for="direccion">Dirección:</label>
-                    <input type="text" id="direccion" [(ngModel)]="restaurante.direccion" name="direccion" required #direccion="ngModel" />
-                    <div *ngIf="direccion.invalid && direccion.touched" class="message error">La dirección es obligatoria.</div>
+                    <input type="text" id="direccion" formControlName="direccion" />
+                    <div *ngIf="restauranteForm.get('direccion')?.invalid && restauranteForm.get('direccion')?.touched"
+                        class="message error">
+                        La dirección es obligatoria.
+                    </div>
                 </div>
                 <div class="input-container">
                     <label for="telefono">Teléfono:</label>
-                    <input type="text" id="telefono" [(ngModel)]="restaurante.telefono" name="telefono" required #telefono="ngModel" />
-                    <div *ngIf="telefono.invalid && telefono.touched" class="message error">El teléfono es obligatorio.</div>
+                    <input type="text" id="telefono" formControlName="telefono" />
+                    <div *ngIf="restauranteForm.get('telefono')?.invalid && restauranteForm.get('telefono')?.touched"
+                        class="message error">
+                        El teléfono es obligatorio.
+                    </div>
                 </div>
                 <div class="input-container">
-                    <label for="imagen">Imagen:</label>
-                    <input type="file" id="imagen" (change)="onImageChange($event)" />
+                    <label for="menu">Menú:</label>
+                    <input type="text" id="menu" formControlName="menu" />
+                    <div *ngIf="restauranteForm.get('menu')?.invalid && restauranteForm.get('menu')?.touched"
+                        class="message error">
+                        El menú es obligatorio.
+                    </div>
                 </div>
 
-                <hr />
+
+                <div class="imgContainer">
+                    <div class="imgContainer-item">
+                        <div class="img-preview" id="preview1">
+                            <img [src]="imagePreviews[0]" alt="Vista previa">
+                        </div>
+                        <label for="file1" class="file-label">Subir imagen</label>
+                        <input accept="image/*" (change)="onFileSelected($event,0)" type="file" id="file1"
+                            class="file-input" accept="image/*" onchange="previewImage(event, 'preview1')">
+                    </div>
+                    <div class="imgContainer-item">
+                        <div class="img-preview" id="preview2">
+                            <img [src]="imagePreviews[1]" alt="Vista previa">
+                        </div>
+                        <label for="file2" class="file-label">Subir imagen</label>
+                        <input accept="image/*" (change)="onFileSelected($event,1)" type="file" id="file2"
+                            class="file-input" accept="image/*" onchange="previewImage(event, 'preview2')">
+                    </div>
+                    <div class="imgContainer-item">
+                        <div class="img-preview" id="preview3">
+                            <img [src]="imagePreviews[2]" alt="Vista previa">
+                        </div>
+                        <label for="file3" class="file-label">Subir imagen</label>
+                        <input accept="image/*" (change)="onFileSelected($event,2)" type="file" id="file3"
+                            class="file-input" accept="image/*" onchange="previewImage(event, 'preview3')">
+                    </div>
+                </div>
+
+
                 <div class="btn-panel">
-                    <button class="btn-opcion" type="submit" [disabled]="formRestaurante.invalid"><span class="icon">✔️</span> Guardar</button>
-                    <button class="btn-opcion" type="button" (click)="limpiarFormulario()"><span class="icon">🧹</span> Limpiar</button>
+                    <button class="btn-opcion" type="submit" (click)="crearRestaurante()">Guardar</button>
                 </div>
             </form>
         </div>
     </div>
-
-    <div *ngIf="message" class="message success">{{ message }}</div>
-
     <div class="table-container">
         <table>
             <thead>
                 <tr>
                     <th>Nombre</th>
                     <th>Dirección</th>
-                    <th>Teléfono</th>
                     <th>Descripción</th>
-                    <th>Imagen</th>
-                    <th>Acciones</th>
+                    <th>Teléfono</th>
+                    <th>Menú</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let restaurante of restaurantes">
+                <tr *ngFor="let restaurante of todosRestaurantes">
                     <td>{{ restaurante.nombre }}</td>
                     <td>{{ restaurante.direccion }}</td>
-                    <td>{{ restaurante.telefono }}</td>
                     <td>{{ restaurante.descripcion }}</td>
-                    <td><img [src]="restaurante.imagen" alt="Imagen Restaurante" /></td>
+                    <td>{{ restaurante.telefono }}</td>
+                    <td>{{ restaurante.menu }}</td>
                     <td>
-                        <button class="btn-opcion" (click)="editarRestaurante(restaurante)"><span class="icon">✏️</span> Editar</button>
-                        <button class="btn-opcion" (click)="eliminarRestaurante(restaurante.id_restaurante)"><span class="icon">❌</span> Eliminar</button>
+                        <button (click)="guardarIdRestaurante(restaurante.idRestaurante)" (click)="abrirModalEtiqueta()"
+                            class="btn-opcion">Agregar/quitar etiquetas</button>
+                        <button (click)="guardarIdRestaurante(restaurante.idRestaurante)" (click)="obtenerImagesDeRestaurante(restaurante.idRestaurante)" (click)="obtenerRestauranteById(restaurante.idRestaurante)"
+                            class="btn-opcion">Editar</button>
+                        <button class="btn-opcion"
+                            (click)="eliminarRestaurante(restaurante.idRestaurante)">Eliminar</button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-</div>
+    <div class="modal-agrgarEtiquetas" *ngIf="modalEtiqueta">
+        <div class="model-agregarEtiquetas-content">
+            <span class="close-modal" (click)="cerrarModalEtiqueta()">✖</span>
+
+            <div class="model-agregarEtiquetas-content-agregar">
+                <div class="modal-agregarEtiquetas-title">
+                    <h3>Agrega etiquetas</h3>
+                </div>
+                <div class="modal-agrgarEtiquetas-p">
+                    <p>Haga clic en la etiqueta que desea asignarle al lugar</p>
+                </div>
+                <div class="modal-agregarEtiquetas-etiquetas">
+                    <div class="etiqueta" *ngFor="let etiqueta of etiquetas">
+                        <button class="etiqueta-boton"
+                            (click)="asignarEtiquetaARestaurante(etiqueta)">{{etiqueta.etiqueta}}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="model-agregarEtiquetas-content-quitar">
+                <div class="modal-agregarEtiquetas-title">
+                    <h3>Quitar etiquetas</h3>
+                </div>
+                <div class="modal-agrgarEtiquetas-p">
+                    <p>Haga clic en la etiqueta que desea quitar del hotel</p>
+                </div>
+                <div class="modal-agregarEtiquetas-etiquetas">
+                    <div class="etiqueta" *ngFor="let etiqueta of etiquetasDelRestaurante">
+                        <button (click)="eliminarEtiqueta(etiqueta)" class="etiqueta-boton">{{etiqueta.etiqueta}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

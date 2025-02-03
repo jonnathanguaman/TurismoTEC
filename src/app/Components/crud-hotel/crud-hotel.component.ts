@@ -29,9 +29,23 @@ export class CrudHotelComponent implements OnInit {
     todosLosLugaresCreadosPorAdmin!: Lugares[];
     idHotel: number;
     idLugarSeleccionado: number;
-    etiquetasDelHotel: EtiquetaHotel[];
+    etiquetasDelHotel!: EtiquetaHotel[];
     urlHost: string = environment.urlAut;
     public hotelAAsignar = new Hoteles();
+
+    constructor(
+        private hotelesService: HotelesService,
+        private lugaresService: LugaresService,
+        private fb: FormBuilder,
+        private imagenesHotelesService: ImagenesHotelesService,
+        private etiquetaHotelService: EtiquetaHotelService,
+        private authService: AuthRegisterService
+    ) { }
+
+    ngOnInit(): void {
+        this.obtenerHoteles();
+        this.obtenerLugaresDeAdmin();
+    }
 
     obtenerLugaresDeAdmin() {
         this.lugaresService.getTodosLugaresDeAdmin().subscribe({
@@ -46,7 +60,7 @@ export class CrudHotelComponent implements OnInit {
         environment.mensajeEmergente('Agregar etiqueta', '¿Estas seguro que deseas agregar la etiqueta?', 'warning')
             .then((contunuar) => {
                 if (contunuar) {
-                    this.etiquetaHotelService.agregarHotelAEtiqueta(etiqueta, this.idHotel,0).subscribe({
+                    this.etiquetaHotelService.agregarHotelAEtiqueta(etiqueta, this.idHotel,0).subscribe({ //0 es para agregar 1 es para eliminar
                         next: (etiquetaHotellll) => {
                             console.log("etiqueta asignada");
                             if (etiquetaHotellll != null) {
@@ -54,7 +68,6 @@ export class CrudHotelComponent implements OnInit {
                             }
                         },
                         complete: () => {
-
                             this.cargarEtiquetasEnModal();
                         }
                     });
@@ -84,12 +97,16 @@ export class CrudHotelComponent implements OnInit {
     }
 
     cargarEtiquetasEnModal() {
+        console.log("cargando etiquetas");
         this.etiquetaHotelService.getEtiquetaHotel().subscribe(etiquetas => {
+            console.log("cargando etiquetas de hotel");
             const etiquetasTemp = etiquetas;
-    
+            console.log(etiquetasTemp);
             this.hotelesService.getHotelById(this.idHotel).subscribe(Hotel => {
-                const etiquetasDelHotelTemp = Hotel.etiquetasHoteles;
-    
+                console.log("cargando etiquetas del hotel");
+                const etiquetasDelHotelTemp = Hotel?.etiquetasHoteles;
+                console.log(etiquetasDelHotelTemp);
+
                 // Aplicar filtro después de que ambas listas estén llenas
                 const etiquetasFiltradas = etiquetasTemp.filter(etiqueta =>
                     !etiquetasDelHotelTemp.some(e => e.idEtiquetaHoteles === etiqueta.idEtiquetaHoteles)
@@ -121,20 +138,6 @@ export class CrudHotelComponent implements OnInit {
 
     guardarIdHotel(idHotel: number) {
         this.idHotel = idHotel;
-    }
-
-    constructor(
-        private hotelesService: HotelesService,
-        private lugaresService: LugaresService,
-        private fb: FormBuilder,
-        private imagenesHotelesService: ImagenesHotelesService,
-        private etiquetaHotelService: EtiquetaHotelService,
-        private authService: AuthRegisterService
-    ) { }
-
-    ngOnInit(): void {
-        this.obtenerHoteles();
-        this.obtenerLugaresDeAdmin();
     }
 
     hotelForm = this.fb.group({

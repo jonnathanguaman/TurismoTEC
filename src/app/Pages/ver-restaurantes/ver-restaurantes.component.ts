@@ -56,7 +56,7 @@ export class VerRestaurantesComponent implements OnInit{
   }
 
   obtenerRestauranteDeLugar(id:number){
-    this.restauranteService.getRestauranteDeLugar(id).subscribe(auxrestauranteDeLugar =>{
+    this.restauranteService.getRestaurantesDeLugar(id).subscribe(auxrestauranteDeLugar =>{
       this.todosRestaurantes = auxrestauranteDeLugar
 
       this.todosRestaurantes.forEach(restaurante =>{
@@ -84,7 +84,7 @@ export class VerRestaurantesComponent implements OnInit{
 
   filtrarHotelesRecomendaciones() {
     const nombreLower = this.nombreRestauranteBuscado.toLowerCase();
-    this.restauranteService.getRestauranteDeLugar(this.idLugar!).subscribe(rest =>{
+    this.restauranteService.getRestaurantesDeLugar(this.idLugar!).subscribe(rest =>{
       this.todosRestaurantes = rest.filter((rest) =>
         rest.nombre.toLowerCase().includes(nombreLower)
       )

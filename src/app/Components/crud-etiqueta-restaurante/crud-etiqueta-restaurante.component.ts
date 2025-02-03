@@ -66,7 +66,7 @@ export class CrudEtiquetaRestauranteComponent implements OnInit{
       }
     } else {
       if (this.etiquetaForm.valid) {
-        this.etiqueRestauranteService.editarEtiquetaRestaurante(this.etiquetaForm.value as unknown as EtiquetaRestaurante).subscribe({
+        this.etiqueRestauranteService.crearEtiquetaRestaurante(this.etiquetaForm.value as unknown as EtiquetaRestaurante).subscribe({
           next: () => {
             environment.mensajeToast('success', 'Etiqueta editada', 'Se ha editada la etiqueta con exito')
           },
