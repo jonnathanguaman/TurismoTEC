@@ -1,8 +1,9 @@
+import { EtiquetaHotel } from "../crub-etiqueta-hotel/etiqueta-hotel";
 import { DatosPersona } from "../DatosPersonales/datosPersonales";
 import { ImagenesHoteles } from "../imagenesHoteles/imagesHoteles";
 import { Lugares } from "../Lugares/lugares";
 
-export interface Hoteles{
+export class Hoteles{
     idHotel:number;
     nombre:string;
     direccion:string;
@@ -11,4 +12,5 @@ export interface Hoteles{
     imagenesHoteles:ImagenesHoteles[];
     usuario:DatosPersona;
     lugar:Lugares;
+    etiquetasHoteles:EtiquetaHotel[];
 }

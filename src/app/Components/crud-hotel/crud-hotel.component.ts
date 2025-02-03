@@ -19,6 +19,7 @@ import { LugaresService } from '../../Services/Lugares/lugares.service';
 })
 export class CrudHotelComponent implements OnInit {
 
+
     isCrudModalOpen: boolean = false;
     imagePreviews: string[] = [];
     selectedFiles: File[] = [];
@@ -30,40 +31,78 @@ export class CrudHotelComponent implements OnInit {
     idLugarSeleccionado: number;
     etiquetasDelHotel: EtiquetaHotel[];
     urlHost: string = environment.urlAut;
-    //public hotelEtiqueta = new EtiquetaHotel();
+    public hotelAAsignar = new Hoteles();
 
     obtenerLugaresDeAdmin() {
         this.lugaresService.getTodosLugaresDeAdmin().subscribe({
             next: (lugares) => {
+                console.log("lugares")
                 this.todosLosLugaresCreadosPorAdmin = lugares;
             }
         })
     }
 
-    onLugarChange(event: any) {
-        const lugarId = event.target.value;
-        this.idLugarSeleccionado = (this.todosLosLugaresCreadosPorAdmin.find(lugar => lugar.idLugares === +lugarId) || null).idLugares;
-        console.log(this.idLugarSeleccionado);
+    asignarEtiquetaAHotel(etiqueta: EtiquetaHotel) {
+        environment.mensajeEmergente('Agregar etiqueta', '¿Estas seguro que deseas agregar la etiqueta?', 'warning')
+            .then((contunuar) => {
+                if (contunuar) {
+                    this.etiquetaHotelService.agregarHotelAEtiqueta(etiqueta, this.idHotel,0).subscribe({
+                        next: (etiquetaHotellll) => {
+                            console.log("etiqueta asignada");
+                            if (etiquetaHotellll != null) {
+                                environment.mensajeToast('success', 'Etiqueta asignada', 'La etiqueta se asignó con éxito');
+                            }
+                        },
+                        complete: () => {
+
+                            this.cargarEtiquetasEnModal();
+                        }
+                    });
+                }
+            });
     }
 
 
-    obtenerEtiquetasHotel() {
-        this.etiquetaHotelService.getEtiquetaDelHotel(this.idHotel).subscribe(etiquetasHotel => {
-            this.etiquetasDelHotel = etiquetasHotel
-        })
+    eliminarEtiqueta(etiqueta: EtiquetaHotel) {
+
+        environment.mensajeEmergente('¿Estás seguro que deseas eliminar?', 'Esta operación no es reversible', 'warning')
+            .then(() => {
+                this.etiquetaHotelService.agregarHotelAEtiqueta(etiqueta,this.idHotel,1).subscribe({
+                    complete: () => {
+                        this.cargarEtiquetasEnModal();
+                        environment.mensajeToast('success', 'Eliminado con exito', 'Se ha eliminado con exito');
+                    }
+                })
+            })
+
     }
 
-
-    obtenerEtiquetas() {
-        this.etiquetaHotelService.getEtiquetaHotel().subscribe(etiquetasObetenidas => {
-            this.etiquetas = etiquetasObetenidas;
-        });
-    }
 
     abrirModalEtiqueta() {
-        //this.obtenerEtiquetas();
+        this.cargarEtiquetasEnModal();
         this.modalEtiqueta = true;
     }
+
+    cargarEtiquetasEnModal() {
+        this.etiquetaHotelService.getEtiquetaHotel().subscribe(etiquetas => {
+            const etiquetasTemp = etiquetas;
+    
+            this.hotelesService.getHotelById(this.idHotel).subscribe(Hotel => {
+                const etiquetasDelHotelTemp = Hotel.etiquetasHoteles;
+    
+                // Aplicar filtro después de que ambas listas estén llenas
+                const etiquetasFiltradas = etiquetasTemp.filter(etiqueta =>
+                    !etiquetasDelHotelTemp.some(e => e.idEtiquetaHoteles === etiqueta.idEtiquetaHoteles)
+                );
+    
+                // Asignar los valores después de aplicar el filtro
+                this.etiquetasDelHotel = etiquetasDelHotelTemp;
+                this.etiquetas = etiquetasFiltradas;
+            });
+        });
+    }
+    
+
 
     cerrarModalEtiqueta() {
         this.modalEtiqueta = false;
@@ -108,7 +147,9 @@ export class CrudHotelComponent implements OnInit {
 
     crearHotel() {
         console.log(this.imagePreviews.length)
-        if (this.hotelForm.valid && this.imagePreviews.length >= 3) {
+        // Verificar si se ha seleccionado un lugar
+        const lugarSeleccionado = this.idLugarSeleccionado && this.idLugarSeleccionado !== 0;
+        if (this.hotelForm.valid && this.imagePreviews.length >= 3 && lugarSeleccionado) {
             const token = sessionStorage.getItem("token")//Obtenemos el token del sesionStorage
             const payload: TokenPayload = jwtDecode(token); //Decodificamos el token, nos devuleve el nombre del usuario
             this.authService.getIdPerson(payload.sub).subscribe({
@@ -127,7 +168,6 @@ export class CrudHotelComponent implements OnInit {
                                         this.hotelForm.reset();
                                         this.selectedFiles = [];
                                         this.imagePreviews = [];
-                                        this.obtenerEtiquetas()
                                         this.abrirModalEtiqueta()
                                     })
                                     .catch((error) => {

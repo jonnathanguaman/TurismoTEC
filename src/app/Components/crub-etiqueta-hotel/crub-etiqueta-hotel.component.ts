@@ -65,7 +65,7 @@ export class CrubEtiquetaHotelComponent implements OnInit {
       }
     } else {
       if (this.etiquetaForm.valid) {
-        this.etiquetaHotelService.editarEtiquetaHotel(this.etiquetaForm.value as unknown as EtiquetaHotel).subscribe({
+        this.etiquetaHotelService.crearEtiquetaHotel(this.etiquetaForm.value as unknown as EtiquetaHotel).subscribe({
           next: () => {
             environment.mensajeToast('success', 'Etiqueta editada', 'Se ha editada la etiqueta con exito')
           },
