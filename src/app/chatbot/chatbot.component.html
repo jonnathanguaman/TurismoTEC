@@ -1,23 +1,27 @@
+<!-- Ícono del chatbot que abre el chat -->
 <div class="chatbot-icon" (click)="toggleChatbot()">
     <img src="assets/img/chatbot.png" alt="Chatbot" />
+  </div>
   
-
-</div>
-
-<div class="chat-window" *ngIf="isChatOpen">
+  <!-- Ventana del chat -->
+  <div class="chat-window" *ngIf="isChatOpen">
     <div class="chat-header">
-        <h3>Chatbot</h3>
-        <button (click)="toggleChatbot()">X</button>
+      <h3>Chatbot</h3>
+      <button (click)="toggleChatbot()">X</button>
     </div>
+  
     <div class="chat-body">
-        <div *ngFor="let message of messages" class="message">
-            <div class="message-content" [ngClass]="{'user-message': message.user, 'bot-message': !message.user}">
-                {{ message.text }}
-            </div>
+      <!-- Mensajes del chat -->
+      <div *ngFor="let message of messages" class="message">
+        <div class="message-content" [ngClass]="{'user-message': message.user, 'bot-message': !message.user}">
+          {{ message.text }}
         </div>
+      </div>
     </div>
+  
     <div class="chat-input">
-        <input [(ngModel)]="userInput" placeholder="Write a message..." (keyup.enter)="sendMessage()" />
-        <button (click)="sendMessage()">Send</button>
+      <!-- Entrada de texto del usuario -->
+      <input [(ngModel)]="userInput" placeholder="Escribe tu consulta..." (keyup.enter)="sendMessage()" />
+      <button (click)="sendMessage()">Enviar</button>
     </div>
-</div>
+  </div>
