@@ -13,4 +13,5 @@ export interface Publicaciones{
     mostrandoFormulario?: boolean; 
     comentarios?: Comentario[];
     textComentario?: string;
+    imagen?: string;
 }

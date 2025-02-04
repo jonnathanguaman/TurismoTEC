@@ -42,6 +42,21 @@ export class ForoComponent implements OnInit {
   publicacionesList!: Publicaciones[];
   comentariosList!: Comentario[];
 
+  imagenSeleccionada: string | ArrayBuffer | null = null;
+
+onFileChange(event: any) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      this.imagenSeleccionada = e.target?.result;
+    };
+    reader.readAsDataURL(file);
+  }
+}
+ // Modificado aquí
+
+
   abrirVentana() {
     this.mostrarVentana = true;
   }
@@ -92,6 +107,7 @@ export class ForoComponent implements OnInit {
     idPublicaciones: ['', [Validators.required]],
     titulo: ['', [Validators.required]],
     contenido: ['', [Validators.required]],
+    imagen: [''],
   });
 
   comentarioForm = this.fb.group({

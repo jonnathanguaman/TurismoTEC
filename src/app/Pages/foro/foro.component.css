@@ -330,3 +330,10 @@ textarea {
 .btn-opcion:last-child:hover {
   background-color: #c82333;
 }
+/* Estilos para imágenes de publicaciones */
+.publicacion-imagen {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+  border-radius: 8px;
+}
