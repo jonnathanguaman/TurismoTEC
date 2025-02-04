@@ -26,6 +26,7 @@ export class VerRestaurantesComponent implements OnInit{
   urlHost:string = environment.urlAut;
   ngOnInit(): void {
     if(this.idLugar){
+      console.log(this.idLugar)
       this.obtenerRestauranteDeLugar(this.idLugar)
     }else{
       this.obtenerTodosRestaurantes()
@@ -56,6 +57,7 @@ export class VerRestaurantesComponent implements OnInit{
   }
 
   obtenerRestauranteDeLugar(id:number){
+    console.log(id)
     this.restauranteService.getRestaurantesDeLugar(id).subscribe(auxrestauranteDeLugar =>{
       this.todosRestaurantes = auxrestauranteDeLugar
 

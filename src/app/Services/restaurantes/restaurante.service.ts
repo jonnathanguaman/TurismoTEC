@@ -20,7 +20,7 @@ export class RestauranteService {
   }
 
   getRestaurantesDeLugar(id: number): Observable<Restaurante[]> {
-    return this.http.get<Restaurante[]>(`${environment.urlHost + "/restaurantesDeLugar"}/${id}`);
+    return this.http.get<Restaurante[]>(`${environment.urlHost + "/restauranteDeLugar"}/${id}`);
   }
 
   guardarRestaurante(restaurante: Restaurante, idUser: number, idLugar: number): Observable<Restaurante> {
