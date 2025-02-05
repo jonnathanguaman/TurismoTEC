@@ -1,5 +1,6 @@
 import { EtiquetaHotel } from "../crub-etiqueta-hotel/etiqueta-hotel";
 import { DatosPersona } from "../DatosPersonales/datosPersonales";
+import { Habitaciones } from "../habitaciones/habitaciones";
 import { ImagenesHoteles } from "../imagenesHoteles/imagesHoteles";
 import { Lugares } from "../Lugares/lugares";
 
@@ -13,4 +14,5 @@ export class Hoteles{
     usuario:DatosPersona;
     lugar:Lugares;
     etiquetasHoteles:EtiquetaHotel[];
+    habitaciones: Habitaciones[];
 }

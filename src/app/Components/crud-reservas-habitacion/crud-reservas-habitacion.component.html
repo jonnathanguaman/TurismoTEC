@@ -44,8 +44,8 @@
             <tbody>
                 <tr *ngFor="let reserva of todasLasReservaciones">
                     <td>{{ reserva.idReservas}}</td>
-                    <td>{{ reserva.habitaciones.hoteles.nombre}}</td>
-                    <td>{{ reserva.habitaciones.numeroHabitacion }}</td>
+                    <td>{{ reserva.habitaciones.hotel.nombre}}</td>
+                    <td>{{ reserva.habitaciones.nombreHabitacion }}</td>
                     <td>{{ reserva.fechaIncioReserva | date: 'dd/MM/yyyy'}}</td>
                     <td>{{ reserva.fechaFinReserva | date: 'dd/MM/yyyy'}}</td>
                     <td>{{ reserva.usuario.correo}}</td>

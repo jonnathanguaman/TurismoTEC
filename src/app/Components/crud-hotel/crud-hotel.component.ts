@@ -11,6 +11,9 @@ import { TokenPayload } from '../../Services/DatosPersonales/TokenPayload ';
 import { jwtDecode } from 'jwt-decode';
 import { Lugares } from '../../Services/Lugares/lugares';
 import { LugaresService } from '../../Services/Lugares/lugares.service';
+import { Habitaciones } from '../../Services/habitaciones/habitaciones';
+import { HabitacionesService } from '../../Services/habitaciones/habitaciones.service';
+import { ImagenesHabitacionesService } from '../../Services/imagenesHabitaciones/imagenes-habitaciones.service';
 
 @Component({
     selector: 'app-crud-hotel',
@@ -35,9 +38,11 @@ export class CrudHotelComponent implements OnInit {
 
     constructor(
         private hotelesService: HotelesService,
+        private habitacionesService: HabitacionesService,
         private lugaresService: LugaresService,
         private fb: FormBuilder,
         private imagenesHotelesService: ImagenesHotelesService,
+        private imagenesHabitacionesService: ImagenesHabitacionesService,
         private etiquetaHotelService: EtiquetaHotelService,
         private authService: AuthRegisterService
     ) { }
@@ -60,7 +65,7 @@ export class CrudHotelComponent implements OnInit {
         environment.mensajeEmergente('Agregar etiqueta', '¿Estas seguro que deseas agregar la etiqueta?', 'warning')
             .then((contunuar) => {
                 if (contunuar) {
-                    this.etiquetaHotelService.agregarHotelAEtiqueta(etiqueta, this.idHotel,0).subscribe({ //0 es para agregar 1 es para eliminar
+                    this.etiquetaHotelService.agregarHotelAEtiqueta(etiqueta, this.idHotel, 0).subscribe({ //0 es para agregar 1 es para eliminar
                         next: (etiquetaHotellll) => {
                             console.log("etiqueta asignada");
                             if (etiquetaHotellll != null) {
@@ -80,7 +85,7 @@ export class CrudHotelComponent implements OnInit {
 
         environment.mensajeEmergente('¿Estás seguro que deseas eliminar?', 'Esta operación no es reversible', 'warning')
             .then(() => {
-                this.etiquetaHotelService.agregarHotelAEtiqueta(etiqueta,this.idHotel,1).subscribe({
+                this.etiquetaHotelService.agregarHotelAEtiqueta(etiqueta, this.idHotel, 1).subscribe({
                     complete: () => {
                         this.cargarEtiquetasEnModal();
                         environment.mensajeToast('success', 'Eliminado con exito', 'Se ha eliminado con exito');
@@ -111,14 +116,14 @@ export class CrudHotelComponent implements OnInit {
                 const etiquetasFiltradas = etiquetasTemp.filter(etiqueta =>
                     !etiquetasDelHotelTemp.some(e => e.idEtiquetaHoteles === etiqueta.idEtiquetaHoteles)
                 );
-    
+
                 // Asignar los valores después de aplicar el filtro
                 this.etiquetasDelHotel = etiquetasDelHotelTemp;
                 this.etiquetas = etiquetasFiltradas;
             });
         });
     }
-    
+
 
 
     cerrarModalEtiqueta() {
@@ -277,9 +282,9 @@ export class CrudHotelComponent implements OnInit {
             error: (e) => {
                 console.log("Error al obtener imagenes" + e)
             }
-
         })
     }
+    
 
     //Obtenemos el la foto en tipo archivo de un lugar en especifico y las agregamos al los arrays para poder subir cuando hacemos el update
     obtenerFile(nombreFoto: string) {
@@ -295,62 +300,142 @@ export class CrudHotelComponent implements OnInit {
         const parts = url.split('/');
         return parts[parts.length - 1];
     }
-   
-        isRoomModalOpen: boolean = false; // Controla el estado del modal principal de habitaciones
-        isCreateRoomModalOpen: boolean = false; // Controla el estado del modal de creación de habitación
-        
-        newRoom = { image: '', name: '', description: '', price: '' }; // Objeto para los datos de la nueva habitación
-        rooms: any[] = []; // Lista de habitaciones
-    
-        // Método para abrir el modal principal de habitaciones
-        openRoomModal() {
-            this.isRoomModalOpen = true;
+
+    isRoomModalOpen: boolean = false; // Controla el estado del modal principal de habitaciones
+    isCreateRoomModalOpen: boolean = false; // Controla el estado del modal de creación de habitación
+
+    newRoom = { image: '', name: '', description: '', price: '' }; // Objeto para los datos de la nueva habitación
+    rooms: Habitaciones[] = []; // Lista de habitaciones
+
+    habitacionForm = this.fb.group({
+        idHabitacion: [''],
+        nombreHabitacion: ['', [Validators.required]],
+        descripcion: ['', [Validators.required]],
+        disponible: ['', [Validators.required]],
+        precio: ['', [Validators.required]]
+    });
+
+    // Método para abrir el modal principal de habitaciones
+    openRoomModal() {
+        this.isRoomModalOpen = true;
+        this.cargarHabitaciones();
+    }
+
+    // Método para cerrar el modal principal de habitaciones
+    closeRoomModal() {
+        this.isRoomModalOpen = false;
+    }
+
+    // Método para abrir el modal de creación de habitación
+    openCreateRoomModal() {
+        this.isCreateRoomModalOpen = true; // Mostrar el modal de creación
+    }
+
+    // Método para cerrar el modal de creación de habitación
+    closeCreateRoomModal() {
+        this.isCreateRoomModalOpen = false; // Cerrar el modal de creación
+        this.habitacionForm.reset();
+        this.selectedFiles = [];
+        this.imagePreviews = [];
+    }
+
+    // Método para leer la imagen seleccionada y convertirla a base64
+    onImageSelected(event: any) {
+        const file = event.target.files[0]; // Obtener el archivo de imagen seleccionado
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                this.newRoom.image = reader.result as string; // Guardar la imagen en base64
+            };
+            reader.readAsDataURL(file); // Leer la imagen como URL de datos (base64)
         }
-    
-        // Método para cerrar el modal principal de habitaciones
-        closeRoomModal() {
-            this.isRoomModalOpen = false;
-        }
-    
-        // Método para abrir el modal de creación de habitación
-        openCreateRoomModal() {
-            this.isCreateRoomModalOpen = true; // Mostrar el modal de creación
-            this.newRoom = { image: '', name: '', description: '', price: null }; // Reiniciar los datos de la nueva habitación
-        }
-    
-        // Método para cerrar el modal de creación de habitación
-        closeCreateRoomModal() {
-            this.isCreateRoomModalOpen = false; // Cerrar el modal de creación
-        }
-    
-        // Método para leer la imagen seleccionada y convertirla a base64
-        onImageSelected(event: any) {
-            const file = event.target.files[0]; // Obtener el archivo de imagen seleccionado
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = () => {
-                    this.newRoom.image = reader.result as string; // Guardar la imagen en base64
-                };
-                reader.readAsDataURL(file); // Leer la imagen como URL de datos (base64)
+    }
+
+    cargarHabitaciones() {
+        this.hotelesService.getHotelById(this.idHotel).subscribe({
+            next: (hotel) => {
+                this.rooms = hotel.habitaciones;
             }
-        }
-    
-        // Método para agregar una nueva habitación a la lista
-        addRoom() {
-            if (this.newRoom.image && this.newRoom.name && this.newRoom.description && this.newRoom.price) {
-                this.rooms.push({ ...this.newRoom }); // Agregar la nueva habitación a la lista
-                this.closeCreateRoomModal(); // Cerrar el modal de creación después de agregar
-            } else {
-                alert('Por favor, complete todos los campos.'); // Alertar si faltan campos
+        });
+    }
+
+    editarHabitacion(idHabitacion: number) {
+        environment.mensajeEmergente('Editar', '¿Estas seguro que deseas editar?', 'warning')
+            .then((cont) => {
+                if (cont) {
+                    this.openRoomModal()
+                    this.habitacionesService.getHabitacionById(idHabitacion).subscribe({
+                        next: (habitacion) => {
+                            this.habitacionForm.controls.idHabitacion.setValue(<string><unknown>habitacion.idHabitacion)
+                            this.habitacionForm.controls.nombreHabitacion.setValue(habitacion.nombreHabitacion)
+                            this.habitacionForm.controls.descripcion.setValue(habitacion.descripcion)
+                            this.habitacionForm.controls.disponible.setValue(<string><unknown>habitacion.disponible)
+                            this.habitacionForm.controls.precio.setValue(<string><unknown>habitacion.precio)
+                        }
+                    })
+                }
+            })
+    }
+
+    obtenerImagesDeHabitacion(id: number) {
+        console.log("Entro aqui")
+        this.imagePreviews = new Array
+        this.imagenesHabitacionesService.getImagenesByIdHabitacion(id).subscribe({
+            next: (imgHabitaciones) => {
+                console.log("next")
+                console.log(imgHabitaciones)
+                imgHabitaciones.forEach((habitacion) => {
+                    //Contruimos la url para la previsualizacion
+                    this.imagePreviews.push(this.urlHost + habitacion.url)
+                    console.log(this.imagePreviews)
+                    this.obtenerFile(this.obtenerNombreDeLaFoto(habitacion.url))
+                    console.log(this.selectedFiles)
+                })
+            },
+            error: (e) => {
+                console.log("Error al obtener imagenes" + e)
             }
-        }
-    
-        // Método para eliminar una habitación
-        deleteRoom(index: number) {
-            if (confirm('¿Está seguro de que desea eliminar esta habitación?')) {
-                this.rooms.splice(index, 1); // Eliminar la habitación seleccionada
+        })
+    }
+
+    mostrarImagesDeHabitacion(id: number): String {
+        console.log("Entro aqui")
+        var imagePreviews = new Array
+        this.imagenesHabitacionesService.getImagenesByIdHabitacion(id).subscribe({
+            next: (imgHabitaciones) => {
+                console.log("next")
+                console.log(imgHabitaciones)
+                imgHabitaciones.forEach((habitacion) => {
+                    //Contruimos la url para la previsualizacion
+                    imagePreviews.push(this.urlHost + habitacion.url)
+                    console.log(imagePreviews)
+                    // this.obtenerFile(this.obtenerNombreDeLaFoto(habitacion.url))
+                    // console.log(this.selectedFiles)
+                })
+            },
+            error: (e) => {
+                console.log("Error al obtener imagenes" + e)
             }
-        }
-    
-    
+        })
+        return this.imagePreviews[0]
+    }
+
+    // Método para agregar una nueva habitación a la lista
+    addRoom() {
+        // if (this.newRoom.image && this.newRoom.name && this.newRoom.description && this.newRoom.price) {
+        //     this.rooms.push({ ...this.newRoom }); // Agregar la nueva habitación a la lista
+        //     this.closeCreateRoomModal(); // Cerrar el modal de creación después de agregar
+        // } else {
+        //     alert('Por favor, complete todos los campos.'); // Alertar si faltan campos
+        // }
+    }
+
+    // Método para eliminar una habitación
+    deleteRoom(index: number) {
+        // if (confirm('¿Está seguro de que desea eliminar esta habitación?')) {
+        //     this.rooms.splice(index, 1); // Eliminar la habitación seleccionada
+        // }
+    }
+
+
 }

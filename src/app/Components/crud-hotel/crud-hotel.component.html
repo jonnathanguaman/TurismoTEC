@@ -13,92 +13,107 @@
         </div>
     </div>
     <!-- Modal para Crear/Editar Habitación -->
-<!-- Modal Principal para mostrar las Habitaciones -->
-<div class="crud-modal" *ngIf="isRoomModalOpen">
-    <div class="crud-modal-content">
-        <span class="close-modal" (click)="closeRoomModal()">✖</span>
-        <h3>Lista de Habitaciones</h3>
+    <!-- Modal Principal para mostrar las Habitaciones -->
+    <div class="crud-modal" *ngIf="isRoomModalOpen">
+        <div class="crud-modal-content">
+            <span class="close-modal" (click)="closeRoomModal()">✖</span>
+            <h3>Lista de Habitaciones</h3>
 
-        <!-- Botón para abrir el modal de creación de habitación -->
-        <button class="btn-opcion btn-create" (click)="openCreateRoomModal()">Crear Habitación</button>
+            <!-- Botón para abrir el modal de creación de habitación -->
+            <button class="btn-opcion btn-create" (click)="openCreateRoomModal()">Crear Habitación</button>
 
-        <!-- Tabla para mostrar las habitaciones registradas -->
-        <table class="room-table">
-            <thead>
-                <tr>
-                    <th>Imagen</th>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Precio</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let room of rooms; let i = index">
-                    <td><img [src]="room.image" alt="Imagen de Habitación" class="room-thumbnail"></td>
-                    <td>{{ room.name }}</td>
-                    <td>{{ room.description }}</td>
-                    <td>${{ room.price }}</td>
-                    <td>
-                        <button class="btn-opcion btn-delete" (click)="deleteRoom(i)">Eliminar</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            <!-- Tabla para mostrar las habitaciones registradas -->
+            <table class="room-table">
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Disponible</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let room of rooms;">
+                        <!-- <td><img [src]="room.image" alt="Imagen de Habitación" class="room-thumbnail"></td> -->
+                        <td>
+                            <div class="img-preview" id="preview1">
+                                
+                                <img [src]="mostrarImagesDeHabitacion(room.idHabitacion)" alt="Vista previa">
+                            </div>
+                        </td>
+                        <td>{{ room.nombreHabitacion }}</td>
+                        <td>{{ room.descripcion }}</td>
+                        <td>{{ room.precio }}</td>
+                        <td>{{ room.disponible ? 'Sí' : 'No' }}</td>
+                        <td>
+                            <button class="btn-opcion btn-delete" (click)="editarHabitacion(room.idHabitacion)"
+                                (click)="obtenerImagesDeHabitacion(room.idHabitacion)">Editar</button>
+                            <button class="btn-opcion btn-delete" (click)="deleteRoom(room.idHabitacion)">Eliminar
+                                Habitacion</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-        <!-- Modal para Crear una Nueva Habitación -->
-        <div class="crud-modal" *ngIf="isCreateRoomModalOpen">
-            <div class="crud-modal-content">
-                <span class="close-modal" (click)="closeCreateRoomModal()">✖</span>
-                <h3>Crear Nueva Habitación</h3>
+            <!-- Modal para Crear una Nueva Habitación -->
+            <div class="crud-modal" *ngIf="isCreateRoomModalOpen">
+                <div class="crud-modal-content">
+                    <span class="close-modal" (click)="closeCreateRoomModal()">✖</span>
+                    <h3>Crear Nueva Habitación</h3>
 
-                <!-- Formulario para ingresar los datos de la habitación -->
-                <form (submit)="addRoom(); $event.preventDefault()">
+                    <!-- Formulario para ingresar los datos de la habitación -->
+                    <form (submit)="addRoom(); $event.preventDefault()">
 
-                    <label for="name">Nombre:</label> 
-                    <input type="text" id="name" [(ngModel)]="newRoom.name" name="name" required>
+                        <label for="name">Nombre:</label>
+                        <input type="text" id="name" [(ngModel)]="newRoom.name" name="name" required>
 
-                    <label for="description">Descripción:</label>
-                    <textarea id="description" [(ngModel)]="newRoom.description" name="description" required></textarea>
+                        <label for="description">Descripción:</label>
+                        <textarea id="description" [(ngModel)]="newRoom.description" name="description"
+                            required></textarea>
 
-                    <label for="price">Precio:</label>
-                    <input type="number" id="price" [(ngModel)]="newRoom.price" name="price" required>
+                        <label for="price">Precio:</label>
+                        <input type="number" id="price" [(ngModel)]="newRoom.price" name="price" required>
 
 
-                    <div class="imgContainer">
-                    <div class="imgContainer-item">
-                        <div  class="img-preview" id="preview1">
-                            <img [src]="imagePreviews[0]" alt="Vista previa">
+                        <div class="imgContainer">
+                            <div class="imgContainer-item">
+                                <div class="img-preview" id="preview1">
+                                    <img [src]="imagePreviews[0]" alt="Vista previa">
+                                </div>
+                                <label for="file1" class="file-label">Subir imagen</label>
+                                <input accept="image/*" (change)="onFileSelected($event,0)" type="file" id="file1"
+                                    class="file-input" accept="image/*" onchange="previewImage(event, 'preview1')">
+                            </div>
+                            <div class="imgContainer-item">
+                                <div class="img-preview" id="preview2">
+                                    <img [src]="imagePreviews[1]" alt="Vista previa">
+                                </div>
+                                <label for="file2" class="file-label">Subir imagen</label>
+                                <input accept="image/*" (change)="onFileSelected($event,1)" type="file" id="file2"
+                                    class="file-input" accept="image/*" onchange="previewImage(event, 'preview2')">
+                            </div>
+                            <div class="imgContainer-item">
+                                <div class="img-preview" id="preview3">
+                                    <img [src]="imagePreviews[2]" alt="Vista previa">
+                                </div>
+                                <label for="file3" class="file-label">Subir imagen</label>
+                                <input accept="image/*" (change)="onFileSelected($event,2)" type="file" id="file3"
+                                    class="file-input" accept="image/*" onchange="previewImage(event, 'preview3')">
+                            </div>
                         </div>
-                        <label for="file1" class="file-label">Subir imagen</label>
-                        <input accept="image/*" (change)="onFileSelected($event,0)" type="file" id="file1" class="file-input" accept="image/*" onchange="previewImage(event, 'preview1')">
-                    </div>
-                    <div class="imgContainer-item">
-                        <div class="img-preview" id="preview2">
-                            <img [src]="imagePreviews[1]" alt="Vista previa">
-                        </div>
-                        <label for="file2" class="file-label">Subir imagen</label>
-                        <input accept="image/*" (change)="onFileSelected($event,1)" type="file" id="file2" class="file-input" accept="image/*" onchange="previewImage(event, 'preview2')">
-                    </div>
-                    <div class="imgContainer-item">
-                        <div class="img-preview" id="preview3">
-                            <img [src]="imagePreviews[2]" alt="Vista previa">
-                        </div>
-                        <label for="file3" class="file-label">Subir imagen</label>
-                        <input accept="image/*" (change)="onFileSelected($event,2)" type="file" id="file3" class="file-input" accept="image/*" onchange="previewImage(event, 'preview3')">
-                    </div>
+
+                        <button type="submit" class="btn-opcion">Guardar</button>
+                    </form>
                 </div>
+            </div>
 
-                    <button type="submit" class="btn-opcion">Guardar</button>
-                </form>
+            <div class="btn-panel">
+                <button class="btn-opcion" (click)="closeRoomModal()">Cerrar</button>
             </div>
         </div>
-
-        <div class="btn-panel">
-            <button class="btn-opcion" (click)="closeRoomModal()">Cerrar</button>
-        </div>
     </div>
-</div>
 
 
     <!-- Modal para el CRUD -->
@@ -204,16 +219,14 @@
                     <td>{{ hotel.descripcion }}</td>
                     <td>{{hotel.telefono}}</td>
 
-
+                    <!-- botones de opciones -->
                     <td>
                         <button (click)="guardarIdHotel(hotel.idHotel)" (click)="abrirModalEtiqueta()"
                             class="btn-opcion">Agregar/quitar etiquetas</button>
-
+                        <button class="btn-opcion" (click)="guardarIdHotel(hotel.idHotel)"
+                            (click)="openRoomModal()">Crear/Editar Habitación</button>
                         <button (click)="guardarIdHotel(hotel.idHotel)" (click)="obtenerImagesDeHotel(hotel.idHotel)"
-                            (click)="obtenerHotelById(hotel.idHotel)" class="btn-opcion">Editar</button>  
-
-                            <button class="btn-opcion" (click)="openRoomModal()">Crear/Editar Habitación</button>
-                            
+                            (click)="obtenerHotelById(hotel.idHotel)" class="btn-opcion">Editar</button>
                         <button class="btn-opcion" (click)="eliminarHotel(hotel.idHotel)">Eliminar</button>
                     </td>
                 </tr>
@@ -222,36 +235,37 @@
     </div>
 
 
-<div class="modal-agrgarEtiquetas" *ngIf="modalEtiqueta">
-    <div class="model-agregarEtiquetas-content">
-        <span class="close-modal" (click)="cerrarModalEtiqueta()">✖</span>
+    <div class="modal-agrgarEtiquetas" *ngIf="modalEtiqueta">
+        <div class="model-agregarEtiquetas-content">
+            <span class="close-modal" (click)="cerrarModalEtiqueta()">✖</span>
 
-        <div class="model-agregarEtiquetas-content-agregar">
-            <div class="modal-agregarEtiquetas-title">
-                <h3>Agrega etiquetas</h3>
-            </div>
-            <div class="modal-agrgarEtiquetas-p">
-                <p>Haga clic en la etiqueta que desea asignarle al lugar</p>
-            </div>
-            <div class="modal-agregarEtiquetas-etiquetas">
-                <div class="etiqueta" *ngFor="let etiqueta of etiquetas">
-                    <button class="etiqueta-boton"
-                        (click)="asignarEtiquetaAHotel(etiqueta)">{{etiqueta.etiqueta}}</button>
+            <div class="model-agregarEtiquetas-content-agregar">
+                <div class="modal-agregarEtiquetas-title">
+                    <h3>Agrega etiquetas</h3>
+                </div>
+                <div class="modal-agrgarEtiquetas-p">
+                    <p>Haga clic en la etiqueta que desea asignarle al lugar</p>
+                </div>
+                <div class="modal-agregarEtiquetas-etiquetas">
+                    <div class="etiqueta" *ngFor="let etiqueta of etiquetas">
+                        <button class="etiqueta-boton"
+                            (click)="asignarEtiquetaAHotel(etiqueta)">{{etiqueta.etiqueta}}</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="model-agregarEtiquetas-content-quitar">
-            <div class="modal-agregarEtiquetas-title">
-                <h3>Quitar etiquetas</h3>
-            </div>
-            <div class="modal-agrgarEtiquetas-p">
-                <p>Haga clic en la etiqueta que desea quitar del hotel</p>
-            </div>
-            <div class="modal-agregarEtiquetas-etiquetas">
-                <div class="etiqueta" *ngFor="let etiqueta of etiquetasDelHotel">
-                    <button (click)="eliminarEtiqueta(etiqueta)" class="etiqueta-boton">{{etiqueta.etiqueta}}</button>
+            <div class="model-agregarEtiquetas-content-quitar">
+                <div class="modal-agregarEtiquetas-title">
+                    <h3>Quitar etiquetas</h3>
+                </div>
+                <div class="modal-agrgarEtiquetas-p">
+                    <p>Haga clic en la etiqueta que desea quitar del hotel</p>
+                </div>
+                <div class="modal-agregarEtiquetas-etiquetas">
+                    <div class="etiqueta" *ngFor="let etiqueta of etiquetasDelHotel">
+                        <button (click)="eliminarEtiqueta(etiqueta)"
+                            class="etiqueta-boton">{{etiqueta.etiqueta}}</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
