@@ -18,6 +18,36 @@ import { LugaresService } from '../../Services/Lugares/lugares.service';
     styleUrls: ['./crud-restaurante.component.css'],
 })
 export class CrudRestauranteComponent implements OnInit {
+
+
+      isRoomModalOpen: boolean = false; // Controla el estado del modal principal de habitaciones
+            isCreateRoomModalOpen: boolean = false; // Controla el estado del modal de creación de habitación
+            
+            newRoom = { image: '', name: '', description: '', price: '' }; // Objeto para los datos de la nueva habitación
+            rooms: any[] = []; // Lista de habitaciones
+        
+            // Método para abrir el modal principal de habitaciones
+            openRoomModal() {
+                this.isRoomModalOpen = true;
+            }
+        
+            // Método para cerrar el modal principal de habitaciones
+            closeRoomModal() {
+                this.isRoomModalOpen = false;
+            }
+        
+            // Método para abrir el modal de creación de habitación
+            openCreateRoomModal() {
+                this.isCreateRoomModalOpen = true; // Mostrar el modal de creación
+                this.newRoom = { image: '', name: '', description: '', price: null }; // Reiniciar los datos de la nueva habitación
+            }
+        
+            // Método para cerrar el modal de creación de habitación
+            closeCreateRoomModal() {
+                this.isCreateRoomModalOpen = false; // Cerrar el modal de creación
+            }
+    
+
     isCrudModalOpen: boolean = false;
     imagePreviews: string[] = [];
     selectedFiles: File[] = [];

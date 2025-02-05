@@ -413,6 +413,7 @@ img {
     color: #555;
     line-height: 1.5;
 }
+
 /*CSS para crea habitaciones*/
 .crud-modal {
     position: fixed;
@@ -516,7 +517,7 @@ textarea {
     }
 }
 
-imgContainer {
+.imgContainer {
     display: flex;
     flex-direction: column;
     gap: 20px;
