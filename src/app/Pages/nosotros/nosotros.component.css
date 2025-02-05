@@ -4,25 +4,27 @@
     gap: 20px;
     justify-content: center;
     padding: 20px;
-    background-color: #f9f9f9;
 }
 
+/* Estilo para cada integrante */
 .integrante {
     width: 250px;
-    height: 300px; /* Ajusta la altura para que sea suficiente */
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    height: 300px;
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
+    border: 1px solid #b65602; /* Borde color principal */
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(255, 253, 253, 0.2);
     text-align: center;
     padding: 20px;
-    transition: transform 0.6s;
+    transition: transform 0.6s, box-shadow 0.3s ease;
     cursor: pointer;
     perspective: 1000px;
     position: relative;
-    transform-style: preserve-3d; 
+    transform-style: preserve-3d;
+
 }
 
+/* Estilo de la parte frontal y trasera */
 .front, .back {
     position: absolute;
     top: 0;
@@ -36,45 +38,64 @@
     align-items: center;
 }
 
+/* Parte frontal visible */
 .front {
-    z-index: 2; 
+    z-index: 2;
+    background: linear-gradient(90deg, #a25d21, #514f4f); /* Degradado */
+
 }
 
+/* Parte trasera oculta inicialmente */
 .back {
-    transform: rotateY(180deg); 
+    transform: rotateY(180deg);
+    display: none;
+        background: linear-gradient(90deg, #dea777, #514f4f); /* Degradado */
+
+}
+
+/* Efecto al pasar el mouse */
+.integrante:hover {
+    transform: rotateY(180deg);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Mostrar la parte trasera al hacer hover */
+.integrante:hover .back {
+    display: flex;
+}
+
+/* Ocultar la parte frontal al hacer hover */
+.integrante:hover .front {
     display: none;
 }
 
-.integrante:hover {
-    transform: rotateY(180deg); 
-}
-
-.integrante:hover .back {
-    display: flex; 
-}
-
-.integrante:hover .front {
-    display: none; 
-}
-
+/* Imagen de cada integrante */
 .integrante img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 15px;
+    border: 3px solid #b65602; /* Borde con color del tema */
 }
 
+/* Nombre del integrante */
 .integrante h3 {
-    font-family: Arial, sans-serif;
-    font-size: 1.2rem;
-    color: #333;
+    font-family: 'Times New Roman', serif;
+    font-size: 1.3rem;
+    color: #ffffff;
     margin-bottom: 10px;
 }
 
+/* Descripción del integrante */
 .integrante p {
-    font-family: Arial, sans-serif;
+    font-family: 'Times New Roman', serif;
+    font-size: 1rem;
+    color: #505050;
     margin: 5px 0;
-    font-size: 0.9rem;
-    color: #666;
+}
+
+/* Efecto de sombra cuando se pasa el mouse */
+.integrante:hover {
+    transform: rotateY(180deg) scale(1.05);
 }

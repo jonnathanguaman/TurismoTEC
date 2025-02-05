@@ -1,14 +1,55 @@
+/* Footer */
 .footer {
-    background-color: #4673a0;
-    color: white;
-    padding: 10px 10px;
-    font-size: 14px;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
+  background: linear-gradient(90deg, #000000, #b65602); /* Degradado como el menú */
+  color: white; /* Texto blanco */
+  padding: 15px 20px; /* Espaciado interno */
+  display: flex; /* Distribución en fila */
+  justify-content: space-between; /* Espacio entre texto e imágenes */
+  align-items: center; /* Centra elementos verticalmente */
+  font-size: 16px; /* Tamaño de letra */
+  font-family: 'Times New Roman', serif; /* Fuente específica */
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2); /* Sombra superior */
+}
+
+/* Estilo del texto en el footer */
+.footer-text {
+  flex: 1; /* Ocupa el espacio disponible a la izquierda */
+  white-space: pre-line; /* Respeta los saltos de línea */
+  text-align: left; /* Alineado a la izquierda */
+}
+
+/* Contenedor de imágenes en el footer */
+.footer-images {
+  display: flex; /* Alinea las imágenes en fila */
+  gap: 15px; /* Espacio entre imágenes */
+}
+
+/* Estilo de la primera imagen */
+.footer-images img {
+  width: 200px; /* Ajusta el tamaño de las imágenes */
+  height: auto; /* Mantiene la proporción */
+  object-fit: contain; /* Ajuste sin distorsión */
+  transition: transform 0.3s ease; /* Transición suave */
+}
+
+/* Efecto hover en las imágenes */
+.footer-images img:hover {
+  transform: scale(1.1); /* Ligera ampliación al pasar el cursor */
+}
+
+/* Responsividad: Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+  .footer {
+      flex-direction: column; /* Cambia a diseño en columna */
+      text-align: center; /* Centra el texto */
+      align-items: center; /* Centra elementos */
   }
-  
-  .footer-bottom {
-    text-align: center;
-    font-size: 14px;
+
+  .footer-text {
+      margin-bottom: 10px; /* Espacio entre texto e imágenes */
   }
+
+  .footer-images {
+      justify-content: center; /* Centra las imágenes */
+  }
+}

@@ -1,100 +1,131 @@
+/* Estilo global para el cuerpo de la página */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f9;
+    font-family: Arial, sans-serif; /* Fuente principal */
+    margin: 0; /* Elimina márgenes predeterminados */
+    padding: 0; /* Elimina padding predeterminado */
+    background-color: #f4f4f9; /* Fondo claro */
 }
 
+/* Estilo del contenedor principal del menú */
 .menu {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #4673a0; /* Azul */
-    padding: 15px 20px;
-    color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    margin-bottom: 12px;
+    display: flex; /* Flexbox para alinear elementos horizontalmente */
+    justify-content: space-between; /* Distribuye elementos a los extremos */
+    align-items: center; /* Centra los elementos verticalmente */
+    background: linear-gradient(90deg, #000000, #b65602); /* Degradado de negro oscuro a negro claro */
+    padding: 15px 20px; /* Espaciado interno del menú */
+    color: white; /* Texto blanco */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra para destacar el menú */
+    position: sticky; /* El menú permanece fijo en la parte superior al hacer scroll */
+    top: 0; /* Posición en la parte superior */
+    z-index: 1000; /* Prioridad de apilamiento para que esté por encima de otros elementos */
+    margin-bottom: 0x; /* Espacio inferior del menú */
+    height: 30px; /* Altura fija del menú */
+    
 }
 
+/* Contenedor para el logo del menú */
 .menu-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: flex; /* Flexbox para alinear logo y texto */
+    align-items: center; /* Centra verticalmente */
+    gap: 8px; /* Espaciado entre elementos internos */
 }
 
+/* Estilo del título dentro del logo */
 .menu-logo h1 {
-    margin: 0;
-    font-size: 20px;
-    font-weight: bold;
+    margin: 0; /* Elimina márgenes predeterminados */
+    font-size: 20px; /* Tamaño de fuente */
+    font-weight: bold; /* Fuente en negrita */
+    color: white; /* Texto blanco */
 }
 
+/* Estilo de la imagen del logo */
+.menu-logo img {
+    width: 140px; /* Ancho de la imagen */
+    height: 60px; /* Altura de la imagen */
+    object-fit: cover; /* Escala la imagen para que se ajuste correctamente al contenedor */
+    transition: transform 0.3s ease; /* Transición suave para efectos de transformación */
+}
+
+/* Efecto al pasar el cursor sobre la imagen del logo */
+.menu-logo img:hover {
+    transform: scale(1.1); /* Agranda ligeramente la imagen */
+}
+
+/* Botón para abrir/cerrar el menú en pantallas pequeñas */
 .menu-toggle {
-    display: none; 
-    font-size: 24px;
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
+    display: none; /* Oculto por defecto en pantallas grandes */
+    font-size: 200px; /* Tamaño del ícono */
+    background: none; /* Sin fondo */
+    border: none; /* Sin borde */
+    color: white; /* Botón de color blanco */
+    cursor: pointer; /* Cambia el cursor a una mano al pasar */
 }
 
+/* Lista de elementos del menú */
 .menu-items {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-    margin: 0;
-    padding: 0;
-    cursor: pointer;
+    list-style: none; /* Elimina los íconos de lista predeterminados */
+    display: flex; /* Flexbox para alinear horizontalmente */
+    gap: 10px; /* Espaciado entre los botones */
+    margin: 0; /* Sin márgenes */
+    padding: 0; /* Sin padding */
+    cursor: pointer; /* Cambia el cursor a una mano al pasar */
 }
 
-
-
+/* Estilo de cada elemento de la lista del menú */
 .menu-items li {
-    margin: 0;
+    margin: 0; /* Sin márgenes */
 }
 
-.menu-items a{
-    text-decoration: none;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 8px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
+/* Estilo de los enlaces del menú */
+.menu-items a {
+    text-decoration: none; /* Elimina el subrayado predeterminado */
+    color: white; /* Texto blanco */
+    font-size: 18px; /* Tamaño de fuente */
+    font-family: 'Georgia', serif; /* Alternativa a Times New Roman */
+   
+    
+    padding: 8px 15px; /* Espaciado interno del enlace */
+    border-radius: 5px; /* Bordes redondeados */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Transiciones suaves */
 }
 
+/* Efecto al pasar el cursor sobre un enlace del menú */
 .menu-items a:hover {
-    background-color: #0056b3; /* Azul más oscuro */
-    color: #f4f4f9; /* Color claro */
+    background-color: #7e2104; /* Fondo naranja */
+    color: #ffffff; /* Texto blanco */
+    transform: scale(1.1); /* Agranda ligeramente el enlace */
 }
 
+/* Efecto al hacer clic en un enlace del menú */
 .menu-items a:active {
-    background-color: #003d80; /* Azul aún más oscuro */
+    background-color: #e64a19; /* Fondo naranja más oscuro */
+    transform: scale(0.95); /* Reduce ligeramente el enlace */
 }
 
-/* RESPONSIVIDAD */
+/* Responsividad: estilos para pantallas pequeñas */
 @media (max-width: 768px) {
+    /* Lista del menú en modo vertical */
     .menu-items {
-        flex-direction: column;
-        gap: 10px;
-        position: absolute;
-        top: 50px;
-        right: 0;
-        background-color: #007BFF; 
-        border-radius: 5px;
-        padding: 10px 20px;
-        display: none;
-        z-index: 1000;
+        flex-direction: column; /* Cambia la orientación a vertical */
+        gap: 10px; /* Espaciado entre elementos */
+        position: absolute; /* Posición absoluta dentro del contenedor */
+        top: 50px; /* Desplazamiento desde el top */
+        right: 0; /* Alineado a la derecha */
+        background: linear-gradient(90deg, #000000, #333333); /* Degradado de fondo */
+        border-radius: 5px; /* Bordes redondeados */
+        padding: 10px 20px; /* Espaciado interno */
+        display: none; /* Oculto por defecto */
+        z-index: 1000; /* Prioridad de apilamiento */
     }
 
+    /* Mostrar el menú cuando esté activo */
     .menu-items.active {
-        display: flex; 
+        display: flex; /* Muestra el menú */
     }
 
+    /* Mostrar el botón para abrir/cerrar el menú */
     .menu-toggle {
-        display: block; 
-        margin-left: 85%;
+        display: block; /* Hacer visible el botón */
+        color: white; /* Botón de color blanco */
     }
 }

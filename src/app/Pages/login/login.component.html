@@ -1,39 +1,57 @@
+<!-- Contenedor principal del login -->
 <div class="login-container">
     <div class="login">
+        <!-- Imágenes dentro del recuadro -->
+        <div class="login-images">
+            <img src="assets/img/img-logo-menu1.png" alt="Imagen 1">
+            
+        </div>
+
+        <!-- Formulario de inicio de sesión -->
         <form [formGroup]="loginForm">
+
+            <!-- Campo de usuario con icono -->
             <div class="form-group">
                 <label for="usuario">Usuario</label>
-                <input formControlName="username" type="text"  id="usuario"
-                    placeholder="Ingrese su usuario">
-
+                <div class="input-group">
+                    <i class="bi bi-person-fill"></i> <!-- Icono de usuario -->
+                    <input formControlName="username" type="text" id="usuario"
+                        placeholder="Ingrese su usuario">
+                </div>
+                <!-- Validaciones -->
                 <div *ngIf="username.invalid && (username.dirty || username.touched)" class="text-danger">
                     <div *ngIf="username.hasError('required')">
-                        El email es requerido
+                        ⚠ El usuario es requerido
                     </div>
                     <div *ngIf="username.hasError('email')">
-                        Email invalido
+                        ⚠ Email inválido
                     </div>
                 </div>
-
             </div>
 
+            <!-- Campo de contraseña con icono -->
             <div class="form-group">
                 <label for="contrasena">Contraseña</label>
-                <input formControlName="password" type="password"  id="contrasena"
-                    placeholder="Ingrese su contraseña">
-
+                <div class="input-group">
+                    <i class="bi bi-lock-fill"></i> <!-- Icono de candado -->
+                    <input formControlName="password" type="password" id="contrasena"
+                        placeholder="Ingrese su contraseña">
+                </div>
+                <!-- Validaciones -->
                 <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
                     <div *ngIf="password.hasError('required')">
-                        La contraseña es requerido
+                        ⚠ La contraseña es requerida
                     </div>
                 </div>
-
             </div>
 
+            <!-- Botón de iniciar sesión -->
             <div class="form-group">
                 <button (click)="login()" type="submit" class="btn">Iniciar sesión</button>
             </div>
         </form>
     </div>
-
 </div>
+
+<!-- Agregamos Bootstrap Icons para los íconos -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">

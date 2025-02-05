@@ -1,45 +1,68 @@
-<!-- Carrusel de imágenes en la parte superior -->
-<div class="carousel">
-  <div class="carousel-item active">
-    <img src="assets/img/img_foro1.jpg" alt="Imagen 1" />
-  </div>
-
-
-  <!-- Descripción con foto lateral -->
-  <div class="descripcion-foto">
-    <div class="descripcion">
-      <h2>Bienvenido al Foro</h2>
-      <p>
-        Cuenca, ubicada en el sur de Ecuador, es una ciudad que cautiva por su belleza colonial,
-        su rica historia y su vibrante cultura. Fundada en 1557, esta encantadora ciudad es un
-        destino ideal para los amantes del turismo histórico, cultural y natural. Su centro histórico,
-        declarado Patrimonio de la Humanidad por la UNESCO, se caracteriza por calles empedradas,
-        hermosas iglesias coloniales, y la imponente catedral que domina la Plaza Calderón. Además,
-        la ciudad está rodeada de impresionantes paisajes montañosos y parques naturales, como el Parque Nacional
-        Cajas, conocido por sus lagunas y biodiversidad. Los turistas también podrán disfrutar de su gastronomía
-        típica, su artesanal sombrero de Panamá, y la calidez de sus habitantes, haciendo de Cuenca un destino
-        único para explorar en Ecuador.
-      </p>
-      <p>
-        Este espacio está diseñado para compartir ideas, resolver dudas y
-        conectar con otros usuarios. ¡Participa y enriquece nuestra comunidad!
-      </p>
-    </div>
+  <!-- boton con foto lateral -->
+ <!-- Contenedor principal -->
+<div class="contenedor-foro">
+  <!-- Lado izquierdo: Botón + imágenes -->
+  <div class="lado-izquierdo">
+    <button class="btn-foro" (click)="abrirVentanaCrear()">
+      <span>Crear Publicación</span>
+      <img src="assets/img/img-logo-menu1.png" alt="Icono Publicar" class="icono-boton">
+    </button>
     <div class="foto">
-      <img src="assets/img/img_foro2.jpg" alt="Foto lateral" />
+      <img src="assets/img/img_foro2.png" alt="Foto lateral" />
+      <img src="assets/img/img_foro1.png" alt="Foto latera" />
     </div>
   </div>
 
-  <!-- Botón para abrir la ventana emergente -->
-  <div class="foro-container">
-    <button class="btn-foro" (click)="abrirVentanaCrear()">Crear publicación</button>
+  <!-- Lado derecho: Publicaciones -->
+  <div class="lado-derecho">
+    <div class="publicaciones">
+      <div class="publicacion" *ngFor="let publicacion of publicacionesList">
+        <p class="publicado">Publicado por: {{publicacion.usuario.nombre}} {{publicacion.usuario.apellido}}</p>
+        <p class="hace">hace: {{publicacion.fechaPublicacion | timeAgo}}</p>
+        <h3>{{ publicacion.titulo }}</h3>
+        <p>{{ publicacion.contenido }}</p>
+
+        <div *ngIf="publicacion.imagen">
+          <img [src]="publicacion.imagen" alt="Imagen de la publicación" class="imagen-publicacion" />
+        </div>
+
+        <div class="comentarios">
+          <button (click)="verComentarios(publicacion)">{{publicacion.textComentario}}</button>
+          <button (click)="comentar(publicacion)">Comentar</button>
+        </div>
+
+        <div *ngIf="publicacion.mostrarComentarios">
+          <h3>Comentarios:</h3>
+          <div class="comentario" *ngFor="let comentario of publicacion.comentarios">
+            <p class="comentario-autor"><strong>Comentado por:</strong> {{ comentario.usuario.nombre }} {{ comentario.usuario.apellido }}</p>
+            <span class="comentario-fecha">hace: {{ comentario.fechaComentario | timeAgo }}</span>
+            <p class="comentario-contenido">{{ comentario.contenido }}</p>
+          </div>
+        </div>
+
+        <div [formGroup]="comentarioForm" class="comentario-container" *ngIf="publicacion.mostrandoFormulario">
+          <textarea formControlName="contenido" (input)="autoResize($event)" placeholder="Escribe tu comentario"
+            class="comentario-textarea"></textarea>
+          <div class="comentario-container-buttons">
+            <button (click)="guardarComentario()" class="comentario-publicar">Publicar</button>
+            <button (click)="cancelarComentar(publicacion)" class="comentario-cancelar">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
+    
 
+  
   <!-- Ventana emergente para crear contenido -->
   <div class="ventana-emergente" *ngIf="mostrarVentanaCrear">
     <form [formGroup]="publicacionForm">
       <div class="ventana-contenido">
+        <img src="assets/img/img-logo-menu.png" alt="Foto lateral" />
+       
+
         <h2>Crear nueva publicación</h2>
         <div class="input-container">
           <label for="titulo">Título:</label>
@@ -64,47 +87,5 @@
     </form>
   </div>
 
-  <!-- Publicaciones -->
-  <div class="publicaciones">
-    <div class="publicacion" *ngFor="let publicacion of publicacionesList">
-      <p class="publicado">Publicado por: {{publicacion.usuario.nombre}} {{publicacion.usuario.apellido}}</p>
-      <p class="hace">hace: {{publicacion.fechaPublicacion | timeAgo}}</p>
-      <h3>{{ publicacion.titulo }}</h3>
-      <p>{{ publicacion.contenido }}</p>
+ 
 
-      <div *ngIf="publicacion.imagen">
-        <img [src]="publicacion.imagen" alt="Imagen de la publicación" class="imagen-publicacion" />
-      </div>
-
-      <div class="comentarios">
-        <button (click)="verComentarios(publicacion)">{{publicacion.textComentario}}</button>
-        <button (click)="comentar(publicacion)">Comentar</button>
-      </div>
-
-      <div *ngIf="publicacion.mostrarComentarios">
-        <h3>Comentarios:</h3>
-        <div class="comentario" *ngFor="let comentario of publicacion.comentarios">
-          <p class="comentario-autor">
-            <strong>Comentado por:</strong>
-            {{ comentario.usuario.nombre }} {{ comentario.usuario.apellido }}
-          </p>
-          <span class="comentario-fecha">
-            hace: {{ comentario.fechaComentario | timeAgo }}
-          </span>
-          <p class="comentario-contenido">
-            {{ comentario.contenido }}
-          </p>
-        </div>
-      </div>
-
-      <div [formGroup]="comentarioForm" class="comentario-container" *ngIf="publicacion.mostrandoFormulario">
-        <textarea formControlName="contenido" (input)="autoResize($event)" placeholder="Escribe tu comentario"
-          class="comentario-textarea"></textarea>
-        <div class="comentario-container-buttons">
-          <button (click)="guardarComentario()" class="comentario-publicar">Publicar</button>
-          <button (click)="cancelarComentar(publicacion)" class="comentario-cancelar">Cancelar</button>
-        </div>
-      </div>
-    </div>
-
-  </div>

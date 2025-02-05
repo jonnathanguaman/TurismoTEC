@@ -1,6 +1,7 @@
 <nav class="menu" *ngIf="!ocultarMenuVal">
     <div class="menu-logo">
-      <h1>CuencaTurismo</h1>
+      <img src="assets/img/img-logo-menu.png" alt="Logo del sitio" class="menu-logo-img" /> <!-- Icono del sitio -->
+
       <button #menuToggle class="menu-toggle" (click)="toggleMenu($event)" aria-label="Abrir menú">&#9776;</button>
     </div>
     <ul #menuItems class="menu-items" [class.active]="menuAbierto">

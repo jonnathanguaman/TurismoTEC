@@ -1,162 +1,128 @@
-.error{
-    font-family: Arial, sans-serif;
-    color: red;
-    font-size: 14px;
-    margin-top: -15px;
-    margin-left: 3px;
+body {
+    font-family: 'Times New Roman', serif;
 }
 
-.input-error {
-    border-radius: 15px;
-    border-left: 5px solid #a3140c;
-    right: 10px;
-  }
-  
-
+/* Contenedor principal del formulario */
 .formularioSugerencia {
-    font-family: Arial, sans-serif;
-    background-color: #fff;
+    font-family: 'Times New Roman', serif;
+    background: linear-gradient(90deg, #b65602, #514f4f);
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(246, 245, 245, 0.2);
     max-width: 600px;
     margin: 0 auto;
     margin-bottom: 10px;
+    color: #0d0d0d;
 }
-/*Datos personales*/
-.datos-personales {
-    font-family: Arial, sans-serif;
+
+/* Estilo para los inputs */
+.datos-personales,
+.datosPersonalesTrue {
     position: relative;
     margin: 20px 0;
 }
-.datosPersonalesTrue{
-    font-family: Arial, sans-serif;
-    position: relative;
-    margin: 20px 0;
-}
 
-
-/* Estilo del input */
-.datos-personales input {
+.datos-personales input,
+.datosPersonalesTrue input {
     width: 98.3%;
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #333;
+    border: 1px solid #090909;
     outline: none;
     transition: all 0.3s ease;
     border-radius: 10px;
+    font-family: 'Times New Roman', serif;
 }
 
-.datosPersonalesTrue input{
-    width: 98.3%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #333;
-    outline: none;
-    transition: all 0.3s ease;
-    border-radius: 10px;
+/* Efecto de foco en el input */
+.datos-personales input:focus,
+.datos-personales input:valid,
+.datosPersonalesTrue input:focus,
+.datosPersonalesTrue input:valid {
+    border-color: #b65602;
+    box-shadow: 0 0 5px rgba(182, 86, 2, 0.5);
 }
 
-@media (max-width: 768px){
-    .datos-personales input {
-        width: 95%;
-    }
-}
-.datos-personales label {
+/* Estilo para las etiquetas */
+.datos-personales label,
+.datosPersonalesTrue label {
     position: absolute;
     top: 50%;
     left: 10px;
     transform: translateY(-50%);
-    background-color: #fff;
-    color: #666;
+    background-color: transparent;
+    color: #777474;
     font-size: 14px;
     padding: 0 5px;
     transition: all 0.3s ease;
     pointer-events: none;
-}
-
-.datosPersonalesTrue label {
-    position: absolute;
-    top: 2%;
-    left: 10px;
-    transform: translateY(-50%);
-    background-color: #fff;
-    color: #666;
-    font-size: 14px;
-    padding: 0 5px;
-    transition: all 0.3s ease;
-    pointer-events: none;
-}
-
-.datos-personales input:focus,
-.datos-personales input:valid {
-    border-color: #007bff;
 }
 
 .datos-personales input:focus+label,
-.datos-personales input:valid+label {
+.datos-personales input:valid+label,
+.datosPersonalesTrue input:focus+label,
+.datosPersonalesTrue input:valid+label {
     top: -10px;
     font-size: 14px;
-    color: #007bff;
-    margin-top: 10px;
+    color: #ff8800;
 }
 
-.botonRegistrar {
-    display: flex;
-    justify-content: center;
-    width: 130px;
-    padding: 12px;
-    background-color: #29a72e;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    text-align: center;
-}
-.botonRegistrar:hover{
-    background-color: #07710b;
+/* Mensajes de error */
+.error {
+    font-size: 0.9rem;
+    background: #c3a45d;
+    padding: 5px;
+    border-radius: 4px;
+    color: #0e0d0d;
+    margin-top: 5px;
 }
 
-.botonRegistrar {
-    display: flex;
-    justify-content: center;
-    width: 130px;
-    padding: 12px;
-    background-color: #29a72e;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    text-align: center;
-}
-.botonRegistrar:hover{
-    background-color: #07710b;
-}
-
+/* Botones */
+.botonRegistrar,
 .botonEditar {
     display: flex;
     justify-content: center;
     width: 130px;
     padding: 12px;
-    background-color: #406ce4;
+    background: linear-gradient(90deg, #bbb7b7, #b65602);
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
+    transition: background 0.3s ease;
     text-align: center;
 }
-.botonEditar:hover{
-    background-color: #071c71;
+
+.botonRegistrar:hover,
+.botonEditar:hover {
+    background: linear-gradient(90deg, #b65602, #000000);
 }
 
-.botonEditarTrue{
+.botonEditarTrue {
     display: none;
 }
-.btn{
+
+.btn {
     display: flex;
     justify-content: center;
     gap: 25px;
+}
+.datos-personales-items {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Iconos */
+.icono {
+    position: absolute;
+    left: 10px;
+    color: #b65602;
+    font-size: 18px;
+}
+
+/* Ajustar input con icono */
+.datos-personales-items input {
+    padding-left: 35px; /* Espacio para el icono */
 }

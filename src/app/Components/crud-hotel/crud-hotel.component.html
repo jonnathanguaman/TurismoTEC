@@ -12,6 +12,71 @@
             <button class="btn-opcion" (click)="openCrudModal()">Crear Hotel</button>
         </div>
     </div>
+    <!-- Modal para Crear/Editar Habitación -->
+<!-- Modal Principal para mostrar las Habitaciones -->
+<div class="crud-modal" *ngIf="isRoomModalOpen">
+    <div class="crud-modal-content">
+        <span class="close-modal" (click)="closeRoomModal()">✖</span>
+        <h3>Lista de Habitaciones</h3>
+
+        <!-- Botón para abrir el modal de creación de habitación -->
+        <button class="btn-opcion btn-create" (click)="openCreateRoomModal()">Crear Habitación</button>
+
+        <!-- Tabla para mostrar las habitaciones registradas -->
+        <table class="room-table">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let room of rooms; let i = index">
+                    <td><img [src]="room.image" alt="Imagen de Habitación" class="room-thumbnail"></td>
+                    <td>{{ room.name }}</td>
+                    <td>{{ room.description }}</td>
+                    <td>${{ room.price }}</td>
+                    <td>
+                        <button class="btn-opcion btn-delete" (click)="deleteRoom(i)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Modal para Crear una Nueva Habitación -->
+        <div class="crud-modal" *ngIf="isCreateRoomModalOpen">
+            <div class="crud-modal-content">
+                <span class="close-modal" (click)="closeCreateRoomModal()">✖</span>
+                <h3>Crear Nueva Habitación</h3>
+
+                <!-- Formulario para ingresar los datos de la habitación -->
+                <form (submit)="addRoom(); $event.preventDefault()">
+                    <label for="image">Imagen (URL):</label>
+                    <input type="text" id="image" [(ngModel)]="newRoom.image" name="image" required>
+
+                    <label for="name">Nombre:</label> 
+                    <input type="text" id="name" [(ngModel)]="newRoom.name" name="name" required>
+
+                    <label for="description">Descripción:</label>
+                    <textarea id="description" [(ngModel)]="newRoom.description" name="description" required></textarea>
+
+                    <label for="price">Precio:</label>
+                    <input type="number" id="price" [(ngModel)]="newRoom.price" name="price" required>
+
+                    <button type="submit" class="btn-opcion">Guardar</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="btn-panel">
+            <button class="btn-opcion" (click)="closeRoomModal()">Cerrar</button>
+        </div>
+    </div>
+</div>
+
 
     <!-- Modal para el CRUD -->
     <div class="crud-modal" *ngIf="isCrudModalOpen">
@@ -122,15 +187,17 @@
                             class="btn-opcion">Agregar/quitar etiquetas</button>
 
                         <button (click)="guardarIdHotel(hotel.idHotel)" (click)="obtenerImagesDeHotel(hotel.idHotel)"
-                            (click)="obtenerHotelById(hotel.idHotel)" class="btn-opcion">Editar</button>
+                            (click)="obtenerHotelById(hotel.idHotel)" class="btn-opcion">Editar</button>  
 
+                            <button class="btn-opcion" (click)="openRoomModal()">Crear/Editar Habitación</button>
+                            
                         <button class="btn-opcion" (click)="eliminarHotel(hotel.idHotel)">Eliminar</button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-</div>
+
 
 <div class="modal-agrgarEtiquetas" *ngIf="modalEtiqueta">
     <div class="model-agregarEtiquetas-content">

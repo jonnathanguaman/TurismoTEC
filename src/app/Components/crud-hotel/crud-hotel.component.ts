@@ -295,5 +295,62 @@ export class CrudHotelComponent implements OnInit {
         const parts = url.split('/');
         return parts[parts.length - 1];
     }
-
+   
+        isRoomModalOpen: boolean = false; // Controla el estado del modal principal de habitaciones
+        isCreateRoomModalOpen: boolean = false; // Controla el estado del modal de creación de habitación
+        
+        newRoom = { image: '', name: '', description: '', price: '' }; // Objeto para los datos de la nueva habitación
+        rooms: any[] = []; // Lista de habitaciones
+    
+        // Método para abrir el modal principal de habitaciones
+        openRoomModal() {
+            this.isRoomModalOpen = true;
+        }
+    
+        // Método para cerrar el modal principal de habitaciones
+        closeRoomModal() {
+            this.isRoomModalOpen = false;
+        }
+    
+        // Método para abrir el modal de creación de habitación
+        openCreateRoomModal() {
+            this.isCreateRoomModalOpen = true; // Mostrar el modal de creación
+            this.newRoom = { image: '', name: '', description: '', price: null }; // Reiniciar los datos de la nueva habitación
+        }
+    
+        // Método para cerrar el modal de creación de habitación
+        closeCreateRoomModal() {
+            this.isCreateRoomModalOpen = false; // Cerrar el modal de creación
+        }
+    
+        // Método para leer la imagen seleccionada y convertirla a base64
+        onImageSelected(event: any) {
+            const file = event.target.files[0]; // Obtener el archivo de imagen seleccionado
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    this.newRoom.image = reader.result as string; // Guardar la imagen en base64
+                };
+                reader.readAsDataURL(file); // Leer la imagen como URL de datos (base64)
+            }
+        }
+    
+        // Método para agregar una nueva habitación a la lista
+        addRoom() {
+            if (this.newRoom.image && this.newRoom.name && this.newRoom.description && this.newRoom.price) {
+                this.rooms.push({ ...this.newRoom }); // Agregar la nueva habitación a la lista
+                this.closeCreateRoomModal(); // Cerrar el modal de creación después de agregar
+            } else {
+                alert('Por favor, complete todos los campos.'); // Alertar si faltan campos
+            }
+        }
+    
+        // Método para eliminar una habitación
+        deleteRoom(index: number) {
+            if (confirm('¿Está seguro de que desea eliminar esta habitación?')) {
+                this.rooms.splice(index, 1); // Eliminar la habitación seleccionada
+            }
+        }
+    
+    
 }
