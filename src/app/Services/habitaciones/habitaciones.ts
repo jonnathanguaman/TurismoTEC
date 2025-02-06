@@ -1,4 +1,5 @@
 import { Hoteles } from "../hoteles/hoteles";
+import { ImagenesHabitacion } from "../imagenesHabitaciones/imagenesHabitacion";
 
 export class Habitaciones{
     idHabitacion:number;
@@ -7,4 +8,5 @@ export class Habitaciones{
     disponible:boolean;
     precio:number;
     hoteles:Hoteles
+    imagenesHabitaciones:ImagenesHabitacion[]
 }

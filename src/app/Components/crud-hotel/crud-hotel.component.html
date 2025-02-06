@@ -39,8 +39,7 @@
                         <!-- <td><img [src]="room.image" alt="Imagen de Habitación" class="room-thumbnail"></td> -->
                         <td>
                             <div class="img-preview" id="preview1">
-
-                                <img [src]="mostrarImagesDeHabitacion(room.idHabitacion)" alt="Vista previa">
+                                <img [src]="[urlHost + room.imagenesHabitaciones[1].url]" alt="Vista previa">
                             </div>
                         </td>
                         <td>{{ room.nombreHabitacion }}</td>
@@ -48,8 +47,8 @@
                         <td>{{ room.precio }}</td>
                         <td>{{ room.disponible ? 'Sí' : 'No' }}</td>
                         <td>
-                            <button class="btn-opcion btn-delete" (click)="editarHabitacion(room.idHabitacion)"
-                                (click)="obtenerImagesDeHabitacion(room.idHabitacion)">Editar</button>
+                            <button class="btn-opcion btn-delete" (click)="editarHabitacion(room.idHabitacion)" 
+                            (click)="obtenerImagesDeHabitacion(room.idHabitacion)">Editar</button>
                             <button class="btn-opcion btn-delete" (click)="deleteRoom(room.idHabitacion)">Eliminar
                                 Habitacion</button>
                         </td>
