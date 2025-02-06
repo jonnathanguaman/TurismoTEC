@@ -23,36 +23,44 @@
                 </div>
 
                 <div class="modal-descripcion">
-                    <p>Disfruta de una experiencia gastronómica inolvidable con una mesa reservada especialmente para ti.</p>
+                    <p>Capacidad: {{mesaObtenda.capacidad}}</p>
                 </div>
 
                 <div class="modal-numeroMesa">
-                    <p>Mesa número: 12</p>
+                    <p>Mesa número: {{mesaObtenda.numeroMesa}}</p>
                 </div>
 
                 <div class="modal-fechaReserva">
                     <div class="modal-fechaReserva-inicio">
-                        <label>Fecha de inicio de la reserva:</label>
-                        <br>
-                        <input type="date">
-                    </div>
-
-                    <div class="modal-fechaReserva-fin">
-                        <label>Fecha final de la reserva:</label>
-                        <br>
-                        <input type="date">
+                        <label>Fecha de incio de la reserva:</label><br>
+                        <input class="custom-flatpickr-input"
+                        [disable]="disabledDates" [(ngModel)]="fechaSelecionada" [minDate]="fechaActual" type="text" mwlFlatpickr
+                        placeholder="Selecciona un rango de fechas" />
                     </div>
                 </div>
 
-                <div class="modal-precio">
-                    <p>Precio: $50</p>
-                </div>
+                <button class="open-btn" (click)="openModalHorario()">Seleccionar Horario</button>
 
+                <div class="modal-numeroMesa">
+                    <p>Hora seleccionada: {{horaReservada}} </p>
+                </div>
                 <div class="modal-boton">
-                    <button class="botonReservar">Reservar</button>
+                    <button (click)="generarReserva()" class="botonReservar">Reservar</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<div class="modal-reserva" *ngIf="horarioOpen">
+    <div class="modal-hora-reserva">
+      <h2>Selecciona un horario</h2>
+      <ul>
+        <a *ngFor="let horario of horarios" (click)="seleccionarHorario(horario)">
+          <li>{{ horario }}</li>
+        </a>
+      </ul>      
+      <button (click)="closeModalHorario()" class="close-btn">Cerrar</button>
+    </div>
+</div>
+  
