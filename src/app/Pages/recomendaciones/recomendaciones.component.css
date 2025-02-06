@@ -146,4 +146,16 @@
   }
 
   
+  img {
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    width: 200px;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  img:hover {
+    transform: scale(1.1); /* Hace la imagen un poco más grande */
+    opacity: 0.9; /* Reduce ligeramente la opacidad */
+  }
   
