@@ -9,6 +9,8 @@ body {
 /* Contenedor principal */
 .cuenca-info {
   background:white;
+  color: white;
+
   color: rgb(142, 77, 7);
   padding: 40px 20px;
   margin: 20px auto;

@@ -39,19 +39,25 @@
 .btn-foro {
   display: flex;
   align-items: center;
+  text-align: center;
+
   justify-content: space-between; /* Espacio entre texto e imagen */
   width: 200px;
   padding: 10px;
   font-size: 18px;
-  background: linear-gradient(90deg, #a25d21, #514f4f);
+  background: linear-gradient(90deg, #a25d21,#dad3d3);
   color: white;
   border: none;
-  font-family: 'Times New Roman', serif;  color: white;
-  font-size: 20px;
-
+  font-family: 'Times New Roman', serif;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+.btn-foro {
+  width: 200px;
+  text-align: center;
+  background: linear-gradient(90deg, #b65602, #514f4f);
+
 }
 /* Icono dentro del botón */
 .icono-boton {
@@ -103,7 +109,7 @@ button:hover,
 }
 
 .ventana-contenido {
-  background: linear-gradient(90deg, #a25d21, #e4e2e2); /* Degradado */
+  background: linear-gradient(90deg, #a25d21, #514f4f); /* Degradado */
   padding: 20px;
   max-width:95%; /* Ajusta el ancho máximo */
   max-height: 70vh; /* Ajusta la altura máxima */
@@ -198,7 +204,7 @@ button:hover,
 .comentario-publicar:hover {
   background: linear-gradient(90deg, #a25d21, #514f4f); /* Degradado */
   font-family: 'Times New Roman', serif;}
-
+ 
 .comentario-cancelar {
   font-size: 18px;
 
@@ -211,10 +217,8 @@ button:hover,
 }
 
 .comentario-cancelar:hover {
-  background: linear-gradient(90deg, #a25d21, #fafafa); /* Degradado */
-
+  background: linear-gradient(90deg, #a25d21, #514f4f);
 }
-
 .comentario-container-buttons {
   display: flex;
   flex-direction: row;
@@ -346,12 +350,7 @@ footer p {
 }
 
 /* Botón "Crear publicación" */
-.btn-foro {
-  width: 200px;
-  text-align: center;
-  background: linear-gradient(90deg, #b65602, #dad3d3);
 
-}
 
 /* Contenedor de imágenes */
 .foto {
@@ -361,12 +360,7 @@ footer p {
   gap: 10px; /* Espacio entre imágenes */
 }
 
-.foto img {
-  width: 500px; /* Ajusta el ancho de las imágenes */
-  height: auto;
-  border-radius: 0px;
-  object-fit: cover;
-}
+
 
 /* Lado derecho (Publicaciones) */
 .lado-derecho {
@@ -375,10 +369,6 @@ footer p {
   flex-direction: column;
 }
 
-/* Ajustes en publicaciones */
-.publicaciones {
-  width: 100%;
-}
 
 /* Ajuste en imágenes de publicaciones */
 .imagen-publicacion {
@@ -387,16 +377,7 @@ footer p {
   border-radius: 8px;
 }
 
-/* Comentarios */
-.comentarios {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
 
-.comentarios button {
-  font-size: 0.7em;
-}
 
 /* Botón de comentar */
 .comentario-publicar,
@@ -407,26 +388,12 @@ footer p {
   cursor: pointer;
 }
 
-.comentario-publicar:hover {
-  background: linear-gradient(90deg, #a25d21, #514f4f);
-}
 
-.comentario-cancelar:hover {
-  background: linear-gradient(90deg, #a25d21, #514f4f);
-}
+
+
 
 /* Ajuste en la ventana emergente de creación */
-.ventana-emergente {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-.ventana-contenido {
-  max-width: 95%;
-  max-height: 70vh;
-  overflow-y: auto;
-}
 
 /* Efecto para todas las imágenes */
 img {

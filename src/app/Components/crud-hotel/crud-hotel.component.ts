@@ -284,7 +284,7 @@ export class CrudHotelComponent implements OnInit {
             }
         })
     }
-    
+
 
     //Obtenemos el la foto en tipo archivo de un lugar en especifico y las agregamos al los arrays para poder subir cuando hacemos el update
     obtenerFile(nombreFoto: string) {
@@ -311,7 +311,6 @@ export class CrudHotelComponent implements OnInit {
         idHabitacion: [''],
         nombreHabitacion: ['', [Validators.required]],
         descripcion: ['', [Validators.required]],
-        disponible: ['', [Validators.required]],
         precio: ['', [Validators.required]]
     });
 
@@ -352,24 +351,55 @@ export class CrudHotelComponent implements OnInit {
     }
 
     cargarHabitaciones() {
-        this.hotelesService.getHotelById(this.idHotel).subscribe({
-            next: (hotel) => {
-                this.rooms = hotel.habitaciones;
+        this.habitacionesService.getHabitacionDeHotel(this.idHotel).subscribe({
+            next: (habitaciones) => {
+                this.rooms = habitaciones;
             }
         });
+    }
+
+    crearHabitacion() {
+        console.log(this.imagePreviews.length)
+
+        if (this.habitacionForm.valid && this.imagePreviews.length >= 3) {
+            this.habitacionesService
+                .crearHabitacion(this.habitacionForm.value as unknown as Habitaciones, this.idHotel).subscribe({
+                    next: (habitacionCreada: Habitaciones) => {
+                        const uploadPromises = this.selectedFiles.map((file) =>
+                            this.imagenesHabitacionesService.uploadImage(file, habitacionCreada.idHabitacion).toPromise());
+                        Promise.all(uploadPromises)
+                            .then(() => {
+                                environment.mensajeToast('success', 'Habitación creado', 'Se ha creado la habitación con éxito');
+                                this.cargarHabitaciones();
+                                this.selectedFiles = [];
+                                this.imagePreviews = [];
+                                this.closeCreateRoomModal();
+                            })
+                            .catch((error) => {
+                                console.error('Error al subir las imágenes:', error);
+                                environment.mensajeToast('error', 'Error al subir las imágenes', 'Ingrese todos los campos y seleccione las imágenes');
+                            });
+                    },
+                    error: () => {
+                        environment.mensajeToast('error', 'Error al registrar', 'Ingrese todos los campos y seleccione las imágenes');
+                    }
+                })
+        } else {
+            environment.mensajeToast(
+                'error', 'Error al registrar', 'Ingrese todos los campos y seleccione las imágenes else');
+        }
     }
 
     editarHabitacion(idHabitacion: number) {
         environment.mensajeEmergente('Editar', '¿Estas seguro que deseas editar?', 'warning')
             .then((cont) => {
                 if (cont) {
-                    this.openRoomModal()
+                    this.openCreateRoomModal()
                     this.habitacionesService.getHabitacionById(idHabitacion).subscribe({
                         next: (habitacion) => {
                             this.habitacionForm.controls.idHabitacion.setValue(<string><unknown>habitacion.idHabitacion)
                             this.habitacionForm.controls.nombreHabitacion.setValue(habitacion.nombreHabitacion)
                             this.habitacionForm.controls.descripcion.setValue(habitacion.descripcion)
-                            this.habitacionForm.controls.disponible.setValue(<string><unknown>habitacion.disponible)
                             this.habitacionForm.controls.precio.setValue(<string><unknown>habitacion.precio)
                         }
                     })
@@ -385,6 +415,7 @@ export class CrudHotelComponent implements OnInit {
                 console.log("next")
                 console.log(imgHabitaciones)
                 imgHabitaciones.forEach((habitacion) => {
+
                     //Contruimos la url para la previsualizacion
                     this.imagePreviews.push(this.urlHost + habitacion.url)
                     console.log(this.imagePreviews)
@@ -398,26 +429,27 @@ export class CrudHotelComponent implements OnInit {
         })
     }
 
+    private imagePreviewsTabla: string[] = [];
     mostrarImagesDeHabitacion(id: number): String {
         console.log("Entro aqui")
-        var imagePreviews = new Array
+        this.imagePreviewsTabla = new Array
         this.imagenesHabitacionesService.getImagenesByIdHabitacion(id).subscribe({
             next: (imgHabitaciones) => {
                 console.log("next")
                 console.log(imgHabitaciones)
-                imgHabitaciones.forEach((habitacion) => {
+                // imgHabitaciones.forEach((habitacion) => {
                     //Contruimos la url para la previsualizacion
-                    imagePreviews.push(this.urlHost + habitacion.url)
-                    console.log(imagePreviews)
+                    this.imagePreviewsTabla.push(this.urlHost + imgHabitaciones[0].url)
+                    console.log(this.imagePreviewsTabla)
                     // this.obtenerFile(this.obtenerNombreDeLaFoto(habitacion.url))
                     // console.log(this.selectedFiles)
-                })
+                // })
             },
             error: (e) => {
                 console.log("Error al obtener imagenes" + e)
             }
         })
-        return this.imagePreviews[0]
+        return this.imagePreviewsTabla[0]
     }
 
     // Método para agregar una nueva habitación a la lista

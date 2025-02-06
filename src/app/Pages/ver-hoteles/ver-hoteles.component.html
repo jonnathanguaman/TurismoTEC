@@ -1,34 +1,34 @@
 <div class="container">
-
     <div class="Titulo">
-        <h1>Hoteles</h1>
+        <img src="assets/img/img-logo-menu1.png" alt="Foto lateral" class="titulo-img" />
+        
+        <div class="titulo-content">
+            <h1>Hoteles</h1>
+            <div class="search-container">
+                <div class="search-bar">
+                    <input *ngIf="!idLugar" [(ngModel)]="nombreHotelBuscado" type="text" name="buscar" id="buscar" placeholder="Buscar..." (input)="filtrarHoteles()" class="search-input">
+                    <input *ngIf="idLugar" [(ngModel)]="nombreHotelBuscado" type="text" name="buscar" id="buscar" placeholder="Buscar en recomendacion" (input)="filtrarHotelesRecomendaciones()" class="search-input">
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="search-container">
-        <div class="search-bar">
-          <input *ngIf="!idLugar" [(ngModel)]="nombreHotelBuscado" type="text" name="buscar" id="buscar" placeholder="Buscar..." (input)="filtrarHoteles()" class="search-input">
-          <input *ngIf="idLugar" [(ngModel)]="nombreHotelBuscado" type="text" name="buscar" id="buscar" placeholder="Buscar en recomendacion" (input)="filtrarHotelesRecomendaciones()" class="search-input">
-        </div>
-    </div>
-    <p>Nombre: {{nombreHotelBuscado}}</p>
-    <div class="card-hotel" *ngFor="let auxhotel of todoshoteles">
-        <div class="card-hotel-img">
-            <img [src]="[urlHost + auxhotel.imagenesHoteles[0].url]" alt="Imagen del hotel">
-        </div>
-        <div class="card-hotel-info">
-            <div class="card-hotel-nombre">
-                <h3>{{auxhotel.nombre}}</h3>
+    <div class="card-container">
+        <div class="card-hotel" *ngFor="let auxhotel of todoshoteles">
+            <div class="card-hotel-img">
+                <img [src]="[urlHost + auxhotel.imagenesHoteles[0].url]" alt="Imagen del hotel">
             </div>
-            <div class="card-hotel-descripcion">
-                <p>{{auxhotel.descripcion}}</p>
+            <div class="card-hotel-info">
+                <div class="card-hotel-nombre">
+                    <h3>{{auxhotel.nombre}}</h3>
+                </div>
+                <div class="card-hotel-descripcion">
+                    <p>{{auxhotel.descripcion}}</p>
+                </div>
             </div>
-
-            <!-- <div class="card-hotel-calificacion">
-                <p>Calificación: {{auxhotel.}} estrellas</p>
-            </div> -->
-        </div>
-        <div class="card-hotel-boton">
-            <button [routerLink]="['/habitacion/'+auxhotel.idHotel]">Ver hotel</button>
+            <div class="card-hotel-boton">
+                <button [routerLink]="['/habitacion/'+auxhotel.idHotel]">Ver hotel</button>
+            </div>
         </div>
     </div>
 </div>
