@@ -42,12 +42,12 @@
             </div>
 
             <div class="card-mesa-botonVer">
-                <button (click)="modal.abrirModal()" class="botonVerMesa">Ver mesa</button>
+                <button (click)="obtenerIdMesa(auxMesa.idMesa)" (click)="modal.abrirModal()" class="botonVerMesa">Ver mesa</button>
             </div>
         </div>
     </div>
 </div>
 
-<app-modal-mesa #modal></app-modal-mesa>
+<app-modal-mesa [idMesa]="idMesa" #modal></app-modal-mesa>
 <app-menu-restaurante #restaurante></app-menu-restaurante>
 <app-review-restaurante [idRestaurante]="restauranteEncontrado.idRestaurante"></app-review-restaurante>

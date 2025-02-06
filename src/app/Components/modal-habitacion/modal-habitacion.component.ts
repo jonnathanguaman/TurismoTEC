@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HabitacionesService } from '../../Services/habitaciones/habitaciones.service';
 import { Habitaciones } from '../../Services/habitaciones/habitaciones';
-import { DisableEnableDate } from 'angularx-flatpickr/lib/flatpickr-defaults.service';
-import { Data } from '@angular/router';
 import { ReservaHotelService } from '../../Services/registrarReservaHabitacion/reserva-hotel.service';
 import { ReservaHatitacion } from '../../Services/registrarReservaHabitacion/reservaHotel';
 import { environment } from '../../../enviroments/enviroment';
