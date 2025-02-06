@@ -39,11 +39,11 @@ export class CrudReservasHabitacionComponent implements OnInit{
     private loginService:AuthService,){}
     
   ngOnInit(): void {
+    console.log("Oninit")
     this.loginService.getRoles()
       this.loginService.admin.subscribe({
           next:(admin) =>{
             this.admin = admin
-            console.log("Admin service: " + admin)
           }
         })
 
@@ -88,6 +88,7 @@ export class CrudReservasHabitacionComponent implements OnInit{
   obtenerReservas(){
     this.reservaHotelService.getReservasHabitaciones().subscribe({
       next:(reservas)=>{
+        console.log(reservas)
         this.todasLasReservaciones = reservas
       }
     })

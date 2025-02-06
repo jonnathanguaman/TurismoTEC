@@ -6,5 +6,5 @@ export class Habitaciones{
     descripcion:string;
     disponible:boolean;
     precio:number;
-    hotel:Hoteles
+    hoteles:Hoteles
 }

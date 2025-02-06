@@ -108,15 +108,17 @@ export class RegistarLugarComponent {
 
                 Promise.all(uploadPromises)
                   .then(() => {
-                    environment.mensajeToast(
-                      'success',
-                      'Imágenes subidas',
-                      'Todas las imágenes se subieron correctamente'
-                    );
-                    this.lugaresForm.reset();
-                    this.selectedFiles = [];
-                    this.imagePreviews = [];
-                    this.abrirModalEtiqueta()
+                    environment.mensajeConfirmacion(
+                      'Lugar creado',
+                      'Hemos enviado el lugar para su revisión. Recibirá un correo para confirmar su aprobación.',
+                      'success'
+                    ).finally(()=>{
+                      this.lugaresForm.reset();
+                      this.selectedFiles = [];
+                      this.imagePreviews = [];
+                      this.abrirModalEtiqueta()
+                    });
+                    
                   })
                   .catch((error) => {
                     console.error('Error al subir las imágenes:', error);

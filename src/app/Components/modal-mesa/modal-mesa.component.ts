@@ -104,27 +104,35 @@ export class ModalMesaComponent implements OnChanges{
   generarReserva(){
     const token = sessionStorage.getItem('token')
       if(token){
-        const payload: TokenPayload = jwtDecode(token); 
-        this.reserva.horaReserva = this.horaReservada
 
-        let fechaSeleccionada = new Date(this.fechaSelecionada); // Fecha seleccionada
-        this.reserva.fechaReserva = new Date(fechaSeleccionada.setDate(fechaSeleccionada.getDate() + 1))
-
-        this.authService.getIdPerson(payload.sub).subscribe({
-          next:(idUser)=>{
-            this.reservaMesaService.registarReserva(this.reserva,idUser,this.idMesa).subscribe({
-              complete:()=>{
-                environment.mensajeToast('success','Reserva registrada','Se ha registrado la reserva')
-                this.cerrarModal()
-              },
-              error:()=>{
-                environment.mensajeToast('error','Se ha producido un error','Pedimos disculpas por los inconvenientes.')
-              }
-            })
-          }
-        })
+        environment.mensajeEmergente("Confirmación de reserva", "¿Está seguro de que desea confirmar la reserva?", "warning").then(
+          (confirmar)=>{
+            if(confirmar){
+              const payload: TokenPayload = jwtDecode(token); 
+              this.reserva.horaReserva = this.horaReservada
+      
+              let fechaSeleccionada = new Date(this.fechaSelecionada); // Fecha seleccionada
+              this.reserva.fechaReserva = new Date(fechaSeleccionada.setDate(fechaSeleccionada.getDate() + 1))
+      
+              this.authService.getIdPerson(payload.sub).subscribe({
+                next:(idUser)=>{
+                  this.reservaMesaService.registarReserva(this.reserva,idUser,this.idMesa).subscribe({
+                    complete:()=>{
+                      environment.mensajeToast('success','Reserva registrada','Se ha registrado la reserva')
+                      this.cerrarModal()
+                    },
+                    error:()=>{
+                      environment.mensajeToast('error','Se ha producido un error','Pedimos disculpas por los inconvenientes.')
+                    }
+                  })
+                }
+              })
+            }else{
+              environment.mensajeToast('success', 'La reserva no se completó', '');
+            }
+          });
       }else{
-        environment.mensajeToast('warning','No se ha completado la reserva','Por favor inicie sesion')
+        environment.mensajeToast('warning', 'No se pudo completar la reserva', 'Por favor, inicia sesión para continuar.');
       }
   }
 

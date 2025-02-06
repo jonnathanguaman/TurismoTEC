@@ -36,10 +36,26 @@ export const environment = {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'No, cancelar'
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No'
     }).then((result) => {
       return result.isConfirmed;
     });
+  },
+
+  mensajeConfirmacion(titulo: string, texto: string, tipo: 'success' | 'error' | 'warning' | 'info' | 'question') {
+    return Swal.fire({
+      title: titulo,
+      text: texto,
+      icon: tipo,
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6', 
+      cancelButtonColor: '#d33',    
+      confirmButtonText: 'Sí',      
+      cancelButtonText: 'No'        
+    }).then((result) => {
+      return result.isConfirmed; 
+    });
   }
+  
 };
