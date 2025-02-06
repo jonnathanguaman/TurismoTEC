@@ -25,6 +25,12 @@ export class MesasComponent implements OnInit {
   enviarIdRestaurante!: number;
   mesasRestaurante!:Mesa[]
 
+  idMesa:number;
+
+  obtenerIdMesa(idmesa:number):number{
+    return this.idMesa = idmesa;
+  }
+
   obtenerRestaurante() {
     this.activedRouter.params.subscribe((params) => {
       let id = params['id'];
@@ -38,7 +44,7 @@ export class MesasComponent implements OnInit {
   }
 
   obtenerMesasDeRestaurante(id:number){
-    this.mesasService.getHabitacionDeHotel(id).subscribe(mesa =>{
+    this.mesasService.getMesasDeRestaurante(id).subscribe(mesa =>{
       this.mesasRestaurante = mesa
     })
   }
