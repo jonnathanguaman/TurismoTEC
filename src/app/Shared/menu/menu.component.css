@@ -105,27 +105,53 @@ body {
 /* Responsividad: estilos para pantallas pequeñas */
 @media (max-width: 768px) {
     /* Lista del menú en modo vertical */
-    .menu-items {
-        flex-direction: column; /* Cambia la orientación a vertical */
-        gap: 10px; /* Espaciado entre elementos */
-        position: absolute; /* Posición absoluta dentro del contenedor */
-        top: 50px; /* Desplazamiento desde el top */
-        right: 0; /* Alineado a la derecha */
-        background: linear-gradient(90deg, #000000, #333333); /* Degradado de fondo */
-        border-radius: 5px; /* Bordes redondeados */
-        padding: 10px 20px; /* Espaciado interno */
-        display: none; /* Oculto por defecto */
-        z-index: 1000; /* Prioridad de apilamiento */
-    }
-
-    /* Mostrar el menú cuando esté activo */
-    .menu-items.active {
-        display: flex; /* Muestra el menú */
-    }
-
-    /* Mostrar el botón para abrir/cerrar el menú */
-    .menu-toggle {
-        display: block; /* Hacer visible el botón */
-        color: white; /* Botón de color blanco */
-    }
-}
+    @media (max-width: 768px) {
+        .menu {
+            padding: 10px 15px; /* Espaciado del menú reducido para pantallas pequeñas */
+            height: 50px; /* Altura ajustada */
+        }
+    
+        /* Lista del menú en modo vertical */
+        .menu-items {
+            flex-direction: column; /* Cambia la orientación a vertical */
+            gap: 10px; /* Espaciado entre elementos */
+            position: absolute; /* Posición absoluta dentro del contenedor */
+            top: 50px; /* Desplazamiento desde el top */
+            right: 0; /* Alineado a la derecha */
+            background: linear-gradient(90deg, #000000, #333333); /* Degradado de fondo */
+            border-radius: 5px; /* Bordes redondeados */
+            padding: 10px 20px; /* Espaciado interno */
+            display: none; /* Oculto por defecto */
+            z-index: 1000; /* Prioridad de apilamiento */
+            width: 100%; /* Ajuste a todo el ancho */
+        }
+    
+        /* Mostrar el menú cuando esté activo */
+        .menu-items.active {
+            display: flex; /* Muestra el menú */
+        }
+    
+        /* Mostrar el botón para abrir/cerrar el menú */
+        .menu-toggle {
+            display: block; /* Hacer visible el botón */
+            color: white; /* Botón de color blanco */
+            font-size: 30px; /* Tamaño adecuado del ícono */
+        }
+        
+        /* Estilo de los enlaces en modo mobile */
+        .menu-items a {
+            font-size: 16px; /* Tamaño de fuente reducido */
+            padding: 10px 20px; /* Ajuste del padding */
+        }
+    
+        /* Estilo de la imagen del logo en pantallas pequeñas */
+        .menu-logo img {
+            width: 120px; /* Reducción de tamaño de la imagen */
+            height: 50px; /* Ajuste proporcional */
+        }
+        
+        /* Asegura que el título del logo se ajuste en pantallas pequeñas */
+        .menu-logo h1 {
+            font-size: 18px; /* Reducción de tamaño del título */
+        }
+}}

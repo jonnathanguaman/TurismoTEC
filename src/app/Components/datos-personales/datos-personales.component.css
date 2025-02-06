@@ -1,11 +1,11 @@
 body {
     font-family: 'Times New Roman', serif;
+
 }
 
 /* Contenedor principal del formulario */
 .formularioSugerencia {
     font-family: 'Times New Roman', serif;
-    background: linear-gradient(90deg, #b65602, #514f4f);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(246, 245, 245, 0.2);

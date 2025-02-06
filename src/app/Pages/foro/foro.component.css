@@ -1,256 +1,165 @@
-.publicado {
-  font-size: 18px;
+/* Estilos generales */
+body {
   font-family: 'Times New Roman', serif;
-}
-
-.hace {
-  font-size: 18px;
-  font-family: 'Times New Roman', serif;
+  color: #333;
 }
 
 /* Contenedor principal */
 .foro-container {
   text-align: center;
   margin: 20px;
-  color: #f7f3f3; /* Texto principal */
-  font-family: 'Times New Roman', serif;
+  color: #f7f3f3;
 }
 
-
-/* Descripción y foto lateral */
-.descripcion-foto {
-  display: flex;
-  justify-content: space-between;
-  margin: 30px 0;
-}
-
-
-.foto {
-  flex: 1;
-  padding: 20px;
-}
-
-.foto img {
-  width: 600px;
-  height: auto;
-  border-radius: 8px;
-  object-fit: cover;
-}
-.btn-foro {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* Espacio entre texto e imagen */
-  width: 200px;
-  padding: 10px;
+/* Botón general */
+button {
+  padding: 10px 20px;
   font-size: 18px;
   background: linear-gradient(90deg, #a25d21, #514f4f);
   color: white;
   border: none;
-  font-family: 'Times New Roman', serif;  color: white;
-  font-size: 20px;
-
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease-in-out;
 }
-/* Icono dentro del botón */
-.icono-boton {
-  width: 60px;  /* Tamaño del icono */
-  height: auto;
-  margin-left: 10px; /* Separación con el texto */
+
+button:hover {
+  background: #8c4a1e;
+  transform: scale(1.05);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
-/* Estilo al pasar el mouse */
+
+/* Botón de foro */
+.btn-foro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 200px;
+  padding: 10px;
+  font-size: 18px;
+  background: linear-gradient(90deg, #a25d21, #514f4f);
+  border-radius: 8px;
+}
+
 .btn-foro:hover {
   background: linear-gradient(90deg, #8c4a1e, #3e3d3d);
 }
-/* Estilo común para botones */
-button,
 
-.btn-opcion {
-  padding: 10px 20px;
-  font-size: 18px;
-  background: linear-gradient(90deg, #a25d21, #514f4f); /* Degradado */
-  font-family: 'Times New Roman', serif;  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+/* Icono dentro del botón */
+.icono-boton {
+  width: 60px;
+  height: auto;
+  margin-left: 10px;
 }
 
-button:hover,
-.btn-foro:hover,
-.btn-opcion:hover {
-  background: linear-gradient(90deg, #a25d21, #514f4f); /* Degradado */
-  font-family: 'Times New Roman', serif;}
-
-/* Ventanas emergentes */
-.ventana-emergente {
-  font-size: 18px;
-  font-family: 'Times New Roman', serif;
-  color: white;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8); /* Fondo semi-transparente */
-
+/* Contenedor del foro */
+.contenedor-foro {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px; /* Espaciado para evitar que el contenido toque los bordes */
-  box-sizing: border-box;
-}
-
-.ventana-contenido {
-  background: linear-gradient(90deg, #a25d21, #e4e2e2); /* Degradado */
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
   padding: 20px;
-  max-width:95%; /* Ajusta el ancho máximo */
-  max-height: 70vh; /* Ajusta la altura máxima */
-  overflow-y: auto; /* Activa el scroll vertical si el contenido es muy grande */
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Sombra para resaltar */
-  color: white;
-
 }
 
+/* Lado izquierdo */
+.lado-izquierdo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Contenedor de imágenes */
+.foto img {
+  width: 500px;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Lado derecho (Publicaciones) */
+.lado-derecho {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+}
 
 /* Publicaciones */
 .publicaciones {
-  margin: 20px auto;
-  width: 95%;
+  width: 100%;
 }
 
 .publicacion {
-  background: linear-gradient(90deg, #f4f3f2, #ebbd87); /* Degradado */
-  font-family: 'Times New Roman', serif;
-
+  background: linear-gradient(90deg, #f4f3f2, #ebbd87);
   margin-bottom: 20px;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(251, 250, 250, 0.1);
-  white-space: pre-wrap;
-  word-break: break-word;
   transition: background-color 0.3s ease;
 }
 
 .publicacion:hover {
-  font-size: 18px;
-  font-family: 'Times New Roman', serif;
-  background: linear-gradient(90deg, #f4f3f2, #7c4200); /* Degradado */
+  background: linear-gradient(90deg, #f4f3f2, #7c4200);
 }
 
-.publicacion h3 {
-  color: #333;
-}
-
-/* Estilos para imágenes de publicaciones */
-.publicacion-imagen {
+/* Imágenes en publicaciones */
+.imagen-publicacion {
   max-width: 100%;
   height: auto;
-  margin-top: 10px;
   border-radius: 8px;
 }
 
 /* Comentarios */
-.comentarios {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.comentarios button {
-  font-size: 0.7em;
-}
-
 .comentario-container {
   display: flex;
   flex-direction: column;
 }
 
 .comentario-textarea {
-  margin-top: 25px;
+  margin-top: 10px;
   width: 40%;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #f7cb93;
   border-radius: 5px;
   outline: none;
-  transition: border-color 0.3s;
   resize: none;
 }
 
-.comentario-textarea:focus {
-  border-color: #a25d21;
-}
-
-.comentario-publicar {
-  font-size: 18px;
-  color: #fff;
-  background: linear-gradient(90deg, #a25d21, #fffdfd); /* Degradado */
-  font-family: 'Times New Roman', serif;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.comentario-publicar:hover {
-  background: linear-gradient(90deg, #a25d21, #514f4f); /* Degradado */
-  font-family: 'Times New Roman', serif;}
-
+.comentario-publicar,
 .comentario-cancelar {
-  font-size: 18px;
-
+  font-size: 16px;
+  padding: 5px 15px;
   border-radius: 5px;
-  background: linear-gradient(90deg, #a25d21, #514f4f); /* Degradado */
-  font-family: 'Times New Roman', serif;
-  color: white;
-  padding: 5px 10px;
   cursor: pointer;
 }
 
+.comentario-publicar:hover,
 .comentario-cancelar:hover {
-  background: linear-gradient(90deg, #a25d21, #fafafa); /* Degradado */
-
+  background: linear-gradient(90deg, #a25d21, #514f4f);
 }
 
-.comentario-container-buttons {
+/* Ventana emergente */
+.ventana-emergente {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
-  flex-direction: row;
-  gap: 20px;
-  margin-top: 10px;
-  width: 40%;
-  
+  justify-content: center;
+  align-items: center;
 }
 
-.comentario {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background-color: #fafafa;
-}
-
-.comentario-autor {
-  font-size: 14px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 8px;
-}
-
-.comentario-fecha {
-  font-size: 12px;
-  color: #888;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.comentario-contenido {
-  font-size: 14px;
-  color: #555;
-  line-height: 1.6;
+.ventana-contenido {
+  background: linear-gradient(90deg, #a25d21, #e4e2e2);
+  padding: 20px;
+  max-width: 95%;
+  max-height: 70vh;
+  overflow-y: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 /* Footer */
@@ -267,182 +176,77 @@ footer p {
   color: #333;
 }
 
-/* Inputs y textarea */
-.input-container {
-  margin-bottom: 15px;
-  text-align: left;
-}
-
-.input-container label {
-  font-size: 14px;
-  color: #333;
-  margin-bottom: 5px;
-  display: block;
-}
-
-.input-container input,
-.input-container textarea {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-
-
-.input-container input:hover,
-.input-container textarea:hover {
-  border-color: #fffcfa;
-}
-
-/* Botones de opción */
-.btn-opcion {
-  display: inline-block;
-  width: 120px;
-  padding: 10px;
-  margin: 10px 5px;
-  font-size: 16px;
-  color: white;
-  background: linear-gradient(90deg, #bbb7b7, #b65602);
-  
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btn-opcion:hover {
-  background: linear-gradient(90deg, #b65602, #000000);
-}
-
-.btn-opcion:last-child {
-  background: linear-gradient(90deg, #a25d21, #514f4f); /* Degradado */
-}
-
-.btn-opcion:last-child:hover {
-  background: linear-gradient(90deg, #a25d21, #514f4f); /* Degradado */
-
-}
-/* Contenedor principal con estructura en dos columnas */
-.contenedor-foro {
-  display: flex; /* Divide la pantalla en dos secciones */
-  justify-content: space-between; /* Espacio entre columnas */
-  align-items: flex-start; /* Alinea elementos en la parte superior */
-  gap: 20px; /* Espacio entre la izquierda y la derecha */
-  padding: 20px;
-}
-
-/* Lado izquierdo (botón + imágenes) */
-.lado-izquierdo {
-  flex: 1; /* Ocupa una parte de la pantalla */
-  display: flex;
-  flex-direction: column; /* Organiza el botón y las imágenes en columna */
-  align-items: center; /* Centra los elementos */
-  gap: 10px; /* Espaciado entre botón e imágenes */
-}
-
-/* Botón "Crear publicación" */
-.btn-foro {
-  width: 200px;
-  text-align: center;
-  background: linear-gradient(90deg, #b65602, #dad3d3);
-
-}
-
-/* Contenedor de imágenes */
-.foto {
-  display: flex;
-  flex-direction: column; /* Acomoda las imágenes en vertical */
-  align-items: center; /* Centra las imágenes */
-  gap: 10px; /* Espacio entre imágenes */
-}
-
-.foto img {
-  width: 500px; /* Ajusta el ancho de las imágenes */
-  height: auto;
-  border-radius: 0px;
-  object-fit: cover;
-}
-
-/* Lado derecho (Publicaciones) */
-.lado-derecho {
-  flex: 2; /* Ocupa más espacio que el lado izquierdo */
-  display: flex;
-  flex-direction: column;
-}
-
-/* Ajustes en publicaciones */
-.publicaciones {
-  width: 100%;
-}
-
-/* Ajuste en imágenes de publicaciones */
-.imagen-publicacion {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-
-/* Comentarios */
-.comentarios {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.comentarios button {
-  font-size: 0.7em;
-}
-
-/* Botón de comentar */
-.comentario-publicar,
-.comentario-cancelar {
-  font-size: 16px;
-  padding: 5px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.comentario-publicar:hover {
-  background: linear-gradient(90deg, #a25d21, #514f4f);
-}
-
-.comentario-cancelar:hover {
-  background: linear-gradient(90deg, #a25d21, #514f4f);
-}
-
-/* Ajuste en la ventana emergente de creación */
-.ventana-emergente {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.ventana-contenido {
-  max-width: 95%;
-  max-height: 70vh;
-  overflow-y: auto;
-}
-
-/* Efecto para todas las imágenes */
+/* Efectos en imágenes */
 img {
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
 img:hover {
-  transform: scale(1.1); /* Hace la imagen un poco más grande */
-  opacity: 0.9; /* Reduce ligeramente la opacidad */
+  transform: scale(1.1);
+  opacity: 0.9;
 }
-button {
-  transition: all 0.3s ease-in-out;
+/* Responsividad */
+@media (max-width: 1200px) {
+  .contenedor-foro {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .lado-izquierdo,
+  .lado-derecho {
+    flex: 1;
+  }
 }
 
-button:hover {
-  background-color: #8c4a1e; /* Cambia el color de fondo */
-  transform: scale(1.05); /* Aumenta ligeramente el tamaño */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Agrega sombra */
+@media (max-width: 768px) {
+  /* Botones */
+  .btn-foro {
+    width: 150px;
+    font-size: 16px;
+  }
+
+  /* Lado izquierdo (imagenes y otros) */
+  .lado-izquierdo {
+    align-items: center;
+    gap: 15px;
+  }
+
+  .foto img {
+    width: 100%;
+  }
+
+  .comentario-textarea {
+    width: 80%;
+  }
+
+  .comentario-publicar,
+  .comentario-cancelar {
+    font-size: 14px;
+  }
+
+  /* Publicaciones */
+  .publicacion {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  .contenedor-foro {
+    padding: 10px;
+  }
+
+  .foto img {
+    width: 100%;
+  }
+
+  .comentario-textarea {
+    width: 100%;
+  }
+
+  footer p {
+    font-size: 14px;
+  }
 }
