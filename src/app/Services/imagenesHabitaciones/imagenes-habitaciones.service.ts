@@ -27,12 +27,12 @@ export class ImagenesHabitacionesService {
     formData.append('file', file);
 
     return this.http.post<string>(
-      `${environment.urlHost + '/imageHoteles'}/${idHabitacion}`, formData, { responseType: 'text' as 'json' }
+      `${environment.urlHost + '/imageHabitacion'}/${idHabitacion}`, formData, { responseType: 'text' as 'json' }
     );
   }
 
   getFile(fileName: string) {
-    return this.http.get(`${environment.urlHost + '/imageHoteles/file'}/${fileName}`, {
+    return this.http.get(`${environment.urlHost + '/imageHabitacion/file'}/${fileName}`, {
       responseType: 'blob', // Importante para manejar archivos binarios
     });
   }

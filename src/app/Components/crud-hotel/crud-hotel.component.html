@@ -39,7 +39,7 @@
                         <!-- <td><img [src]="room.image" alt="Imagen de Habitación" class="room-thumbnail"></td> -->
                         <td>
                             <div class="img-preview" id="preview1">
-                                
+
                                 <img [src]="mostrarImagesDeHabitacion(room.idHabitacion)" alt="Vista previa">
                             </div>
                         </td>
@@ -64,18 +64,45 @@
                     <h3>Crear Nueva Habitación</h3>
 
                     <!-- Formulario para ingresar los datos de la habitación -->
-                    <form (submit)="addRoom(); $event.preventDefault()">
+                    <form [formGroup]="habitacionForm">
 
-                        <label for="name">Nombre:</label>
-                        <input type="text" id="name" [(ngModel)]="newRoom.name" name="name" required>
+                        <div class="input-container">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" id="nombreHabitacion" formControlName="nombreHabitacion" />
+                            <div *ngIf="habitacionForm.get('nombreHabitacion')?.invalid && habitacionForm.get('nombreHabitacion')?.touched"
+                                class="message error">
+                                El nombre es obligatorio.
+                            </div>
+                        </div>
 
-                        <label for="description">Descripción:</label>
-                        <textarea id="description" [(ngModel)]="newRoom.description" name="description"
-                            required></textarea>
+                        <div class="input-container">
+                            <label for="descripcion">Descripción:</label>
+                            <input type="text" id="descripcion" formControlName="descripcion" />
+                            <div *ngIf="habitacionForm.get('descripcion')?.invalid && habitacionForm.get('descripcion')?.touched"
+                                class="message error">
+                                La descripción es obligatorio.
+                            </div>
+                        </div>
 
-                        <label for="price">Precio:</label>
-                        <input type="number" id="price" [(ngModel)]="newRoom.price" name="price" required>
+                        <!-- <div class="input-container">
+                            <label for="visualizacion">Disponible:</label>
+                            <select id="visualizacion" formControlName="visualizacion">
+                                <option [value]="true">Publico</option>
+                                <option [value]="false">Privado</option>
+                            </select>
+                            <div *ngIf="hotelForm.get('visualizacion')?.invalid && lugaresForm.get('visualizacion')?.touched" class="message error">
+                                El estado es obligatorio.
+                            </div>
+                        </div> -->
 
+                        <div class="input-container">
+                            <label for="descripcion">Precio:</label>
+                            <input type="text" id="precio" formControlName="precio" />
+                            <div *ngIf="habitacionForm.get('precio')?.invalid && habitacionForm.get('precio')?.touched"
+                                class="message error">
+                                El precio es obligatorio.
+                            </div>
+                        </div>
 
                         <div class="imgContainer">
                             <div class="imgContainer-item">
@@ -86,6 +113,7 @@
                                 <input accept="image/*" (change)="onFileSelected($event,0)" type="file" id="file1"
                                     class="file-input" accept="image/*" onchange="previewImage(event, 'preview1')">
                             </div>
+
                             <div class="imgContainer-item">
                                 <div class="img-preview" id="preview2">
                                     <img [src]="imagePreviews[1]" alt="Vista previa">
@@ -94,6 +122,7 @@
                                 <input accept="image/*" (change)="onFileSelected($event,1)" type="file" id="file2"
                                     class="file-input" accept="image/*" onchange="previewImage(event, 'preview2')">
                             </div>
+
                             <div class="imgContainer-item">
                                 <div class="img-preview" id="preview3">
                                     <img [src]="imagePreviews[2]" alt="Vista previa">
@@ -104,7 +133,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn-opcion">Guardar</button>
+                        <button type="submit" class="btn-opcion" (click)="crearHabitacion()">Guardar</button>
                     </form>
                 </div>
             </div>

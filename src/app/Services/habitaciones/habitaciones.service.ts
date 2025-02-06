@@ -9,13 +9,18 @@ import { environment } from '../../../enviroments/enviroment';
 })
 export class HabitacionesService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  getHabitacionDeHotel(id:number):Observable<Habitaciones[]>{
+  getHabitacionDeHotel(id: number): Observable<Habitaciones[]> {
     return this.http.get<Habitaciones[]>(`${environment.urlHost + "/habitacionesDeHotel"}/${id}`)
   }
 
-  getHabitacionById(id:number):Observable<Habitaciones>{
+  getHabitacionById(id: number): Observable<Habitaciones> {
     return this.http.get<Habitaciones>(`${environment.urlHost + "/habitaciones"}/${id}`)
   }
+
+  crearHabitacion(habitacion: Habitaciones, idHotel: number): Observable<Habitaciones> {
+    return this.http.post<Habitaciones>(`${environment.urlHost + "/habitaciones"}/${idHotel}`, habitacion)
+  }
+
 }
