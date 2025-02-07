@@ -19,8 +19,7 @@ export class MenuAdminComponent {
   }
 
   perfil(){
-    this.router.navigateByUrl("/admin/crud-reservaciones-habitaciones").then(()=>{
-      window.location.reload()
-    });
+    // Quite el reload por si da un error
+    this.router.navigateByUrl("/admin/crud-reservaciones-habitaciones")
   }
 }

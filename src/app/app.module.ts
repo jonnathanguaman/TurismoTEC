@@ -47,6 +47,7 @@ import { CrudEtiquetaRestauranteComponent } from './Components/crud-etiqueta-res
 import { ReviewHotelComponent } from './Components/review-hotel/review-hotel.component';
 import { ReviewRestauranteComponent } from './Components/review-restaurante/review-restaurante.component';
 import { ChatbotComponent } from './chatbot/chatbot.component';
+import { CrudReservasMesasComponent } from './Components/crud-reservas-mesas/crud-reservas-mesas.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { ChatbotComponent } from './chatbot/chatbot.component';
     CrudEtiquetaRestauranteComponent,
     ReviewHotelComponent,
     ReviewRestauranteComponent,
-    ChatbotComponent
+    ChatbotComponent,
+    CrudReservasMesasComponent
   ],
   imports: [
     BrowserModule,

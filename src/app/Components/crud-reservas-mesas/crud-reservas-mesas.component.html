@@ -1,0 +1,83 @@
+<div class="crud-container">
+    <div class="container-header">
+        <div class="contenedor-izq">
+            <h2>Gestión de reservas mesas</h2>
+        </div>
+        <div class="contenedor-derecho">
+            <div class="search-container">
+                <input type="text" placeholder="Buscar" class="search-input" />
+                <button class="search-button"><span class="icon">🔍</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para el CRUD -->
+    <div class="crud-modal" *ngIf="isCrudModalOpen">
+        <div class="crud-modal-content">
+            <span class="close-modal" (click)="closeCrudModal()">✖</span>
+            <h3>Editar reservas</h3>
+            <div class="modal-fechaReserva">
+                <div class="modal-fechaReserva-inicio">
+                    <label>Fecha de incio de la reserva:</label><br>
+                    <input class="custom-flatpickr-input"
+                    [disable]="disabledDates" [(ngModel)]="fechaSelecionada" [minDate]="fechaActual" type="text" mwlFlatpickr
+                    placeholder="Selecciona un rango de fechas" />
+                </div>
+            </div>
+
+            <button class="open-btn" (click)="openModalHorario()">Seleccionar Horario</button>
+
+            <div class="modal-numeroMesa">
+                <p>Hora seleccionada: {{horaReservada}} </p>
+            </div>
+            <div class="btn-panel">
+                <button (click)="modificarReserva()" class="btn-opcion" type="submit">Guardar</button>
+            </div>
+        </div>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th># Mesa</th>
+                    <th>Fecha de reserva</th>
+                    <th>Hora reserva</th>
+                    <th>Correo</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Asistio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let reserva of todasReservasMesas">
+                    <td>{{ reserva.idReservaMesa}}</td>
+                    <td>{{ reserva.mesas.numeroMesa}}</td>
+                    <td>{{ reserva.fechaReserva | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{ reserva.horaReserva}}</td>
+                    <td>{{ reserva.usuario.correo}}</td>
+                    <td>{{ reserva.usuario.nombre}}</td>
+                    <td>{{ reserva.usuario.apellido}}</td>
+                    <td>{{ reserva.estadoReserva}}</td>
+                    <td>
+                        <button (click)="obtenerReserva(reserva.idReservaMesa)" (click)="openCrudModal(reserva.mesas.idMesa)" class="btn-opcion">Editar</button>
+                        <button class="btn-opcion">Cancelar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal-reserva" *ngIf="horarioOpen">
+    <div class="modal-hora-reserva">
+      <h2>Selecciona un horario</h2>
+      <ul>
+        <a *ngFor="let horario of horarios" (click)="seleccionarHorario(horario)">
+          <li>{{ horario }}</li>
+        </a>
+      </ul>      
+      <button (click)="closeModalHorario()" class="close-btn">Cerrar</button>
+    </div>
+</div>

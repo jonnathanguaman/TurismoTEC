@@ -22,6 +22,7 @@ import { CrudReservasHabitacionComponent } from './Components/crud-reservas-habi
 import { CrudPersonasComponent } from './Components/crud-personas/crud-personas.component';
 import { CrubEtiquetaHotelComponent } from './Components/crub-etiqueta-hotel/crub-etiqueta-hotel.component';
 import { CrudEtiquetaRestauranteComponent } from './Components/crud-etiqueta-restaurante/crud-etiqueta-restaurante.component';
+import { CrudReservasMesasComponent } from './Components/crud-reservas-mesas/crud-reservas-mesas.component';
 
 const routes: Routes = [
   {
@@ -91,6 +92,10 @@ const routes: Routes = [
       {
         path: "crud-reservaciones-habitaciones",
         component: CrudReservasHabitacionComponent
+      },
+      {
+        path: "crud-reservaciones-mesas",
+        component: CrudReservasMesasComponent
       },
       {
         path: "crudRestaurante",
