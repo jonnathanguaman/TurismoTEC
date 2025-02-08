@@ -48,7 +48,7 @@ export class LoginComponent{
                 this.loginService.asociado.subscribe({
                     next:(asociado) =>{
                       console.log("admin: " + admin)
-                      console.log("Asocidado: " + asociado)
+                      console.log("admin: " + asociado)
                       if(admin || asociado){
                         this.loginForm.reset()
                         this.router.navigateByUrl("/admin").then(()=>{window.location.reload()})
@@ -64,7 +64,10 @@ export class LoginComponent{
         },
         error:()=>{
           environment.mensajeToast("error","Credenciales invalidas","Usuario o contraseña incorrectas")
-        }
+        },
+        complete() {
+          window.location.reload()
+        },
         
       })
     }

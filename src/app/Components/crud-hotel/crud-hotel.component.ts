@@ -15,6 +15,7 @@ import { Habitaciones } from '../../Services/habitaciones/habitaciones';
 import { HabitacionesService } from '../../Services/habitaciones/habitaciones.service';
 import { ImagenesHabitacionesService } from '../../Services/imagenesHabitaciones/imagenes-habitaciones.service';
 import { ImagenesHabitacion } from '../../Services/imagenesHabitaciones/imagenesHabitacion';
+import { AuthService } from '../../Services/login/login.service';
 
 @Component({
     selector: 'app-crud-hotel',
@@ -36,7 +37,9 @@ export class CrudHotelComponent implements OnInit {
     etiquetasDelHotel!: EtiquetaHotel[];
     urlHost: string = environment.urlAut;
     public hotelAAsignar = new Hoteles();
+    idUsuario:number
 
+    asociado:boolean = false;
     constructor(
         private hotelesService: HotelesService,
         private habitacionesService: HabitacionesService,
@@ -45,12 +48,41 @@ export class CrudHotelComponent implements OnInit {
         private imagenesHotelesService: ImagenesHotelesService,
         private imagenesHabitacionesService: ImagenesHabitacionesService,
         private etiquetaHotelService: EtiquetaHotelService,
-        private authService: AuthRegisterService
+        private authService: AuthRegisterService,
+        private loginService:AuthService
     ) { }
 
     ngOnInit(): void {
-        this.obtenerHoteles();
+
+        this.loginService.asociado.subscribe({next:(asociado) =>{this.asociado = asociado}})
+
         this.obtenerLugaresDeAdmin();
+        
+        if(this.asociado){
+            this.obtenerHotelesDeAsociado();
+        }else{
+            this.obtenerHoteles();
+        }
+        
+    }
+
+    obtenerHoteles() {
+        this.hotelesService.getTodosHoteles().subscribe((hoteles) => {
+            this.todosHoteles = hoteles;
+        });
+    }
+
+    obtenerHotelesDeAsociado(){
+        const token = sessionStorage.getItem("token")//Obtenemos el token del sesionStorage
+        const payload: TokenPayload = jwtDecode(token); //Decodificamos el token, nos devuleve el nombre del usuario
+        this.authService.getIdPerson(payload.sub).subscribe({
+        next: (idUser) => {
+            this.hotelesService.getHotelesByIdUser(idUser).subscribe({
+                next:(hotelesUser)=>{
+                    this.todosHoteles = hotelesUser;
+                }
+            })
+        }})
     }
 
     obtenerLugaresDeAdmin() {
@@ -172,7 +204,11 @@ export class CrudHotelComponent implements OnInit {
                                 Promise.all(uploadPromises)
                                     .then(() => {
                                         environment.mensajeToast('success', 'Hotel creado', 'Se ha creado el hotel con exito');
-                                        this.obtenerHoteles();
+                                        if(this.asociado){
+                                            this.obtenerHotelesDeAsociado();
+                                        }else{
+                                            this.obtenerHoteles();
+                                        }
                                         this.closeCrudModal();
                                         this.hotelForm.reset();
                                         this.selectedFiles = [];
@@ -196,11 +232,7 @@ export class CrudHotelComponent implements OnInit {
         }
     }
 
-    obtenerHoteles() {
-        this.hotelesService.getTodosHoteles().subscribe((hoteles) => {
-            this.todosHoteles = hoteles;
-        });
-    }
+    
 
     eliminarHotel(idHotel: number) {
         const mensajeError = environment.mensajeEmergente(
@@ -212,7 +244,11 @@ export class CrudHotelComponent implements OnInit {
             if (confirmado) {
                 this.hotelesService.eliminarHotel(idHotel).subscribe({
                     next: () => {
-                        this.obtenerHoteles();
+                        if(this.asociado){
+                            this.obtenerHotelesDeAsociado();
+                        }else{
+                            this.obtenerHoteles();
+                        }
                         environment.mensajeToast(
                             'success',
                             'Eliminado con exito',
