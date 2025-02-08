@@ -39,13 +39,12 @@ export class CrudReservasHabitacionComponent implements OnInit{
     private loginService:AuthService,){}
     
   ngOnInit(): void {
-    console.log("Oninit")
     this.loginService.getRoles()
       this.loginService.admin.subscribe({
           next:(admin) =>{
             this.admin = admin
           }
-        })
+      })
 
     if(this.admin){
       this.obtenerReservas()

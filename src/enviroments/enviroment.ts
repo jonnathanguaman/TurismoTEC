@@ -5,8 +5,11 @@ export const environment = {
   production: false,
   urlHost: 'http://localhost:8080/public/v1',
   urlAut: 'http://localhost:8080',
-  urlMap: 'http://localhost:4200/lugar/',
+  urlMap: 'http://localhost:80/lugar/',
   
+  // urlHost: 'http://24.144.105.202:8080/public/v1',
+  // urlAut: 'http://24.144.105.202:8080',
+  // urlMap: 'http://24.144.105.202:80/lugar/',
   mensajeToast: (tipo: 'success' | 'error' | 'warning' | 'info' | 'question', mensajeCuerpo: string, footer: string) => {
     const Toast = Swal.mixin({
       toast: true,

@@ -15,6 +15,9 @@ export class ReservaMesaService {
   obtenerTodasLasReservasMesas():Observable<ReservaMesa[]>{
       return this.http.get<ReservaMesa[]>(environment.urlHost + "/reservaMesa")
   }
+  obtenerReservasByIdUser(idUser:number):Observable<ReservaMesa[]>{
+    return this.http.get<ReservaMesa[]>(`${environment.urlHost + "/reservasDeUsuarioMesas"}/${idUser}`)
+  }
 
   obtenerReservaById(idReserva:number):Observable<ReservaMesa>{
     return this.http.get<ReservaMesa>(`${environment.urlHost + "/reservaMesa"}/${idReserva}`)

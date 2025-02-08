@@ -5,6 +5,7 @@ import { environment } from '../../../enviroments/enviroment';
 import { TokenPayload } from '../../Services/DatosPersonales/TokenPayload ';
 import { jwtDecode } from 'jwt-decode';
 import { AuthRegisterService } from '../../Services/auth/authRegister.service';
+import { AuthService } from '../../Services/login/login.service';
 
 @Component({
   selector: 'app-crud-reservas-mesas',
@@ -13,10 +14,13 @@ import { AuthRegisterService } from '../../Services/auth/authRegister.service';
 })
 export class CrudReservasMesasComponent implements OnInit{
 
-  constructor(private readonly reservasMesasService:ReservaMesaService,
+  constructor(
+    private readonly reservasMesasService:ReservaMesaService,
     private readonly authService:AuthRegisterService,
+    private readonly loginService:AuthService,
   ){}
 
+  admin:boolean = false
   fechaActual:string =<string> <unknown>new Date()
   disabledDates = [''];
   horaReservada:string
@@ -27,9 +31,51 @@ export class CrudReservasMesasComponent implements OnInit{
   horaAsignada:string[] = [];
   idMesa:number
 
+  todasReservasMesas:ReservaMesa[]
+
   ngOnInit(): void {
-    this.obtenerReservasMesas()
+    this.loginService.getRoles()
+    this.loginService.admin.subscribe({
+      next:(admin)=>{
+        this.admin = admin
+      }
+    })
+
+    if(this.admin){
+      this.obtenerReservasMesas()
+    }else if(!this.admin){
+      this.obtenerReservasMesasByIdUsuario()
+    }
+    
   }
+
+ 
+
+    obtenerReservasMesas(){
+      console.log("Entro aqui")
+      this.reservasMesasService.obtenerTodasLasReservasMesas().subscribe({
+        next:(reservasMesas)=>{
+          this.todasReservasMesas = reservasMesas
+        }
+      })
+    }
+
+  obtenerReservasMesasByIdUsuario(){
+    console.log("Entro aqui")
+    const token = sessionStorage.getItem('token');
+    const payload: TokenPayload = jwtDecode(token);
+    this.authService.getIdPerson(payload.sub).subscribe({
+      next:(idPersona)=>{
+        console.log(idPersona)
+        this.reservasMesasService.obtenerReservasByIdUser(idPersona).subscribe({
+          next:(reservasUser)=>{
+            console.log(reservasUser)
+            this.todasReservasMesas = reservasUser
+          }
+        })
+      }})
+  }
+
   closeCrudModal() {
     this.limpiarDatos()
     this.isCrudModalOpen = false;
@@ -43,7 +89,6 @@ export class CrudReservasMesasComponent implements OnInit{
   }
 
   openModalHorario(){
-
       if(this.fechaSelecionada){
         this.horarioOpen = true
         this.horarios =[]
@@ -56,6 +101,7 @@ export class CrudReservasMesasComponent implements OnInit{
         environment.mensajeToast('warning', 'Por favor, seleccione una fecha', 'Es necesario elegir una fecha antes de continuar.');
       }
     }
+
     generarHorarios() {
       let start = 10;
       while (start < 20) {
@@ -108,15 +154,7 @@ export class CrudReservasMesasComponent implements OnInit{
       this.closeModalHorario()
     }
 
-    todasReservasMesas:ReservaMesa[]
-
-    obtenerReservasMesas(){
-      this.reservasMesasService.obtenerTodasLasReservasMesas().subscribe({
-        next:(reservasMesas)=>{
-          this.todasReservasMesas = reservasMesas
-        }
-      })
-    }
+    
 
 
     reservaMesa:ReservaMesa

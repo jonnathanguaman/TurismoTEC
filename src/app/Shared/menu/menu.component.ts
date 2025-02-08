@@ -67,11 +67,11 @@ export class MenuComponent implements OnInit{
     this.ocultarMenuVal = true
   }
 
-  perfil(){
-    this.router.navigateByUrl("/perfil").then(()=>{
-      window.location.reload()
-    });
-  }
+  // perfil(){
+  //   this.router.navigateByUrl("/perfil").then(()=>{
+  //     window.location.reload()
+  //   });
+  // }
 
   
 }

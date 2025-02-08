@@ -47,11 +47,11 @@ export class LoginComponent{
               next:(admin) =>{
                 console.log("admin: " + admin)
                 if(admin){
-                  
-                  this.router.navigateByUrl("/admin").then()
                   this.loginForm.reset()
+                  this.router.navigateByUrl("/admin").then(()=>{window.location.reload()})
+                  
                 }else{
-                this.router.navigateByUrl("/").then()
+                this.router.navigateByUrl("/").then(()=>{window.location.reload()})
                 }
               }
             }

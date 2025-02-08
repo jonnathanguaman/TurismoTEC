@@ -18,8 +18,9 @@ export class MenuAdminComponent {
     this.loginService.logOut()
   }
 
-  perfil(){
-    // Quite el reload por si da un error
-    this.router.navigateByUrl("/admin/crud-reservaciones-habitaciones")
-  }
+  // perfil(){
+  //   this.router.navigateByUrl("/admin/crud-reservaciones-habitaciones").then(()=>{
+  //     window.location.reload()
+  //   })
+  // }
 }
