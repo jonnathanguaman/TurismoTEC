@@ -17,6 +17,7 @@ import { Habitaciones } from '../../Services/habitaciones/habitaciones';
 export class CrudReservasHabitacionComponent implements OnInit{
 
   admin:boolean = true
+  asociado:boolean = false
   reserva:ReservaHatitacion
   disabledDates = [''];
   fechaActual:string =<string> <unknown>new Date()
@@ -34,22 +35,26 @@ export class CrudReservasHabitacionComponent implements OnInit{
 
   constructor(
     private reservaHotelService:ReservaHotelService,
-    private habitacionService:HabitacionesService,
     private authService: AuthRegisterService,
     private loginService:AuthService,){}
     
   ngOnInit(): void {
     this.loginService.getRoles()
-      this.loginService.admin.subscribe({
-          next:(admin) =>{
-            this.admin = admin
-          }
-      })
+    this.loginService.admin.subscribe({next:(admin) =>{this.admin = admin}})
+    this.loginService.asociado.subscribe({next:(asociado) =>{this.asociado = asociado}})
 
-    if(this.admin){
+    this.comprarHaQuienMostrar()
+  }
+
+  comprarHaQuienMostrar(){
+    if(this.admin && !this.asociado){
+      console.log("Entro en admin")
       this.obtenerReservas()
-    }else if(!this.admin){
+    }else if(!this.admin && !this.asociado){
+      console.log("Entro en usuario")
       this.obtenerReservacionesDeUsuarios()
+    }else if(this.asociado){
+      this.obtenerReservasDeHotelesByAsociado()
     }
   }
 
@@ -65,6 +70,19 @@ export class CrudReservasHabitacionComponent implements OnInit{
         })
       }
     })
+  }
+
+  obtenerReservasDeHotelesByAsociado(){
+    const token = sessionStorage.getItem('token');
+    const payload: TokenPayload = jwtDecode(token);
+    this.authService.getIdPerson(payload.sub).subscribe({
+      next:(idPersona)=>{
+        this.reservaHotelService.getReservasDeHotelesByAsociado(idPersona).subscribe({
+          next:(reservasUsuario)=>{
+            this.todasLasReservaciones = reservasUsuario 
+          }
+        })
+    }})
   }
 
   idHabitacion:number
@@ -203,11 +221,7 @@ export class CrudReservasHabitacionComponent implements OnInit{
         this.reservaHotelService.eliminarReservacion(idReservacion).subscribe({
           complete:()=>{
             environment.mensajeToast('success','Reservación cancelada','Se ha cancelado la reservacion con exito')
-            if(this.admin){
-              this.obtenerReservas()
-            }else if(!this.admin){
-              this.obtenerReservacionesDeUsuarios()
-            }
+            this.comprarHaQuienMostrar()
           }
         })
       }

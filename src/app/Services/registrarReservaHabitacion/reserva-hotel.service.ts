@@ -31,6 +31,10 @@ export class ReservaHotelService {
     return this.http.get<ReservaHatitacion>(`${environment.urlHost + "/reservasHabitaciones"}/${idReserva}`);
   }
 
+  getReservasDeHotelesByAsociado(idusuario:number):Observable<ReservaHatitacion[]>{
+    return this.http.get<ReservaHatitacion[]>(`${environment.urlHost + "/reservasDeHotelesDeAsociados"}/${idusuario}`)
+  }
+
   eliminarReservacion(idReserva:number):Observable<ReservaHatitacion>{
     return this.http.delete<ReservaHatitacion>(`${environment.urlHost + "/reservasHabitaciones"}/${idReserva}`);
   }
