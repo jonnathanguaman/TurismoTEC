@@ -44,15 +44,20 @@ export class LoginComponent{
           this.loginService.getRoles()
           this.loginService.admin.subscribe(
             {
-              next:(admin) =>{
-                console.log("admin: " + admin)
-                if(admin){
-                  this.loginForm.reset()
-                  this.router.navigateByUrl("/admin").then(()=>{window.location.reload()})
-                  
-                }else{
-                this.router.navigateByUrl("/").then(()=>{window.location.reload()})
-                }
+              next:(admin)=>{
+                this.loginService.asociado.subscribe({
+                    next:(asociado) =>{
+                      console.log("admin: " + admin)
+                      console.log("Asocidado: " + asociado)
+                      if(admin || asociado){
+                        this.loginForm.reset()
+                        this.router.navigateByUrl("/admin").then(()=>{window.location.reload()})
+                        
+                      }else{
+                      this.router.navigateByUrl("/").then(()=>{window.location.reload()})
+                      }
+                    }
+                })
               }
             }
           )

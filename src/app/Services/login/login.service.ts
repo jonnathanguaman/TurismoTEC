@@ -18,6 +18,7 @@ export class AuthService {
 
   admin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   user: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  asociado: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   currentUserLoginOn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   currentUserData: BehaviorSubject<String> = new BehaviorSubject<String>("");
 
@@ -50,9 +51,6 @@ export class AuthService {
     if (token) {
       try {
         const payload: TokenPayload = jwtDecode(token);
-  
-        // Consultar roles desde el backend
-        //Cambiar esto, esta mal, esta evaluando el id del usuario y no del auth
         this.authRegisterService.getAuth(payload.sub).subscribe({
           next: (idUser) => {
             this.authRolService.getRolesDeAuth(idUser.id_auth).subscribe({
@@ -60,15 +58,14 @@ export class AuthService {
   
                 console.log(auth)
                 auth.forEach((roles)=>{
-                  roles.rol.rolNombre
                   if(roles.rol.rolNombre === 'user'){
                     this.user.next(true);
                   }else if(roles.rol.rolNombre === 'admin'){
                     this.admin.next(true);
+                  } else if(roles.rol.rolNombre === 'asociado'){
+                    this.asociado.next(true)
                   }
                 })
-                // const isAdmin = auth.authorities.some((role: any) => role.authority === 'admin');
-                // const isUser = auth.authorities.some((role: any) => role.authority === 'user');
               },
               error: (err) => {
                 console.error('Error al obtener roles desde el backend:', err);
@@ -97,7 +94,6 @@ export class AuthService {
   }
 
   logOut():void{
-    
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("id");
     this.admin.next(false);
@@ -122,6 +118,9 @@ export class AuthService {
 
   get rolUser():Observable<boolean>{
     return this.user.asObservable();
+  }
+  get rolAsociado():Observable<boolean>{
+    return this.asociado.asObservable();
   }
 
   get userToken():String{

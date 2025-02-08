@@ -10,6 +10,7 @@ import { Router } from 'express';
 export class AppComponent implements OnInit{
 
   admin:boolean = false
+  asociado:boolean = false
 
   constructor(private loginService:AuthService){}
   
@@ -20,6 +21,13 @@ export class AppComponent implements OnInit{
         {
           next:(admin) =>{
             this.admin = admin
+          }
+        }
+      )
+      this.loginService.asociado.subscribe(
+        {
+          next:(asociado) =>{
+            this.asociado = asociado
           }
         }
       )
