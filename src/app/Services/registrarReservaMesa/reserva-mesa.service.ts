@@ -23,6 +23,10 @@ export class ReservaMesaService {
     return this.http.get<ReservaMesa>(`${environment.urlHost + "/reservaMesa"}/${idReserva}`)
   }
 
+  obtenerReservasDeMesasDeAsociados(idUser:number):Observable<ReservaMesa[]>{
+    return this.http.get<ReservaMesa[]>(`${environment.urlHost + "/reservasDeMesasDeAsociados"}/${idUser}`)
+  }
+
   registarReserva(reserva:ReservaMesa, idUsuario:number, idMesa:number):Observable<ReservaMesa>{
     return this.http.post<ReservaMesa>(`${environment.urlHost + "/reservaMesa"}/${idUsuario}/${idMesa}`,reserva)
   }

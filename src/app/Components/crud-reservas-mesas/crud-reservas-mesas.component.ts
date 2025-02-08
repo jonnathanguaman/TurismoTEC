@@ -21,6 +21,8 @@ export class CrudReservasMesasComponent implements OnInit{
   ){}
 
   admin:boolean = false
+  asociado:boolean = false
+
   fechaActual:string =<string> <unknown>new Date()
   disabledDates = [''];
   horaReservada:string
@@ -35,30 +37,42 @@ export class CrudReservasMesasComponent implements OnInit{
 
   ngOnInit(): void {
     this.loginService.getRoles()
-    this.loginService.admin.subscribe({
-      next:(admin)=>{
-        this.admin = admin
-      }
-    })
-
-    if(this.admin){
-      this.obtenerReservasMesas()
-    }else if(!this.admin){
-      this.obtenerReservasMesasByIdUsuario()
-    }
-    
+    this.loginService.admin.subscribe({next:(admin)=>{this.admin = admin}})
+    this.loginService.asociado.subscribe({next:(asociado) =>{this.asociado = asociado}})
+    this.comprarHaQuienMostrar()
   }
 
- 
+  comprarHaQuienMostrar(){
+    if(this.admin && !this.asociado){
+      this.obtenerReservasMesas()
+    }else if(!this.admin && !this.asociado){
+      console.log("Entro en usuario")
+      this.obtenerReservasMesasByIdUsuario()
+    }else if(this.asociado){
+      this.obtenerReservasDeMesasDeAsociados()
+    }
+  }
 
-    obtenerReservasMesas(){
+  obtenerReservasMesas(){
       console.log("Entro aqui")
       this.reservasMesasService.obtenerTodasLasReservasMesas().subscribe({
         next:(reservasMesas)=>{
           this.todasReservasMesas = reservasMesas
         }
+    })
+  }
+  obtenerReservasDeMesasDeAsociados(){
+    const token = sessionStorage.getItem('token');
+    const payload: TokenPayload = jwtDecode(token);
+    this.authService.getIdPerson(payload.sub).subscribe({
+      next:(idPersona)=>{
+        this.reservasMesasService.obtenerReservasDeMesasDeAsociados(idPersona).subscribe({
+          next:(reservasMesasAsociados)=>{
+            this.todasReservasMesas = reservasMesasAsociados
+          }
       })
-    }
+    }})
+  }
 
   obtenerReservasMesasByIdUsuario(){
     console.log("Entro aqui")
