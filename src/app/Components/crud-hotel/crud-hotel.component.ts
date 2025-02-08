@@ -38,8 +38,8 @@ export class CrudHotelComponent implements OnInit {
     urlHost: string = environment.urlAut;
     public hotelAAsignar = new Hoteles();
     idUsuario:number
-
     asociado:boolean = false;
+    
     constructor(
         private hotelesService: HotelesService,
         private habitacionesService: HabitacionesService,

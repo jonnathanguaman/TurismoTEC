@@ -11,6 +11,7 @@ import { TokenPayload } from '../../Services/DatosPersonales/TokenPayload ';
 import { jwtDecode } from 'jwt-decode';
 import { Lugares } from '../../Services/Lugares/lugares';
 import { LugaresService } from '../../Services/Lugares/lugares.service';
+import { AuthService } from '../../Services/login/login.service';
 
 @Component({
     selector: 'app-crud-restaurante',
@@ -59,6 +60,8 @@ export class CrudRestauranteComponent implements OnInit {
     idLugarSeleccionado: number;
     etiquetasDelRestaurante!: EtiquetaRestaurante[];
     urlHost: string = environment.urlAut;
+    asociado:boolean = false;
+
     public restauranteAAsignar = new Restaurante();
 
     constructor(
@@ -67,12 +70,19 @@ export class CrudRestauranteComponent implements OnInit {
         private fb: FormBuilder,
         private imagenesRestaurantesService: ImagenesRestaurantesService,
         private etiquetaRestauranteService: EtiquetaRestauranteService,
-        private authService: AuthRegisterService
+        private authService: AuthRegisterService,
+        private loginService:AuthService
     ) { }
 
     ngOnInit(): void {
-        this.obtenerRestaurantes();
+        this.loginService.asociado.subscribe({next:(asociado) =>{this.asociado = asociado}})
+        
         this.obtenerLugaresDeAdmin();
+        if(this.asociado){
+            this.obtenerRestaurantesDeAsociado();
+        }else{
+            this.obtenerRestaurantes();
+        }
     }
 
     restauranteForm = this.fb.group({
@@ -83,6 +93,25 @@ export class CrudRestauranteComponent implements OnInit {
         descripcion: ['', [Validators.required]],
         menu: ['', [Validators.required]]
     });
+    
+    obtenerRestaurantes() {
+        this.restaurantesService.getTodosRestaurantes().subscribe((restaurantes) => {
+            this.todosRestaurantes = restaurantes;
+        });
+    }
+
+    obtenerRestaurantesDeAsociado(){
+        const token = sessionStorage.getItem("token")//Obtenemos el token del sesionStorage
+        const payload: TokenPayload = jwtDecode(token); //Decodificamos el token, nos devuleve el nombre del usuario
+        this.authService.getIdPerson(payload.sub).subscribe({
+        next: (idUser) => {
+            this.restaurantesService.getRestaurantesByIdUser(idUser).subscribe({
+                next:(restauranteUser)=>{
+                    this.todosRestaurantes = restauranteUser;
+                }
+            })
+        }})
+    }
 
     obtenerLugaresDeAdmin() {
         this.lugaresService.getTodosLugaresDeAdmin().subscribe({
@@ -189,7 +218,11 @@ export class CrudRestauranteComponent implements OnInit {
                                 Promise.all(uploadPromises)
                                     .then(() => {
                                         environment.mensajeToast('success', 'Hotel creado', 'Se ha creado el hotel con exito');
-                                        this.obtenerRestaurantes();
+                                        if(this.asociado){
+                                            this.obtenerRestaurantesDeAsociado();
+                                        }else{
+                                            this.obtenerRestaurantes();
+                                        }
                                         this.closeCrudModal();
                                         this.restauranteForm.reset();
                                         this.selectedFiles = [];
@@ -213,11 +246,7 @@ export class CrudRestauranteComponent implements OnInit {
         }
     }
 
-    obtenerRestaurantes() {
-        this.restaurantesService.getTodosRestaurantes().subscribe((restaurantes) => {
-            this.todosRestaurantes = restaurantes;
-        });
-    }
+    
 
     eliminarRestaurante(idRestaurante: number) {
         const mensajeError = environment.mensajeEmergente(
@@ -229,7 +258,11 @@ export class CrudRestauranteComponent implements OnInit {
             if (confirmado) {
                 this.restaurantesService.eliminarRestaurante(idRestaurante).subscribe({
                     next: () => {
-                        this.obtenerRestaurantes();
+                        if(this.asociado){
+                            this.obtenerRestaurantesDeAsociado();
+                        }else{
+                            this.obtenerRestaurantes();
+                        }
                         environment.mensajeToast(
                             'success',
                             'Eliminado con exito',
