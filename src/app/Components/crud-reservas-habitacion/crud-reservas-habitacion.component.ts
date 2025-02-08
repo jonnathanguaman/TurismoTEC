@@ -8,6 +8,8 @@ import { AuthRegisterService } from '../../Services/auth/authRegister.service';
 import { AuthService } from '../../Services/login/login.service';
 import { environment } from '../../../enviroments/enviroment';
 import { Habitaciones } from '../../Services/habitaciones/habitaciones';
+import { ImagenesHabitacion } from '../../Services/imagenesHabitaciones/imagenesHabitacion';
+import { ImagenesHabitacionesService } from '../../Services/imagenesHabitaciones/imagenes-habitaciones.service';
 
 @Component({
   selector: 'app-crud-reservas-habitacion',
@@ -22,6 +24,7 @@ export class CrudReservasHabitacionComponent implements OnInit{
   disabledDates = [''];
   fechaActual:string =<string> <unknown>new Date()
 
+  urlHost: string = environment.urlAut;
   
   rangeValue: { Desde: Date; hasta: Date } = {
     Desde: null,
@@ -36,7 +39,9 @@ export class CrudReservasHabitacionComponent implements OnInit{
   constructor(
     private reservaHotelService:ReservaHotelService,
     private authService: AuthRegisterService,
-    private loginService:AuthService,){}
+    private loginService:AuthService,
+    private imagenesHabitacionesService: ImagenesHabitacionesService,
+  ){}
     
   ngOnInit(): void {
     this.loginService.getRoles()
@@ -58,6 +63,20 @@ export class CrudReservasHabitacionComponent implements OnInit{
     }
   }
 
+  obtenerReservas(){
+    this.reservaHotelService.getReservasHabitaciones().subscribe({
+      next:(reservas)=>{
+        console.log(reservas)
+        this.todasLasReservaciones = reservas
+        this.todasLasReservaciones.forEach((reservas)=>{
+          this.obtenerImagesDeHabitaciones(reservas.habitaciones.idHabitacion).then((img)=>{
+            reservas.habitaciones.imagenesHabitaciones = img
+          })
+        })
+      }
+    })
+  }
+
   obtenerReservacionesDeUsuarios(){
     const token = sessionStorage.getItem('token');
     const payload: TokenPayload = jwtDecode(token);
@@ -66,6 +85,11 @@ export class CrudReservasHabitacionComponent implements OnInit{
         this.reservaHotelService.getReservasUser(idPersona).subscribe({
           next:(reservasUsuario)=>{
             this.todasLasReservaciones = reservasUsuario 
+            this.todasLasReservaciones.forEach((reservas)=>{
+              this.obtenerImagesDeHabitaciones(reservas.habitaciones.idHabitacion).then((img)=>{
+                reservas.habitaciones.imagenesHabitaciones = img
+              })
+            })
           }
         })
       }
@@ -80,10 +104,24 @@ export class CrudReservasHabitacionComponent implements OnInit{
         this.reservaHotelService.getReservasDeHotelesByAsociado(idPersona).subscribe({
           next:(reservasUsuario)=>{
             this.todasLasReservaciones = reservasUsuario 
+            this.todasLasReservaciones.forEach((reservas)=>{
+              this.obtenerImagesDeHabitaciones(reservas.habitaciones.idHabitacion).then((img)=>{
+                reservas.habitaciones.imagenesHabitaciones = img
+              })
+            })
           }
         })
     }})
   }
+
+  obtenerImagesDeHabitaciones(idHoteles:number):Promise<ImagenesHabitacion[]>{
+    return new Promise((resolve,reject) =>{
+      this.imagenesHabitacionesService.getImagenesByIdHabitacion(idHoteles).subscribe(
+          imgHoteles => resolve(imgHoteles),
+          error => reject(error)
+        )
+    })
+}
 
   idHabitacion:number
   openCrudModal(idHabitacion:number) {
@@ -102,14 +140,7 @@ export class CrudReservasHabitacionComponent implements OnInit{
     this.isCrudModalOpen = false;
   }
 
-  obtenerReservas(){
-    this.reservaHotelService.getReservasHabitaciones().subscribe({
-      next:(reservas)=>{
-        console.log(reservas)
-        this.todasLasReservaciones = reservas
-      }
-    })
-  }
+  
   
   limpiarFecha(){
     this.rangeValue = { Desde: null, hasta: null };
