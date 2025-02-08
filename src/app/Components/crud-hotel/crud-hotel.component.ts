@@ -16,6 +16,8 @@ import { HabitacionesService } from '../../Services/habitaciones/habitaciones.se
 import { ImagenesHabitacionesService } from '../../Services/imagenesHabitaciones/imagenes-habitaciones.service';
 import { ImagenesHabitacion } from '../../Services/imagenesHabitaciones/imagenesHabitacion';
 import { AuthService } from '../../Services/login/login.service';
+import { lastValueFrom } from 'rxjs';
+import { ImagenesHoteles } from '../../Services/imagenesHoteles/imagesHoteles';
 
 @Component({
     selector: 'app-crud-hotel',
@@ -69,7 +71,21 @@ export class CrudHotelComponent implements OnInit {
     obtenerHoteles() {
         this.hotelesService.getTodosHoteles().subscribe((hoteles) => {
             this.todosHoteles = hoteles;
+            this.todosHoteles.forEach((hoteles)=>{
+                this.obtenerImagesDeHoteles(hoteles.idHotel).then((img)=>{
+                    hoteles.imagenesHoteles = img
+                })
+            })
         });
+    }
+
+    obtenerImagesDeHoteles(idHoteles:number):Promise<ImagenesHoteles[]>{
+        return new Promise((resolve,reject) =>{
+          this.imagenesHotelesService.getImagenesByIdHoteles(idHoteles).subscribe(
+              imgHoteles => resolve(imgHoteles),
+              error => reject(error)
+            )
+        })
     }
 
     obtenerHotelesDeAsociado(){
@@ -80,6 +96,11 @@ export class CrudHotelComponent implements OnInit {
             this.hotelesService.getHotelesByIdUser(idUser).subscribe({
                 next:(hotelesUser)=>{
                     this.todosHoteles = hotelesUser;
+                    this.todosHoteles.forEach((hoteles)=>{
+                        this.obtenerImagesDeHoteles(hoteles.idHotel).then((img)=>{
+                            hoteles.imagenesHoteles = img
+                        })
+                    })
                 }
             })
         }})
@@ -231,8 +252,6 @@ export class CrudHotelComponent implements OnInit {
                 'error', 'Error al registrar', 'Ingrese todos los campos y seleccione las imágenes else');
         }
     }
-
-    
 
     eliminarHotel(idHotel: number) {
         const mensajeError = environment.mensajeEmergente(
@@ -498,6 +517,4 @@ export class CrudHotelComponent implements OnInit {
         //     this.rooms.splice(index, 1); // Eliminar la habitación seleccionada
         // }
     }
-
-
 }

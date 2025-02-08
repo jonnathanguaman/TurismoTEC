@@ -12,6 +12,7 @@ import { jwtDecode } from 'jwt-decode';
 import { Lugares } from '../../Services/Lugares/lugares';
 import { LugaresService } from '../../Services/Lugares/lugares.service';
 import { AuthService } from '../../Services/login/login.service';
+import { ImagenesRestaurantes } from '../../Services/imagenesRestaurantes/imagenesRestaurantes';
 
 @Component({
     selector: 'app-crud-restaurante',
@@ -97,7 +98,22 @@ export class CrudRestauranteComponent implements OnInit {
     obtenerRestaurantes() {
         this.restaurantesService.getTodosRestaurantes().subscribe((restaurantes) => {
             this.todosRestaurantes = restaurantes;
+            this.todosRestaurantes.forEach((restaurante)=>{
+                console.log("Entro aqui")
+                this.obtenerImagesDeRestaurantes(restaurante.idRestaurante).then((img)=>{
+                    restaurante.imagenesRestaurantes = img
+                })
+            })
         });
+    }
+
+    obtenerImagesDeRestaurantes(idRestaurante:number):Promise<ImagenesRestaurantes[]>{
+        return new Promise((resolve,reject) =>{
+          this.imagenesRestaurantesService.getImagenesByIdRestaurantes(idRestaurante).subscribe(
+              imgRestaurante => resolve(imgRestaurante),
+              error => reject(error)
+            )
+        })
     }
 
     obtenerRestaurantesDeAsociado(){

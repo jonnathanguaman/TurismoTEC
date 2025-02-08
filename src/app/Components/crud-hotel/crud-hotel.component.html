@@ -233,6 +233,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>Imagen</th>
                     <th>Nombre</th>
                     <th>Dirección</th>
                     <th>Descripción</th>
@@ -242,6 +243,11 @@
             </thead>
             <tbody>
                 <tr *ngFor="let hotel of todosHoteles">
+                    <td>
+                        <div class="img-preview" id="preview1">
+                            <img [src]="[urlHost + hotel.imagenesHoteles[1].url]" alt="Vista previa">
+                        </div>
+                    </td>
                     <td>{{ hotel.nombre }}</td>
                     <td>{{ hotel.direccion }}</td>
                     <td>{{ hotel.descripcion }}</td>

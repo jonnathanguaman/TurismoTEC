@@ -197,6 +197,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>Imagen</th>
                     <th>Nombre</th>
                     <th>Dirección</th>
                     <th>Descripción</th>
@@ -207,6 +208,11 @@
             </thead>
             <tbody>
                 <tr *ngFor="let restaurante of todosRestaurantes">
+                    <td>
+                        <div class="img-preview" id="preview1">
+                            <img [src]="[urlHost + restaurante.imagenesRestaurantes[1].url]" alt="Vista previa">
+                        </div>
+                    </td>
                     <td>{{ restaurante.nombre }}</td>
                     <td>{{ restaurante.direccion }}</td>
                     <td>{{ restaurante.descripcion }}</td>
