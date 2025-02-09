@@ -1,5 +1,14 @@
 <form #form="ngForm">
     <div class="formularioSugerencia">
+
+        <div class="imgContainer-item">
+            <div  class="img-preview" id="preview1">
+                <img [src]="imagePreviews[0]" alt="Vista previa">
+            </div>
+            <label for="file1" class="file-label">Subir imagen</label>
+            <input accept="image/*" (change)="onFileSelected($event,0)" type="file" id="file1" class="file-input" accept="image/*" onchange="previewImage(event, 'preview1')">
+        </div>
+        
         <!-- Nombre -->
         <div class="datos-personales" [ngClass]="{'datosPersonalesTrue': editar}">
             <div class="datos-personales-items input-group">

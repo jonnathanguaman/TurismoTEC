@@ -6,4 +6,5 @@ export class DatosPersona{
     paisOrigen!:string;
     idioma!:string;
     correo!:string
+    urlImageUser:string
 }

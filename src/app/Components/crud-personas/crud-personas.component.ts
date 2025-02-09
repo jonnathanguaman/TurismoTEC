@@ -42,6 +42,7 @@ export class CrudPersonasComponent implements OnInit{
     paisOrigen:['',[Validators.required]],
     idioma:['',[Validators.required]],
     correo:['',[Validators.required, Validators.email]],
+    urlImageUser:['']
   })
 
   authForm = this.fb.group({
@@ -50,6 +51,11 @@ export class CrudPersonasComponent implements OnInit{
     password:['',[Validators.required]],
     id_usuario:['',[Validators.required]],  
   })
+  
+  get urlImageUser(){
+    return this.personaForm.controls.urlImageUser;
+  }
+
   get nombre(){
     return this.personaForm.controls.nombre;
   }

@@ -37,7 +37,7 @@ export class DatosPersonalesComponent implements OnInit {
   pais: string = '';
   fechaNacimiento!: Date;
   correo:string=''
-
+  urlHost:string = environment.urlAut
   closeCrudModalPassword() {
     this.isCrudModalOpen = false
   }
@@ -85,6 +85,10 @@ export class DatosPersonalesComponent implements OnInit {
         this.authService.getIdPerson(payload.sub).subscribe({
           next: (idUser) => {
             this.datosService.getPersonById(idUser).subscribe((person) => {
+
+              this.imagePreviews.push(this.urlHost + person.urlImageUser)
+              
+              this.obtenerFile(this.obtenerNombreDeLaFoto(person.urlImageUser))
               this.idioma = person.idioma;
               this.nombre = person.nombre;
               this.apellido = person.apellido;
@@ -214,8 +218,13 @@ export class DatosPersonalesComponent implements OnInit {
     this.persona.correo = this.correo;
     console.log(this.persona)
     this.datosService.actualizarPersona(this.persona,this.userId).subscribe({
-      next:()=>{
-        environment.mensajeToast('success','Editado con exito','Los datos del usuario han sido editados con exito')
+      next:(usuario)=>{
+        const uploadPromises = this.selectedFiles.map((file) =>
+        this.datosService.guardarImagenDeUser(file,usuario.id_Usuario).toPromise());
+        Promise.all(uploadPromises)
+          .then(() => {
+            environment.mensajeToast('success','Editado con exito','Los datos del usuario han sido editados con exito')
+        })
       }
     })
   }
@@ -262,4 +271,41 @@ export class DatosPersonalesComponent implements OnInit {
       environment.mensajeToast('warning','Ingrese el usuario','')
   }
   }
+
+  imagePreviews: string[] = [];
+  selectedFiles: File[] = [];
+  
+  onFileSelected(event: Event, index: number): void {
+    
+    //Esto es javaScrip basico solo que en lenguaje de ts
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    
+    if (file) {
+      this.selectedFiles[0] = file;
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        this.imagePreviews[index] = e.target?.result as string;
+      };
+
+      reader.readAsDataURL(file);
+    } else {
+      this.imagePreviews[index] = null;
+    }
+  }
+
+  //Obtenemos el la foto en tipo archivo de un lugar en especifico y las agregamos al los arrays para poder subir cuando hacemos el update
+  obtenerFile(nombreFoto: string) {
+    this.datosService.getFile(nombreFoto).subscribe((file: Blob) => {
+      const fileFromBlob = new File([file], nombreFoto, { type: file.type });
+      this.selectedFiles.push(fileFromBlob)
+    });
+  }
+  
+  //Obtenermos el nomnbre el archivo para poder buscarlo en la base de datos y obtener el archivo en formato blob
+  obtenerNombreDeLaFoto(url: string): string {
+    const parts = url.split('/');
+    return parts[parts.length - 1];
+  }
+  
 }

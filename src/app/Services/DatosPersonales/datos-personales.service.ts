@@ -31,4 +31,19 @@ export class DatosPersonalesService {
     return this.http.delete<DatosPersona>(`${environment.urlAut+"/public/api/usuario"}/${idPersona}`)
   }
 
+  guardarImagenDeUser(file: File, idUser:number): Observable<string> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http.put<string>(
+     `${environment.urlAut + '/public/api/usuarioImagen'}/${idUser}`,formData);
+  }
+
+
+  //Obtenernos los archivos de las images por nombre de imagen 
+  getFile(fileName: string) {
+    return this.http.get(`${environment.urlAut + '/public/api/imagePerfilUsuario/file'}/${fileName}`, {
+      responseType: 'blob', // Importante para manejar archivos binarios
+    });
+  }
 }
