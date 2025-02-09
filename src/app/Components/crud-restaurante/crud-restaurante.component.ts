@@ -31,7 +31,7 @@ export class CrudRestauranteComponent implements OnInit {
     todosLosLugaresCreadosPorAdmin!: Lugares[];
     idRestaurante: number;
     idLugarSeleccionado: number;
-    etiquetasDelRestaurante!: EtiquetaRestaurante[];
+    etiquetasDelRestaurante: EtiquetaRestaurante[];
     urlHost: string = environment.urlAut;
     asociado:boolean = false;
 
@@ -208,9 +208,12 @@ export class CrudRestauranteComponent implements OnInit {
                         .guardarRestaurante(this.restauranteForm.value as unknown as Restaurante, idUser, this.idLugarSeleccionado).subscribe({
                             next: (restauranteCreado: Restaurante) => {
                                 this.idRestaurante = restauranteCreado.idRestaurante;
+                                console.log("Imagenes create"+this.selectedFiles)
                                 const uploadPromises = this.selectedFiles.map((file) =>
                                     this.imagenesRestaurantesService.uploadImage(file, restauranteCreado.idRestaurante).toPromise());
-                                Promise.all(uploadPromises)
+                                    console.log(restauranteCreado.idRestaurante)
+                                
+                                    Promise.all(uploadPromises)
                                     .then(() => {
                                         environment.mensajeToast('success', 'Hotel creado', 'Se ha creado el hotel con exito');
                                         if(this.asociado){
@@ -311,20 +314,18 @@ export class CrudRestauranteComponent implements OnInit {
     }
 
     obtenerImagesDeRestaurante(id: number) {
+        this.imagePreviews = []; 
+        this.selectedFiles = [];
+
         this.imagePreviews = new Array
-        this.imagenesRestaurantesService.getImagenesByIdRestaurantes(id).subscribe({
-            next: (imgRestaurantes) => {
-                imgRestaurantes.forEach((Hotel) => {
+        this.imagenesRestaurantesService.getImagenesByIdRestaurantes(id).subscribe(imgRestaurante =>{
+            imgRestaurante.forEach((Hotel) => {
 
-                    //Contruimos la url para la previsualizacion
-                    this.imagePreviews.push(this.urlHost + Hotel.url)
-                    this.obtenerFile(this.obtenerNombreDeLaFoto(Hotel.url))
-
-                })
-            },
-            error: (e) => {
-                console.log("Error al obtener imagenes" + e)
-            }
+                //Contruimos la url para la previsualizacion
+                this.imagePreviews.push(this.urlHost + Hotel.url)
+                this.obtenerFile(this.obtenerNombreDeLaFoto(Hotel.url))
+                console.log(this.selectedFiles)
+            })
         })
     }
 
