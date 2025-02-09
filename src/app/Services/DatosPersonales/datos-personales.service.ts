@@ -10,14 +10,15 @@ import { Persona } from './persona';
 })
 export class DatosPersonalesService {
 
-  private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
-
   constructor(private http:HttpClient) { }
 
   guardarPesona(datosPersonales:DatosPersona):Observable<DatosPersona>{
-    return this.http.post<DatosPersona>(environment.urlAut+"/public/api/usuario",datosPersonales,{headers:this.httpHeaders})
+    return this.http.post<DatosPersona>(environment.urlAut+"/public/api/usuario",datosPersonales)
   }
 
+  actualizarPersona(datosPersonales:DatosPersona,idPersona:number):Observable<DatosPersona>{
+    return this.http.put<DatosPersona>(`${environment.urlAut+"/public/api/usuario"}/${idPersona}`,datosPersonales)
+  }
   getPersonById(id:number):Observable<any>{
     return this.http.get<any>(`${environment.urlAut+"/public/api/usuario"}/${id}`)
   }

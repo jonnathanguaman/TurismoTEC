@@ -46,7 +46,7 @@
             <div [ngClass]="{'datos-personales': !editar, 'datosPersonalesTrue': editar}">
                 <div class="datos-personales-items">
                     <i class="bi bi-calendar-check-fill icono"></i>
-                    <input type="number" id="edad" name="edad" [(ngModel)]="edad" #auxedad="ngModel" required min="18" [disabled]="editar"/>
+                    <input type="date" id="fechaNacimiento" name="fechaNacimiento" [(ngModel)]="fechaNacimiento" #auxedad="ngModel" required min="18" [disabled]="editar"/>
                     <label for="edad">Edad</label>
                 </div>
             </div>
@@ -84,7 +84,7 @@
         </div>
 
         <!-- Usuario -->
-        <div>
+        <div *ngIf="!userloginOn">
             <div [ngClass]="{'datos-personales': !editar, 'datosPersonalesTrue': editar}">
                 <div class="datos-personales-items">
                     <i class="bi bi-person-circle icono"></i>
@@ -98,7 +98,7 @@
         </div>
 
         <!-- Contraseña -->
-        <div>
+        <div *ngIf="!userloginOn">
             <div [ngClass]="{'datos-personales': !editar, 'datosPersonalesTrue': editar}">
                 <div class="datos-personales-items">
                     <i class="bi bi-key-fill icono"></i>
@@ -114,8 +114,34 @@
         <!-- Botones -->
         <div class="btn">
             <button (click)="registrarPersona()" *ngIf="!userloginOn" type="submit" class="botonRegistrar">Registrar</button>
-            <button (click)="registrarPersona()" *ngIf="!editar && userloginOn" type="submit" class="botonRegistrar">Guardar</button>
+            <button (click)="actualizarPersona()" *ngIf="!editar && userloginOn" type="submit" class="botonRegistrar">Actualizar datos personales</button>
+            <button (click)="openCrudModalUsername()" *ngIf="!editar && userloginOn" type="submit" class="botonRegistrar">Actualizar usuario</button>
+            <button (click)="openCrudModalPassword()" *ngIf="!editar && userloginOn" type="submit" class="botonRegistrar">Actualizar contraseña</button>
             <button [ngClass]="{'botonEditar': editar, 'botonEditarTrue': !editar}" (click)="activarModoEditar()" type="button">Editar</button>
         </div>
     </div>
 </form>
+
+<!-- Modal para el CRUD PASSWORD -->
+<div class="crud-modal" *ngIf="isCrudModalOpen">
+    <div class="crud-modal-content">
+        <span class="close-modal" (click)="closeCrudModalPassword()">✖</span>
+        <h2>Actualizar Contraseña</h2>
+        <input type="password" id="contrasena" name="contrasena" [(ngModel)]="contrasena" #auxcontrasena="ngModel" required minlength="6">
+            <div class="buttons">
+                <button (click)="actualizarPassword()" class="update-btn">Actualizar</button>
+            </div>
+    </div>
+</div>
+
+<!-- Modal para el CRUD User name -->
+<div class="crud-modal" *ngIf="isCrudModalUsernameOpen">
+    <div class="crud-modal-content">
+        <span class="close-modal" (click)="closeCrudModalUsername()">✖</span>
+        <h2>Actualizar Usuario</h2>
+        <input type="text" id="usuario" name="usuario" [(ngModel)]="usuario" #auxusuario="ngModel" required>
+            <div class="buttons">
+                <button (click)="actualizarUsername()" class="update-btn">Actualizar</button>
+            </div>
+    </div>
+</div>

@@ -217,51 +217,53 @@
                         </div>
                     </div>
 
-
-                    <div class="btn-panel">
+                    <<<<<<< HEAD <div class="btn-panel">
                         <button class="btn-opcion" type="submit" (click)="crearRestaurante()">Guardar</button>
-                    </div>
-                </form>
             </div>
+            =======
+            <button type="submit" class="btn-opcion">Guardar</button>
+            >>>>>>> 1a1b55cbad1ab1afd4c8285990e78e90acbb9426
+            </form>
         </div>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Dirección</th>
-                        <th>Descripción</th>
-                        <th>Teléfono</th>
-                        <th>Menú</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let restaurante of todosRestaurantes">
-                        <td>{{ restaurante.nombre }}</td>
-                        <td>{{ restaurante.direccion }}</td>
-                        <td>{{ restaurante.descripcion }}</td>
-                        <td>{{ restaurante.telefono }}</td>
-                        <td>{{ restaurante.menu }}</td>
-                        <td>
-                            <button (click)="guardarIdRestaurante(restaurante.idRestaurante)"
-                                (click)="abrirModalEtiqueta()" class="btn-opcion">Agregar/quitar etiquetas</button>
-                            <button class="btn-opcion" (click)="openMesaModal()">Crear/Editar mesas</button>
-                            <button (click)="guardarIdRestaurante(restaurante.idRestaurante)"
-                                (click)="obtenerImagesDeRestaurante(restaurante.idRestaurante)"
-                                (click)="obtenerRestauranteById(restaurante.idRestaurante)"
-                                class="btn-opcion">Editar</button>
-                            <button class="btn-opcion"
-                                (click)="eliminarRestaurante(restaurante.idRestaurante)">Eliminar</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="modal-agrgarEtiquetas" *ngIf="modalEtiqueta">
-            <div class="model-agregarEtiquetas-content">
-                <span class="close-modal" (click)="cerrarModalEtiqueta()">✖</span>
-
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Dirección</th>
+                    <th>Descripción</th>
+                    <th>Teléfono</th>
+                    <th>Menú</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let restaurante of todosRestaurantes">
+                    <td>{{ restaurante.nombre }}</td>
+                    <td>{{ restaurante.direccion }}</td>
+                    <td>{{ restaurante.descripcion }}</td>
+                    <td>{{ restaurante.telefono }}</td>
+                    <td>{{ restaurante.menu }}</td>
+                    <td>
+                        <button (click)="guardarIdRestaurante(restaurante.idRestaurante)" (click)="abrirModalEtiqueta()"
+                            class="btn-opcion">Agregar/quitar etiquetas</button>
+                        <button class="btn-opcion" (click)="openMesaModal()">Crear/Editar mesas</button>
+                        <button (click)="guardarIdRestaurante(restaurante.idRestaurante)"
+                            (click)="obtenerImagesDeRestaurante(restaurante.idRestaurante)"
+                            (click)="obtenerRestauranteById(restaurante.idRestaurante)"
+                            class="btn-opcion">Editar</button>
+                        <button class="btn-opcion"
+                            (click)="eliminarRestaurante(restaurante.idRestaurante)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-agrgarEtiquetas" *ngIf="modalEtiqueta">
+        <div class="model-agregarEtiquetas-content">
+            <span class="close-modal" (click)="cerrarModalEtiqueta()">✖</span>
+            <form>
                 <div class="model-agregarEtiquetas-content-agregar">
                     <div class="modal-agregarEtiquetas-title">
                         <h3>Agrega etiquetas</h3>
@@ -288,6 +290,82 @@
                             <button (click)="eliminarEtiqueta(etiqueta)"
                                 class="etiqueta-boton">{{etiqueta.etiqueta}}</button>
                         </div>
+                        <label for="file2" class="file-label">Subir imagen</label>
+                        <input accept="image/*" (change)="onFileSelected($event,1)" type="file" id="file2"
+                            class="file-input" accept="image/*" onchange="previewImage(event, 'preview2')">
+                    </div>
+                    <div class="imgContainer-item">
+                        <div class="img-preview" id="preview3">
+                            <img [src]="imagePreviews[2]" alt="Vista previa">
+                        </div>
+                        <label for="file3" class="file-label">Subir imagen</label>
+                        <input accept="image/*" (change)="onFileSelected($event,2)" type="file" id="file3"
+                            class="file-input" accept="image/*" onchange="previewImage(event, 'preview3')">
+                    </div>
+                </div>
+
+
+                <div class="btn-panel">
+                    <button class="btn-opcion" type="submit" (click)="crearRestaurante()">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Dirección</th>
+                    <th>Descripción</th>
+                    <th>Teléfono</th>
+                    <th>Menú</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let restaurante of todosRestaurantes">
+                    <td>
+                        <div class="img-preview" id="preview1">
+                            <img [src]="[urlHost + restaurante.imagenesRestaurantes[1].url]" alt="Vista previa">
+                        </div>
+                    </td>
+                    <td>{{ restaurante.nombre }}</td>
+                    <td>{{ restaurante.direccion }}</td>
+                    <td>{{ restaurante.descripcion }}</td>
+                    <td>{{ restaurante.telefono }}</td>
+                    <td>{{ restaurante.menu }}</td>
+                    <td>
+                        <button (click)="guardarIdRestaurante(restaurante.idRestaurante)" (click)="abrirModalEtiqueta()"
+                            class="btn-opcion">Agregar/quitar etiquetas</button>
+                        <button class="btn-opcion" (click)="openMesaModal()">Crear/Editar mesas</button>
+                        <button (click)="guardarIdRestaurante(restaurante.idRestaurante)"
+                            (click)="obtenerImagesDeRestaurante(restaurante.idRestaurante)"
+                            (click)="obtenerRestauranteById(restaurante.idRestaurante)"
+                            class="btn-opcion">Editar</button>
+                        <button class="btn-opcion"
+                            (click)="eliminarRestaurante(restaurante.idRestaurante)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-agrgarEtiquetas" *ngIf="modalEtiqueta">
+        <div class="model-agregarEtiquetas-content">
+            <span class="close-modal" (click)="cerrarModalEtiqueta()">✖</span>
+
+            <div class="model-agregarEtiquetas-content-agregar">
+                <div class="modal-agregarEtiquetas-title">
+                    <h3>Agrega etiquetas</h3>
+                </div>
+                <div class="modal-agrgarEtiquetas-p">
+                    <p>Haga clic en la etiqueta que desea asignarle al lugar</p>
+                </div>
+                <div class="modal-agregarEtiquetas-etiquetas">
+                    <div class="etiqueta" *ngFor="let etiqueta of etiquetas">
+                        <button class="etiqueta-boton"
+                            (click)="asignarEtiquetaARestaurante(etiqueta)">{{etiqueta.etiqueta}}</button>
                     </div>
                 </div>
             </div>

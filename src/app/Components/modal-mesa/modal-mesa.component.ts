@@ -85,12 +85,10 @@ export class ModalMesaComponent implements OnChanges{
     this.obtenerMesa()
   }
 
-
-
   seleccionarHorario(horario: string) {
     this.horaReservada = horario
     this.closeModalHorario()
-    }
+  }
 
   obtenerMesa(){
     this.mesaService.getMesaById(this.idMesa).subscribe({

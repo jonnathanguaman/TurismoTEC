@@ -44,22 +44,30 @@ export class LoginComponent{
           this.loginService.getRoles()
           this.loginService.admin.subscribe(
             {
-              next:(admin) =>{
-                console.log("admin: " + admin)
-                if(admin){
-                  
-                  this.router.navigateByUrl("/admin").then()
-                  this.loginForm.reset()
-                }else{
-                this.router.navigateByUrl("/").then()
-                }
+              next:(admin)=>{
+                this.loginService.asociado.subscribe({
+                    next:(asociado) =>{
+                      console.log("admin: " + admin)
+                      console.log("admin: " + asociado)
+                      if(admin || asociado){
+                        this.loginForm.reset()
+                        this.router.navigateByUrl("/admin").then(()=>{window.location.reload()})
+                        
+                      }else{
+                      this.router.navigateByUrl("/").then(()=>{window.location.reload()})
+                      }
+                    }
+                })
               }
             }
           )
         },
         error:()=>{
           environment.mensajeToast("error","Credenciales invalidas","Usuario o contraseña incorrectas")
-        }
+        },
+        complete() {
+          window.location.reload()
+        },
         
       })
     }

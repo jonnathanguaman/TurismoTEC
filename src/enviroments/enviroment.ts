@@ -7,6 +7,9 @@ export const environment = {
   urlAut: 'http://localhost:8080',
   urlMap: 'http://localhost:4200/lugar/',
   
+  // urlHost: 'http://24.144.105.202:9096/public/v1',
+  // urlAut: 'http://24.144.105.202:9096',
+  // urlMap: 'http://24.144.105.202:9094/lugar/',
   mensajeToast: (tipo: 'success' | 'error' | 'warning' | 'info' | 'question', mensajeCuerpo: string, footer: string) => {
     const Toast = Swal.mixin({
       toast: true,
@@ -51,8 +54,7 @@ export const environment = {
       showCancelButton: true,
       confirmButtonColor: '#3085d6', 
       cancelButtonColor: '#d33',    
-      confirmButtonText: 'Sí',      
-      cancelButtonText: 'No'        
+      confirmButtonText: 'Listo',      
     }).then((result) => {
       return result.isConfirmed; 
     });

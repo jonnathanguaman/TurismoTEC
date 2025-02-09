@@ -1,6 +1,6 @@
 <div class="sidebar">
   <div class="sidebar-header">
-    <h2>Admin Dashboard</h2>
+    <h2>{{textoDash}}</h2>
   </div>
   <ul class="menu">
     <li>
@@ -10,25 +10,28 @@
       <button routerLink="crudHotel" class="menu-item">Hoteles</button>
     </li>
     <li>
-      <button (click)="perfil()" class="menu-item">Reservas habitaciones</button>
+      <button routerLink="crud-reservaciones-habitaciones" class="menu-item">Reservas habitaciones</button>
     </li>
     <li>
       <button routerLink="crudRestaurante" class="menu-item">Restaurantes</button>
     </li>
     <li>
-      <button routerLink="crudLugar" class="menu-item">Lugares</button>
+      <button routerLink="crud-reservaciones-mesas" class="menu-item">Reservas mesas</button>
     </li>
     <li>
-      <button routerLink="crudEtiquetaLugar" class="menu-item">Etiquetas de Lugares</button>
+      <button *ngIf="!asociado" routerLink="crudLugar" class="menu-item">Lugares</button>
     </li>
     <li>
-      <button routerLink="crudEtiquetaHotel" class="menu-item">Etiquetas de Hoteles</button>
+      <button *ngIf="!asociado" routerLink="crudEtiquetaLugar" class="menu-item">Etiquetas de Lugares</button>
     </li>
     <li>
-      <button routerLink="crudEtiquetaRestaurante" class="menu-item">Etiquetas de Restaurantes</button>
+      <button *ngIf="!asociado" routerLink="crudEtiquetaHotel" class="menu-item">Etiquetas de Hoteles</button>
     </li>
     <li>
-      <button routerLink="crudPersonas" class="menu-item">Personas</button>
+      <button *ngIf="!asociado" routerLink="crudEtiquetaRestaurante" class="menu-item">Etiquetas de Restaurantes</button>
+    </li>
+    <li>
+      <button *ngIf="!asociado" routerLink="crudPersonas" class="menu-item">Personas</button>
     </li>
     <li>
       <button (click)="cerrarSesion()" class="menu-item">Cerrar sesion</button>

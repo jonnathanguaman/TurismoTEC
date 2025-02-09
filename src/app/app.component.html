@@ -1,4 +1,4 @@
-<div *ngIf="!admin">
+<div *ngIf="!admin && !asociado">
     <app-menu></app-menu>
     <router-outlet></router-outlet>
     <app-footer></app-footer>
@@ -6,7 +6,7 @@
    
 </div>
 
-<div *ngIf="admin">
+<div *ngIf="admin || asociado">
     <app-menu-admin></app-menu-admin>
     <router-outlet></router-outlet>
     <app-chatbot></app-chatbot>

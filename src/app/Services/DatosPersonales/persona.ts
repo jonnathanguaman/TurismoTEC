@@ -4,7 +4,7 @@ export interface Persona{
     id_Usuario:number;
     nombre:string;
     apellido:string;
-    edad:number;
+    fechaNacimiento:Date;
     paisOrigen:string;
     idioma:string;
     correo:string

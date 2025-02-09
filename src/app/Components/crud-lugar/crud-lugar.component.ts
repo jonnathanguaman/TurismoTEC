@@ -174,8 +174,23 @@ export class CrudLugarComponent implements OnInit {
   obtenerLugares() {
     this.lugaresService.getLugaresAdmin().subscribe((lugares) => {
       this.todosLugares = lugares;
+      this.todosLugares.forEach((lugares)=>{
+        console.log("Entro aqui")
+        this.obtenerImagesDeLugares(lugares.idLugares).then((img)=>{
+          lugares.imagenesLugars = img
+        })
+    })
     });
   }
+
+  obtenerImagesDeLugares(idLugar:number):Promise<ImagenesLugares[]>{
+    return new Promise((resolve,reject) =>{
+      this.imagenesLugaresService.getImagenesByIdLugares(idLugar).subscribe(
+          idLugar => resolve(idLugar),
+          error => reject(error)
+        )
+    })
+}
 
   eliminarLugar(idLugar: number) {
     const mensajeError = environment.mensajeEmergente('¿Estás seguro que deseas eliminar?','Esta operación no es reversible','warning');

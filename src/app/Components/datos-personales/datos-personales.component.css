@@ -126,3 +126,118 @@ body {
 .datos-personales-items input {
     padding-left: 35px; /* Espacio para el icono */
 }
+
+/* Modal */
+.crud-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    overflow-y: auto; /* Habilita el scroll vertical */
+}
+
+.crud-modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 60%;
+    max-width: 600px;
+    max-height: 80vh; /* Limita la altura */
+    overflow-y: auto; /* Habilita el scroll dentro del modal */
+    box-sizing: border-box;
+    position: relative;
+}
+
+.crud-modal-content h3 {
+    font-size: 24px;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+/* Contenido del modal */
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Campo de entrada */
+.modal-content input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.update-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+
+/* Modal */
+.crud-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    overflow-y: auto; /* Habilita el scroll vertical */
+}
+
+.crud-modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 60%;
+    max-width: 600px;
+    max-height: 80vh; /* Limita la altura */
+    overflow-y: auto; /* Habilita el scroll dentro del modal */
+    box-sizing: border-box;
+    position: relative;
+}
+
+.crud-modal-content h3 {
+    font-size: 24px;
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+/* Contenido del modal */
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Campo de entrada */
+.modal-content input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.update-btn {
+    background-color: #28a745;
+    color: white;
+}

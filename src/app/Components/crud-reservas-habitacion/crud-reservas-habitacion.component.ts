@@ -8,6 +8,8 @@ import { AuthRegisterService } from '../../Services/auth/authRegister.service';
 import { AuthService } from '../../Services/login/login.service';
 import { environment } from '../../../enviroments/enviroment';
 import { Habitaciones } from '../../Services/habitaciones/habitaciones';
+import { ImagenesHabitacion } from '../../Services/imagenesHabitaciones/imagenesHabitacion';
+import { ImagenesHabitacionesService } from '../../Services/imagenesHabitaciones/imagenes-habitaciones.service';
 
 @Component({
   selector: 'app-crud-reservas-habitacion',
@@ -17,10 +19,12 @@ import { Habitaciones } from '../../Services/habitaciones/habitaciones';
 export class CrudReservasHabitacionComponent implements OnInit{
 
   admin:boolean = true
+  asociado:boolean = false
   reserva:ReservaHatitacion
   disabledDates = [''];
   fechaActual:string =<string> <unknown>new Date()
 
+  urlHost: string = environment.urlAut;
   
   rangeValue: { Desde: Date; hasta: Date } = {
     Desde: null,
@@ -34,24 +38,43 @@ export class CrudReservasHabitacionComponent implements OnInit{
 
   constructor(
     private reservaHotelService:ReservaHotelService,
-    private habitacionService:HabitacionesService,
     private authService: AuthRegisterService,
-    private loginService:AuthService,){}
+    private loginService:AuthService,
+    private imagenesHabitacionesService: ImagenesHabitacionesService,
+  ){}
     
   ngOnInit(): void {
-    console.log("Oninit")
     this.loginService.getRoles()
-      this.loginService.admin.subscribe({
-          next:(admin) =>{
-            this.admin = admin
-          }
-        })
+    this.loginService.admin.subscribe({next:(admin) =>{this.admin = admin}})
+    this.loginService.asociado.subscribe({next:(asociado) =>{this.asociado = asociado}})
 
-    if(this.admin){
+    this.comprarHaQuienMostrar()
+  }
+
+  comprarHaQuienMostrar(){
+    if(this.admin && !this.asociado){
+      console.log("Entro en admin")
       this.obtenerReservas()
-    }else if(!this.admin){
+    }else if(!this.admin && !this.asociado){
+      console.log("Entro en usuario")
       this.obtenerReservacionesDeUsuarios()
+    }else if(this.asociado){
+      this.obtenerReservasDeHotelesByAsociado()
     }
+  }
+
+  obtenerReservas(){
+    this.reservaHotelService.getReservasHabitaciones().subscribe({
+      next:(reservas)=>{
+        console.log(reservas)
+        this.todasLasReservaciones = reservas
+        this.todasLasReservaciones.forEach((reservas)=>{
+          this.obtenerImagesDeHabitaciones(reservas.habitaciones.idHabitacion).then((img)=>{
+            reservas.habitaciones.imagenesHabitaciones = img
+          })
+        })
+      }
+    })
   }
 
   obtenerReservacionesDeUsuarios(){
@@ -62,11 +85,43 @@ export class CrudReservasHabitacionComponent implements OnInit{
         this.reservaHotelService.getReservasUser(idPersona).subscribe({
           next:(reservasUsuario)=>{
             this.todasLasReservaciones = reservasUsuario 
+            this.todasLasReservaciones.forEach((reservas)=>{
+              this.obtenerImagesDeHabitaciones(reservas.habitaciones.idHabitacion).then((img)=>{
+                reservas.habitaciones.imagenesHabitaciones = img
+              })
+            })
           }
         })
       }
     })
   }
+
+  obtenerReservasDeHotelesByAsociado(){
+    const token = sessionStorage.getItem('token');
+    const payload: TokenPayload = jwtDecode(token);
+    this.authService.getIdPerson(payload.sub).subscribe({
+      next:(idPersona)=>{
+        this.reservaHotelService.getReservasDeHotelesByAsociado(idPersona).subscribe({
+          next:(reservasUsuario)=>{
+            this.todasLasReservaciones = reservasUsuario 
+            this.todasLasReservaciones.forEach((reservas)=>{
+              this.obtenerImagesDeHabitaciones(reservas.habitaciones.idHabitacion).then((img)=>{
+                reservas.habitaciones.imagenesHabitaciones = img
+              })
+            })
+          }
+        })
+    }})
+  }
+
+  obtenerImagesDeHabitaciones(idHoteles:number):Promise<ImagenesHabitacion[]>{
+    return new Promise((resolve,reject) =>{
+      this.imagenesHabitacionesService.getImagenesByIdHabitacion(idHoteles).subscribe(
+          imgHoteles => resolve(imgHoteles),
+          error => reject(error)
+        )
+    })
+}
 
   idHabitacion:number
   openCrudModal(idHabitacion:number) {
@@ -85,14 +140,7 @@ export class CrudReservasHabitacionComponent implements OnInit{
     this.isCrudModalOpen = false;
   }
 
-  obtenerReservas(){
-    this.reservaHotelService.getReservasHabitaciones().subscribe({
-      next:(reservas)=>{
-        console.log(reservas)
-        this.todasLasReservaciones = reservas
-      }
-    })
-  }
+  
   
   limpiarFecha(){
     this.rangeValue = { Desde: null, hasta: null };
@@ -204,11 +252,7 @@ export class CrudReservasHabitacionComponent implements OnInit{
         this.reservaHotelService.eliminarReservacion(idReservacion).subscribe({
           complete:()=>{
             environment.mensajeToast('success','Reservación cancelada','Se ha cancelado la reservacion con exito')
-            if(this.admin){
-              this.obtenerReservas()
-            }else if(!this.admin){
-              this.obtenerReservacionesDeUsuarios()
-            }
+            this.comprarHaQuienMostrar()
           }
         })
       }

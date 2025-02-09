@@ -32,9 +32,9 @@
         <table>
             <thead>
                 <tr>
-                    <th>Codigo</th>
+                    <th>habitación</th>
                     <th>Hotel</th>
-                    <th>habitacion</th>
+                    <th>habitación</th>
                     <th>Fecha de inicio</th>
                     <th>Fecha de final</th>
                     <th>Correo</th>
@@ -45,7 +45,11 @@
             </thead>
             <tbody>
                 <tr *ngFor="let reserva of todasLasReservaciones">
-                    <td>{{ reserva.idReservas}}</td>
+                    <td>
+                        <div class="img-preview" id="preview1">
+                            <img [src]="[urlHost + reserva.habitaciones.imagenesHabitaciones[1].url]" alt="Vista previa">
+                        </div>
+                    </td>
                     <td>{{ reserva.habitaciones.hoteles.nombre}}</td>
                     <td>{{ reserva.habitaciones.nombreHabitacion }}</td>
                     <td>{{ reserva.fechaIncioReserva | date: 'dd/MM/yyyy'}}</td>

@@ -131,6 +131,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>Imagen</th>
                     <th>Nombre</th>
                     <th>Dirección</th>
                     <th>Descripción</th>
@@ -147,6 +148,11 @@
             </thead>
             <tbody>
                 <tr *ngFor="let lugar of todosLugares">
+                    <td>
+                        <div class="img-preview" id="preview1">
+                            <img [src]="[urlHost + lugar.imagenesLugars[1].url]" alt="Vista previa">
+                        </div>
+                    </td>
                     <td>{{ lugar.nombre }}</td>
                     <td>{{ lugar.direccion }}</td>
                     <td>{{ lugar.descripcion }}</td>
@@ -161,8 +167,8 @@
                     
                     <td>
                         <button *ngIf="!lugar.aprobado" (click)="enviarCorreoAprobado(lugar.usuario.id_Usuario)" (click)="aprobarLugar(lugar.idLugares)" class="btn-opcion">Aprobar publicacion</button>
-                        <button *ngIf="lugar.creadoPor" (click)="guardarIdLugar(lugar.idLugares)" (click)="abrirModalEtiqueta()" class="btn-opcion">Agregar/quitar etiquetas</button>
-                        <button *ngIf="lugar.creadoPor" (click)="obtenerImagesDeLugar(lugar.idLugares)" (click)="obtenerLugarById(lugar.idLugares)" class="btn-opcion">Editar</button>
+                        <button  (click)="guardarIdLugar(lugar.idLugares)" (click)="abrirModalEtiqueta()" class="btn-opcion">Agregar/quitar etiquetas</button>
+                        <button  (click)="obtenerImagesDeLugar(lugar.idLugares)" (click)="obtenerLugarById(lugar.idLugares)" class="btn-opcion">Editar</button>
                         <button class="btn-opcion" (click)="eliminarLugar(lugar.idLugares)" >Eliminar</button>
                     </td>
                 </tr>
