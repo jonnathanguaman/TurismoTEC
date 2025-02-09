@@ -9,4 +9,5 @@ export interface Persona{
     idioma:string;
     correo:string
     auth:Auth
+    urlImageUser:string
 }
