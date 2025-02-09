@@ -39,9 +39,9 @@ export class CrudHotelComponent implements OnInit {
     etiquetasDelHotel!: EtiquetaHotel[];
     urlHost: string = environment.urlAut;
     public hotelAAsignar = new Hoteles();
-    idUsuario:number
-    asociado:boolean = false;
-    
+    idUsuario: number
+    asociado: boolean = false;
+
     constructor(
         private hotelesService: HotelesService,
         private habitacionesService: HabitacionesService,
@@ -51,59 +51,63 @@ export class CrudHotelComponent implements OnInit {
         private imagenesHabitacionesService: ImagenesHabitacionesService,
         private etiquetaHotelService: EtiquetaHotelService,
         private authService: AuthRegisterService,
-        private loginService:AuthService
+        private loginService: AuthService
     ) { }
 
     ngOnInit(): void {
 
-        this.loginService.asociado.subscribe({next:(asociado) =>{this.asociado = asociado}})
+        this.loginService.asociado.subscribe({ next: (asociado) => { this.asociado = asociado } })
 
         this.obtenerLugaresDeAdmin();
-        
-        if(this.asociado){
+
+        if (this.asociado) {
             this.obtenerHotelesDeAsociado();
-        }else{
+        } else {
             this.obtenerHoteles();
         }
-        
+
     }
 
     obtenerHoteles() {
         this.hotelesService.getTodosHoteles().subscribe((hoteles) => {
             this.todosHoteles = hoteles;
-            this.todosHoteles.forEach((hoteles)=>{
-                this.obtenerImagesDeHoteles(hoteles.idHotel).then((img)=>{
+            this.todosHoteles.forEach((hoteles) => {
+                this.obtenerImagesDeHoteles(hoteles.idHotel).then((img) => {
                     hoteles.imagenesHoteles = img
                 })
             })
         });
     }
 
-    obtenerImagesDeHoteles(idHoteles:number):Promise<ImagenesHoteles[]>{
-        return new Promise((resolve,reject) =>{
-          this.imagenesHotelesService.getImagenesByIdHoteles(idHoteles).subscribe(
-              imgHoteles => resolve(imgHoteles),
-              error => reject(error)
+    obtenerImagesDeHoteles(idHoteles: number): Promise<ImagenesHoteles[]> {
+        return new Promise((resolve, reject) => {
+            this.imagenesHotelesService.getImagenesByIdHoteles(idHoteles).subscribe(
+                imgHoteles => resolve(imgHoteles),
+                error => reject(error)
             )
         })
     }
 
-    obtenerHotelesDeAsociado(){
+
+
+
+    obtenerHotelesDeAsociado() {
         const token = sessionStorage.getItem("token")//Obtenemos el token del sesionStorage
         const payload: TokenPayload = jwtDecode(token); //Decodificamos el token, nos devuleve el nombre del usuario
         this.authService.getIdPerson(payload.sub).subscribe({
-        next: (idUser) => {
-            this.hotelesService.getHotelesByIdUser(idUser).subscribe({
-                next:(hotelesUser)=>{
-                    this.todosHoteles = hotelesUser;
-                    this.todosHoteles.forEach((hoteles)=>{
-                        this.obtenerImagesDeHoteles(hoteles.idHotel).then((img)=>{
-                            hoteles.imagenesHoteles = img
+            next: (idUser) => {
+                this.hotelesService.getHotelesByIdUser(idUser).subscribe({
+                    next: (hotelesUser) => {
+                        this.todosHoteles = hotelesUser;
+                        this.todosHoteles.forEach((hoteles) => {
+                            this.obtenerImagesDeHoteles(hoteles.idHotel).then((img) => {
+                                hoteles.imagenesHoteles = img
+                            })
                         })
-                    })
-                }
-            })
-        }})
+                    }
+                })
+            }
+        })
     }
 
     obtenerLugaresDeAdmin() {
@@ -225,9 +229,9 @@ export class CrudHotelComponent implements OnInit {
                                 Promise.all(uploadPromises)
                                     .then(() => {
                                         environment.mensajeToast('success', 'Hotel creado', 'Se ha creado el hotel con exito');
-                                        if(this.asociado){
+                                        if (this.asociado) {
                                             this.obtenerHotelesDeAsociado();
-                                        }else{
+                                        } else {
                                             this.obtenerHoteles();
                                         }
                                         this.closeCrudModal();
@@ -263,9 +267,9 @@ export class CrudHotelComponent implements OnInit {
             if (confirmado) {
                 this.hotelesService.eliminarHotel(idHotel).subscribe({
                     next: () => {
-                        if(this.asociado){
+                        if (this.asociado) {
                             this.obtenerHotelesDeAsociado();
-                        }else{
+                        } else {
                             this.obtenerHoteles();
                         }
                         environment.mensajeToast(
@@ -320,24 +324,16 @@ export class CrudHotelComponent implements OnInit {
     }
 
     obtenerImagesDeHotel(id: number) {
-        console.log("Entro aqui")
         this.imagePreviews = new Array
-        this.imagenesHotelesService.getImagenesByIdHoteles(id).subscribe({
-            next: (imgHoteles) => {
-                console.log("next")
-                console.log(imgHoteles)
-                imgHoteles.forEach((Hotel) => {
+        this.imagenesHotelesService.getImagenesByIdHoteles(id).subscribe(imgHoteles => {
+            imgHoteles.forEach((lugar) => {
 
-                    //Contruimos la url para la previsualizacion
-                    this.imagePreviews.push(this.urlHost + Hotel.url)
-                    console.log(this.imagePreviews)
-                    this.obtenerFile(this.obtenerNombreDeLaFoto(Hotel.url))
-                    console.log(this.selectedFiles)
-                })
-            },
-            error: (e) => {
-                console.log("Error al obtener imagenes" + e)
-            }
+                //Contruimos la url para la previsualizacion
+                this.imagePreviews.push(this.urlHost + lugar.url)
+
+                this.obtenerFile(this.obtenerNombreDeLaFoto(lugar.url))
+                console.log(this.selectedFiles)
+            })
         })
     }
 
@@ -410,9 +406,9 @@ export class CrudHotelComponent implements OnInit {
         this.habitacionesService.getHabitacionDeHotel(this.idHotel).subscribe({
             next: (habitaciones) => {
                 this.rooms = habitaciones;
-                this.rooms.forEach((room)=>{
+                this.rooms.forEach((room) => {
                     console.log("Entro aqui")
-                    this.obtenerImagesDeHabitaciones(room.idHabitacion).then((img)=>{
+                    this.obtenerImagesDeHabitaciones(room.idHabitacion).then((img) => {
                         room.imagenesHabitaciones = img
                     })
                 })
@@ -420,11 +416,11 @@ export class CrudHotelComponent implements OnInit {
         });
     }
 
-    obtenerImagesDeHabitaciones(idHoteles:number):Promise<ImagenesHabitacion[]>{
-        return new Promise((resolve,reject) =>{
-          this.imagenesHabitacionesService.getImagenesByIdHabitacion(idHoteles).subscribe(
-              imgHoteles => resolve(imgHoteles),
-              error => reject(error)
+    obtenerImagesDeHabitaciones(idHoteles: number): Promise<ImagenesHabitacion[]> {
+        return new Promise((resolve, reject) => {
+            this.imagenesHabitacionesService.getImagenesByIdHabitacion(idHoteles).subscribe(
+                imgHoteles => resolve(imgHoteles),
+                error => reject(error)
             )
         })
     }
