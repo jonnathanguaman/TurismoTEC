@@ -16,6 +16,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>Foto</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Idioma</th>
@@ -29,6 +30,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let persona of personas">
+                    <td><img [src]="[urlHost + persona.urlImageUser]" alt=""></td>
                     <td>{{ persona.nombre }}</td>
                     <td>{{ persona.apellido }}</td>
                     <td>{{ persona.idioma }}</td>

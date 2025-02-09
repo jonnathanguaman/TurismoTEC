@@ -20,6 +20,8 @@ export class CrudPersonasComponent implements OnInit{
 
   isCrudModalOpen: boolean = false;
   personas:Persona[]
+
+  urlHost:string = environment.urlAut
   constructor(
     private personaService:DatosPersonalesService,
     private fb:FormBuilder,
@@ -132,6 +134,7 @@ export class CrudPersonasComponent implements OnInit{
         this.personaForm.controls.paisOrigen.setValue(persona.paisOrigen);
         this.personaForm.controls.idioma.setValue(persona.idioma);
         this.personaForm.controls.correo.setValue(persona.correo);
+        this.personaForm.controls.urlImageUser.setValue(persona.urlImageUser)
         this.obtenerAuthByIdUsuario(persona.id_Usuario);
       }
     })
