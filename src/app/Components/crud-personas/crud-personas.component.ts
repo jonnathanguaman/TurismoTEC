@@ -160,6 +160,7 @@ export class CrudPersonasComponent implements OnInit{
     this.personaForm.controls.fechaNacimiento.setValue(new Date(fechaSeleccionada.setDate(fechaSeleccionada.getDate() + 1)))
     this.personaService.guardarPesona(this.personaForm.value as unknown as Persona).subscribe({
       next:()=>{
+        //Camnbiar esto
         this.authRegisterService.editarAuth(this.authForm.value as unknown as authRegister, <number><unknown> this.id_auth.value).subscribe({
           error:()=>{
             environment.mensajeToast('error','Ups ha ocurrido un error al modificar las credenciales','Sentimos los inconvenientes, hemos notificado el error a los responsable')

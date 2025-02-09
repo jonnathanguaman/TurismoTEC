@@ -167,8 +167,8 @@
                     
                     <td>
                         <button *ngIf="!lugar.aprobado" (click)="enviarCorreoAprobado(lugar.usuario.id_Usuario)" (click)="aprobarLugar(lugar.idLugares)" class="btn-opcion">Aprobar publicacion</button>
-                        <button *ngIf="lugar.creadoPor" (click)="guardarIdLugar(lugar.idLugares)" (click)="abrirModalEtiqueta()" class="btn-opcion">Agregar/quitar etiquetas</button>
-                        <button *ngIf="lugar.creadoPor" (click)="obtenerImagesDeLugar(lugar.idLugares)" (click)="obtenerLugarById(lugar.idLugares)" class="btn-opcion">Editar</button>
+                        <button  (click)="guardarIdLugar(lugar.idLugares)" (click)="abrirModalEtiqueta()" class="btn-opcion">Agregar/quitar etiquetas</button>
+                        <button  (click)="obtenerImagesDeLugar(lugar.idLugares)" (click)="obtenerLugarById(lugar.idLugares)" class="btn-opcion">Editar</button>
                         <button class="btn-opcion" (click)="eliminarLugar(lugar.idLugares)" >Eliminar</button>
                     </td>
                 </tr>
