@@ -54,8 +54,7 @@ export const environment = {
       showCancelButton: true,
       confirmButtonColor: '#3085d6', 
       cancelButtonColor: '#d33',    
-      confirmButtonText: 'Sí',      
-      cancelButtonText: 'No'        
+      confirmButtonText: 'Listo',      
     }).then((result) => {
       return result.isConfirmed; 
     });

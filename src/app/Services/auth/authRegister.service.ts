@@ -39,8 +39,17 @@ export class AuthRegisterService {
     return this.http.get<any>(`${environment.urlAut + '/public/v1/authByIdUser'}/${idPersona} `)
   }
   
-  editarAuth(user:string,password:string,id:number): Observable<any> {
-    return this.http.patch<any>(`${environment.urlAut + '/public/v1/auth'}/${user}/${password}/${id}`, null);
+  // Eliminar
+  editarAuth(auth: authRegister,id:number): Observable<any> {
+    return this.http.put<any>(`${environment.urlAut + '/public/v1/auth'}/${id}`,auth);
+  }
+
+  editarAuthPassword(auth: authRegister,id:number): Observable<any> {
+    return this.http.put<any>(`${environment.urlAut + '/public/v1/authPassword'}/${id}`,auth);
+  }
+
+  editarAuthUsermane(auth: authRegister,id:number): Observable<any> {
+    return this.http.put<any>(`${environment.urlAut + '/public/v1/authUserName'}/${id}`,auth);
   }
 
   eliminarAuth(idAuth:number):Observable<any>{

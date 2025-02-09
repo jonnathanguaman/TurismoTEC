@@ -154,7 +154,7 @@ export class CrudPersonasComponent implements OnInit{
   editarPersonaYauth(){
     this.personaService.guardarPesona(this.personaForm.value as unknown as Persona).subscribe({
       next:()=>{
-        this.authRegisterService.editarAuth(this.username.value, this.password.value,<number><unknown> this.id_auth.value).subscribe({
+        this.authRegisterService.editarAuth(this.authForm.value as unknown as authRegister, <number><unknown> this.id_auth.value).subscribe({
           error:()=>{
             environment.mensajeToast('error','Ups ha ocurrido un error al modificar las credenciales','Sentimos los inconvenientes, hemos notificado el error a los responsable')
           }
@@ -249,11 +249,10 @@ export class CrudPersonasComponent implements OnInit{
   public auth_rol = new Auth_rol;
 
   asignarRol(idRol:number){
-    
     this.authRolService.guardarAuth_RolAdmin(this.auth_rol,this.idAuth,idRol).subscribe({
       next:(rolAsiganado)=>{
         if(rolAsiganado == null){
-          environment.mensajeToast('error','El usuario ya cuenta con ese rol','El usuario ya cuenta con ese r')
+          environment.mensajeToast('error','El usuario ya cuenta con ese rol','El usuario ya cuenta con ese rol')
         }else{
           environment.mensajeToast('success','Rol asignado','El rol se asigno con exito')
         }

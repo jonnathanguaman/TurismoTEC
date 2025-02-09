@@ -20,11 +20,13 @@ import { Router } from '@angular/router';
 })
 export class DatosPersonalesComponent implements OnInit {
   
-  
+  isCrudModalOpen: boolean = false;
+  isCrudModalUsernameOpen:boolean=false
   textBoton: String = 'Registrar';
   userloginOn: boolean = false;
   editar!: boolean;
 
+  idAuth:number;
   userId: number;
 
   usuario: string = '';
@@ -36,6 +38,21 @@ export class DatosPersonalesComponent implements OnInit {
   edad!: number;
   correo:string=''
 
+  closeCrudModalPassword() {
+    this.isCrudModalOpen = false
+  }
+
+  openCrudModalPassword() {
+    this.isCrudModalOpen = true;
+  }
+
+  closeCrudModalUsername() {
+    this.isCrudModalUsernameOpen = false
+  }
+  
+  openCrudModalUsername() {
+    this.isCrudModalUsernameOpen = true;
+  }
   constructor(
     private datosService: DatosPersonalesService,
     private authService: AuthRegisterService,
@@ -65,7 +82,6 @@ export class DatosPersonalesComponent implements OnInit {
     if (token) {
       try {
         const payload: TokenPayload = jwtDecode(token);
-
         this.authService.getIdPerson(payload.sub).subscribe({
           next: (idUser) => {
             this.datosService.getPersonById(idUser).subscribe((person) => {
@@ -75,11 +91,12 @@ export class DatosPersonalesComponent implements OnInit {
               this.edad = person.edad;
               this.pais = person.paisOrigen;
               this.correo = person.correo;
+              this.userId = person.id_Usuario
             });
 
             this.authService.getAuth(payload.sub).subscribe((auth) => {
-              this.contrasena = auth.password;
-              this.usuario = auth.username;
+              this.idAuth = auth.id_auth
+              this.usuario = auth.username
             });
           },
         });
@@ -146,5 +163,62 @@ export class DatosPersonalesComponent implements OnInit {
         });
       },
     });
+  }
+
+  actualizarPersona(){
+    console.log("Entro a actualizar")
+    this.persona.nombre = this.nombre;
+    this.persona.apellido = this.apellido;
+    this.persona.edad = this.edad;
+    this.persona.idioma = this.idioma;
+    this.persona.paisOrigen = this.pais;
+    this.persona.correo = this.correo;
+    this.datosService.actualizarPersona(this.persona,this.userId).subscribe({
+      next:()=>{
+        environment.mensajeToast('success','Editado con exito','Los datos del usuario han sido editados con exito')
+      }
+    })
+  }
+
+  actualizarPassword(){
+    if(this.contrasena){
+      environment.mensajeEmergente('Actualizar contraseña','¿Estas seguro que deseas actualizar la contraseña?','warning').then(
+        (confirmar)=>{
+          if(confirmar){
+            this.auth.password = this.contrasena
+            this.authService.editarAuthPassword(this.auth, this.idAuth).subscribe({
+              next:()=>{
+                environment.mensajeConfirmacion( 'Contraseña actualizada', 'Tu contraseña se ha actualizado correctamente. La sesión se cerrará por seguridad.', 'success' ).then(()=>{
+                  this.loginService.logOut()
+                })
+              }
+            })
+          }
+      })
+    }else{
+      environment.mensajeToast('warning','Ingrese la contraseña','')
+    }
+  }
+
+  authUser: authRegister = new authRegister();
+  actualizarUsername(){
+    if(this.usuario){
+    environment.mensajeEmergente('Actualizar contraseña','¿Estas seguro que deseas actualizar la contraseña?','warning').then(
+      (confirmar)=>{
+        if(confirmar){
+          this.authUser.username = this.usuario
+          console.log(this.authUser)
+          this.authService.editarAuthUsermane(this.authUser, this.idAuth).subscribe({
+            next:()=>{
+              environment.mensajeConfirmacion( 'Usuario actualizada', 'Tu usuario se ha actualizado correctamente. La sesión se cerrará por seguridad.', 'success' ).then(()=>{
+                this.loginService.logOut()
+              })
+            }
+          })
+        }
+    })
+    }else{
+      environment.mensajeToast('warning','Ingrese el usuario','')
+  }
   }
 }
