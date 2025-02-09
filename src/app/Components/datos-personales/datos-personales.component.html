@@ -46,7 +46,7 @@
             <div [ngClass]="{'datos-personales': !editar, 'datosPersonalesTrue': editar}">
                 <div class="datos-personales-items">
                     <i class="bi bi-calendar-check-fill icono"></i>
-                    <input type="number" id="edad" name="edad" [(ngModel)]="edad" #auxedad="ngModel" required min="18" [disabled]="editar"/>
+                    <input type="date" id="fechaNacimiento" name="fechaNacimiento" [(ngModel)]="fechaNacimiento" #auxedad="ngModel" required min="18" [disabled]="editar"/>
                     <label for="edad">Edad</label>
                 </div>
             </div>

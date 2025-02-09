@@ -19,7 +19,7 @@
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Idioma</th>
-                    <th>Edad</th>
+                    <th>Fecha de nacimineto</th>
                     <th>Correo</th>
                     <th>Pais</th>
                     <th>Usuario</th>
@@ -32,7 +32,7 @@
                     <td>{{ persona.nombre }}</td>
                     <td>{{ persona.apellido }}</td>
                     <td>{{ persona.idioma }}</td>
-                    <td>{{ persona.edad }}</td>
+                    <td>{{ persona.fechaNacimiento | date: 'dd/MM/yyyy'}}</td>
                     <td>{{ persona.correo }}</td>
                     <td>{{ persona.paisOrigen }}</td>
                     <td>{{ persona.auth.username }}</td>
@@ -75,11 +75,14 @@
             </div>
 
             <div class="input-container">
-                <label for="nombre">Edad:</label>
-                <input formControlName="edad" type="number" id="edad" name="edad"/>
-                <div *ngIf="edad.invalid && edad.touched" class="message error">
-                    El edad es obligatoria.
+                <label for="fechaNacimiento">Fecha de nacimineto:</label>
+                <input formControlName="fechaNacimiento" type="date" id="fechaNacimiento" name="fechaNacimiento"/>
+                <div *ngIf="fechaNacimiento.invalid && fechaNacimiento.touched" class="message error">
+                    El fecha de nacimineto es obligatoria.
                 </div>
+                <div *ngIf="fechaNacimiento.errors?.['edadInvalida']">
+                    ⚠️ Debes tener al menos 18 años.
+                </div>                  
             </div>
 
             <div class="input-container">

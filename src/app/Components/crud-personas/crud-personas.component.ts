@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatosPersonalesService } from '../../Services/DatosPersonales/datos-personales.service';
 import { Persona } from '../../Services/DatosPersonales/persona';
-import { FormBuilder, FormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Auth } from '../../Services/login/Auth';
 import { AuthRegisterService } from '../../Services/auth/authRegister.service';
 import { authRegister } from '../../Services/auth/authRegister';
@@ -38,7 +38,7 @@ export class CrudPersonasComponent implements OnInit{
     id_Usuario:['',[Validators.required]],
     nombre:['',[Validators.required]],
     apellido:['',[Validators.required]],
-    edad:['',[Validators.required]],
+    fechaNacimiento:[new Date,[Validators.required,this.validarEdad.bind(this)]],
     paisOrigen:['',[Validators.required]],
     idioma:['',[Validators.required]],
     correo:['',[Validators.required, Validators.email]],
@@ -58,8 +58,8 @@ export class CrudPersonasComponent implements OnInit{
     return this.personaForm.controls.apellido;
   }
 
-  get edad(){
-    return this.personaForm.controls.edad;
+  get fechaNacimiento(){
+    return this.personaForm.controls.fechaNacimiento;
   }
 
   get paisOrigen(){
@@ -118,7 +118,11 @@ export class CrudPersonasComponent implements OnInit{
         this.personaForm.controls.id_Usuario.setValue(persona.id_Usuario);
         this.personaForm.controls.nombre.setValue(persona.nombre);
         this.personaForm.controls.apellido.setValue(persona.apellido);
-        this.personaForm.controls.edad.setValue(persona.edad);
+
+        const fechaSeleccionada = new Date(persona.fechaNacimiento);
+        const fechaISO = new Date(fechaSeleccionada.getTime() - 1).toISOString().split('T')[0]
+
+        this.personaForm.controls.fechaNacimiento.setValue(<Date> <unknown>fechaISO);
         this.personaForm.controls.paisOrigen.setValue(persona.paisOrigen);
         this.personaForm.controls.idioma.setValue(persona.idioma);
         this.personaForm.controls.correo.setValue(persona.correo);
@@ -152,6 +156,8 @@ export class CrudPersonasComponent implements OnInit{
   }
 
   editarPersonaYauth(){
+    let fechaSeleccionada = new Date(this.personaForm.controls.fechaNacimiento.value);
+    this.personaForm.controls.fechaNacimiento.setValue(new Date(fechaSeleccionada.setDate(fechaSeleccionada.getDate() + 1)))
     this.personaService.guardarPesona(this.personaForm.value as unknown as Persona).subscribe({
       next:()=>{
         this.authRegisterService.editarAuth(this.authForm.value as unknown as authRegister, <number><unknown> this.id_auth.value).subscribe({
@@ -174,6 +180,10 @@ export class CrudPersonasComponent implements OnInit{
   idAuth:number
 
   crearPersonaAuth(){
+    console.log("Fecha antes de enviar "+this.personaForm.controls.fechaNacimiento.value)
+    let fechaSeleccionada = new Date(this.personaForm.controls.fechaNacimiento.value);
+    this.personaForm.controls.fechaNacimiento.setValue(new Date(fechaSeleccionada.setDate(fechaSeleccionada.getDate() + 1)))
+    console.log("Fecha despues de enviar " + this.personaForm.controls.fechaNacimiento.value)
     this.personaService.guardarPesona(this.personaForm.value as unknown as Persona).subscribe({
       next:(persona)=>{
         this.authForm.controls.id_usuario.setValue(<string><unknown> persona.id_Usuario)
@@ -282,4 +292,26 @@ export class CrudPersonasComponent implements OnInit{
       })
     })
   }
+
+  validarEdad(control: AbstractControl): ValidationErrors | null {
+    if (!control.value) {
+      return null; // Si el campo está vacío, no se valida aún.
+    }
+  
+    const fechaNacimiento = new Date(control.value);
+    const hoy = new Date();
+  
+    let edad = hoy.getFullYear() - fechaNacimiento.getFullYear();
+  
+    if (
+      hoy.getMonth() < fechaNacimiento.getMonth() || 
+      (hoy.getMonth() === fechaNacimiento.getMonth() && hoy.getDate() < fechaNacimiento.getDate())
+    ) {
+      edad--;
+    }
+  
+    return edad < 18 ? { edadInvalida: true } : null;
+  }
+  
+  
 }
