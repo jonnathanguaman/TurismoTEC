@@ -18,4 +18,8 @@ constructor(private http:HttpClient) { }
   getMesaById(idMesa:number):Observable<Mesa>{
     return this.http.get<Mesa>(`${environment.urlHost + "/mesas"}/${idMesa}`)
   }
+
+  crearMesa(mesa:Mesa):Observable<Mesa>{
+    return this.http.post<Mesa>(`${environment.urlHost + "/mesas"}`,mesa)
+  }
 }
