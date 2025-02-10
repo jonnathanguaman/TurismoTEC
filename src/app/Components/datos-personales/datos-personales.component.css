@@ -101,13 +101,6 @@ body {
     align-items: center;
 }
 
-/* Iconos */
-.icono {
-    position: absolute;
-    left: 10px;
-    color: #b65602;
-    font-size: 18px;
-}
 
 /* Ajustar input con icono */
 .datos-personales-items input {
