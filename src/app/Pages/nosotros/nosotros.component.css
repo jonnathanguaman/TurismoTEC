@@ -11,7 +11,7 @@
     width: 250px;
     height: 300px;
     background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
-    border: 1px solid #b65602; /* Borde color principal */
+    border: 1px solid #0088ff; /* Borde color principal */
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(255, 253, 253, 0.2);
     text-align: center;
@@ -41,16 +41,14 @@
 /* Parte frontal visible */
 .front {
     z-index: 2;
-    background: linear-gradient(90deg, #a25d21, #514f4f); /* Degradado */
-
+    background: linear-gradient(90deg, #0eacac, #313131); 
 }
 
 /* Parte trasera oculta inicialmente */
 .back {
     transform: rotateY(180deg);
     display: none;
-        background: linear-gradient(90deg, #dea777, #514f4f); /* Degradado */
-
+    background: linear-gradient(90deg, #0eacac, #ffffff); 
 }
 
 /* Efecto al pasar el mouse */
@@ -76,7 +74,7 @@
     border-radius: 50%;
     object-fit: cover;
     margin-bottom: 15px;
-    border: 3px solid #b65602; /* Borde con color del tema */
+    border: 3px solid #0088ff; /* Borde con color del tema */
 }
 
 /* Nombre del integrante */

@@ -8,7 +8,7 @@
 
 .perfil-images-item {
     width: 200px;
-    border: 1px solid rgb(125, 122, 122);
+    border: 1px solid #0088ff;
     border-radius: 100%;
     margin-top: 12px;
 }
@@ -49,12 +49,12 @@ hr {
 }
 
 .tabla.active {
-    color: #0d6efd;
-    border-bottom: 2px solid #0d6efd;
+    color: #0088ff;
+    border-bottom: 2px solid #0088ff;
 }
 
 .tabla:hover {
-    color: #0a58ca;
+    color: #0088ff;
 }
 
 .tabla-contenido {
@@ -68,7 +68,7 @@ hr {
 
 /*Datos personales*/
 .datos-personales {
-    font-family: Arial, sans-serif;
+    font-family: 'Times New Roman', serif;
     position: relative;
     margin: 20px 0;
 }
@@ -78,16 +78,10 @@ hr {
     width: 98.3%;
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #333;
+    border: 1px solid #0eacac;
     border-radius: 4px;
     outline: none;
     transition: all 0.3s ease;
-}
-
-@media (max-width: 768px){
-    .datos-personales input {
-        width: 95%;
-    }
 }
 .datos-personales label {
     position: absolute;
@@ -100,17 +94,18 @@ hr {
     padding: 0 5px;
     transition: all 0.3s ease;
     pointer-events: none;
+    font-family: 'Times New Roman', serif;
 }
 
 .datos-personales input:focus,
 .datos-personales input:valid {
-    border-color: #007bff;
+    border-color: #0eacac;
 }
 
 .datos-personales input:focus+label,
 .datos-personales input:valid+label {
     top: -10px;
     font-size: 14px;
-    color: #007bff;
+    color: #0eacac;
     margin-top: 10px;
 }

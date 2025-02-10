@@ -4,7 +4,7 @@
     max-width: 90%;
     margin: 20px auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: #ffffff;
 }
 
 .hotel {
@@ -14,7 +14,7 @@
 .hotel-nombre h2 {
     margin: 0;
     font-size: 28px;
-    color: #0073e6;
+    color: #707070;
     text-align: center;
 }
 
@@ -26,7 +26,7 @@
 
 .hotel-titulo-informacion h3 {
     font-size: 22px;
-    color: #0073e6;
+    color: #707070;
     margin-top: 20px;
 }
 
@@ -46,7 +46,7 @@
 .habitaciones-titulo h2 {
     text-align: center;
     font-size: 24px;
-    color: #0073e6;
+    color: #707070;
     margin-bottom: 15px;
 }
 
@@ -54,7 +54,7 @@
     text-align: center;
     padding: 40px 20px;
     font-family: Arial, sans-serif;
-    border: 1px solid #ddd;
+    border: 1px solid #0088ff    ;
     border-radius: 8px;
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
     width: 25%;
@@ -69,7 +69,7 @@
 }
 
 .card-habitacion-imagen {
-    display: flex;
+    display: flex;      
     justify-content: center;
     object-fit: cover;
     height: 200px;
@@ -80,14 +80,14 @@
 }
 
 .card-habitacion-informacion {
-    background-color: #f8f9fa;
+    background-color: #0080ff;
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .botonVerHabitacion {
-    background-color: #4CAF50;
+    background: linear-gradient(90deg, #0eacac, #6b797e);
     color: white;
     padding: 10px;
     font-size: 1rem;
@@ -98,11 +98,11 @@
 }
 
 .botonVerHabitacion:hover {
-    background-color: #45a049;
+    background: linear-gradient(90deg, #0eacac, #6b797e);
 }
 
 .botonVerHabitacion:active {
-    background-color: #4CAF50;
+    background: linear-gradient(90deg, #0eacac, #6b797e);
 }
 
 

@@ -3,17 +3,7 @@ body {
 
 }
 
-/* Contenedor principal del formulario */
-.formularioSugerencia {
-    font-family: 'Times New Roman', serif;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(246, 245, 245, 0.2);
-    max-width: 600px;
-    margin: 0 auto;
-    margin-bottom: 10px;
-    color: #0d0d0d;
-}
+
 
 /* Estilo para los inputs */
 .datos-personales,
@@ -27,7 +17,7 @@ body {
     width: 98.3%;
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #090909;
+    border: 1px solid #0088ff;
     outline: none;
     transition: all 0.3s ease;
     border-radius: 10px;
@@ -39,8 +29,7 @@ body {
 .datos-personales input:valid,
 .datosPersonalesTrue input:focus,
 .datosPersonalesTrue input:valid {
-    border-color: #b65602;
-    box-shadow: 0 0 5px rgba(182, 86, 2, 0.5);
+    border-color: #0088ff;
 }
 
 /* Estilo para las etiquetas */
@@ -64,13 +53,13 @@ body {
 .datosPersonalesTrue input:valid+label {
     top: -10px;
     font-size: 14px;
-    color: #ff8800;
+    color: #3c5c5e;
 }
 
 /* Mensajes de error */
 .error {
     font-size: 0.9rem;
-    background: #c3a45d;
+    background: linear-gradient(90deg,#fbfbfb, #a1d1da, #5cb0b0,#000000); /* Degradado como el menú */
     padding: 5px;
     border-radius: 4px;
     color: #0e0d0d;
@@ -84,8 +73,7 @@ body {
     justify-content: center;
     width: 130px;
     padding: 12px;
-    background: linear-gradient(90deg, #bbb7b7, #b65602);
-    color: white;
+    background: linear-gradient(90deg, #0eacac, #6b797e);    color: white;
     border: none;
     border-radius: 4px;
     font-size: 16px;
@@ -96,8 +84,7 @@ body {
 
 .botonRegistrar:hover,
 .botonEditar:hover {
-    background: linear-gradient(90deg, #b65602, #000000);
-}
+    background: linear-gradient(90deg, #0eacac, #fdfdfd);}
 
 .botonEditarTrue {
     display: none;
@@ -125,119 +112,4 @@ body {
 /* Ajustar input con icono */
 .datos-personales-items input {
     padding-left: 35px; /* Espacio para el icono */
-}
-
-/* Modal */
-.crud-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-    overflow-y: auto; /* Habilita el scroll vertical */
-}
-
-.crud-modal-content {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    width: 60%;
-    max-width: 600px;
-    max-height: 80vh; /* Limita la altura */
-    overflow-y: auto; /* Habilita el scroll dentro del modal */
-    box-sizing: border-box;
-    position: relative;
-}
-
-.crud-modal-content h3 {
-    font-size: 24px;
-    color: #007bff;
-    margin-bottom: 20px;
-}
-
-/* Contenido del modal */
-.modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 300px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Campo de entrada */
-.modal-content input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.update-btn {
-    background-color: #28a745;
-    color: white;
-}
-
-
-/* Modal */
-.crud-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-    overflow-y: auto; /* Habilita el scroll vertical */
-}
-
-.crud-modal-content {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    width: 60%;
-    max-width: 600px;
-    max-height: 80vh; /* Limita la altura */
-    overflow-y: auto; /* Habilita el scroll dentro del modal */
-    box-sizing: border-box;
-    position: relative;
-}
-
-.crud-modal-content h3 {
-    font-size: 24px;
-    color: #007bff;
-    margin-bottom: 20px;
-}
-
-/* Contenido del modal */
-.modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 300px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Campo de entrada */
-.modal-content input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.update-btn {
-    background-color: #28a745;
-    color: white;
 }

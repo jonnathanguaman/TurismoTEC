@@ -3,13 +3,12 @@ body {
   font-family: 'Times New Roman', serif;
   font-size: 18px;
   color: white;
-  background: linear-gradient(90deg, #b65602, #aaa7a7);
 }
 
 /* Contenedor principal */
 .cuenca-info {
-  background:white;
-  color: white;
+  background: linear-gradient(90deg, #bce7e7, #839ba9);
+  color: rgb(231, 18, 18);
 
   color: rgb(142, 77, 7);
   padding: 40px 20px;
@@ -65,7 +64,7 @@ body {
 
 /* Estilos para los artículos */
 .section-content article {
-  background: linear-gradient(90deg, #f2c59e, #bebbbb);
+  background: linear-gradient(90deg, #0eacac, #6b797e);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);

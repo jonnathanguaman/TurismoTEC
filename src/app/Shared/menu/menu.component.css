@@ -11,7 +11,7 @@ body {
     display: flex; /* Flexbox para alinear elementos horizontalmente */
     justify-content: space-between; /* Distribuye elementos a los extremos */
     align-items: center; /* Centra los elementos verticalmente */
-    background: linear-gradient(90deg, #000000, #b65602); /* Degradado de negro oscuro a negro claro */
+    background: linear-gradient(90deg, #000000, #0eacac); /* Degradado de negro oscuro a negro claro */
     padding: 15px 20px; /* Espaciado interno del menú */
     color: white; /* Texto blanco */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra para destacar el menú */
@@ -91,14 +91,14 @@ body {
 
 /* Efecto al pasar el cursor sobre un enlace del menú */
 .menu-items a:hover {
-    background-color: #7e2104; /* Fondo naranja */
+    background-color: #1184ae; /* Fondo naranja */
     color: #ffffff; /* Texto blanco */
     transform: scale(1.1); /* Agranda ligeramente el enlace */
 }
 
 /* Efecto al hacer clic en un enlace del menú */
 .menu-items a:active {
-    background-color: #e64a19; /* Fondo naranja más oscuro */
+    background-color: #39a6eebb; /* Fondo naranja más oscuro */
     transform: scale(0.95); /* Reduce ligeramente el enlace */
 }
 

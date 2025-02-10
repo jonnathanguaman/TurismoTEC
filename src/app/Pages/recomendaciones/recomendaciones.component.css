@@ -11,7 +11,8 @@
 
 .mapa-container-item {
     padding: 16px; /* Espaciado interno */
-    background-color: #fff; /* Fondo blanco */
+    background: linear-gradient(90deg, #c5ecec, #ffffff); 
+    /* Fondo blanco */
     border: 1px solid #ddd; /* Borde sutil */
     border-radius: 8px; /* Bordes redondeados */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
@@ -19,9 +20,10 @@
 
 /* Título del filtro */
 .mapa-container-item h1 {
-    font-size: 1.5rem;
-    color: #333;
+    font-size: 30px;
+    color: #6e6e6e;
     margin: 0 0 16px; /* Espaciado inferior */
+    font-family: 'Times New Roman', Times, serif;
 }
 
 /* Estilo del buscador */
@@ -29,27 +31,32 @@
     width: 100%;
     padding: 10px;
     font-size: 1rem;
-    border: 1px solid #ddd;
+    border: 1px solid #8bbae4;
     border-radius: 4px;
     margin-bottom: 16px; /* Espaciado inferior */
     box-sizing: border-box;
 }
 
 .buscardo input:focus {
-    border-color: #007bff; /* Color de borde al hacer foco */
+    border-color: #0088ff; /* Color de borde al hacer foco */
     outline: none;
 }
 
 /* Estilo de las categorías */
 .categorias {
     margin-top: 16px; /* Separar un poco de la búsqueda */
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 18px;
+    color: #6e6e6e;
+
 }
 
 /* Título de las categorías */
 .categorias-titulo h3 {
-    font-size: 1.25rem;
-    color: #333;
+    font-size: 30px;
+    color: #6e6e6e;
     margin-bottom: 8px; /* Espaciado inferior */
+    font-family: 'Times New Roman', Times, serif;
 }
 
 /* Estilo de la lista de categorías */
@@ -66,14 +73,19 @@
 
 .categorias-contenido li {
     padding: 8px 0;
-    border-bottom: 1px solid #eee; /* Separadores suaves entre las categorías */
+    border-bottom: 1px solid #000000; /* Separadores suaves entre las categorías */
     cursor: pointer;
     transition: background-color 0.3s ease;
+    border-radius: 10px; /* Bordes redondeados */
+
 }
 
 .categorias-contenido li:hover {
-    background-color: #f1f1f1; /* Fondo al pasar el ratón */
+background: linear-gradient(90deg, #ffffff,#0eacac); 
+    border-radius: 20px; /* Aumenta la redondez */
+    transform: scale(1.1); /* Agranda un poco el elemento */
 }
+
 
 .categorias-contenido li:last-child {
     border-bottom: none; /* Eliminar borde en el último elemento */
@@ -140,7 +152,7 @@
     left: 66%;
     margin-top: -18%;
     font-size: 24px;
-    color: #ff0000;
+    color: linear-gradient(90deg, #0eacac, #6b797e);
     cursor: pointer;
     z-index: 101;
   }

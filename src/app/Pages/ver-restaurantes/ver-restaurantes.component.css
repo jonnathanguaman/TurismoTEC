@@ -53,8 +53,7 @@
 }
 
 .search-input:focus {
-    border-color: #b57118;
-    box-shadow: 0 0 5px rgba(211, 174, 55, 0.5);
+    border-color: #0088ff;
 }
 
 /* Contenedor de tarjetas de restaurantes */
@@ -74,16 +73,16 @@
     width: calc(33.333% - 20px);
     padding: 15px;
     border-radius: 8px;
-    border: 1px solid #f79400;
-    background: linear-gradient(300deg, #9e6532, #b9b8b8);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #0088ff;
+    background: linear-gradient(90deg, #b1b3b5, #0eacac); 
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
 }
 
 .card-restaurante:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 10px rgba(222, 6, 6, 0.15);
 }
 
 /* Imagen del restaurante */
@@ -116,8 +115,7 @@
 
 /* Botón de ver restaurante */
 .card-restaurante-boton button {
-    background: linear-gradient(45deg, #b65602, #514f4f);
-    color: white;
+    background: linear-gradient(90deg, #0eacac, #6b797e);    color: white;
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
@@ -127,7 +125,7 @@
 }
 
 .card-restaurante-boton button:hover {
-    background: linear-gradient(45deg, #b65602, #bebcbc);
+    background: linear-gradient(90deg, #0eacac, #fdfdfd);
 }
 
 /* Responsividad */

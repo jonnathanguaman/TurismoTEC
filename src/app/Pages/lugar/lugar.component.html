@@ -1,22 +1,21 @@
 <div class="lugar-container">
     <!-- Columna de imágenes -->
     <div class="imagenes-container" *ngIf="lugarEcontrado">
-        <div class="imagen-principal">
-            <img [src]="[urlHost + imgDeLugares[0].url]"
-                alt="Producto principal">
-            <img [src]="[urlHost + imgDeLugares[1].url]" >
-        </div>
-        <div class="imagenes-secundarias">
-            <img [src]="[urlHost + imgDeLugares[2].url]">
-        </div>
-    </div>
+        <img class="imagen imagen-pequena" src="assets/img/img-logo-menu1.png" alt="Imagen extra">
 
+        <img class="imagen" [src]="[urlHost + imgDeLugares[0].url]" alt="Producto principal">
+        <img class="imagen" [src]="[urlHost + imgDeLugares[1].url]" alt="Imagen secundaria 1">
+        <img class="imagen" [src]="[urlHost + imgDeLugares[2].url]" alt="Imagen secundaria 2">
+    </div>
     <!-- Columna de detalles -->
     <div class="detalles-container" *ngIf="lugarEcontrado">
+        <img class="logo-pequeno" src="assets/img/img-logo-menu1.png" alt="Foto lateral" />
         <h1 class="nombre">{{lugarEcontrado.nombre}}</h1>
         <p class="descripcion">{{lugarEcontrado.descripcion}}</p>
         
         <div class="container-detalles">
+           
+
             <p class="detalles" *ngIf="lugarEcontrado.areaProtegida">Area protegida</p>
             <p class="detalles">Zona {{lugarEcontrado.tipoZona}}</p>
         </div>

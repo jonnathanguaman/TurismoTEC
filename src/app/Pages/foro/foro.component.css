@@ -40,25 +40,20 @@
   display: flex;
   align-items: center;
   text-align: center;
-
   justify-content: space-between; /* Espacio entre texto e imagen */
   width: 200px;
   padding: 10px;
   font-size: 18px;
-  background: linear-gradient(90deg, #a25d21,#dad3d3);
+  background: linear-gradient(90deg, #0eacac, #6b797e);
   color: white;
   border: none;
   font-family: 'Times New Roman', serif;
-  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  border-radius: 20px; /* Aumenta la redondez */
+  transform: scale(1.1); /* Agranda un poco el elemento */
 }
-.btn-foro {
-  width: 200px;
-  text-align: center;
-  background: linear-gradient(90deg, #b65602, #514f4f);
 
-}
 /* Icono dentro del botón */
 .icono-boton {
   width: 60px;  /* Tamaño del icono */
@@ -66,16 +61,15 @@
   margin-left: 10px; /* Separación con el texto */
 }
 /* Estilo al pasar el mouse */
-.btn-foro:hover {
-  background: linear-gradient(90deg, #8c4a1e, #3e3d3d);
-}
+
 /* Estilo común para botones */
 button,
 
 .btn-opcion {
   padding: 10px 20px;
   font-size: 18px;
-  background: linear-gradient(90deg, #a25d21, #514f4f); /* Degradado */
+  background: linear-gradient(90deg, #0eacac, #6b797e);
+
   font-family: 'Times New Roman', serif;  color: white;
   border: none;
   border-radius: 8px;
@@ -86,7 +80,7 @@ button,
 button:hover,
 .btn-foro:hover,
 .btn-opcion:hover {
-  background: linear-gradient(90deg, #a25d21, #514f4f); /* Degradado */
+  background: linear-gradient(90deg, #0eacac, #fdfdfd);
   font-family: 'Times New Roman', serif;}
 
 /* Ventanas emergentes */
@@ -109,8 +103,8 @@ button:hover,
 }
 
 .ventana-contenido {
-  background: linear-gradient(90deg, #a25d21, #514f4f); /* Degradado */
-  padding: 20px;
+  background: linear-gradient(90deg, #b1b3b5, #0eacac); 
+   padding: 20px;
   max-width:95%; /* Ajusta el ancho máximo */
   max-height: 70vh; /* Ajusta la altura máxima */
   overflow-y: auto; /* Activa el scroll vertical si el contenido es muy grande */
@@ -128,7 +122,7 @@ button:hover,
 }
 
 .publicacion {
-  background: linear-gradient(90deg, #f4f3f2, #ebbd87); /* Degradado */
+  background: linear-gradient(90deg, #b1b3b5, #0eacac); 
   font-family: 'Times New Roman', serif;
 
   margin-bottom: 20px;
@@ -143,7 +137,7 @@ button:hover,
 .publicacion:hover {
   font-size: 18px;
   font-family: 'Times New Roman', serif;
-  background: linear-gradient(90deg, #f4f3f2, #7c4200); /* Degradado */
+  background: linear-gradient(90deg, #a3adb7, #0eacac); 
 }
 
 .publicacion h3 {
@@ -179,37 +173,20 @@ button:hover,
   width: 40%;
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #f7cb93;
+  border: 1px solid #0088ff;
   border-radius: 5px;
   outline: none;
   transition: border-color 0.3s;
   resize: none;
 }
 
-.comentario-textarea:focus {
-  border-color: #a25d21;
-}
 
-.comentario-publicar {
-  font-size: 18px;
-  color: #fff;
-  background: linear-gradient(90deg, #a25d21, #fffdfd); /* Degradado */
-  font-family: 'Times New Roman', serif;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.comentario-publicar:hover {
-  background: linear-gradient(90deg, #a25d21, #514f4f); /* Degradado */
-  font-family: 'Times New Roman', serif;}
  
 .comentario-cancelar {
   font-size: 18px;
 
   border-radius: 5px;
-  background: linear-gradient(90deg, #a25d21, #514f4f); /* Degradado */
+  background: linear-gradient(90deg, #0eacac, #6b797e); /* Degradado */
   font-family: 'Times New Roman', serif;
   color: white;
   padding: 5px 10px;
@@ -217,8 +194,7 @@ button:hover,
 }
 
 .comentario-cancelar:hover {
-  background: linear-gradient(90deg, #a25d21, #514f4f);
-}
+  background: linear-gradient(90deg, #0eacac, #fdfdfd);}
 .comentario-container-buttons {
   display: flex;
   flex-direction: row;
@@ -228,14 +204,7 @@ button:hover,
   
 }
 
-.comentario {
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background-color: #fafafa;
-}
+
 
 .comentario-autor {
   font-size: 14px;
@@ -303,34 +272,8 @@ footer p {
   border-color: #fffcfa;
 }
 
-/* Botones de opción */
-.btn-opcion {
-  display: inline-block;
-  width: 120px;
-  padding: 10px;
-  margin: 10px 5px;
-  font-size: 16px;
-  color: white;
-  background: linear-gradient(90deg, #bbb7b7, #b65602);
-  
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
 
-.btn-opcion:hover {
-  background: linear-gradient(90deg, #b65602, #000000);
-}
 
-.btn-opcion:last-child {
-  background: linear-gradient(90deg, #a25d21, #514f4f); /* Degradado */
-}
-
-.btn-opcion:last-child:hover {
-  background: linear-gradient(90deg, #a25d21, #514f4f); /* Degradado */
-
-}
 /* Contenedor principal con estructura en dos columnas */
 .contenedor-foro {
   display: flex; /* Divide la pantalla en dos secciones */
@@ -348,20 +291,6 @@ footer p {
   align-items: center; /* Centra los elementos */
   gap: 10px; /* Espaciado entre botón e imágenes */
 }
-
-/* Botón "Crear publicación" */
-
-
-/* Contenedor de imágenes */
-.foto {
-  display: flex;
-  flex-direction: column; /* Acomoda las imágenes en vertical */
-  align-items: center; /* Centra las imágenes */
-  gap: 10px; /* Espacio entre imágenes */
-}
-
-
-
 /* Lado derecho (Publicaciones) */
 .lado-derecho {
   flex: 2; /* Ocupa más espacio que el lado izquierdo */
@@ -409,7 +338,6 @@ button {
 }
 
 button:hover {
-  background-color: #8c4a1e; /* Cambia el color de fondo */
-  transform: scale(1.05); /* Aumenta ligeramente el tamaño */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Agrega sombra */
+  transform: scale(1.4); /* Aumenta ligeramente el tamaño */
+  box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.2); /* Agrega sombra */
 }

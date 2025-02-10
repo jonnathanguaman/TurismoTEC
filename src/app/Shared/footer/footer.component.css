@@ -1,6 +1,6 @@
 /* Footer */
 .footer {
-  background: linear-gradient(90deg, #000000, #b65602); /* Degradado como el menú */
+  background: linear-gradient(90deg, #000000, #0eacac); /* Degradado como el menú */
   color: white; /* Texto blanco */
   padding: 15px 20px; /* Espaciado interno */
   display: flex; /* Distribución en fila */

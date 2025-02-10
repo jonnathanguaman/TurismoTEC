@@ -1,91 +1,206 @@
-.chatbot-icon {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
+/* ----------------------------- */
+/* Chatbot Icon (Ícono del Chat) */
+/* ----------------------------- */
+
+.chatbot-icon { 
+    position: fixed; /* Fija el ícono en la pantalla */
+    bottom: 20px; /* Distancia desde la parte inferior */
+    right: 20px; /* Distancia desde la parte derecha */
+    width: 70px; /* Ancho del ícono */
+    height: 70px; /* Alto del ícono */
+    border-radius: 50%; /* Hace que el ícono sea circular */
     background-color: #ffffff; /* Color de fondo */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    z-index: 1000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex; /* Usa flexbox para centrar el contenido */
+    justify-content: center; /* Centra horizontalmente el contenido */
+    align-items: center; /* Centra verticalmente el contenido */
+    cursor: pointer; /* Cambia el cursor a "puntero" al pasar el mouse */
+    z-index: 1000; /* Asegura que el ícono esté sobre otros elementos */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Agrega sombra */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Agrega transiciones suaves */
 }
 
-.chatbot-icon img {
-    width: 80%;
-    height: auto;
+/* Efecto al pasar el cursor sobre el ícono */
+.chatbot-icon:hover { 
+    transform: scale(1.1); /* Aumenta ligeramente el tamaño */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Aumenta la sombra */
 }
 
-.chat-window {
-    position: fixed;
-    bottom: 80px; /* Altura del icono */
-    right: 20px;
-    width: 300px;
-    max-width: 80%;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+/* Estilos para la imagen dentro del ícono */
+.chatbot-icon img { 
+    width: 100%; /* Ajusta el tamaño de la imagen */
+    height: auto; /* Mantiene la proporción */
 }
 
-.chat-header {
-    background-color: #4673a0;
-    color: white;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 8px 8px 0 0;
+/* ----------------------------- */
+/* Chat Window (Ventana del Chat) */
+/* ----------------------------- */
+
+.chat-window { 
+    position: fixed; /* Fija la ventana en la pantalla */
+    bottom: 90px; /* Ubicación desde la parte inferior */
+    right: 20px; /* Ubicación desde la parte derecha */
+    width: 350px; /* Ancho fijo */
+    height: 500px; /* Altura fija */
+    background-color: white; /* Fondo blanco */
+    border: 1px solid #0088ff; /* Borde gris */
+    border-radius: 12px; /* Esquinas redondeadas */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra alrededor */
+    overflow: hidden; /* Oculta el contenido desbordado */
+    font-family: 'Times New Roman', serif;
+    box-sizing: border-box; /* Asegurar que todo se mantenga dentro del tamaño */
 }
 
-.chat-body {
-    padding: 10px;
-    max-height: 300px;
-    overflow-y: auto;
+/* Fondo de la ventana del chat */
+.chat-background { 
+    position: absolute; /* Posiciona el fondo de forma absoluta */
+    top: 0; /* Alineado arriba */
+    left: 0; /* Alineado a la izquierda */
+    width: 100%; /* Ocupar todo el ancho */
+    height: 100%; /* Ocupar toda la altura */
+    z-index: -1; /* Coloca el fondo detrás del contenido */
+    opacity: 0.2; /* Hace el fondo translúcido */
+    background-size: cover; /* Ajusta la imagen al tamaño del contenedor */
+    background-position: center; /* Centra la imagen de fondo */
+    filter: blur(2px); /* Aplica un desenfoque al fondo */
 }
 
-.message {
-    margin: 5px 0;
+/* -------------------------- */
+/* Chat Header (Encabezado) */
+/* -------------------------- */
+
+.chat-header { 
+    background: linear-gradient(90deg, #0eacac, #000000);     color: white; /* Texto blanco */
+    padding: 12px; /* Espaciado interno */
+    display: flex; /* Usa flexbox */
+    justify-content: space-between; /* Distribuye elementos a los extremos */
+    align-items: center; /* Alinea verticalmente */
+    border-radius: 12px 12px 0 0; /* Redondea solo la parte superior */
+    font-size: 16px; /* Tamaño de la fuente */
+    font-weight: bold; /* Texto en negrita */
 }
 
-.message-content {
-    padding: 10px;
-    border-radius: 10px;
-    max-width: 80%;
-    word-wrap: break-word;
+/* Botón para cerrar el chat */
+.close-button { 
+    background: none; /* Sin fondo */
+    border: none; /* Sin borde */
+    color: white; /* Color del ícono */
+    font-size: 24px; /* Tamaño del ícono */
+    cursor: pointer; /* Cursor tipo puntero */
+    transition: color 0.3s ease, transform 0.3s ease; /* Animaciones */
+    padding: 0; /* Sin espacio adicional */
+    line-height: 1; /* Ajusta la alineación */
 }
 
-.user-message {
-    background-color: #D1E7DD;
-    margin-left: auto; /* Alinear a la derecha */
+/* Efecto al pasar el cursor sobre el botón de cerrar */
+.close-button:hover { 
+    color: #0eacac; /* Cambia a color rojo */
+    transform: rotate(90deg); /* Gira el ícono */
 }
 
-.bot-message {
-    background-color: #E9ECEF;
-    margin-right: auto; /* Alinear a la izquierda */
+/* -------------------------- */
+/* Chat Body (Cuerpo del Chat) */
+/* -------------------------- */
+
+.chat-body { 
+    padding: 12px; /* Espaciado interno */
+    height: 320px; /* Altura fija */
+    overflow-y: auto; /* Permite desplazamiento vertical */
+    position: relative; /* Posicionamiento relativo */
+    z-index: 1; /* Asegura que esté sobre el fondo */
+    scrollbar-width: thin; /* Hace la barra de desplazamiento más delgada */
+    scrollbar-color: #0eacac #f1f1f1; /* Color de la barra de desplazamiento */
 }
 
-.chat-input {
-    display: flex;
-    padding: 10px;
+/* Estilos de la barra de desplazamiento para navegadores WebKit */
+.chat-body::-webkit-scrollbar { 
+    width: 8px; /* Ancho de la barra de desplazamiento */
 }
 
-.chat-input input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    margin-right: 10px;
+/* Color del "pulgar" de la barra de desplazamiento */
+.chat-body::-webkit-scrollbar-thumb { 
+    background-color: #000000; /* Azul */
+    border-radius: 4px; /* Esquinas redondeadas */
 }
 
-.chat-input button {
-    background-color: #4673a0;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 15px;
-    cursor: pointer;
+/* Color del fondo de la barra de desplazamiento */
+.chat-body::-webkit-scrollbar-track { 
+    background-color: #f1f1f1; /* Gris claro */
 }
+
+/* Mensajes del chat */
+.message { 
+    margin: 8px 0; /* Espaciado entre mensajes */
+    display: flex; /* Usa flexbox */
+    flex-direction: column; /* Alineación en columna */
+}
+
+/* Contenedor de cada mensaje */
+.message-content { 
+    padding: 12px; /* Espaciado interno */
+    border-radius: 12px; /* Bordes redondeados */
+    max-width: 80%; /* Ancho máximo */
+    word-wrap: break-word; /* Permite saltos de línea */
+    font-size: 14px; /* Tamaño de fuente */
+    line-height: 1.4; /* Espaciado entre líneas */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    font-family: 'Times New Roman', serif;
+
+}
+
+/* Mensajes del usuario */
+.user-message { 
+    background-color: #0eacac98; /* Azul */
+    color: white; /* Texto blanco */
+    margin-left: auto; /* Alineado a la derecha */
+    border-bottom-right-radius: 4px; /* Bordes específicos */
+    font-family: 'Times New Roman', serif;
+}
+
+/* Mensajes del bot */
+.bot-message { 
+    background-color: #f1f1f1; /* Gris claro */
+    color: #333; /* Texto oscuro */
+    margin-right: auto; /* Alineado a la izquierda */
+    border-bottom-left-radius: 4px; /* Bordes específicos */
+    font-family: 'Times New Roman', serif;
+}
+
+/* -------------------------- */
+/* Chat Input (Entrada de Texto) */
+/* -------------------------- */
+
+.chat-input { 
+    display: flex; /* Usa flexbox */
+    padding: 10px; /* Espaciado interno */
+    position: relative; /* Posicionamiento relativo */
+    z-index: 1; /* Asegura que esté sobre el fondo */
+    background-color: #f9f9f9; /* Fondo gris claro */
+    border-top: 1px solid #eee; /* Borde superior */
+}
+
+/* Campo de entrada de texto */
+.chat-input input { 
+    flex: 1; /* Ocupa todo el espacio disponible */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde gris */
+    border-radius: 20px; /* Bordes redondeados */
+    font-size: 14px; /* Tamaño de fuente */
+    outline: none; /* Elimina borde al enfocar */
+    font-family: 'Times New Roman', serif;
+}
+
+/* Botón de enviar */
+.chat-input button { 
+    background: linear-gradient(90deg, #0eacac, #000000);
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 20px; /* Bordes redondeados */
+    padding: 10px 20px; /* Espaciado interno */
+    cursor: pointer; /* Cursor tipo puntero */
+    font-size: 14px; /* Tamaño de fuente */
+    font-family: 'Times New Roman', serif;
+
+}
+
+.chat-input button:hover { 
+    background: linear-gradient(90deg, #0eacac, #ffffff);}

@@ -1,224 +1,221 @@
 /* Contenedor principal */
 .crud-container {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    max-width: 900px;
-    margin: 20px auto;
-  }
-  
-  /* Cabecera de la reseña */
-  .review-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 15px;
-    margin-bottom: 20px;
-  }
-  
-  .review-image {
-    width: 70px;
-    height: 70px;
-    border-radius: 8px;
-    object-fit: cover;
-    border: 2px solid #007bff;
-  }
-  
-  .review-description {
-    flex-grow: 1;
-    font-size: 16px;
-    color: #333;
-    line-height: 1.5;
-  }
-  
-  .btn-opcion {
-    padding: 10px 20px;
-    font-size: 16px;
-    color: white;
-    background-color: #007bff;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .btn-opcion:hover {
-    background-color: #0056b3;
-    box-shadow: 0 6px 8px rgba(0, 86, 179, 0.3);
-  }
-  
-  .btn-opcion:last-child {
-    background-color: #dc3545;
-  }
-  
-  .btn-opcion:last-child:hover {
-    background-color: #b71c1c;
-  }
-  
-  /* Modal */
-  .crud-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 200;
-  }
-  
-  .crud-modal-content {
-    background-color: #ffffff;
-    padding: 40px;
-    border-radius: 12px;
-    width: 80%;
-    max-width: 600px;
-    position: relative;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    animation: fadeIn 0.3s ease-out;
-  }
-  
-  @keyframes fadeIn {
-    from {
+  background: linear-gradient(90deg, #92c2c2, #b1b3b5);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(205, 6, 6, 0.15);
+  max-width: 900px;
+  margin: 20px auto;
+  font-family: 'Times New Roman', serif;
+
+}
+
+/* Cabecera de la reseña */
+.review-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid #ffffff;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  font-family: 'Times New Roman', serif;
+
+}
+
+.review-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid #07c1ff;
+  font-family: 'Times New Roman', serif;
+
+}
+
+.review-description {
+  flex-grow: 1;
+  font-size: 16px;
+  color: #ffffff;
+  line-height: 1.5;
+  font-family: 'Times New Roman', serif;
+
+}
+
+.btn-opcion {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background: linear-gradient(90deg, #0eacac, #6b797e);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'Times New Roman', serif;
+
+}
+
+.btn-opcion:hover {
+  background: linear-gradient(90deg, #0eacac, #fdfdfd);
+  box-shadow: 0 6px 8px rgba(0, 86, 179, 0.3);
+}
+
+.btn-opcion:last-child {
+  background-color: #dc3545;
+}
+
+.btn-opcion:last-child:hover {
+  background-color: #b71c1c;
+}
+
+/* Modal */
+.crud-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+}
+
+.crud-modal-content {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  width: 80%;
+  max-width: 600px;
+  position: relative;
+  box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
       opacity: 0;
       transform: scale(0.95);
-    }
-    to {
+  }
+  to {
       opacity: 1;
       transform: scale(1);
-    }
   }
-  
-  .crud-modal-content h3 {
-    font-size: 22px;
-    color: #007bff;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .close-modal {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 24px;
-    color: #ff0000;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-  }
-  
-  .close-modal:hover {
-    transform: scale(1.2);
-  }
-  
-  /* Campos del formulario */
-  .input-container {
-    margin-bottom: 20px;
-  }
-  
-  .input-container label {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 8px;
-    display: block;
-  }
-  
-  textarea,
-  input {
-    width: 100%;
-    padding: 12px;
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-sizing: border-box;
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  textarea:focus,
-  input:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
-  }
-  
-  textarea {
-    resize: none;
-    word-wrap: break-word; /* Permitir saltos de línea */
-  }
-  
-  /* Estrellas */
-  .stars {
-    font-size: 28px;
-    color: #ddd;
-    display: flex;
-    gap: 5px;
-  }
-  
-  .star {
-    cursor: pointer;
-    transition: color 0.2s ease, transform 0.2s ease;
-  }
-  
-  .star:hover {
-    color: #ffc107;
-    transform: scale(1.2);
-  }
-  
-  .star.filled {
-    color: #ffc107;
-  }
-  
-  /* Botones del modal */
-  .btn-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
-  }
-  
-  /* Rejilla de reseñas */
-  .reviews-list {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-  }
-  
-  .review-item {
-    background: #ffffff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    word-wrap: break-word; /* Habilitar saltos de línea */
-  }
-  
-  .review-item p {
-    margin: 5px 0;
-    font-size: 14px;
-    color: #333;
-  }
-  
-  .review-item strong {
-    color: #007bff;
-  }
-  /* Estrellas compartidas en modal y reseñas */
+}
+
+.crud-modal-content h3 {
+  font-size: 22px;
+  color: #000000;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 24px;
+  color: #ff0000;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  font-family: 'Times New Roman', serif;
+
+}
+
+.close-modal:hover {
+  transform: scale(1.2);
+}
+
+/* Campos del formulario */
+.input-container {
+  margin-bottom: 20px;
+}
+
+.input-container label {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+  display: block;
+}
+
+textarea,
+input {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'Times New Roman', serif;
+
+}
+
+textarea:focus,
+input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+}
+
+textarea {
+  resize: none;
+  word-wrap: break-word;
+}
+
+/* Estrellas */
 .stars {
-    font-size: 28px; /* Tamaño de las estrellas */
-    color: #ece4ca; /* Color dorado opaco */
-    display: flex;
-    gap: 5px; /* Espaciado entre estrellas */
-  }
-  
-  .star {
-    transition: color 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
-  }
-  
-  .star.filled {
-    color: #ffc107; /* Amarillo brillante para estrellas seleccionadas */
-  }
+  font-size: 28px;
+  color: #ddd;
+  display: flex;
+  gap: 5px;
+}
+
+.star {
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.star:hover {
+  color: #ffc107;
+  transform: scale(1.2);
+}
+
+.star.filled {
+  color: #ffc107;
+}
+
+/* Botones del modal */
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+
+}
+
+/* Rejilla de reseñas */
+.reviews-list {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.review-item {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  word-wrap: break-word;
+}
+
+.review-item p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #000000;
+  font-family: 'Times New Roman', serif;
+
+}
