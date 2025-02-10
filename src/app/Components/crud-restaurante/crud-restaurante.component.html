@@ -15,7 +15,7 @@
 
     <!-- Modal para Crear/Editar Mesa -->
     <!-- Modal Principal para mostrar las Mesas -->
-    <div class="crud-modal" *ngIf="isRestauranteModalOpen">
+    <div class="crud-modal" *ngIf="isMesaModalOpen">
         <div class="crud-modal-content">
             <span class="close-modal" (click)="closeMesaModal()">✖</span>
             <h3>Lista de Mesas</h3>
@@ -30,67 +30,65 @@
                         <th>Imagen</th>
                         <th># Mesa</th>
                         <th>Capacidad</th>
-                        <th>Precio</th>
-                        <th>Disponible</th>
+                        <th>Disponibilidad/th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let room of mesas;">
+                    <tr *ngFor="let mesa of mesas;">
                         <!-- <td><img [src]="room.image" alt="Imagen de Habitación" class="room-thumbnail"></td> -->
                         <td>
                             <div class="img-preview" id="preview1">
 
-                                <!-- <img [src]="mostrarImagesDeMesas(room.idHabitacion)" alt="Vista previa"> -->
+                                <img [src]="[urlHost + mesa.imagenesMesa[1].url]" alt="Vista previa">
                             </div>
                         </td>
-                        <td>{{ room.nombreHabitacion }}</td>
-                        <td>{{ room.descripcion }}</td>
-                        <td>{{ room.precio }}</td>
-                        <td>{{ room.disponible ? 'Sí' : 'No' }}</td>
+                        <td>{{ mesa.numeroMesa }}</td>
+                        <td>{{ mesa.capacidad }}</td>
+                        <td>{{ mesa.disponibilidad ? 'Sí' : 'No' }}</td>
                         <td>
-                            <!-- <button class="btn-opcion btn-delete" (click)="editarHabitacion(room.idHabitacion)"
-                                    (click)="obtenerImagesDeHabitacion(room.idHabitacion)">Editar</button>
-                                <button class="btn-opcion btn-delete" (click)="deleteRoom(room.idHabitacion)">Eliminar
-                                    Habitacion</button> -->
+                            <button class="btn-opcion btn-delete" (click)="editarMesa(mesa.idMesa)" (click)="obtenerImagesDeMesa(mesa.idMesa)">Editar</button>
+                                <button class="btn-opcion btn-delete" (click)="eliminarMesa(mesa.idMesa)">Eliminar</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
 
-            <!-- Modal para Crear una Nueva Habitación -->
+            <!-- Modal para Crear una Nueva Mesa -->
             <div class="crud-modal" *ngIf="isCreateMesaModalOpen">
                 <div class="crud-modal-content">
                     <span class="close-modal" (click)="closeCreateMesaModal()">✖</span>
-                    <h3>Crear Nueva Habitación</h3>
+                    <h3>Crear Nueva Mesa</h3>
 
                     <!-- Formulario para ingresar los datos de la habitación -->
-                    <!-- <form [formGroup]="habitacionForm">
+                    <form [formGroup]="MesaForm">
 
                             <div class="input-container">
-                                <label for="nombre">Nombre:</label>
-                                <input type="text" id="nombreHabitacion" formControlName="nombreHabitacion" />
-                                <div *ngIf="habitacionForm.get('nombreHabitacion')?.invalid && habitacionForm.get('nombreHabitacion')?.touched"
+                                <label for="numeroMesa"># Mesa:</label>
+                                <input type="text" id="numeroMesa" formControlName="numeroMesa" />
+                                <div *ngIf="MesaForm.get('numeroMesa')?.invalid && MesaForm.get('numeroMesa')?.touched"
                                     class="message error">
-                                    El nombre es obligatorio.
+                                    El numero de mesa es obligatorio.
                                 </div>
                             </div>
 
                             <div class="input-container">
-                                <label for="descripcion">Descripción:</label>
-                                <input type="text" id="descripcion" formControlName="descripcion" />
-                                <div *ngIf="habitacionForm.get('descripcion')?.invalid && habitacionForm.get('descripcion')?.touched"
+                                <label for="capacidad">Capacidad:</label>
+                                <input type="text" id="capacidad" formControlName="capacidad" />
+                                <div *ngIf="MesaForm.get('capacidad')?.invalid && MesaForm.get('capacidad')?.touched"
                                     class="message error">
-                                    La descripción es obligatorio.
+                                    La capacidad de la mesa es obligatorio.
                                 </div>
                             </div>
 
                             <div class="input-container">
-                                <label for="descripcion">Precio:</label>
-                                <input type="text" id="precio" formControlName="precio" />
-                                <div *ngIf="habitacionForm.get('precio')?.invalid && habitacionForm.get('precio')?.touched"
-                                    class="message error">
-                                    El precio es obligatorio.
+                                <label for="disponibilidad">Disponibilidad</label>
+                                <select id="disponibilidad" formControlName="disponibilidad">
+                                    <option [value]="true">Disponible</option>
+                                    <option [value]="false">No Disponible</option>
+                                </select>
+                                <div *ngIf="MesaForm.get('disponibilidad')?.invalid && MesaForm.get('disponibilidad')?.touched" class="message error">
+                                    El estado de disponibilidad
                                 </div>
                             </div>
 
@@ -123,8 +121,8 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn-opcion" (click)="crearHabitacion()">Guardar</button>
-                        </form> -->
+                            <button type="submit" class="btn-opcion" (click)="crearMesa()">Guardar</button>
+                        </form>
                 </div>
             </div>
 
@@ -253,7 +251,7 @@
                     <td>
                         <button (click)="guardarIdRestaurante(restaurante.idRestaurante)" (click)="abrirModalEtiqueta()"
                             class="btn-opcion">Agregar/quitar etiquetas</button>
-                        <button class="btn-opcion" (click)="openMesaModal()">Crear/Editar mesas</button>
+                        <button class="btn-opcion" (click)="guardarIdRestaurante(restaurante.idRestaurante)" (click)="openMesaModal()">Crear/Editar mesas</button>
                         <button (click)="guardarIdRestaurante(restaurante.idRestaurante)"
                             (click)="obtenerImagesDeRestaurante(restaurante.idRestaurante)"
                             (click)="obtenerRestauranteById(restaurante.idRestaurante)"

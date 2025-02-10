@@ -390,18 +390,6 @@ export class CrudHotelComponent implements OnInit {
         this.imagePreviews = [];
     }
 
-    // Método para leer la imagen seleccionada y convertirla a base64
-    onImageSelected(event: any) {
-        const file = event.target.files[0]; // Obtener el archivo de imagen seleccionado
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                this.newRoom.image = reader.result as string; // Guardar la imagen en base64
-            };
-            reader.readAsDataURL(file); // Leer la imagen como URL de datos (base64)
-        }
-    }
-
     cargarHabitaciones() {
         this.habitacionesService.getHabitacionDeHotel(this.idHotel).subscribe({
             next: (habitaciones) => {
@@ -496,21 +484,30 @@ export class CrudHotelComponent implements OnInit {
             })
     }
 
-
-    // Método para agregar una nueva habitación a la lista
-    addRoom() {
-        // if (this.newRoom.image && this.newRoom.name && this.newRoom.description && this.newRoom.price) {
-        //     this.rooms.push({ ...this.newRoom }); // Agregar la nueva habitación a la lista
-        //     this.closeCreateRoomModal(); // Cerrar el modal de creación después de agregar
-        // } else {
-        //     alert('Por favor, complete todos los campos.'); // Alertar si faltan campos
-        // }
-    }
-
-    // Método para eliminar una habitación
-    deleteRoom(index: number) {
-        // if (confirm('¿Está seguro de que desea eliminar esta habitación?')) {
-        //     this.rooms.splice(index, 1); // Eliminar la habitación seleccionada
-        // }
+    deleteRoom(idHabitacion: number) {
+        const mensajeError = environment.mensajeEmergente(
+            '¿Estás seguro que deseas eliminar?',
+            'Esta operación no es reversible',
+            'warning'
+        );
+        mensajeError.then((confirmado) => {
+            if (confirmado) {
+                this.habitacionesService.eliminarHabitacion(idHabitacion).subscribe({
+                    next: () => {
+                        
+                            this.cargarHabitaciones();
+                        
+                        environment.mensajeToast(
+                            'success',
+                            'Eliminado con exito',
+                            'Se ha eliminado con exito'
+                        );
+                    },
+                    error: () => {
+                        environment.mensajeToast('error', 'No se puedo eliminar', 'Elimina las etiquetas')
+                    }
+                });
+            }
+        });
     }
 }

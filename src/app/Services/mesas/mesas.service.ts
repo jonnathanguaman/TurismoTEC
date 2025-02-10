@@ -9,17 +9,21 @@ import { environment } from '../../../enviroments/enviroment';
 })
 export class MesasService {
 
-constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  getMesasDeRestaurante(id:number):Observable<Mesa[]>{
+  getMesasDeRestaurante(id: number): Observable<Mesa[]> {
     return this.http.get<Mesa[]>(`${environment.urlHost + "/mesasDeRestaurante"}/${id}`)
   }
 
-  getMesaById(idMesa:number):Observable<Mesa>{
+  getMesaById(idMesa: number): Observable<Mesa> {
     return this.http.get<Mesa>(`${environment.urlHost + "/mesas"}/${idMesa}`)
   }
 
-  crearMesa(mesa:Mesa):Observable<Mesa>{
-    return this.http.post<Mesa>(`${environment.urlHost + "/mesas"}`,mesa)
+  crearMesa(mesa: Mesa, idRestaurante: number): Observable<Mesa> {
+    return this.http.post<Mesa>(`${environment.urlHost + "/mesas"}/${idRestaurante}`, mesa)
+  }
+
+  eliminarMesa(id: number): Observable<Mesa> {
+    return this.http.delete<Mesa>(`${environment.urlHost + "/mesas"}/${id}`)
   }
 }

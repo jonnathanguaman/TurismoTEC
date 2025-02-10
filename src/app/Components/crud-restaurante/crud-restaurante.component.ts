@@ -13,6 +13,10 @@ import { Lugares } from '../../Services/Lugares/lugares';
 import { LugaresService } from '../../Services/Lugares/lugares.service';
 import { AuthService } from '../../Services/login/login.service';
 import { ImagenesRestaurantes } from '../../Services/imagenesRestaurantes/imagenesRestaurantes';
+import { Mesa } from '../../Services/mesas/mesas';
+import { MesasService } from '../../Services/mesas/mesas.service';
+import { ImagenesMesas } from '../../Services/imagenesMesas/imagenesMesas';
+import { ImagenesMesasService } from '../../Services/imagenesMesas/imagenes-mesas.service';
 
 @Component({
     selector: 'app-crud-restaurante',
@@ -33,27 +37,29 @@ export class CrudRestauranteComponent implements OnInit {
     idLugarSeleccionado: number;
     etiquetasDelRestaurante: EtiquetaRestaurante[];
     urlHost: string = environment.urlAut;
-    asociado:boolean = false;
+    asociado: boolean = false;
 
     public restauranteAAsignar = new Restaurante();
 
     constructor(
+        private mesasService: MesasService,
         private restaurantesService: RestauranteService,
         private lugaresService: LugaresService,
         private fb: FormBuilder,
+        private imagenesMesasService: ImagenesMesasService,
         private imagenesRestaurantesService: ImagenesRestaurantesService,
         private etiquetaRestauranteService: EtiquetaRestauranteService,
         private authService: AuthRegisterService,
-        private loginService:AuthService
+        private loginService: AuthService
     ) { }
 
     ngOnInit(): void {
-        this.loginService.asociado.subscribe({next:(asociado) =>{this.asociado = asociado}})
-        
+        this.loginService.asociado.subscribe({ next: (asociado) => { this.asociado = asociado } })
+
         this.obtenerLugaresDeAdmin();
-        if(this.asociado){
+        if (this.asociado) {
             this.obtenerRestaurantesDeAsociado();
-        }else{
+        } else {
             this.obtenerRestaurantes();
         }
     }
@@ -66,39 +72,40 @@ export class CrudRestauranteComponent implements OnInit {
         descripcion: ['', [Validators.required]],
         menu: ['', [Validators.required]]
     });
-    
+
     obtenerRestaurantes() {
         this.restaurantesService.getTodosRestaurantes().subscribe((restaurantes) => {
             this.todosRestaurantes = restaurantes;
-            this.todosRestaurantes.forEach((restaurante)=>{
+            this.todosRestaurantes.forEach((restaurante) => {
                 console.log("Entro aqui")
-                this.obtenerImagesDeRestaurantes(restaurante.idRestaurante).then((img)=>{
+                this.obtenerImagesDeRestaurantes(restaurante.idRestaurante).then((img) => {
                     restaurante.imagenesRestaurantes = img
                 })
             })
         });
     }
 
-    obtenerImagesDeRestaurantes(idRestaurante:number):Promise<ImagenesRestaurantes[]>{
-        return new Promise((resolve,reject) =>{
-          this.imagenesRestaurantesService.getImagenesByIdRestaurantes(idRestaurante).subscribe(
-              imgRestaurante => resolve(imgRestaurante),
-              error => reject(error)
+    obtenerImagesDeRestaurantes(idRestaurante: number): Promise<ImagenesRestaurantes[]> {
+        return new Promise((resolve, reject) => {
+            this.imagenesRestaurantesService.getImagenesByIdRestaurantes(idRestaurante).subscribe(
+                imgRestaurante => resolve(imgRestaurante),
+                error => reject(error)
             )
         })
     }
 
-    obtenerRestaurantesDeAsociado(){
+    obtenerRestaurantesDeAsociado() {
         const token = sessionStorage.getItem("token")//Obtenemos el token del sesionStorage
         const payload: TokenPayload = jwtDecode(token); //Decodificamos el token, nos devuleve el nombre del usuario
         this.authService.getIdPerson(payload.sub).subscribe({
-        next: (idUser) => {
-            this.restaurantesService.getRestaurantesByIdUser(idUser).subscribe({
-                next:(restauranteUser)=>{
-                    this.todosRestaurantes = restauranteUser;
-                }
-            })
-        }})
+            next: (idUser) => {
+                this.restaurantesService.getRestaurantesByIdUser(idUser).subscribe({
+                    next: (restauranteUser) => {
+                        this.todosRestaurantes = restauranteUser;
+                    }
+                })
+            }
+        })
     }
 
     mesaForm = this.fb.group({
@@ -208,17 +215,17 @@ export class CrudRestauranteComponent implements OnInit {
                         .guardarRestaurante(this.restauranteForm.value as unknown as Restaurante, idUser, this.idLugarSeleccionado).subscribe({
                             next: (restauranteCreado: Restaurante) => {
                                 this.idRestaurante = restauranteCreado.idRestaurante;
-                                console.log("Imagenes create"+this.selectedFiles)
+                                console.log("Imagenes create" + this.selectedFiles)
                                 const uploadPromises = this.selectedFiles.map((file) =>
                                     this.imagenesRestaurantesService.uploadImage(file, restauranteCreado.idRestaurante).toPromise());
-                                    console.log(restauranteCreado.idRestaurante)
-                                
-                                    Promise.all(uploadPromises)
+                                console.log(restauranteCreado.idRestaurante)
+
+                                Promise.all(uploadPromises)
                                     .then(() => {
                                         environment.mensajeToast('success', 'Hotel creado', 'Se ha creado el hotel con exito');
-                                        if(this.asociado){
+                                        if (this.asociado) {
                                             this.obtenerRestaurantesDeAsociado();
-                                        }else{
+                                        } else {
                                             this.obtenerRestaurantes();
                                         }
                                         this.closeCrudModal();
@@ -244,7 +251,7 @@ export class CrudRestauranteComponent implements OnInit {
         }
     }
 
-    
+
 
     eliminarRestaurante(idRestaurante: number) {
         const mensajeError = environment.mensajeEmergente(
@@ -256,9 +263,9 @@ export class CrudRestauranteComponent implements OnInit {
             if (confirmado) {
                 this.restaurantesService.eliminarRestaurante(idRestaurante).subscribe({
                     next: () => {
-                        if(this.asociado){
+                        if (this.asociado) {
                             this.obtenerRestaurantesDeAsociado();
-                        }else{
+                        } else {
                             this.obtenerRestaurantes();
                         }
                         environment.mensajeToast(
@@ -314,11 +321,11 @@ export class CrudRestauranteComponent implements OnInit {
     }
 
     obtenerImagesDeRestaurante(id: number) {
-        this.imagePreviews = []; 
+        this.imagePreviews = [];
         this.selectedFiles = [];
 
         this.imagePreviews = new Array
-        this.imagenesRestaurantesService.getImagenesByIdRestaurantes(id).subscribe(imgRestaurante =>{
+        this.imagenesRestaurantesService.getImagenesByIdRestaurantes(id).subscribe(imgRestaurante => {
             imgRestaurante.forEach((Hotel) => {
 
                 //Contruimos la url para la previsualizacion
@@ -344,14 +351,157 @@ export class CrudRestauranteComponent implements OnInit {
         return parts[parts.length - 1];
     }
 
-    public isRestauranteModalOpen = false;
+    public isMesaModalOpen = false;
     public isCreateMesaModalOpen = false;
+    mesas: Mesa[] = [];
 
-    closeMesaModal() {}
-    openCreateMesaModal() {}
-    mostrarImagesDeMesas() {}
-    closeCreateMesaModal() {}
-    openMesaModal() {}
-    mesas: any[] = [];
+    MesaForm = this.fb.group({
+        idMesa: [''],
+        numeroMesa: ['', [Validators.required]],
+        capacidad: ['', [Validators.required]],
+        disponibilidad: ['', [Validators.required]],
+    })
+
+    openMesaModal() { 
+        this.isMesaModalOpen = true;
+        this.cargarMesas();
+    }
+    closeMesaModal() { 
+        this.isMesaModalOpen = false;
+    }
+
+    openCreateMesaModal() { 
+        this.isCreateMesaModalOpen = true;
+    }
+
+    closeCreateMesaModal() { 
+        this.isCreateMesaModalOpen = false; // Cerrar el modal de creación
+        this.mesaForm.reset();
+        this.selectedFiles = [];
+        this.imagePreviews = [];
+    }
+
+    mostrarImagesDeMesas() { }
+
+    cargarMesas() {
+        this.mesasService.getMesasDeRestaurante(this.idRestaurante).subscribe({
+            next: (mesas) => {
+                this.mesas = mesas;
+                this.mesas.forEach((mesa) => {
+                    console.log("Entro aqui")
+                    this.obtenerImagesDeMesas(mesa.idMesa).then((img) => {
+                        mesa.imagenesMesa = img
+                    })
+                })
+            }
+        });
+    }
+
+    editarMesa(idMesa: number) { 
+        environment.mensajeEmergente('Editar', '¿Estas seguro que deseas editar?', 'warning')
+            .then((cont) => {
+                if (cont) {
+                    this.openCreateMesaModal()
+                    this.mesasService.getMesaById(idMesa).subscribe({
+                        next: (mesa) => {
+                            this.mesaForm.controls.idMesa.setValue(<string><unknown>mesa.idMesa)
+                            this.mesaForm.controls.numeroMesa.setValue(mesa.numeroMesa)
+                            this.mesaForm.controls.capacidad.setValue(mesa.capacidad)
+                            this.mesaForm.controls.disponibilidad.setValue(<string><unknown>mesa.disponibilidad)
+                        }
+                    })
+                }
+            })
+    }
+    //para mostrar en la tabla lo llamo desde cargarMesas
+    obtenerImagesDeMesas(idMesa: number): Promise<ImagenesMesas[]> {
+        return new Promise((resolve, reject) => {
+            this.imagenesMesasService.getImagenesByIdMesa(idMesa).subscribe(
+                imgMesas => resolve(imgMesas),
+                error => reject(error)
+            )
+        })
+    }
+    //para editar una mesa
+    obtenerImagesDeMesa(id: number) { 
+        console.log("Entro aqui")
+        this.imagePreviews = new Array
+        this.imagenesMesasService.getImagenesByIdMesa(id).subscribe({
+            next: (imgMesas) => {
+                console.log("next")
+                console.log(imgMesas)
+                imgMesas.forEach((mesa) => {
+
+                    //Contruimos la url para la previsualizacion
+                    this.imagePreviews.push(this.urlHost + mesa.url)
+                    console.log(this.imagePreviews)
+                    this.obtenerFile(this.obtenerNombreDeLaFoto(mesa.url))
+                    console.log(this.selectedFiles)
+                })
+            },
+            error: (e) => {
+                console.log("Error al obtener imagenes" + e)
+            }
+        })
+    }
+
+    eliminarMesa(idMesa: number) {
+        const mensajeError = environment.mensajeEmergente(
+            '¿Estás seguro que deseas eliminar?',
+            'Esta operación no es reversible',
+            'warning'
+        );
+        mensajeError.then((confirmado) => {
+            if (confirmado) {
+                this.mesasService.eliminarMesa(idMesa).subscribe({
+                    next: () => {
+
+                        this.cargarMesas();
+
+                        environment.mensajeToast(
+                            'success',
+                            'Eliminado con exito',
+                            'Se ha eliminado con exito'
+                        );
+                    },
+                    error: () => {
+                        environment.mensajeToast('error', 'No se puedo eliminar', 'Elimina las etiquetas')
+                    }
+                });
+            }
+        });
+    }
+
+    crearMesa() { 
+        console.log(this.imagePreviews.length)
+        console.log(this.mesaForm.valid)
+                if (this.mesaForm.valid && this.imagePreviews.length >= 3) {
+                    this.mesasService
+                        .crearMesa(this.mesaForm.value as unknown as Mesa, this.idRestaurante).subscribe({
+                            next: (mesaCreada: Mesa) => {
+                                const uploadPromises = this.selectedFiles.map((file) =>
+                                    this.imagenesMesasService.uploadImage(file, mesaCreada.idMesa).toPromise());
+                                Promise.all(uploadPromises)
+                                    .then(() => {
+                                        environment.mensajeToast('success', 'Habitación creado', 'Se ha creado la habitación con éxito');
+                                        this.cargarMesas();
+                                        this.selectedFiles = [];
+                                        this.imagePreviews = [];
+                                        this.closeCreateMesaModal();
+                                    })
+                                    .catch((error) => {
+                                        console.error('Error al subir las imágenes:', error);
+                                        environment.mensajeToast('error', 'Error al subir las imágenes', 'Ingrese todos los campos y seleccione las imágenes');
+                                    });
+                            },
+                            error: () => {
+                                environment.mensajeToast('error', 'Error al registrar', 'Ingrese todos los campos y seleccione las imágenes');
+                            }
+                        })
+                } else {
+                    environment.mensajeToast(
+                        'error', 'Error al registrar', 'Ingrese todos los campos y seleccione las imágenes else');
+                }
+    }
 
 }

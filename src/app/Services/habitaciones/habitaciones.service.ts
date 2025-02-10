@@ -23,4 +23,8 @@ export class HabitacionesService {
     return this.http.post<Habitaciones>(`${environment.urlHost + "/habitaciones"}/${idHotel}`, habitacion)
   }
 
+  eliminarHabitacion(id: number): Observable<Habitaciones> {
+    return this.http.delete<Habitaciones>(`${environment.urlHost + "/habitaciones"}/${id}`)
+  }
+
 }
