@@ -29,6 +29,7 @@ export class CrudRestauranteComponent implements OnInit {
     isCrudModalOpen: boolean = false;
     imagePreviews: string[] = [];
     selectedFiles: File[] = [];
+    mesas: Mesa[] = [];
     etiquetas!: EtiquetaRestaurante[];
     modalEtiqueta: boolean = false;
     todosRestaurantes!: Restaurante[];
@@ -108,12 +109,6 @@ export class CrudRestauranteComponent implements OnInit {
         })
     }
 
-    mesaForm = this.fb.group({
-        idMesa: [''],
-        numeroMesa: ['', [Validators.required]],
-        capacidad: ['', [Validators.required]],
-        disponibilidad: ['', [Validators.required]],
-    });
 
     obtenerLugaresDeAdmin() {
         this.lugaresService.getTodosLugaresDeAdmin().subscribe({
@@ -353,7 +348,7 @@ export class CrudRestauranteComponent implements OnInit {
 
     public isMesaModalOpen = false;
     public isCreateMesaModalOpen = false;
-    mesas: Mesa[] = [];
+
 
     MesaForm = this.fb.group({
         idMesa: [''],
@@ -362,21 +357,22 @@ export class CrudRestauranteComponent implements OnInit {
         disponibilidad: ['', [Validators.required]],
     })
 
-    openMesaModal() { 
-        this.isMesaModalOpen = true;
+    openMesaModal() {
         this.cargarMesas();
+        this.isMesaModalOpen = true;
+
     }
-    closeMesaModal() { 
+    closeMesaModal() {
         this.isMesaModalOpen = false;
     }
 
-    openCreateMesaModal() { 
+    openCreateMesaModal() {
         this.isCreateMesaModalOpen = true;
     }
 
-    closeCreateMesaModal() { 
+    closeCreateMesaModal() {
         this.isCreateMesaModalOpen = false; // Cerrar el modal de creación
-        this.mesaForm.reset();
+        this.MesaForm.reset();
         this.selectedFiles = [];
         this.imagePreviews = [];
     }
@@ -384,30 +380,48 @@ export class CrudRestauranteComponent implements OnInit {
     mostrarImagesDeMesas() { }
 
     cargarMesas() {
+        console.log("Entro a cargar mesas")
+        console.log(this.idRestaurante)
+        // this.mesasService.getMesasDeRestaurante(this.idRestaurante).subscribe((mesas) => {
+        //     this.mesas = mesas;
+        //     this.mesas.forEach((mesas) => {
+        //         this.obtenerImagesDeMesas(mesas.idMesa).then((img) => {
+        //             mesas.imagenesMesa = img
+        //         })
+        //     })
+        // });
         this.mesasService.getMesasDeRestaurante(this.idRestaurante).subscribe({
             next: (mesas) => {
+                console.log("Datos recibidos:", mesas);
                 this.mesas = mesas;
                 this.mesas.forEach((mesa) => {
-                    console.log("Entro aqui")
-                    this.obtenerImagesDeMesas(mesa.idMesa).then((img) => {
-                        mesa.imagenesMesa = img
-                    })
-                })
+                    if (!mesa.idMesa) {
+                        console.error("Error: idMesa es undefined en una de las mesas", mesa);
+                        return;
+                    }
+                    this.obtenerImagesDeMesas(mesa.idMesa)
+                        .then((img) => mesa.imagenesMesa = img)
+                        .catch((error) => console.error("Error obteniendo imágenes:", error));
+                });
+            },
+            error: (err) => {
+                console.error("Error en la petición HTTP:", err);
             }
         });
+
     }
 
-    editarMesa(idMesa: number) { 
+    editarMesa(idMesa: number) {
         environment.mensajeEmergente('Editar', '¿Estas seguro que deseas editar?', 'warning')
             .then((cont) => {
                 if (cont) {
                     this.openCreateMesaModal()
                     this.mesasService.getMesaById(idMesa).subscribe({
                         next: (mesa) => {
-                            this.mesaForm.controls.idMesa.setValue(<string><unknown>mesa.idMesa)
-                            this.mesaForm.controls.numeroMesa.setValue(mesa.numeroMesa)
-                            this.mesaForm.controls.capacidad.setValue(mesa.capacidad)
-                            this.mesaForm.controls.disponibilidad.setValue(<string><unknown>mesa.disponibilidad)
+                            this.MesaForm.controls.idMesa.setValue(<string><unknown>mesa.idMesa)
+                            this.MesaForm.controls.numeroMesa.setValue(mesa.numeroMesa)
+                            this.MesaForm.controls.capacidad.setValue(mesa.capacidad)
+                            this.MesaForm.controls.disponibilidad.setValue(<string><unknown>mesa.disponibilidad)
                         }
                     })
                 }
@@ -423,7 +437,7 @@ export class CrudRestauranteComponent implements OnInit {
         })
     }
     //para editar una mesa
-    obtenerImagesDeMesa(id: number) { 
+    obtenerImagesDeMesa(id: number) {
         console.log("Entro aqui")
         this.imagePreviews = new Array
         this.imagenesMesasService.getImagenesByIdMesa(id).subscribe({
@@ -472,36 +486,36 @@ export class CrudRestauranteComponent implements OnInit {
         });
     }
 
-    crearMesa() { 
+    crearMesa() {
         console.log(this.imagePreviews.length)
-        console.log(this.mesaForm.valid)
-                if (this.mesaForm.valid && this.imagePreviews.length >= 3) {
-                    this.mesasService
-                        .crearMesa(this.mesaForm.value as unknown as Mesa, this.idRestaurante).subscribe({
-                            next: (mesaCreada: Mesa) => {
-                                const uploadPromises = this.selectedFiles.map((file) =>
-                                    this.imagenesMesasService.uploadImage(file, mesaCreada.idMesa).toPromise());
-                                Promise.all(uploadPromises)
-                                    .then(() => {
-                                        environment.mensajeToast('success', 'Habitación creado', 'Se ha creado la habitación con éxito');
-                                        this.cargarMesas();
-                                        this.selectedFiles = [];
-                                        this.imagePreviews = [];
-                                        this.closeCreateMesaModal();
-                                    })
-                                    .catch((error) => {
-                                        console.error('Error al subir las imágenes:', error);
-                                        environment.mensajeToast('error', 'Error al subir las imágenes', 'Ingrese todos los campos y seleccione las imágenes');
-                                    });
-                            },
-                            error: () => {
-                                environment.mensajeToast('error', 'Error al registrar', 'Ingrese todos los campos y seleccione las imágenes');
-                            }
-                        })
-                } else {
-                    environment.mensajeToast(
-                        'error', 'Error al registrar', 'Ingrese todos los campos y seleccione las imágenes else');
-                }
+        console.log(this.MesaForm.valid)
+        if (this.MesaForm.valid && this.imagePreviews.length >= 3) {
+            this.mesasService
+                .crearMesa(this.MesaForm.value as unknown as Mesa, this.idRestaurante).subscribe({
+                    next: (mesaCreada: Mesa) => {
+                        const uploadPromises = this.selectedFiles.map((file) =>
+                            this.imagenesMesasService.uploadImage(file, mesaCreada.idMesa).toPromise());
+                        Promise.all(uploadPromises)
+                            .then(() => {
+                                environment.mensajeToast('success', 'Habitación creado', 'Se ha creado la habitación con éxito');
+                                this.cargarMesas();
+                                this.selectedFiles = [];
+                                this.imagePreviews = [];
+                                this.closeCreateMesaModal();
+                            })
+                            .catch((error) => {
+                                console.error('Error al subir las imágenes:', error);
+                                environment.mensajeToast('error', 'Error al subir las imágenes', 'Ingrese todos los campos y seleccione las imágenes');
+                            });
+                    },
+                    error: () => {
+                        environment.mensajeToast('error', 'Error al registrar', 'Ingrese todos los campos y seleccione las imágenes');
+                    }
+                })
+        } else {
+            environment.mensajeToast(
+                'error', 'Error al registrar', 'Ingrese todos los campos y seleccione las imágenes else');
+        }
     }
 
 }

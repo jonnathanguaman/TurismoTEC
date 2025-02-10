@@ -27,13 +27,16 @@
                 <thead>
                     <tr>
                         <th>Imagen</th>
-                        <th>#</th>
-                        <th>Capacidad/th>
-                        <th>Disponibilidad</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Disponible</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let room of rooms;">
+                        <!-- <td><img [src]="room.image" alt="Imagen de Habitación" class="room-thumbnail"></td> -->
                         <td>
                             <div class="img-preview" id="preview1">
                                 <img [src]="[urlHost + room.imagenesHabitaciones[1].url]" alt="Vista previa">
@@ -79,6 +82,17 @@
                                 La descripción es obligatorio.
                             </div>
                         </div>
+
+                        <!-- <div class="input-container">
+                            <label for="visualizacion">Disponible:</label>
+                            <select id="visualizacion" formControlName="visualizacion">
+                                <option [value]="true">Publico</option>
+                                <option [value]="false">Privado</option>
+                            </select>
+                            <div *ngIf="hotelForm.get('visualizacion')?.invalid && lugaresForm.get('visualizacion')?.touched" class="message error">
+                                El estado es obligatorio.
+                            </div>
+                        </div> -->
 
                         <div class="input-container">
                             <label for="descripcion">Precio:</label>

@@ -11,6 +11,10 @@ export class MesasService {
 
   constructor(private http: HttpClient) { }
 
+  getTodosMesas(): Observable<Mesa[]> {
+      return this.http.get<Mesa[]>(environment.urlHost + "/mesas")
+    }
+
   getMesasDeRestaurante(id: number): Observable<Mesa[]> {
     return this.http.get<Mesa[]>(`${environment.urlHost + "/mesasDeRestaurante"}/${id}`)
   }

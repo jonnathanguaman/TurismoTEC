@@ -21,34 +21,32 @@
             <h3>Lista de Mesas</h3>
 
             <!-- Botón para abrir el modal de creación de habitación -->
-            <button class="btn-opcion btn-create" (click)="openCreateMesaModal()">Crear Mesas</button>
+            <button class="btn-opcion btn-create" (click)="openCreateMesaModal()">Agregar Mesa</button>
 
-            <!-- Tabla para mostrar las habitaciones registradas -->
+            <!-- Tabla para mostrar las Mesas registradas -->
             <table class="room-table">
                 <thead>
                     <tr>
                         <th>Imagen</th>
                         <th># Mesa</th>
                         <th>Capacidad</th>
-                        <th>Disponibilidad/th>
+                        <th>Disponibilidad</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let mesa of mesas;">
-                        <!-- <td><img [src]="room.image" alt="Imagen de Habitación" class="room-thumbnail"></td> -->
                         <td>
                             <div class="img-preview" id="preview1">
-
-                                <img [src]="[urlHost + mesa.imagenesMesa[1].url]" alt="Vista previa">
+                                <img [src]="[urlHost + mesa.imagenesMesa[1]?.url]" alt="Vista previa">
                             </div>
                         </td>
                         <td>{{ mesa.numeroMesa }}</td>
                         <td>{{ mesa.capacidad }}</td>
-                        <td>{{ mesa.disponibilidad ? 'Sí' : 'No' }}</td>
+                        <td>{{ mesa.disponibilidad ? 'Sí' : 'No'}}</td>
                         <td>
-                            <button class="btn-opcion btn-delete" (click)="editarMesa(mesa.idMesa)" (click)="obtenerImagesDeMesa(mesa.idMesa)">Editar</button>
-                                <button class="btn-opcion btn-delete" (click)="eliminarMesa(mesa.idMesa)">Eliminar</button>
+                            <button class="btn-opcion btn-delete" (click)="editarMesa(mesa.idMesa);obtenerImagesDeMesa(mesa.idMesa)">Editar</button>
+                            <button class="btn-opcion btn-delete" (click)="eliminarMesa(mesa.idMesa)">Eliminar</button>
                         </td>
                     </tr>
                 </tbody>
@@ -63,66 +61,67 @@
                     <!-- Formulario para ingresar los datos de la habitación -->
                     <form [formGroup]="MesaForm">
 
-                            <div class="input-container">
-                                <label for="numeroMesa"># Mesa:</label>
-                                <input type="text" id="numeroMesa" formControlName="numeroMesa" />
-                                <div *ngIf="MesaForm.get('numeroMesa')?.invalid && MesaForm.get('numeroMesa')?.touched"
-                                    class="message error">
-                                    El numero de mesa es obligatorio.
+                        <div class="input-container">
+                            <label for="numeroMesa"># Mesa:</label>
+                            <input type="text" id="numeroMesa" formControlName="numeroMesa" />
+                            <div *ngIf="MesaForm.get('numeroMesa')?.invalid && MesaForm.get('numeroMesa')?.touched"
+                                class="message error">
+                                El numero de mesa es obligatorio.
+                            </div>
+                        </div>
+
+                        <div class="input-container">
+                            <label for="capacidad">Capacidad:</label>
+                            <input type="text" id="capacidad" formControlName="capacidad" />
+                            <div *ngIf="MesaForm.get('capacidad')?.invalid && MesaForm.get('capacidad')?.touched"
+                                class="message error">
+                                La capacidad de la mesa es obligatorio.
+                            </div>
+                        </div>
+
+                        <div class="input-container">
+                            <label for="disponibilidad">Disponibilidad</label>
+                            <select id="disponibilidad" formControlName="disponibilidad">
+                                <option [value]="true">Disponible</option>
+                                <option [value]="false">No Disponible</option>
+                            </select>
+                            <div *ngIf="MesaForm.get('disponibilidad')?.invalid && MesaForm.get('disponibilidad')?.touched"
+                                class="message error">
+                                El estado de disponibilidad
+                            </div>
+                        </div>
+
+                        <div class="imgContainer">
+                            <div class="imgContainer-item">
+                                <div class="img-preview" id="preview1">
+                                    <img [src]="imagePreviews[0]" alt="Vista previa">
                                 </div>
+                                <label for="file1" class="file-label">Subir imagen</label>
+                                <input accept="image/*" (change)="onFileSelected($event,0)" type="file" id="file1"
+                                    class="file-input" accept="image/*" onchange="previewImage(event, 'preview1')">
                             </div>
 
-                            <div class="input-container">
-                                <label for="capacidad">Capacidad:</label>
-                                <input type="text" id="capacidad" formControlName="capacidad" />
-                                <div *ngIf="MesaForm.get('capacidad')?.invalid && MesaForm.get('capacidad')?.touched"
-                                    class="message error">
-                                    La capacidad de la mesa es obligatorio.
+                            <div class="imgContainer-item">
+                                <div class="img-preview" id="preview2">
+                                    <img [src]="imagePreviews[1]" alt="Vista previa">
                                 </div>
+                                <label for="file2" class="file-label">Subir imagen</label>
+                                <input accept="image/*" (change)="onFileSelected($event,1)" type="file" id="file2"
+                                    class="file-input" accept="image/*" onchange="previewImage(event, 'preview2')">
                             </div>
 
-                            <div class="input-container">
-                                <label for="disponibilidad">Disponibilidad</label>
-                                <select id="disponibilidad" formControlName="disponibilidad">
-                                    <option [value]="true">Disponible</option>
-                                    <option [value]="false">No Disponible</option>
-                                </select>
-                                <div *ngIf="MesaForm.get('disponibilidad')?.invalid && MesaForm.get('disponibilidad')?.touched" class="message error">
-                                    El estado de disponibilidad
+                            <div class="imgContainer-item">
+                                <div class="img-preview" id="preview3">
+                                    <img [src]="imagePreviews[2]" alt="Vista previa">
                                 </div>
+                                <label for="file3" class="file-label">Subir imagen</label>
+                                <input accept="image/*" (change)="onFileSelected($event,2)" type="file" id="file3"
+                                    class="file-input" accept="image/*" onchange="previewImage(event, 'preview3')">
                             </div>
+                        </div>
 
-                            <div class="imgContainer">
-                                <div class="imgContainer-item">
-                                    <div class="img-preview" id="preview1">
-                                        <img [src]="imagePreviews[0]" alt="Vista previa">
-                                    </div>
-                                    <label for="file1" class="file-label">Subir imagen</label>
-                                    <input accept="image/*" (change)="onFileSelected($event,0)" type="file" id="file1"
-                                        class="file-input" accept="image/*" onchange="previewImage(event, 'preview1')">
-                                </div>
-
-                                <div class="imgContainer-item">
-                                    <div class="img-preview" id="preview2">
-                                        <img [src]="imagePreviews[1]" alt="Vista previa">
-                                    </div>
-                                    <label for="file2" class="file-label">Subir imagen</label>
-                                    <input accept="image/*" (change)="onFileSelected($event,1)" type="file" id="file2"
-                                        class="file-input" accept="image/*" onchange="previewImage(event, 'preview2')">
-                                </div>
-
-                                <div class="imgContainer-item">
-                                    <div class="img-preview" id="preview3">
-                                        <img [src]="imagePreviews[2]" alt="Vista previa">
-                                    </div>
-                                    <label for="file3" class="file-label">Subir imagen</label>
-                                    <input accept="image/*" (change)="onFileSelected($event,2)" type="file" id="file3"
-                                        class="file-input" accept="image/*" onchange="previewImage(event, 'preview3')">
-                                </div>
-                            </div>
-
-                            <button type="submit" class="btn-opcion" (click)="crearMesa()">Guardar</button>
-                        </form>
+                        <button type="submit" class="btn-opcion" (click)="crearMesa()">Guardar</button>
+                    </form>
                 </div>
             </div>
 
@@ -221,7 +220,7 @@
             </form>
         </div>
     </div>
-    
+
     <!-- Tabla de restaurantes -->
     <div class="table-container">
         <table>
@@ -249,13 +248,9 @@
                     <td>{{ restaurante.telefono }}</td>
                     <td>{{ restaurante.menu }}</td>
                     <td>
-                        <button (click)="guardarIdRestaurante(restaurante.idRestaurante)" (click)="abrirModalEtiqueta()"
-                            class="btn-opcion">Agregar/quitar etiquetas</button>
-                        <button class="btn-opcion" (click)="guardarIdRestaurante(restaurante.idRestaurante)" (click)="openMesaModal()">Crear/Editar mesas</button>
-                        <button (click)="guardarIdRestaurante(restaurante.idRestaurante)"
-                            (click)="obtenerImagesDeRestaurante(restaurante.idRestaurante)"
-                            (click)="obtenerRestauranteById(restaurante.idRestaurante)"
-                            class="btn-opcion">Editar</button>
+                        <button (click)="guardarIdRestaurante(restaurante.idRestaurante);abrirModalEtiqueta()" class="btn-opcion">Agregar/quitar etiquetas</button>
+                        <button class="btn-opcion" (click)="guardarIdRestaurante(restaurante.idRestaurante);openMesaModal()">Crear/Editar mesas</button>
+                        <button (click)="guardarIdRestaurante(restaurante.idRestaurante);obtenerImagesDeRestaurante(restaurante.idRestaurante);obtenerRestauranteById(restaurante.idRestaurante)"class="btn-opcion">Editar</button>
                         <button class="btn-opcion"
                             (click)="eliminarRestaurante(restaurante.idRestaurante)">Eliminar</button>
                     </td>
