@@ -10,21 +10,6 @@ import { TokenPayload } from '../../Services/DatosPersonales/TokenPayload ';
 import { jwtDecode } from 'jwt-decode';
 import { environment } from '../../../enviroments/enviroment';
 
-type ToastIcon = 'success' | 'error' | 'warning' | 'info' | 'question';
-
-const Toast = Swal.mixin({
-  toast: true,
-  position: 'bottom-end',
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  showCloseButton: true,
-  didOpen: (toast) => {
-    toast.onmouseenter = Swal.stopTimer;
-    toast.onmouseleave = Swal.resumeTimer;
-  },
-});
-
 @Component({
   selector: 'app-foro',
   templateUrl: './foro.component.html',
@@ -44,16 +29,7 @@ export class ForoComponent implements OnInit {
 
   imagenSeleccionada: string | ArrayBuffer | null = null;
 
-onFileChange(event: any) {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      this.imagenSeleccionada = e.target?.result;
-    };
-    reader.readAsDataURL(file);
-  }
-}
+  urlHost:string = environment.urlAut
  // Modificado aquí
 
 
@@ -145,11 +121,16 @@ onFileChange(event: any) {
             this.publicacionesService
               .guardarPublicacion(this.publicacionForm.value as unknown as Publicaciones,idPersona)
               .subscribe({
-                next: () => {
-                  this.limpiarCamposPublicacion()
-                  this.obtenerPublicaciones();
-                  this.cerrarVentana();
-                  this.mensajeToast('success','Publicacion registrada','Gracias por compartir con la comunidad');
+                next: (publicaciones) => {
+                  const uploadPromises = this.selectedFiles.map((file) =>
+                  this.publicacionesService.guardarImagenDePublicacion(file,publicaciones.idPublicaciones).toPromise());
+                
+                  Promise.all(uploadPromises).then(()=>{
+                    this.limpiarCamposPublicacion()
+                    this.obtenerPublicaciones();
+                    this.cerrarVentana();
+                    environment.mensajeToast('success','Publicacion registrada','Gracias por compartir con la comunidad');
+                  })
                 },
                 error: (e) => {
                   console.log(e);
@@ -166,12 +147,14 @@ onFileChange(event: any) {
   }
 
   obtenerPublicaciones() {
-    this.publicacionesService.getPublicaciones().subscribe((publicaciones) => {
-      this.publicacionesList = publicaciones.map((publicacion) => ({
-        ...publicacion, // Copia todas las propiedades existentes de `publicacion`
-        textComentario: '▼ Comentarios',
-        mostrarComentarios: false, 
-      }));;
+    this.publicacionesService.getPublicaciones().subscribe({
+      next:(publicaciones)=>{
+          this.publicacionesList = publicaciones.map((publicacion) => ({
+            ...publicacion, // Copia todas las propiedades existentes de `publicacion`
+            textComentario: '▼ Comentarios',
+            mostrarComentarios: false, 
+          }));
+      }
     });
   }
 
@@ -185,7 +168,7 @@ onFileChange(event: any) {
           this.comentarioService.guardarComentario(this.comentarioForm.value as Comentario,idPersona,this.idPublicacionHaComentar).subscribe({
             next:()=>{
               this.limpiarCamposComentario()
-              this.mensajeToast('success','Comentario registrado','Gracias por compartir con la comunidad');
+              environment.mensajeToast('success','Comentario registrado','Gracias por compartir con la comunidad');
             }
           });
         }
@@ -203,13 +186,25 @@ onFileChange(event: any) {
     event.target.style.height = `${event.target.scrollHeight}px`;
   }
 
+  imagePreviews: string[] = [];
+  selectedFiles: File[] = [];
 
-  mensajeToast(tipo: ToastIcon, mesajeCuerpo: string, footer: string) {
-    Toast.fire({
-      icon: tipo,
-      title: mesajeCuerpo,
-      footer: footer
-    });
+  onFileSelected(event: Event, index: number): void {
+    
+    //Esto es javaScrip basico solo que en lenguaje de ts
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    
+    if (file) {
+      this.selectedFiles[0] = file;
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        this.imagePreviews[index] = e.target?.result as string;
+      };
+
+      reader.readAsDataURL(file);
+    } else {
+      this.imagePreviews[index] = null;
+    }
   }
-  
 }

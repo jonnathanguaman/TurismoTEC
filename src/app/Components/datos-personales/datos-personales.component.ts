@@ -157,6 +157,9 @@ export class DatosPersonalesComponent implements OnInit {
     console.log(this.persona)
     this.datosService.guardarPesona(this.persona).subscribe({
       next: (usuario) => {
+        const uploadPromises = this.selectedFiles.map((file) =>
+        this.datosService.guardarImagenDeUser(file,usuario.id_Usuario).toPromise());
+        
         this.auth.username = this.usuario;
         this.auth.password = this.contrasena;
         this.auth.id_usuario = usuario.id_Usuario;
@@ -166,6 +169,7 @@ export class DatosPersonalesComponent implements OnInit {
               next:(auth)=>{
                 this.authRolService.guardarAuth_Rol(this.auth_Rol,auth.id_auth).subscribe({
                   next:() =>{
+                    
                     environment.mensajeToast("success","Usuario registrado","Se ha registrado con exito")
                     this.loginForm.controls.username.setValue(this.auth.username)
                     this.loginForm.controls.password.setValue(this.auth.password)

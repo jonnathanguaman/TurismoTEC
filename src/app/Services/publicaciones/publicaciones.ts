@@ -7,7 +7,7 @@ export interface Publicaciones{
     contenido:string;
     fechaPublicacion:Date
     usuario:DatosPersona;
-
+    urlFotoForo:string;
     //Controlar comentarios por publicación
     mostrarComentarios?: boolean;
     mostrandoFormulario?: boolean; 
