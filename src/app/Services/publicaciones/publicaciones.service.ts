@@ -20,5 +20,16 @@ export class PublicacionesService {
     return this.http.post<Publicaciones>(`${environment.urlHost + "/publicaciones"}/${idusuario}`,publicaciones);
   }
 
+  guardarImagenDePublicacion(file: File, idPublicacion:number): Observable<string> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.put<string>(`${environment.urlHost + '/publicacionesImagen'}/${idPublicacion}`,formData);
+  }
 
+   //Obtenernos los archivos de las images por nombre de imagen 
+   getFile(fileName: string) {
+    return this.http.get(`${environment.urlHost + '/imagePerfilUsuario/file'}/${fileName}`, {
+      responseType: 'blob', // Importante para manejar archivos binarios
+    });
+  }
 }
